@@ -79,6 +79,10 @@ if($action == 'ajax'){
 					
 				$status=$row['BITSUS'];
 				$INTIDCAT=$row['INTIDCAT'];
+				
+				$Categoria=mysqli_query($con, "SELECT FROM categorias WHERE id='$INTIDCAT'");
+				$NombreCategoria=$Categoria['nombre'];
+
 			   $INTIDSUBCAT=$row['INTIDSUBCAT'];
 			     $MONPCOS=$row['MONPCOS'];
 			    $INTIDUNI=$row['INTIDUNI'];
