@@ -188,6 +188,7 @@ $dompdf->render();
 header("Content-type: application/pdf");
 header("Content-Disposition: inline; filename=documento.pdf");
 echo $dompdf->output();
+
 }else{
   require 'resources/acceso_prohibido.php';
 }

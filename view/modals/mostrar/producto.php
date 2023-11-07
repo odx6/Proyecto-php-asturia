@@ -88,21 +88,10 @@
         <?php echo $INTTIPUSO;?>
     </div>
 </div>
+
 <div class="form-group">
-    <label for="registro" class="col-sm-4 control-label">Estado: </label>
-    <div class="col-sm-8">
-       <?php echo $BITSUS;?>
-    </div>
-</div>
-<!--<div class="form-group">
     <label for="estado" class="col-sm-4 control-label">Estado: </label>
     <div class="col-sm-8">
-        <?php echo ($status==1)?  "Activo" :  "Inactivo";?>
+        <?php echo ($BITSUS==1)?  "Activo" :  "Inactivo";?>
     </div>
 </div>
-<div class="form-group">
-    <label for="estado" class="col-sm-4 control-label">Fecha: </label>
-    <div class="col-sm-8">
-        <?php echo $created_at;?>
-    </div>
-</div>-->
