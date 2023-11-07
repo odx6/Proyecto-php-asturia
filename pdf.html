@@ -1,0 +1,143 @@
+<html>
+<head>
+<style>
+/** Define the margins of your page **/
+@page {
+  margin: 100px 25px;
+}
+body {
+    width: 8.5in;
+    height: 11in;
+    margin: 0 auto;
+}
+header {
+  position: fixed;
+  top: -60px;
+  left: 0px;
+  right: 0px;
+  height: 50px;
+  /** Extra personal styles **/
+  
+  color:black;
+  text-align: center;
+  line-height: 35px;
+}
+footer {
+  position: fixed;
+  bottom: -60px;
+  left: 0px;
+  right: 0px;
+  height: 50px;
+  /** Extra personal styles **/
+  
+  color:black;
+  text-align: center;
+  line-height: 35px;
+}
+th,td{
+  width:20%;
+  text-align: left;
+}
+.Datos{
+width:15%;
+  text-align: left;
+}
+.container {
+display: flex;
+}
+
+.column {
+flex: 50%;
+padding: 10px;
+height: 300px; /* Should be removed. Only for demonstration */
+}
+h1,h2,h4,h5,P{
+  text-align: center;
+}
+h5{
+  width: 95%;
+  background-color: black;
+  color:white;
+}
+textarea{
+  width: 100%;
+  height: 10%;
+  text-align:justify;
+}
+.firmas {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid black;
+        }
+        .firma {
+            border-top: 1px solid #000;
+            text-align: center;
+            width: 40%;
+            border-top: 1px solid black;
+        }
+footer{
+
+  border-top: 1px solid black;
+}
+</style>
+</head>
+<body>
+<!-- Define header and footer blocks before your content -->
+<header>
+  CEMENTOS  ACERO Y ACABADOS ROMA S.A DE C.V <br>
+SIMBOLOS PATRIOS N° 730 COL.ELISEO JIMENEZ RUIZ C.P 68120
+</header>
+<footer>
+  MANUEL F RODRIGUEZ MARRON GERENTE <?php echo date ("Y");?>
+</footer>
+<!-- Wrap the content of your PDF inside a main tag -->
+<main>
+<table class="table table-dark">
+<tbody>
+  <tr>
+    <th scope="row">ID Orden </th>
+    <td>: 24747</td>
+    <th scope="row">No.Folio  </th>
+    <td>: 2699</td>
+    <th scope="row">Fecha  </th>
+    <td>: 26/08/2023</td>
+  </tr>
+
+</tbody>
+</table>
+<h5>Datos generales -Orden</h5>
+<table class="table table-dark">
+<tbody>
+<tr>
+<th scope="row" class="Datos">Operador </th>
+<td class="Datos">MOISES HINOSTROSA REVILLA</td>
+
+</tr>
+<tr>
+<th scope="row" class="Datos">No. de Carro: </th>
+<td class="Datos">50</td>
+<th scope="row" class="Datos">Kilometraje: </th>
+<td class="Datos">422646</td>
+<th scope="row" class="Datos">No.Placas: </th>
+<td class="Datos">RY-31618</td>
+</tr>
+</tbody>
+</table>
+<h5>Detalles del servicio</h5>
+<textarea name="" id="" cols="100" rows="10">Cambiar  disco de cluth-cambiar valvula de pie de freno</textarea>
+<h5>Observaciones</h5>
+<textarea name="" id="" cols="100" rows="10">Cambiar  disco de cluth-cambiar valvula de pie de freno</textarea>
+
+<h1>ORDEN DE SERVICIO-TALLER</h1>
+<div class="firmas">
+  <div class="firma">
+      Firma 1
+  </div>
+  <div class="firma">
+      Firma 2
+  </div>
+</div>
+</main>
+</body>
+</html>
+'
