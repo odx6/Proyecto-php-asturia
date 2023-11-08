@@ -164,11 +164,16 @@ $created_at = $rw->created_at;
 <script>
     $("#update_register").submit(function(event) {
         $('.actualizar_datos').attr("disabled", true);
+        var inputFileImage = document.getElementById("imagefile");
+        var file = inputFileImage.files[0];
+        var data = new FormData();
+        data.append('imagefile', file);
+        data.append('id', id_user);
         var parametros = $(this).serialize();
         $.ajax({
             type: "POST",
             url: "view/ajax/agregar/actualizar_perfil.php",
-            data: parametros,
+            data: parametros,data,
             beforeSend: function(objeto) {
                 $("#resultados_ajax").html("Mensaje: Cargando...");
             },

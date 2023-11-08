@@ -7,7 +7,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <!-- form  -->
-            <form class="form-horizontal" role="form" method="post" id="new_register" name="new_register">
+            <form class="form-horizontal" role="form" method="post" id="new_register" name="new_register" enctype="multipart/form-data">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel"> Nuevo Producto</h4>
@@ -58,7 +58,7 @@
                     <div class="form-group">
                         <label for="localidad" class="col-sm-2 control-label">Imagen: </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Imagen" name="Imagen" placeholder="Imagen: ">
+                        <input type="file" name="imagefile" class="form-control" id="imagefile" >
                         </div>
                     </div>
                     <div class="form-group">
