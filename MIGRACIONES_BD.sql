@@ -117,7 +117,7 @@ CREATE TABLE `taller2`.`TBLCATPRO` (
 -- TABLE PRODUCTOS --
 
 
-ALTER TABLE `tblcatemp`
+ALTER TABLE `tblcatpro`
   ADD PRIMARY KEY (`STRSKU`);
 
 ALTER TABLE `tblcatpro`
