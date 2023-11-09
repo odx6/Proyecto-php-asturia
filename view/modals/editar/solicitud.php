@@ -11,6 +11,14 @@
 			$rw=mysqli_fetch_array($query);
 			$pk_solicitud=$rw['pk_solicitud'];
 			$fk_empleado=$rw['fk_empleado'];
+
+            //Name empleado 
+            if (isset($fk_empleado) && $fk_empleado != NULL) {
+                $Empleado = mysqli_query($con, "SELECT * FROM empleado WHERE id='$fk_empleado'");
+                $tem = mysqli_fetch_array($Empleado);
+                $NombreEmpleado = $tem['nombre'] ." ".$tem['apellido'];
+            }
+            //
 			$NumeroFolio=$rw['NumeroFolio'];
 			$fecha=$rw['fecha'];
 			$operador=$rw['operador'];
@@ -34,7 +42,7 @@
 <div class="form-group">
     <label for="nombre" class="col-sm-2 control-label">Empleado: </label>
     <div class="col-sm-10">
-        <input type="text" required class="form-control" id="fk_empleado" name="fk_empleado" value="<?php echo $fk_empleado;?>" placeholder="Empleado: ">
+        <input type="text" required class="form-control" id="fk_empleado" name="fk_empleado" value="<?php echo $fk_empleado;?>" placeholder="<?php echo $NombreEmpleado;?>">
     </div>
 </div>
 <div class="form-group">

@@ -19,10 +19,10 @@
                             <input type="text" required class="form-control" id="IDORDEN" name="IDORDEN" placeholder="Id de Orden: ">
                         </div>
                     </div>
-            <div class="form-group">
-                        <label for="sku" class="col-sm-2 control-label">Ide Empleado: </label>
+            <div class="form-group" >
+                       <!-- <label for="sku" class="col-sm-2 control-label">Ide Empleado: </label>-->
                         <div class="col-sm-10">
-                            <input type="text" required class="form-control" id="IDEmpleado" name="IDEMPLEADO" placeholder="EMPLEADO: ">
+                            <input type="hidden"  required class="form-control" id="IDEmpleado" name="IDEMPLEADO" placeholder="EMPLEADO: " value="<?php if (isset($id))echo   $id?>">
                         </div>
                     </div>
                     <div class="form-group">

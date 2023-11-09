@@ -1,4 +1,8 @@
 <?php
+
+
+
+
     if (!isset($_SESSION['user_id'])&& $_SESSION['user_id']==null) {
         header("location: ./?view=index");
     }
@@ -88,6 +92,7 @@
                             <li>
                                 <a href="./?view=logout"><i class="fa fa-power-off"></i> Salir</a>
                             </li>
+                           
                         </ul>
                     </li>
                 </ul>

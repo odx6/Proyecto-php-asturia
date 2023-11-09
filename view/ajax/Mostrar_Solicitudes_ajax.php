@@ -57,7 +57,7 @@ if($action == 'ajax'){
         <thead>
             <tr>
                 <th>#Id Orden </th>
-                <th>#Id Empleado </th>
+                <th> Empleado </th>
                 <th>No.Folio</th>
                 <th>Fecha</th>
                 <th>Operador</th>
@@ -74,6 +74,13 @@ if($action == 'ajax'){
 			while($row = mysqli_fetch_array($query)){	
 				$id=$row['pk_solicitud'];
 				$empleado=$row['fk_empleado'];
+				//Name Empleado 
+				if (isset($empleado) && $empleado != NULL) {
+					$Empleado = mysqli_query($con, "SELECT * FROM empleado WHERE id='$empleado'");
+					$tem = mysqli_fetch_array($Empleado);
+					$NombreEmpleado = $tem['nombre'] ." ".$tem['apellido'];
+				}
+				//
 				$Folio=$row['NumeroFolio'];
 				$Fecha=$row['fecha'];
 				$Operador=$row['operador'];
@@ -90,7 +97,7 @@ if($action == 'ajax'){
         <tbody>
             <tr>
                 <td><?php echo $id ?></td>
-                <td><?php echo $empleado ?></td>
+                <td><?php echo $NombreEmpleado ?></td>
                 <td><?php echo $Folio ?></td>
                 <td><?php echo $Fecha ?></td>
                 <td><?php echo $Operador ?></td>
