@@ -7,6 +7,7 @@
     <script src="assets/plugins/waypoints/waypoints.min.js"></script>
     <script src="assets/plugins/nanoScroller/jquery.nanoscroller.min.js"></script>
     <script src="assets/js/application.js"></script>
+    <script src="assets/js/Asturias.js"></script>
 
     <!-- <script src="assets/plugins/selectpicker/bootstrap-select.min.js"></script> 
     <script type="text/javascript">

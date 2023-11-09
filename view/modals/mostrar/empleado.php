@@ -27,6 +27,20 @@
 	else{exit;}
 ?>
 <input type="hidden" value="<?php echo $id;?>" name="id" id="id">
+
+<div class="row">
+            <div class="col-md-3">
+                <!-- Profile Image -->
+                <div class="panel panel-primary">
+                    <div class="panel-body panel-profile">
+                        <div id="load_img">
+                            <img class="img-responsive" src="<?php echo $imagen; ?>" alt="Logotipo">
+                        </div>
+                        <h3 class="profile-username text-center"><?php echo $nombre . " " . $apellido; ?></h3>
+                        <p class="text-muted text-center mail-text"><?php echo $email; ?></p>
+                    </div>
+                </div>
+            </div>
 <div class="form-group">
     <label for="dni" class="col-sm-4 control-label">DNI: </label>
     <div class="col-sm-8">

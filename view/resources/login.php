@@ -1,5 +1,10 @@
 <?php
 	session_start();
+	
+    if (!empty($_SESSION['username'])) {
+        $user_ip = $_SERVER['REMOTE_ADDR'];
+        // Guarda $user_ip en la base de datos o utilízalo como necesites
+    }
 
 	/*if (isset($_POST['token']) && $_POST['token']!=='') {*/
 			
@@ -34,6 +39,7 @@
 				in_array(9,$valores)?$_SESSION['reparaciones']=1:$_SESSION['reparaciones']=0;
 				in_array(10,$valores)?$_SESSION['choque']=1:$_SESSION['choque']=0;
 				in_array(11,$valores)?$_SESSION['configuracion']=1:$_SESSION['configuracion']=0;
+				in_array(12,$valores)?$_SESSION['productos']=1:$_SESSION['productos']=0;
 
 				$_SESSION['user_id'] = $idempleado;
 				if($_SESSION['dashboard']==1){
@@ -42,7 +48,7 @@
 					header("location: ../../?view=perfil");
 				}
 				
-
+				
 		}else{
 			header("location: ../../index.php?invalid");
 			//echo mysqli_error($con);

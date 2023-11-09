@@ -1,7 +1,8 @@
 <?php
 $active2 = "active";
 include "resources/header.php";
-if ($_SESSION['empleados'] == 1) {
+if ($_SESSION['productos'] == 1) {
+    //verifica si tiene permiso al modulo 
 ?>
     <!--main content start-->
     <section class="main-content-wrapper">

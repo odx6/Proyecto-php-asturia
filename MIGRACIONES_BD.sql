@@ -1,0 +1,134 @@
+CREATE TABLE `taller2`.`tblcatemp` (
+  `IDEMP` int(11) NOT NULL,
+  `STRNSS` varchar(15) NOT NULL,
+  `STRRFC` varchar(15) NOT NULL,
+  `STRCUR` varchar(25) NOT NULL,
+  `STRNOM` varchar(50) NOT NULL,
+  `STRAPE` varchar(50) NOT NULL,
+  `STRDOM` varchar(100) NOT NULL,
+  `STRLOC` varchar(50) NOT NULL,
+  `STRMUN` varchar(50) NOT NULL,
+  `STREST` varchar(50) NOT NULL,
+  `STRCP` varchar(15) NOT NULL,
+  `STRPAI` varchar(15) NOT NULL,
+  `STRTEL` varchar(12) NOT NULL,
+  `STRCOR` varchar(30) NOT NULL,
+  `STRPWS` varchar(30) NOT NULL,
+  `STRSUS` bit(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+
+ALTER TABLE `tblcatemp`
+  ADD PRIMARY KEY (`IDEMP`),
+  ADD UNIQUE KEY `STRNSS` (`STRNSS`),
+  ADD UNIQUE KEY `STRRFC` (`STRRFC`),
+  ADD UNIQUE KEY `STRCUR` (`STRCUR`);
+
+
+ALTER TABLE `tblcatemp`
+  MODIFY `IDEMP` int(11) NOT NULL AUTO_INCREMENT;
+
+  -- TABLE CATEGORIAS --
+
+
+CREATE TABLE `taller2`.`TBLCATCAT` (
+  `INTIDCAT` int(11) NOT NULL,
+  `STRNOMCAT` varchar(30) NOT NULL,
+  `STRDESCAT` varchar(150) NOT NULL,
+  `DTEHOR` datetime NOT NULL,
+  `BITSUS` tinyint(1) NOT NULL
+ 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+ALTER TABLE `tblcatcat`
+  ADD PRIMARY KEY (`INTIDCAT`);
+
+ALTER TABLE `tblcatcat`
+  MODIFY `INTIDCAT` int(11) NOT NULL AUTO_INCREMENT;
+
+
+-- TABLE CASUBCATEGORIA --
+
+
+CREATE TABLE `taller2`.`TBLCATSBC` (
+  `INTIDSBC` int(11) NOT NULL,
+  `STRNOMSBC` varchar(30) NOT NULL,
+  `STRDESBC` varchar(150) NOT NULL,
+  `DTEHOR` datetime NOT NULL,
+  `BITSUS` tinyint(1) NOT NULL
+ 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+ALTER TABLE `tblcatsbc`
+  ADD PRIMARY KEY (`intidsbc`);
+
+ALTER TABLE `tblcatsbc`
+  MODIFY `INTIDSBC` int(11) NOT NULL AUTO_INCREMENT;
+
+-- TABLE UNIDAD DE MEDIDA 
+
+CREATE TABLE `taller2`.`TBLCATUNI` (
+  `INTIDUNI` int(11) NOT NULL,
+  `STRNOMUNI` varchar(30) NOT NULL,
+  `STRDESUNI` varchar(150) NOT NULL,
+  `DTEHOR` datetime NOT NULL,
+  `BITSUS` tinyint(1) NOT NULL
+ 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+ALTER TABLE `tblcatuni`
+  MODIFY `INTIDUNI` int(11) NOT NULL AUTO_INCREMENT;
+
+--- TABLE TBLCATALM
+CREATE TABLE `taller2`.`TBLCATALM` (
+  `INTIDALM` int(11) NOT NULL,
+  `STRNOMALM` varchar(30) NOT NULL,
+  `STRDESALM` varchar(150) NOT NULL,
+  `DTEHOR` datetime NOT NULL,
+  `BITSUS` tinyint(1) NOT NULL 
+ 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+ALTER TABLE `tblcatalm`
+  ADD PRIMARY KEY (`INITDALM`);
+
+ALTER TABLE `tblcatalm`
+  MODIFY `INTIDALM` int(11) NOT NULL AUTO_INCREMENT;
+
+
+-- TABLE PRODUCTOS --
+
+CREATE TABLE `taller2`.`TBLCATPRO` (
+  `STRSKU` varchar(50) NOT NULL,
+  `STRCOD` varchar(25) NOT NULL,
+  `INTIDCAT` int(11) NOT NULL,
+  `INTIDSBC` int(11) NOT NULL,
+  `MONPCOS` double NOT NULL,
+  `INTIDUNI` int(11) NOT NULL,
+  `STRIMG` varchar(255) NOT NULL,
+  `BITTALL` bit(1) NOT NULL,
+  `INTTIPUSO` int(11) NOT NULL,
+  `BITSUS` int(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+
+
+
+
+-- TABLE PRODUCTOS --
+
+
+ALTER TABLE `tblcatemp`
+  ADD PRIMARY KEY (`STRSKU`);
+
+ALTER TABLE `tblcatpro`
+  ADD CONSTRAINT `tblcatpro_ibfk_1` FOREIGN KEY (`INTIDCAT`) REFERENCES `tblcatcat` (`INTIDCAT`);
+
+ALTER TABLE `tblcatpro`
+  ADD CONSTRAINT `tblcatpro_ibfk_2` FOREIGN KEY (`INTIDSBC`) REFERENCES `tblcatsbc` (`INTIDSBC`);
+
+ALTER TABLE `tblcatpro`
+  ADD CONSTRAINT `tblcatpro_ibfk_3` FOREIGN KEY (`INTIDUNI`) REFERENCES `tblcatuni` (`INTIDUNI`);
+
+
+
+

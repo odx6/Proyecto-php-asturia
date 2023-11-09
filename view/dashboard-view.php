@@ -102,10 +102,11 @@
 <?php
     include "resources/footer.php";
 ?>
-<script src="assets/plugins/chartjs/Chart.min.js"></script> 
+
+<!--<script src="assets/plugins/chartjs/Chart.min.js"></script>-->
 <!--Page Level JS-->
-<script src="assets/plugins/countTo/jquery.countTo.js"></script>
-<script src="assets/plugins/weather/js/skycons.js"></script>
+<!--<script src="assets/plugins/countTo/jquery.countTo.js"></script>-->
+<!--<script src="assets/plugins/weather/js/skycons.js"></script>-->
 <script>
 var barChartData = {
     labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
@@ -126,10 +127,10 @@ var barChartData = {
 var myLine = new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
 </script>
 
-<!-- Morris  -->
+<!-- Morris  
 <script src="assets/plugins/morris/js/morris.min.js"></script>
 <script src="assets/plugins/morris/js/raphael.2.1.0.min.js"></script>
-
+-->
 <!--Load these page level functions-->
 <script>
     $(document).ready(function() {

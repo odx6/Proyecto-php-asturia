@@ -1,10 +1,13 @@
 <?php
 
 
-
+$user_ip = $_SERVER['REMOTE_ADDR'];
 
     if (!isset($_SESSION['user_id'])&& $_SESSION['user_id']==null) {
         header("location: ./?view=index");
+        
+           
+            // Guarda $user_ip en la base de datos o utilízalo como necesites
     }
 
     $id=$_SESSION['user_id'];
@@ -92,6 +95,9 @@
                             <li>
                                 <a href="./?view=logout"><i class="fa fa-power-off"></i> Salir</a>
                             </li>
+                            <li>
+                                <a href="#"><i class="fa fa-power-off"></i><?php echo $user_ip; ?></a>
+                            </li>
                            
                         </ul>
                     </li>
@@ -120,7 +126,7 @@
 
 
 
-		    <?php if ($_SESSION['empleados']==1) { ?>
+		    <?php if ($_SESSION['productos']==1) { ?>
                     <li class="<?php if(isset($active2)){echo $active2;}?>">
                         <a href="./?view=productos"><i class="fa fa-users"></i><span>Productos</span></a>
                     </li>
