@@ -157,35 +157,34 @@ if ($_SESSION['productos'] == 1) {
         }
     </script>
     <script>
- 
-    $("#new_register").submit(function(event) {
-    event.preventDefault();
-    $('#guardar_datos').attr("disabled", true);
+        $("#new_register").submit(function(event) {
+            event.preventDefault();
+            $('#guardar_datos').attr("disabled", true);
 
-    var formData = new FormData(this);  // Crear un objeto FormData
+            var formData = new FormData(this); // Crear un objeto FormData
 
-    $.ajax({
-        type: "POST",
-        url: "view/ajax/agregar/agregar_producto.php",
-        data: formData,  // Usar el objeto FormData como los datos de la petición
-        processData: false,  // Indicar a jQuery que no procese los datos
-        contentType: false,  // Indicar a jQuery que no establezca el tipo de contenido
-        beforeSend: function(objeto) {
-            $("#resultados_ajax").html("Enviando...");
-        },
-        success: function(datos) {
-            $("#resultados_ajax").html(datos);
-            $('#guardar_datos').attr("disabled", false);
-            load(1);
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 5000);
-            $('#formModal').modal('hide');
-        }
-    });
-});
+            $.ajax({
+                type: "POST",
+                url: "view/ajax/agregar/agregar_producto.php",
+                data: formData, // Usar el objeto FormData como los datos de la petición
+                processData: false, // Indicar a jQuery que no procese los datos
+                contentType: false, // Indicar a jQuery que no establezca el tipo de contenido
+                beforeSend: function(objeto) {
+                    $("#resultados_ajax").html("Enviando...");
+                },
+                success: function(datos) {
+                    $("#resultados_ajax").html(datos);
+                    $('#guardar_datos').attr("disabled", false);
+                    load(1);
+                    window.setTimeout(function() {
+                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                    $('#formModal').modal('hide');
+                }
+            });
+        });
     </script>
 
     <script>
@@ -214,34 +213,35 @@ if ($_SESSION['productos'] == 1) {
             });
             event.preventDefault();
         });
+
         $("#update_register").submit(function(event) {
-    event.preventDefault();
-    $('#actualizar_datos').attr("disabled", true);
+            event.preventDefault();
+            $('#actualizar_datos').attr("disabled", true);
 
-    var formData = new FormData(this);  // Crear un objeto FormData
+            var formData = new FormData(this); // Crear un objeto FormData
 
-    $.ajax({
-        type: "POST",
-        url: "view/ajax/agregar/agregar_producto.php",
-        data: formData,  // Usar el objeto FormData como los datos de la petición
-        processData: false,  // Indicar a jQuery que no procese los datos
-        contentType: false,  // Indicar a jQuery que no establezca el tipo de contenido
-        beforeSend: function(objeto) {
-            $("#resultados_ajax").html("Enviando...");
-        },
-        success: function(datos) {
-            $("#resultados_ajax").html(datos);
-            $('#guardar_datos').attr("disabled", false);
-            load(1);
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 5000);
-            $('#formModal').modal('hide');
-        }
-    });
-});
+            $.ajax({
+                type: "POST",
+                url: "view/ajax/editar/editar_producto.php",
+                data: formData, // Usar el objeto FormData como los datos de la petición
+                processData: false, // Indicar a jQuery que no procese los datos
+                contentType: false, // Indicar a jQuery que no establezca el tipo de contenido
+                beforeSend: function(objeto) {
+                    $("#resultados_ajax").html("Enviando...");
+                },
+                success: function(datos) {
+                    $("#resultados_ajax").html(datos);
+                    $('#actualizar_datos').attr("disabled", false);
+                    load(1);
+                    window.setTimeout(function() {
+                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                    $('#modal_update').modal('hide');
+                }
+            });
+        });
     </script>
     <script>
         function editar(id) {

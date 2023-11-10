@@ -45,6 +45,7 @@
         <?php echo $STRDESPRO;?>
     </div>
 </div>
+<?php  ?>
 <div class="form-group">
     <label for="usuario" class="col-sm-4 control-label">Categoria : </label>
     <div class="col-sm-8">

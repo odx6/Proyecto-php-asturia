@@ -51,8 +51,14 @@
     $Unidad = mysqli_real_escape_string($con,(strip_tags($_POST["Unidad"],ENT_QUOTES)));
 	
 	$sqlimg="SELECT STRIMG FROM `tblcatpro` WHERE STRSKU=$sku;";
-	$queyimg=mysqli_query($con,$sql);
-	if(file_exists($queyimg))unlink($queyimg);
+	$queyimg=mysqli_query($con,$sqlimg);
+	$num = mysqli_num_rows($queyimg);
+    if ($num == 1) {
+        $row = mysqli_fetch_array($queyimg);
+        $pathimg = $row['STRIMG'];
+		
+	}
+	
     
     //UPDATE IMG 
 		 //Agregar imagen
@@ -76,7 +82,7 @@
 			 }
 	//END UPDATE IMG 
 
-    $Imagen = mysqli_real_escape_string($con,(strip_tags($_POST["Imagen"],ENT_QUOTES)));
+    $Imagen = $img_insert;
     $PTAller = mysqli_real_escape_string($con,(strip_tags($_POST["PTaller"],ENT_QUOTES)));
     $estado = mysqli_real_escape_string($con,(strip_tags($_POST["estado"],ENT_QUOTES)));
 	$id=intval($_POST['id']);
@@ -87,7 +93,9 @@
 	// UPDATE data into database
     $sql = "UPDATE tblcatpro SET STRSKU='".$sku."', STRCOD='".$Codigo."', STRDESPRO='".$Descripcion."', INTIDCAT='".$Categoria."', INTIDSBC='".$Subcategoria."', MONPCOS='".$Precio."', INTIDUNI='".$Unidad."', STRIMG='".$Imagen."',INTTIPUSO='".$PTAller."', BITSUS='".$estado."' WHERE STRSKU='".$id."' ";
     $query = mysqli_query($con,$sql);
-
+  //codigo para eliminar una img
+  if($query && file_exists("../../../".$pathimg))unlink("../../../".$pathimg);
+//
     //Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
    
 		
