@@ -16,12 +16,10 @@
             $errors[] = "Precio está vacío.";
         }  elseif (empty($_POST['Unidad'])) {
             $errors[] = "Unidad de medida  está vacío.";
-        }   elseif (empty($_POST['Imagen'])) {
+        }   elseif (empty($_FILES['imagefile'])) {
             $errors[] = "Imagen está vacía.";
         }  elseif (empty($_POST['PTaller'])) {
             $errors[] = "Estado de taller está vacío.";
-        }  elseif (empty($_POST['BITBALL'])) {
-            $errors[] = "BITBALL  está vacío.";
         }
         elseif (empty($_POST['estado'])) {
             $errors[] = "estado  está vacío.";
@@ -36,9 +34,8 @@
 			/*&& !empty($_POST['password'])*/
 			&& !empty($_POST['Precio'])
 			&& !empty($_POST['Unidad'])
-			&& !empty($_POST['Imagen'])
+			&& !empty($_FILES['imagefile'])
 			&& !empty($_POST['PTaller'])
-			&& !empty($_POST['BITBALL'])
 			&& !empty($_POST['estado'])
 			/*&& !empty($_POST['kind'])*/
         ){
@@ -52,9 +49,35 @@
     $Subcategoria = mysqli_real_escape_string($con,(strip_tags($_POST["Subcategoria"],ENT_QUOTES)));
     $Precio = mysqli_real_escape_string($con,(strip_tags($_POST["Precio"],ENT_QUOTES)));
     $Unidad = mysqli_real_escape_string($con,(strip_tags($_POST["Unidad"],ENT_QUOTES)));
+	
+	$sqlimg="SELECT STRIMG FROM `tblcatpro` WHERE STRSKU=$sku;";
+	$queyimg=mysqli_query($con,$sql);
+	if(file_exists($queyimg))unlink($queyimg);
+    
+    //UPDATE IMG 
+		 //Agregar imagen
+		 $target_dir="../../resources/images/Productos/";
+		 $image_name = time()."_".basename($_FILES["imagefile"]["name"]);
+		 $target_file = $target_dir .$image_name ;
+		 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+		 $imageFileZise=$_FILES["imagefile"]["size"];
+
+		 if(($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) and $imageFileZise>0) {
+			 $errors[]= "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
+			 } else if ($imageFileZise > 1048576) {//1048576 byte=1MB
+			 $errors[]= "<p>Lo sentimos, pero el archivo es demasiado grande. Selecciona logo de menos de 1MB</p>";
+			 }  else{
+				 /* Fin Validacion*/
+				 if ($imageFileZise>0){
+				 move_uploaded_file($_FILES["imagefile"]["tmp_name"], $target_file);
+				 $imagen=basename($_FILES["imagefile"]["name"]);
+				 $img_insert="view/resources/images/Productos/$image_name";
+				 }
+			 }
+	//END UPDATE IMG 
+
     $Imagen = mysqli_real_escape_string($con,(strip_tags($_POST["Imagen"],ENT_QUOTES)));
     $PTAller = mysqli_real_escape_string($con,(strip_tags($_POST["PTaller"],ENT_QUOTES)));
-    $BITBALL = mysqli_real_escape_string($con,(strip_tags($_POST["BITBALL"],ENT_QUOTES)));
     $estado = mysqli_real_escape_string($con,(strip_tags($_POST["estado"],ENT_QUOTES)));
 	$id=intval($_POST['id']);
     //variable de los permisos 
@@ -62,7 +85,7 @@
 
 
 	// UPDATE data into database
-    $sql = "UPDATE tblcatpro SET SKU='".$sku."', STRCODINT='".$Codigo."', STRDESPRO='".$Descripcion."', INTIDCAT='".$Categoria."', INTIDSUBCAT='".$Subcategoria."', MONPCOS='".$Precio."', INTIDUNI='".$Unidad."', STRIMG='".$Imagen."', BITTALL='".$PTAller."', INTTIPUSO='".$BITBALL."', BITSUS='".$estado."' WHERE SKU='".$id."' ";
+    $sql = "UPDATE tblcatpro SET STRSKU='".$sku."', STRCOD='".$Codigo."', STRDESPRO='".$Descripcion."', INTIDCAT='".$Categoria."', INTIDSBC='".$Subcategoria."', MONPCOS='".$Precio."', INTIDUNI='".$Unidad."', STRIMG='".$Imagen."',INTTIPUSO='".$PTAller."', BITSUS='".$estado."' WHERE STRSKU='".$id."' ";
     $query = mysqli_query($con,$sql);
 
     //Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa

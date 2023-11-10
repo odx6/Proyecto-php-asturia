@@ -19,9 +19,7 @@
         }  elseif (empty($_POST['Ptaller'])) {
             $errors[] = "Pertenece al taller  está vacío.";
         } 
-		elseif (empty($_POST['BITBALL'])) {
-            $errors[] = "BITBALL está vacío.";
-        }  elseif (empty($_POST['INITIPUSO'])) {
+		  elseif (empty($_POST['INITIPUSO'])) {
             $errors[] = "INITIPUSO está vacío.";
         }  elseif (empty($_POST['estado'])) {
             $errors[] = "Estado está vacío.";
@@ -37,8 +35,6 @@
 			&& !empty($_POST['unidad'])
 			&& !empty($_FILES["imagefile"])
 			&& !empty($_POST['Ptaller'])
-			&& !empty($_POST['BITBALL'])
-			
 			&& !empty($_POST['estado'])
 			
 			/*&& !empty($_POST['kind'])*/
@@ -80,7 +76,7 @@
 		   $Imagen =$img_insert;
 
             $perteneceTaller = mysqli_real_escape_string($con,(strip_tags($_POST["Ptaller"],ENT_QUOTES)));
-            $BITBALL = mysqli_real_escape_string($con,(strip_tags($_POST["Ptaller"],ENT_QUOTES)));
+          
            
             $estado = mysqli_real_escape_string($con,(strip_tags($_POST["estado"],ENT_QUOTES)));
            /* $kind = mysqli_real_escape_string($con,(strip_tags($_POST["kind"],ENT_QUOTES)));*/
@@ -91,8 +87,8 @@
             //$permisos = $_POST["permisos"];
 
 			//Write register in to database 
-			$sql = "INSERT INTO tblcatpro (SKU, STRCODINT, STRDESPRO, INTIDCAT, INTIDSUBCAT, MONPCOS, INTIDUNI, STRIMG, BITTALL, INTTIPUSO, BITSUS) 
-			VALUES('".$sku."','".$codigo."','".$descripcion."','".$categoria."','".$subcategoria."','".$precio."','".$unidad."','".$Imagen."','".$perteneceTaller."','".$BITBALL."','".$estado."');";
+			$sql = "INSERT INTO tblcatpro (STRSKU, STRCOD, STRDESPRO, INTIDCAT, INTIDSBC, MONPCOS, INTIDUNI, STRIMG, INTTIPUSO, BITSUS) 
+			VALUES('".$sku."','".$codigo."','".$descripcion."','".$categoria."','".$subcategoria."','".$precio."','".$unidad."','".$Imagen."','".$perteneceTaller."','".$estado."');";
 			$query_new = mysqli_query($con,$sql);
             // if has been added successfully
            /* if ($query_new) {

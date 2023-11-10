@@ -5,7 +5,7 @@ require_once("../../config/config.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
-	if ($delete = mysqli_query($con, "DELETE FROM tblcatpro WHERE SKU='$id'")) {
+	if ($delete = mysqli_query($con, "DELETE FROM tblcatpro WHERE STRSKU='$id'")) {
 		$aviso = "Bien hecho!";
 		$msj = "Datos eliminados satisfactoriamente.";
 		$classM = "alert alert-success";
@@ -66,7 +66,7 @@ if ($action == 'ajax') {
 					<th>Unidad Medida</th>
 					<th>Imagen</th>
 					<th>Taller</th>
-					<th>.</th>
+					
 
 					<th>Estado</th>
 
@@ -76,8 +76,8 @@ if ($action == 'ajax') {
 			<?php
 			$finales = 0;
 			while ($row = mysqli_fetch_array($query)) {
-				$sku = $row['SKU'];
-				$codigo = $row['STRCODINT'];
+				$sku = $row['STRSKU'];
+				$codigo = $row['STRCOD'];
 				$descripcion = $row['STRDESPRO'];
 
 				$status = $row['BITSUS'];
@@ -91,16 +91,16 @@ if ($action == 'ajax') {
 				//ENDCONSULTA
 
 
-				$INTIDSUBCAT = $row['INTIDSUBCAT'];
-				if (isset($INTIDSUBCAT) && $INTIDSUBCAT != NULL) {
-					$Subcategoria = mysqli_query($con, "SELECT * FROM subcategoria WHERE id='$INTIDSUBCAT'");
+				$INTIDSBC = $row['INTIDSBC'];
+				if (isset($INTIDSBC) && $INTIDSBC != NULL) {
+					$Subcategoria = mysqli_query($con, "SELECT * FROM subcategoria WHERE id='$INTIDSBC'");
 					$tem = mysqli_fetch_array($Subcategoria);
 					$SubcategoriaNombre = $tem['nombre'];
 				}
 				$MONPCOS = $row['MONPCOS'];
 				$INTIDUNI = $row['INTIDUNI'];
 				$STRIMG = $row['STRIMG'];
-				$BITTALL = $row['BITTALL'];
+				
 				$INTTIPUSO = $row['INTTIPUSO'];
 
 
@@ -111,13 +111,7 @@ if ($action == 'ajax') {
 					$lbl_status = "Inactivo";
 					$lbl_class = 'label label-danger';
 				}
-				if ($BITTALL == 1) {
-					$lbl_BITTALL = "Taller";
-					$bit_class = 'label label-success';
-				} else {
-					$lbl_BITTALL = "Oficina";
-					$bit_class = 'label label-danger';
-				}
+				
 				/*$kind=$row['kind'];*/
 
 				$finales++;
@@ -137,7 +131,7 @@ if ($action == 'ajax') {
 							</div>
 						</td>
 
-						<td><span class="<?php echo $bit_class; ?>"><?php echo $lbl_BITTALL; ?></span></td>
+						
 						<td><?php echo $INTTIPUSO ?></td>
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 

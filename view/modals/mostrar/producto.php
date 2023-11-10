@@ -4,17 +4,17 @@
 	if (isset($_GET["id"])){
 		$id=$_GET["id"];
 		$id=intval($id);
-		$sql="select * from tblcatpro where SKU='$id'";
+		$sql="select * from tblcatpro where STRSKU='$id'";
 		$query=mysqli_query($con,$sql);
 		$num=mysqli_num_rows($query);
 		if ($num==1){
 			$rw=mysqli_fetch_array($query);
-			$SKU=$rw['SKU'];
-			$STRCODINT=$rw['STRCODINT'];
+			$SKU=$rw['STRSKU'];
+			$STRCODINT=$rw['STRCOD'];
 			//$nombre=$rw['nombre'];
 			$STRDESPRO=$rw['STRDESPRO'];
 			$INTIDCAT=$rw['INTIDCAT'];
-			$INTIDSUBCAT=$rw['INTIDSUBCAT'];
+			$INTIDSUBCAT=$rw['INTIDSBC'];
 			$MONPCOS=$rw['MONPCOS'];
 			$INTIDUNI=$rw['INTIDUNI'];
 			$STRIMG=$rw['STRIMG'];

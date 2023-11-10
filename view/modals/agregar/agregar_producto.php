@@ -67,12 +67,7 @@
                             <input type="text" required class="form-control" id="Ptaller" name="Ptaller" placeholder="Pertenece al taller">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="telefono" class="col-sm-2 control-label">BITBALL</label>
-                        <div class="col-sm-10">
-                            <input type="text" required class="form-control" id="BITBALL" name="BITBALL" placeholder="BITBALL">
-                        </div>
-                    </div>
+                   
                     <div class="form-group">
                         <label for="telefono" class="col-sm-2 control-label">INITIPUSO</label>
                         <div class="col-sm-10">

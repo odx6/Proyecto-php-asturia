@@ -4,22 +4,22 @@
 	if (isset($_GET["id"])){
 		$id=$_GET["id"];
 		$id=intval($id);
-		$sql="select * from tblcatpro where SKU='$id'";
+		$sql="select * from tblcatpro where STRSKU='$id'";
 		$query=mysqli_query($con,$sql);
 		$num=mysqli_num_rows($query);
 		if ($num==1){
 			$rw=mysqli_fetch_array($query);
-			$sku=$rw['SKU'];
-			$codigo=$rw['STRCODINT'];
+			$sku=$rw['STRSKU'];
+			$codigo=$rw['STRCOD'];
 			$descripcion=$rw['STRDESPRO'];
 			$categoria=$rw['INTIDCAT'];
-			$subcategoria=$rw['INTIDSUBCAT'];
+			$subcategoria=$rw['INTIDSBC'];
 			$precio=$rw['MONPCOS']; 
 			$unidadMedida=$rw['INTIDUNI'];
 			$imagen=$rw['STRIMG'];
-			$perteneceTaller=$rw['BITTALL'];
-			$BITBALL=$rw['INTTIPUSO'];
-			$status=$rw['INTTIPUSO'];
+			$perteneceTaller=$rw['INTTIPUSO'];
+			
+			$status=$rw['BITSUS'];
 			
 		}
 	}	
@@ -80,12 +80,7 @@
         <input type="text" required class="form-control" id="PTaller" name="PTaller" value="<?php echo $perteneceTaller;?>" placeholder="PTaller">
     </div>
 </div>
-<div class="form-group">
-    <label for="celular" class="col-sm-2 control-label">BITBALL: </label>
-    <div class="col-sm-10">
-        <input type="text" required class="form-control" id="BITBALL" name="BITBALL" value="<?php echo $BITBALL;?>" placeholder="BITBALL: ">
-    </div>
-</div>
+
 
 <div class="form-group">
     <label for="estado" class="col-sm-2 control-label">Estado: </label>
