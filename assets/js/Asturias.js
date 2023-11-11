@@ -1,3 +1,3 @@
 $(document).ready(function() {
-    alert("archivo cargado");
+   // alert("archivo cargado");
 });

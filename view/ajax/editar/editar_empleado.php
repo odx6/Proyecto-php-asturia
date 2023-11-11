@@ -1,70 +1,88 @@
 <?php
     include("../is_logged.php");//Archivo comprueba si el usuario esta logueado	
-	if (empty($_POST['dni'])){
-			$errors[] = "DNI está vacío.";
-		}  elseif (empty($_POST['nombre'])) {
-            $errors[] = "Nombre está vacío.";
-        }  elseif (empty($_POST['apellido'])) {
-            $errors[] = "Apellido está vacío.";
-        }  elseif (empty($_POST['usuario'])) {
-            $errors[] = "Usuario está vacío.";
-        }  elseif (empty($_POST['email'])) {
-            $errors[] = "Correo Electronico está vacío.";
-        }/*  elseif (empty($_POST['password'])) {
-            $errors[] = "Contraseña está vacío.";
-        }*/  elseif (empty($_POST['domicilio'])) {
-            $errors[] = "Domicilio está vacío.";
-        }  elseif (empty($_POST['localidad'])) {
-            $errors[] = "Localidad está vacío.";
-        }  elseif (empty($_POST['telefono'])) {
-            $errors[] = "Telefono está vacío.";
-        }  elseif (empty($_POST['celular'])) {
-            $errors[] = "Celular está vacío.";
-        }  elseif (empty($_POST['registro'])) {
-            $errors[] = "Registro está vacío.";
-        }  elseif (empty($_POST['estado'])) {
-            $errors[] = "Estado está vacío.";
-        } /* elseif (empty($_POST['kind'])) {
-            $errors[] = "Kind está vacío.";
-        }*/ elseif (
-        	!empty($_POST['dni'])
-        	&& !empty($_POST['nombre'])
-        	&& !empty($_POST['apellido'])
-			&& !empty($_POST['usuario'])
-			&& !empty($_POST['email'])
-			/*&& !empty($_POST['password'])*/
-			&& !empty($_POST['domicilio'])
-			&& !empty($_POST['localidad'])
-			&& !empty($_POST['telefono'])
-			&& !empty($_POST['celular'])
-			&& !empty($_POST['registro'])
-			&& !empty($_POST['estado'])
-			/*&& !empty($_POST['kind'])*/
-        ){
-		require_once ("../../../config/config.php");//Contiene las variables de configuracion para conectar a la base de datos
+    if (empty($_POST['STRNSS'])){
+        $errors[] = "NSS está vacío.";
+    }  elseif (empty($_POST['STRRFC'])) {
+        $errors[] = "RFC está vacío.";
+    }  elseif (empty($_POST['STRCUR'])) {
+        $errors[] = "CURP está vacío.";
+    }  elseif (empty($_POST['STRNOM'])) {
+        $errors[] = "Nombre está vacío.";
+    }  elseif (empty($_POST['STRAPE'])) {
+        $errors[] = "Apellidos está vacío.";
+    }  elseif (empty($_POST['STRDOM'])) {
+        $errors[] = "Domicilio está vacío.";
+    }  elseif (empty($_POST['STRLOC'])) {
+        $errors[] = "Localidad está vacío.";
+    }  elseif (empty($_POST['STRMUN'])) {
+        $errors[] = "Municipio está vacío.";
+    }  elseif (empty($_POST['STREST'])) {
+        $errors[] = "Estado está vacío.";
+    }  elseif (empty($_POST['STRCP'])) {
+        $errors[] = "Codigo Postal esta vacio.";
+    }  elseif (empty($_POST['STRPAI'])) {
+        $errors[] = "Pais está vacío.";
+    } 
+    elseif (empty($_POST['STRTEL'])) {
+        $errors[] = "Telefono está vacío.";
+    }  elseif (empty($_POST['STRCOR'])) {
+        $errors[] = "Correo Electronico está vacío.";
+    } elseif (empty($_POST['STRPWS'])) {
+        $errors[] = "Contraseña  está vacío.";
+    } elseif (empty($_FILES['STRIMG'])) {
+        $errors[] = "Imagen está vacío.";
+    } elseif (empty($_POST['BITSUS'])) {
+        $errors[] = "Estado está vacío.";
+    } /* elseif (empty($_POST['kind'])) {
+        $errors[] = "Kind está vacío.";
+    }*/ elseif (
+        !empty($_POST['STRNSS'])
+        && !empty($_POST['STRRFC'])
+        && !empty($_POST['STRCUR'])
+        && !empty($_POST['STRNOM'])
+        && !empty($_POST['STRAPE'])
+        && !empty($_POST['STRDOM'])
+        && !empty($_POST['STRLOC'])
+        && !empty($_POST['STRMUN'])
+        && !empty($_POST['STREST'])
+        && !empty($_POST['STRCP'])
+        && !empty($_POST['STRPAI'])
+        && !empty($_POST['STRTEL'])
+        && !empty($_POST['STRCOR'])
+        && !empty($_POST['STRPWS'])
+        && !empty($_POST['BITSUS'])
+        && !empty($_FILES['STRIMG'])
+        /*&& !empty($_POST['kind'])*/
+    ){
+    require_once ("../../../config/config.php");//Contiene las variables de configuracion para conectar a la base de datos
+        
+        // escaping, additionally removing everything that could be (html/javascript-) code
+        //$IDEMP = mysqli_real_escape_string($con,(strip_tags($_POST["IDEMP"],ENT_QUOTES)));
+        $STRNSS = mysqli_real_escape_string($con,(strip_tags($_POST["STRNSS"],ENT_QUOTES)));
+        $STRRFC = mysqli_real_escape_string($con,(strip_tags($_POST["STRRFC"],ENT_QUOTES)));
+        $STRCUR = mysqli_real_escape_string($con,(strip_tags($_POST["STRCUR"],ENT_QUOTES)));
+        $STRNOM = mysqli_real_escape_string($con,(strip_tags($_POST["STRNOM"],ENT_QUOTES)));
+        $STRAPE = mysqli_real_escape_string($con,(strip_tags($_POST["STRAPE"],ENT_QUOTES)));
+        $STRDOM = mysqli_real_escape_string($con,(strip_tags($_POST["STRDOM"],ENT_QUOTES)));
+        $STRLOC = mysqli_real_escape_string($con,(strip_tags($_POST["STRLOC"],ENT_QUOTES)));
+        $STRMUN = mysqli_real_escape_string($con,(strip_tags($_POST["STRMUN"],ENT_QUOTES)));
+        $STREST = mysqli_real_escape_string($con,(strip_tags($_POST["STREST"],ENT_QUOTES)));
+        $STRCP = mysqli_real_escape_string($con,(strip_tags($_POST["STRCP"],ENT_QUOTES)));
+        $STRPAI = mysqli_real_escape_string($con,(strip_tags($_POST["STRPAI"],ENT_QUOTES)));
+        $STRTEL = mysqli_real_escape_string($con,(strip_tags($_POST["STRTEL"],ENT_QUOTES)));
+        $STRCOR = mysqli_real_escape_string($con,(strip_tags($_POST["STRCOR"],ENT_QUOTES)));
+        $STRPWS = sha1(md5(mysqli_real_escape_string($con,(strip_tags($_POST["STRPWS"],ENT_QUOTES)))));
+        $BITSUS = mysqli_real_escape_string($con,(strip_tags($_POST["BITSUS"],ENT_QUOTES)));
 
-	// escaping, additionally removing everything that could be (html/javascript-) code
-    $dni = mysqli_real_escape_string($con,(strip_tags($_POST["dni"],ENT_QUOTES)));
-    $nombre = mysqli_real_escape_string($con,(strip_tags($_POST["nombre"],ENT_QUOTES)));
-    $apellido = mysqli_real_escape_string($con,(strip_tags($_POST["apellido"],ENT_QUOTES)));
-    $usuario = mysqli_real_escape_string($con,(strip_tags($_POST["usuario"],ENT_QUOTES)));
-    $email = mysqli_real_escape_string($con,(strip_tags($_POST["email"],ENT_QUOTES)));
-
-    $password=sha1(md5(mysqli_real_escape_string($con,(strip_tags($_POST["password"],ENT_QUOTES)))));
-
-    $domicilio = mysqli_real_escape_string($con,(strip_tags($_POST["domicilio"],ENT_QUOTES)));
-    $localidad = mysqli_real_escape_string($con,(strip_tags($_POST["localidad"],ENT_QUOTES)));
-    $telefono = mysqli_real_escape_string($con,(strip_tags($_POST["telefono"],ENT_QUOTES)));
-    $celular = mysqli_real_escape_string($con,(strip_tags($_POST["celular"],ENT_QUOTES)));
-    $registro = mysqli_real_escape_string($con,(strip_tags($_POST["registro"],ENT_QUOTES)));
-    $estado = mysqli_real_escape_string($con,(strip_tags($_POST["estado"],ENT_QUOTES)));
 	$id=intval($_POST['id']);
     //variable de los permisos 
     $permisos = $_POST["permisos"];
 
 
 	// UPDATE data into database
-    $sql = "UPDATE empleado SET dni='".$dni."', nombre='".$nombre."', apellido='".$apellido."', username='".$usuario."', email='".$email."', domicilio='".$domicilio."', localidad='".$localidad."', telefono='".$telefono."', celular='".$celular."', registro='".$registro."', status='".$estado."' WHERE id='".$id."' ";
+    $sql = "UPDATE tblcatemp SET STRNSS='".$STRNSS."', STRRFC='".$STRRFC."', STRCUR='".$STRCUR."', STRAPE='".$STRAPE."', STRDOM='".$STRDOM."', STRLOC
+    ='".$STRLOC
+    ."', STRMUN='".$STRMUN."', STREST='".$STREST."', STRCP='".$STRCP."', STRPAI='".$STRPAI."', STRTEL='".$STRTEL."',STRCOR='".$STRCOR."',STRPWS='".$STRPWS."',BITSUS='".$BITSUS."' WHERE IDEMP='".$id."' ";
     $query = mysqli_query($con,$sql);
 
     //Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa

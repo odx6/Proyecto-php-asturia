@@ -27,17 +27,16 @@
             $errors[] = "Telefono está vacío.";
         }  elseif (empty($_POST['STRCOR'])) {
             $errors[] = "Correo Electronico está vacío.";
-        } elseif (empty($_FILES['STRPWS'])) {
+        } elseif (empty($_POST['STRPWS'])) {
             $errors[] = "Contraseña  está vacío.";
-        } elseif (empty($_POST['SRTIMG'])) {
-            $errors[] = "Telefono está vacío.";
+        } elseif (empty($_FILES['STRIMG'])) {
+            $errors[] = "Imagen está vacío.";
         } elseif (empty($_POST['BITSUS'])) {
-            $errors[] = "Telefono está vacío.";
+            $errors[] = "Estado está vacío.";
         } /* elseif (empty($_POST['kind'])) {
             $errors[] = "Kind está vacío.";
         }*/ elseif (
-        	!empty($_POST['IDEMP'])
-        	&& !empty($_POST['STRNSS'])
+        	!empty($_POST['STRNSS'])
         	&& !empty($_POST['STRRFC'])
 			&& !empty($_POST['STRCUR'])
 			&& !empty($_POST['STRNOM'])
@@ -52,18 +51,17 @@
 			&& !empty($_POST['STRCOR'])
 			&& !empty($_POST['STRPWS'])
 			&& !empty($_POST['BITSUS'])
-			&& !empty($_files['STRIMG'])
+			&& !empty($_FILES['STRIMG'])
 			/*&& !empty($_POST['kind'])*/
         ){
 		require_once ("../../../config/config.php");//Contiene las variables de configuracion para conectar a la base de datos
 			
 			// escaping, additionally removing everything that could be (html/javascript-) code
-            $IDEMP = mysqli_real_escape_string($con,(strip_tags($_POST["IDEMP"],ENT_QUOTES)));
+            //$IDEMP = mysqli_real_escape_string($con,(strip_tags($_POST["IDEMP"],ENT_QUOTES)));
             $STRNSS = mysqli_real_escape_string($con,(strip_tags($_POST["STRNSS"],ENT_QUOTES)));
             $STRRFC = mysqli_real_escape_string($con,(strip_tags($_POST["STRRFC"],ENT_QUOTES)));
             $STRCUR = mysqli_real_escape_string($con,(strip_tags($_POST["STRCUR"],ENT_QUOTES)));
             $STRNOM = mysqli_real_escape_string($con,(strip_tags($_POST["STRNOM"],ENT_QUOTES)));
-            $STRAPE = mysqli_real_escape_string($con,(strip_tags($_POST["STRAPE"],ENT_QUOTES)));
             $STRAPE = mysqli_real_escape_string($con,(strip_tags($_POST["STRAPE"],ENT_QUOTES)));
             $STRDOM = mysqli_real_escape_string($con,(strip_tags($_POST["STRDOM"],ENT_QUOTES)));
             $STRLOC = mysqli_real_escape_string($con,(strip_tags($_POST["STRLOC"],ENT_QUOTES)));
@@ -75,7 +73,8 @@
             $STRCOR = mysqli_real_escape_string($con,(strip_tags($_POST["STRCOR"],ENT_QUOTES)));
             $STRPWS = sha1(md5(mysqli_real_escape_string($con,(strip_tags($_POST["STRPWS"],ENT_QUOTES)))));
             $BITSUS = mysqli_real_escape_string($con,(strip_tags($_POST["BITSUS"],ENT_QUOTES)));
-
+			$CREATED_AT=date("Y-m-d H:i:s");
+			$STRIMG="view/resources/images/default.png";
            // $STRIMG = mysqli_real_escape_string($con,(strip_tags($_POST["STRIMG"],ENT_QUOTES)));
            /* $kind = mysqli_real_escape_string($con,(strip_tags($_POST["kind"],ENT_QUOTES)));*/
 			$CREATED_AT=date("Y-m-d H:i:s");
@@ -85,12 +84,12 @@
             $permisos = $_POST["permisos"];
 
 			//Write register in to database 
-			$sql = "INSERT INTO empleado (STRNSS,STRRFC,STRCUR, apellido, username, email, password, domicilio, localidad, telefono, celular, registro, status, created_at) VALUES('".$dni."','".$imagen."','".$nombre."','".$apellido."','".$usuario."','".$email."','".$password."','".$domicilio."','".$localidad."','".$telefono."','".$celular."','".$registro."','".$estado."','".$created_at."');";
+			$sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT) VALUES('".$STRNSS."','".$STRRFC."','".$STRCUR."','".$STRNOM."','".$STRAPE."','".$STRDOM."','".$STRLOC."','".$STRMUN."','".$STREST."','".$STRCP."','".$STRPAI."','".$STRTEL."','".$STRCOR."','".$STRPWS."','".$BITSUS."','".$STRIMG."','".$CREATED_AT."');";
 			$query_new = mysqli_query($con,$sql);
             // if has been added successfully
             if ($query_new) {
 
-            		$numeroMaximo="select max(id) as nuevo_empleado from empleado";
+            		$numeroMaximo="select max(IDEMP) as nuevo_empleado from tblcatemp";
             		$idusernew_sql=mysqli_query($con,$numeroMaximo);
             		$idusernew_rw=mysqli_fetch_array($idusernew_sql);
             		$idusernew=$idusernew_rw['nuevo_empleado'];	

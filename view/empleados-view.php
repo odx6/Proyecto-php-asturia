@@ -141,29 +141,37 @@
     }
 </script>
 <script>
-    //agrega un nuevo  un nuevo producto con el modal y una peticion ajax
-    $( "#new_register" ).submit(function( event ) {
-      $('#guardar_datos').attr("disabled", true);
-     var parametros = $(this).serialize();
-         $.ajax({
+   
+    //nuevo form data
+    $("#new_register").submit(function(event) {
+            event.preventDefault();
+            $('#guardar_datos').attr("disabled", true);
+
+            var formData = new FormData(this); // Crear un objeto FormData
+
+            $.ajax({
                 type: "POST",
                 url: "view/ajax/agregar/agregar_empleado.php",
-                data: parametros,
-                 beforeSend: function(objeto){
+                data: formData, // Usar el objeto FormData como los datos de la petición
+                processData: false, // Indicar a jQuery que no procese los datos
+                contentType: false, // Indicar a jQuery que no establezca el tipo de contenido
+                beforeSend: function(objeto) {
                     $("#resultados_ajax").html("Enviando...");
-                  },
-                success: function(datos){
-                $("#resultados_ajax").html(datos);
-                $('#guardar_datos').attr("disabled", false);
-                load(1);
-                window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                $(this).remove();});}, 5000);
-                $('#formModal').modal('hide');
-              }
+                },
+                success: function(datos) {
+                    $("#resultados_ajax").html(datos);
+                    $('#guardar_datos').attr("disabled", false);
+                    load(1);
+                    window.setTimeout(function() {
+                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                    $('#formModal').modal('hide');
+                }
+            });
         });
-      event.preventDefault();
-    })
+
 </script>
 
 <script>
@@ -192,6 +200,7 @@
 </script>
 <script>
     function editar(id){
+       
         var parametros = {"action":"ajax","id":id};
         $.ajax({
                 url:'view/modals/editar/empleado.php',

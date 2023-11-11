@@ -14,7 +14,7 @@
 	$email=mysqli_real_escape_string($con,(strip_tags($_POST["email"],ENT_QUOTES)));
 	$password=sha1(md5(mysqli_real_escape_string($con,(strip_tags($_POST["password"],ENT_QUOTES)))));
 
-    $query = mysqli_query($con,"SELECT * FROM empleado WHERE username=\"$email\" OR email =\"$email\" AND password = \"$password\";");
+    $query = mysqli_query($con,"SELECT * FROM tblcatemp WHERE   STRCOR =\"$email\" AND STRPWS = \"$password\";");
 
 		if ($row = mysqli_fetch_array($query)) {
 			

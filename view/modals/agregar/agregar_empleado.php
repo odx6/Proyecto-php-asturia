@@ -3,7 +3,7 @@
 
 
     <!-- Form Modal -->
-    <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" enctype="multipart/form-data">
         <div class="modal-dialog">
             <div class="modal-content">
             <!-- form  -->
@@ -40,7 +40,7 @@
                     <div class="form-group">
                         <label for="email" class="col-sm-2 control-label">Apellidos: </label>
                         <div class="col-sm-10">
-                            <input type="email" required class="form-control" id="STRAPE" name="STRAPE" placeholder="Apellidos: ">
+                            <input type="text" required class="form-control" id="STRAPE" name="STRAPE" placeholder="Apellidos: ">
                         </div>
                     </div>
                     <div class="form-group">
@@ -89,7 +89,8 @@
                     <div class="form-group">
                         <label for="registro" class="col-sm-2 control-label">Correo Electronico: </label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="STRCOR" name="STRCOR" placeholder="Telefono: ">
+                            <input type="email" class="form-control" id="STRCOR" name="STRCOR" placeholder="Email: ">
+
                         </div>
                     </div>
                     <div class="form-group">
