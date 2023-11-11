@@ -4,7 +4,7 @@
 
     if ($_SESSION['dashboard']==1){
 
-        $empleados = mysqli_query($con, "select * from empleado");
+        $empleados = mysqli_query($con, "select * from tblcatemp");
       //  $talleres = mysqli_query($con, "select * from taller");
        // $empresas = mysqli_query($con, "select * from empresa");
        // $vehiculos = mysqli_query($con, "select * from vehiculo");

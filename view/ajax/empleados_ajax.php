@@ -6,7 +6,7 @@ require_once("../../config/config.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
-	if ($delete = mysqli_query($con, "DELETE FROM empleado WHERE id='$id'")) {
+	if ($delete = mysqli_query($con, "DELETE FROM tblcatemp WHERE IDEMP='$id'")) {
 		$aviso = "Bien hecho!";
 		$msj = "Datos eliminados satisfactoriamente.";
 		$classM = "alert alert-success";
@@ -22,9 +22,9 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
 if ($action == 'ajax') {
 	$query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
-	$tables = "empleado";
+	$tables = "tblcatemp";
 	$campos = "*";
-	$sWhere = " nombre LIKE '%" . $query . "%'";
+	$sWhere = " STRNOM LIKE '%" . $query . "%'";
 	include 'pagination.php'; //include pagination file
 	//pagination variables
 	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
@@ -59,37 +59,53 @@ if ($action == 'ajax') {
 			<thead>
 				<tr>
 					<th>#ID</th>
-					<th>Nombre</th>
-					<th>Usuario</th>
-					<th>Correo Electrónico</th>
-					<th>Telefóno</th>
-					<th>Estado</th>
-					<th>Fecha</th>
-					<th>Accion</th>
+					<th>NSS</th>
+					<th>RFC</th>
+					<th>CURP</th>
+					<th>NOMBRE</th>
+					
+					<th>DOMICILIO</th>
+					<th>LOCALIDAD</th>
+					<th>MUNICIPIO</th>
+					<th>ESTADO</th>
+					<th>CODIGO POSTAL</th>
+					<th>PAIS</th>
+					<th>TELEFONO</th>
+					<th>CORREO</th>
+					<th>CONTRASEÑA</th>
+					<th>CREATE</th>
+					<th>ACCION</th>
+					<th></th>
+					
 				</tr>
 			</thead>
 			<?php
 			$finales = 0;
 			while ($row = mysqli_fetch_array($query)) {
-				$id = $row['id'];
-				$nombre = $row['nombre'];
-				$apellido = $row['apellido'];
-				$username = $row['username'];
-				$email = $row['email'];
-				$domicilio = $row['domicilio'];
-				$localidad = $row['localidad'];
-				$telefono = $row['telefono'];
-				$celular = $row['celular'];
-				$registro = $row['registro'];
-				$status = $row['status'];
-				$created_at = $row['created_at'];
+				$IDEMP=$row['IDEMP'];
+				$STRNSS = $row['STRNSS'];
+				$STRRFC = $row['STRRFC'];
+				$STRCUR = $row['STRCUR'];
+				$STRNOM = $row['STRNOM'];
+				$STRAPE = $row['STRAPE'];
+				$STRLOC = $row['STRLOC'];
+				$STRMUN = $row['STRMUN'];
+				$STREST = $row['STREST'];
+				$STRCP = $row['STRCP'];
+				$STRPAI = $row['STRPAI'];
+				$STRTEL = $row['STRTEL'];
+				$STRCOR = $row['STRCOR'];
+				$STRPWS = $row['STRPWS'];
+				$BITSUS = $row['BITSUS'];
+				$STRIMG = $row['STRIMG'];
+				$CREATE_AT = $row['CREATE_AT'];
 
-				list($date, $hora) = explode(" ", $created_at);
+				list($date, $hora) = explode(" ", $CREATE_AT);
 				list($Y, $m, $d) = explode("-", $date);
 				$fecha = $d . "-" . $m . "-" . $Y;
 
 
-				if ($status == 1) {
+				if ($BITSUS == 1) {
 					$lbl_status = "Activo";
 					$lbl_class = 'label label-success';
 				} else {
@@ -102,11 +118,24 @@ if ($action == 'ajax') {
 			?>
 				<tbody>
 					<tr>
-						<td><?php echo $id ?></td>
-						<td><?php echo $nombre . " " . $apellido ?></td>
-						<td><?php echo $username ?></td>
-						<td><?php echo $email ?></td>
-						<td><?php echo $telefono ?></td>
+						<td><?php echo $IDEMP?></td>
+						<td> <?php echo $STRNSS  ?> </td> 
+						<td> <?php echo $STRRFC  ?> </td> 
+						<td> <?php echo $STRCUR  ?> </td> 
+						<td> <?php echo $STRNOM . " " .$STRAPE  ?> </td> 
+						<td> <?php echo $STRLOC  ?> </td> 
+						<td> <?php echo $STRMUN  ?> </td> 
+						<td> <?php echo $STREST  ?> </td> 
+						<td> <?php echo $STRCP ?> </td> 					
+						<td> <?php echo $STRPAI  ?> </td> 
+						<td> <?php echo $STRTEL  ?> </td> 
+						<td> <?php echo $STRCOR  ?> </td> 
+						<td> <?php echo $STRPWS  ?> </td> 
+						<td> <?php echo $BITSUS  ?> </td> 
+						<td> <?php echo $STRIMG  ?> </td> 
+						
+
+						
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 						<td><?php echo $fecha ?></td>
 						<td class="text-right">

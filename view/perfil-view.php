@@ -2,23 +2,26 @@
 include "resources/header.php";
 
 $id_user = $_SESSION['user_id'];
-$empleado = mysqli_query($con, "select * from empleado where id=$id_user");
+$empleado = mysqli_query($con, "select * from tblcatemp where IDEMP=$id_user");
 $rw = mysqli_fetch_object($empleado);
-// $id=$rw->id;
-$dni = $rw->dni;
-$imagen = $rw->imagen;
-$nombre = $rw->nombre;
-$apellido = $rw->apellido;
-$username = $rw->username;
-$email = $rw->email;
-$domicilio = $rw->domicilio;
-$localidad = $rw->localidad;
-$telefono = $rw->telefono;
-$celular = $rw->celular;
-$registro = $rw->registro;
-$status = $rw->status;
-$kind = $rw->kind;
-$created_at = $rw->created_at;
+$IDEMP = $rw->IDEMP;
+$STRNSS = $rw->STRNSS;
+$STRRFC = $rw->STRRFC;
+$STRCUR = $rw->STRCUR;
+$STRNOM = $rw->STRNOM;
+$STRAPE = $rw->STRAPE;
+$STRDOM = $rw->STRDOM;
+$STRLOC = $rw->STRLOC;
+$STRMUN = $rw->STRMUN;
+$STREST = $rw->STREST;
+$STRCP = $rw->STRCP;
+$STRPAI = $rw->STRPAI;
+$STRTEL = $rw->STRTEL;
+$STRCOR = $rw->STRCOR;
+$STRPWS = $rw->STRPWS;
+$BITSUS = $rw->BITSUS;
+$STRIMG = $rw->STRIMG;
+$CREATE_AT = $rw->CREATE_AT;
 ?>
 <!--main content start-->
 <section class="main-content-wrapper">
@@ -42,10 +45,10 @@ $created_at = $rw->created_at;
                 <div class="panel panel-primary">
                     <div class="panel-body panel-profile">
                         <div id="load_img">
-                            <img class="img-responsive" src="<?php echo $imagen; ?>" alt="Logotipo">
+                            <img class="img-responsive" src="<?php echo $STRIMG; ?>" alt="Logotipo">
                         </div>
-                        <h3 class="profile-username text-center"><?php echo $nombre . " " . $apellido; ?></h3>
-                        <p class="text-muted text-center mail-text"><?php echo $email; ?></p>
+                        <h3 class="profile-username text-center"><?php echo $STRNOM . " " . $STRAPE; ?></h3>
+                        <p class="text-muted text-center mail-text"><?php echo $STRCOR; ?></p>
                     </div>
                 </div>
             </div>
@@ -63,64 +66,86 @@ $created_at = $rw->created_at;
                         <form class="form-horizontal" role="form" name="update_register" id="update_register" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="id" class="form-control" id="id" value="<?php echo $id_user ?>">
                             <div class="form-group">
-                                <label for="dni" class="col-sm-2 control-label">DNI: </label>
+                                <label for="dni" class="col-sm-2 control-label">Seguridad social: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="dni" class="form-control" id="dni" placeholder="DNI: " value="<?php echo $dni ?>">
+                                    <input type="text" required name="STRNSS" class="form-control" id="STRNSS" placeholder="NSS: " value="<?php echo $STRNSS ?>">
                                 </div>
                                 <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
                                 <div class="col-sm-4">
-                                    <input type="file" name="imagefile" class="form-control" id="imagefile" onchange="upload_image(<?php echo $id_user; ?>);">
+                                    <input type="file" name="STRIMG" class="form-control" id="STRIMG" onchange="upload_image(<?php echo $id_user; ?>);">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="nombre" class="col-sm-2 control-label">Nombre: </label>
+                                <label for="nombre" class="col-sm-2 control-label">RFC : </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="nombre" class="form-control" id="nombre" placeholder="Nombre: " value="<?php echo $nombre ?>">
+                                    <input type="text" required name="STRRFC" class="form-control" id="STRRFC" placeholder="STRRFC: " value="<?php echo $STRRFC ?>">
                                 </div>
-                                <label for="apellido" class="col-sm-2 control-label">Apellido: </label>
+                                <label for="apellido" class="col-sm-2 control-label">CURP: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="apellido" class="form-control" id="apellido" placeholder="Apellido: " value="<?php echo $apellido ?>">
+                                    <input type="text" required name="STRCUR" class="form-control" id="STRCUR" placeholder="Apellido: " value="<?php echo $STRCUR ?>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="usuario" class="col-sm-2 control-label">Usuario: </label>
+                                <label for="usuario" class="col-sm-2 control-label">Nombre: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="usuario" class="form-control" id="usuario" placeholder="Usuario: " value="<?php echo $username ?>">
+                                    <input type="text" required name="STRNOM" class="form-control" id="STRNOM" placeholder="Nombre: " value="<?php echo $STRNOM ?>">
                                 </div>
-                                <label for="email" class="col-sm-2 control-label">E-Mail: </label>
+                                <label for="email" class="col-sm-2 control-label">Apellidos: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="email" class="form-control" id="email" placeholder="E-Mail: " value="<?php echo $email ?>">
+                                    <input type="text" required name="STRAPE" class="form-control" id="STRAPE" placeholder="Apellidos: " value="<?php echo $STRAPE ?>">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="domicilio" class="col-sm-2 control-label">Domicilio: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="domicilio" class="form-control" id="domicilio" placeholder="Domicilio: " value="<?php echo $domicilio ?>">
+                                    <input type="text" required name="STRDOM" class="form-control" id="STRDOM" placeholder="Domicilio: " value="<?php echo $STRDOM ?>">
                                 </div>
                                 <label for="localidad" class="col-sm-2 control-label">Localidad: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="localidad" class="form-control" id="localidad" placeholder="Localidad: " value="<?php echo $localidad ?>">
+                                    <input type="text" required name="STRLOC" class="form-control" id="STRLOC" placeholder="Localidad: " value="<?php echo $STRLOC ?>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="telefono" class="col-sm-2 control-label">Telefóno: </label>
+                                <label for="telefono" class="col-sm-2 control-label">Municipio : </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="telefono" class="form-control" id="telefono" placeholder="Telefóno: " value="<?php echo $telefono ?>">
+                                    <input type="text" required name="STRMUN" class="form-control" id="STRMUN" placeholder="Municipio: " value="<?php echo $STRMUN ?>">
                                 </div>
-                                <label for="celular" class="col-sm-2 control-label">Celular: </label>
+                                <label for="celular" class="col-sm-2 control-label">Estado: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="celular" class="form-control" id="celular" placeholder="Celular: " value="<?php echo $celular ?>">
+                                    <input type="text" required name="STREST" class="form-control" id="STREST" placeholder="Estado: " value="<?php echo $STREST ?>">
+                                </div>
+                            </div>
+                          
+                            <div class="form-group">
+                                <label for="registro" class="col-sm-2 control-label">Codigo Postal: </label>
+                                <div class="col-sm-4">
+                                    <input type="text" required name="STRCP" class="form-control" id="STRCP" placeholder="Codigo Postal: " value="<?php echo $STRCP ?>">
+                                </div>
+                                <label for="password" class="col-sm-2 control-label">Pais: </label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="STRPAI" class="form-control" id="STRPAI" placeholder="Pais: " value="<?php echo $STRPAI ?>">
+                                   
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="registro" class="col-sm-2 control-label">Registro: </label>
+                                <label for="registro" class="col-sm-2 control-label">Telefono: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" required name="registro" class="form-control" id="registro" placeholder="Registro: " value="<?php echo $registro ?>">
+                                    <input type="text" required name="STRTEL" class="form-control" id="STRTEL" placeholder="Telefono: " value="<?php echo $STRTEL ?>">
                                 </div>
-                                <label for="password" class="col-sm-2 control-label">Contraseña: </label>
+                                <label for="password" class="col-sm-2 control-label">Email: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="password" class="form-control" id="password" placeholder="Contraseña: ">
-                                    <span class="text-muted text-right">Solo se modifica si escribes algo!</span>
+                                    <input type="email" name="STRCOR" class="form-control" id="STRCOR" placeholder="Email: "  value="<?php echo $STRCOR ?>">
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="registro" class="col-sm-2 control-label">Contraseña: </label>
+                                <div class="col-sm-4">
+                                    <input type="password" required name="STRPWS" class="form-control" id="STRPWS" placeholder="Contraseña: " value="<?php echo $STRPWS ?>">
+                                </div>
+                                <label for="password" class="col-sm-2 control-label">Estado: </label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="BITSUS" class="form-control" id="BITSUS" placeholder="Estado: "  value="<?php echo $BITSUS ?>">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -173,7 +198,8 @@ $created_at = $rw->created_at;
         $.ajax({
             type: "POST",
             url: "view/ajax/agregar/actualizar_perfil.php",
-            data: parametros,data,
+            data: parametros,
+            data,
             beforeSend: function(objeto) {
                 $("#resultados_ajax").html("Mensaje: Cargando...");
             },

@@ -6,9 +6,9 @@
             $errors[] = "Codigo  está vacío.";
         }  elseif (empty($_POST['descripcion'])) {
             $errors[] = "Descripcion está vacío.";
-        }   elseif (empty($_POST['categoria'])) {
+        }   elseif (empty($_POST['Categoria'])) {
             $errors[] = "Categoria  está vacío.";
-        }  elseif (empty($_POST['subcategoria'])) {
+        }  elseif (empty($_POST['Subcategoria'])) {
             $errors[] = "Subcategoria está vacío.";
         }  elseif (empty($_POST['precio'])) {
             $errors[] = "precio está vacío.";
@@ -29,8 +29,8 @@
         	!empty($_POST['sku'])
         	&& !empty($_POST['codigo'])
         	&& !empty($_POST['descripcion'])
-			&& !empty($_POST['categoria'])
-			&& !empty($_POST['subcategoria'])
+			&& !empty($_POST['[Categoria'])
+			&& !empty($_POST['Subcategoria'])
 			&& !empty($_POST['precio'])
 			&& !empty($_POST['unidad'])
 			&& !empty($_FILES["imagefile"])
@@ -45,8 +45,8 @@
             $sku = mysqli_real_escape_string($con,(strip_tags($_POST["sku"],ENT_QUOTES)));
             $codigo = mysqli_real_escape_string($con,(strip_tags($_POST["codigo"],ENT_QUOTES)));
             $descripcion = mysqli_real_escape_string($con,(strip_tags($_POST["descripcion"],ENT_QUOTES)));
-            $categoria = mysqli_real_escape_string($con,(strip_tags($_POST["categoria"],ENT_QUOTES)));
-            $subcategoria = mysqli_real_escape_string($con,(strip_tags($_POST["subcategoria"],ENT_QUOTES)));
+            $categoria = mysqli_real_escape_string($con,(strip_tags($_POST["Categoria"],ENT_QUOTES)));
+            $subcategoria = mysqli_real_escape_string($con,(strip_tags($_POST["Subcategoria"],ENT_QUOTES)));
             $precio= mysqli_real_escape_string($con,(strip_tags($_POST["precio"],ENT_QUOTES)));
             $unidad = mysqli_real_escape_string($con,(strip_tags($_POST["unidad"],ENT_QUOTES)));
 

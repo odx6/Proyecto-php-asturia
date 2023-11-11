@@ -46,14 +46,44 @@ if (isset($_GET["id"])) {
 </div>
 <div class="form-group">
     <label for="usuario" class="col-sm-2 control-label">Categoria: </label>
+
     <div class="col-sm-10">
-        <input type="text" required class="form-control" id="Categoria" name="Categoria" value="<?php echo $categoria; ?>" placeholder="Categoria: ">
+        <?php
+
+        // Consulta SQL para obtener los datos
+        $consulta = "SELECT  INTIDCAT,STRNOMCAT FROM tblcatcat";
+        $resultado = mysqli_query($con, $consulta);
+
+
+        // Crear el elemento select
+        echo ' <select class="form-control" name="Categoria" id="Categoria">';
+
+        if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+            // Iterar sobre los resultados y crear una opción para cada uno
+
+            while ($fila = mysqli_fetch_assoc($resultado)) {
+                echo '<option value="' . $fila['INTIDCAT'] . '">' . $fila['STRNOMCAT'] . '</option>';
+            }
+        } else {
+
+            echo  '<option value="" disabled  selected >No hay categorias en la  bd agregue datos </option>';
+        }
+
+        echo '</select>';
+        ?>
+
+
+
+
     </div>
 </div>
 <div class="form-group">
     <label for="email" class="col-sm-2 control-label">Sub-categoria: </label>
     <div class="col-sm-10">
-        <input type="text" required class="form-control" id="Subcategoria" name="Subcategoria" value="<?php echo $subcategoria; ?>" placeholder="Sub-categoria: ">
+    <select class="form-control" name="Subcategoria" id="Subcategoria">
+            <option value="<?php echo $subcategoria ?>" selected><?php echo $subcategoria ?></option>
+        </select>
     </div>
 </div>
 <div class="form-group">

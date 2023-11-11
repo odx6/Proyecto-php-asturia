@@ -84,18 +84,23 @@ if ($action == 'ajax') {
 				$INTIDCAT = $row['INTIDCAT'];
 				//cONSULTA PARA SACAR LA CATEGORIA
 				if (isset($INTIDCAT) && $INTIDCAT != NULL) {
-					$Categoria = mysqli_query($con, "SELECT * FROM categoria WHERE id='$INTIDCAT'");
+					$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
+					if (isset($Categoria) && $Categoria != NULL) {
 					$tem = mysqli_fetch_array($Categoria);
-					$NombreCategoria = $tem['nombre'];
+					if(isset($tem) && $tem != NULL)$NombreCategoria = $tem['STRNOMCAT'];
+					}
 				}
 				//ENDCONSULTA
 
 
 				$INTIDSBC = $row['INTIDSBC'];
 				if (isset($INTIDSBC) && $INTIDSBC != NULL) {
-					$Subcategoria = mysqli_query($con, "SELECT * FROM subcategoria WHERE id='$INTIDSBC'");
-					$tem = mysqli_fetch_array($Subcategoria);
-					$SubcategoriaNombre = $tem['nombre'];
+					$Subcategoria = mysqli_query($con, "SELECT * FROM  tblcatsbc WHERE INTIDSBC='$INTIDSBC'");
+					
+					if (isset($Subcategoria) && $Subcategoria != NULL) {
+						$tem = mysqli_fetch_array($Subcategoria);
+						if(isset($tem) && $tem != NULL)$SubcategoriaNombre = $tem['STRSBC'];
+						}
 				}
 				$MONPCOS = $row['MONPCOS'];
 				$INTIDUNI = $row['INTIDUNI'];
@@ -121,8 +126,8 @@ if ($action == 'ajax') {
 						<td><?php echo $sku ?></td>
 						<td><?php echo $codigo ?></td>
 						<td><?php echo $descripcion ?></td>
-						<td><?php echo $NombreCategoria ?></td>
-						<td><?php echo $SubcategoriaNombre ?></td>
+						<td><?php  echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
+						<td><?php echo   (isset($SubcategoriaNombre)) ? $SubcategoriaNombre : $INTIDSBC;?></td>
 						<td>$ <?php echo $MONPCOS ?> mxm</td>
 						<td><?php echo $INTIDUNI ?></td>
 						<td>

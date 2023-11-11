@@ -136,8 +136,50 @@ SIMBOLOS PATRIOS N° 730 COL.ELISEO JIMENEZ RUIZ C.P 68120
   <div class="firma">
       Firma 2
   </div>
+  
 </div>
 </main>
 </body>
 </html>
+
+
+//subconsulta de categoria 
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#categoria").change(function(){
+    var categoriaID = $(this).val();
+    $.ajax({
+      url: 'get_subcategorias.php',
+      type: 'post',
+      data: {categoria:categoriaID},
+      dataType: 'json',
+      success:function(response){
+        var len = response.length;
+        $("#subcategoria").empty();
+        for( var i = 0; i<len; i++){
+          var id = response[i]['id'];
+          var nombre = response[i]['nombre'];
+          $("#subcategoria").append("<option value='"+id+"'>"+nombre+"</option>");
+        }
+      }
+    });
+  });
+});
+</script>
+</head>
+<body>
+<select id="categoria">
+  <!-- Opciones de categoría cargadas desde la base de datos -->
+</select>
+
+<select id="subcategoria">
+  <!-- Opciones de subcategoría cargadas en base a la categoría seleccionada -->
+</select>
+</body>
+</html>
+
+//
 '

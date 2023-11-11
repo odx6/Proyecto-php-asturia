@@ -11,21 +11,25 @@ $user_ip = $_SERVER['REMOTE_ADDR'];
     }
 
     $id=$_SESSION['user_id'];
-    $query=mysqli_query($con,"SELECT * from empleado where id=$id");
+    $query=mysqli_query($con,"SELECT * from tblcatemp where IDEMP=$id");
     while ($row=mysqli_fetch_array($query)) {
-        $dni_empleado=$row['dni'];
-        $imagen_empleado=$row['imagen'];
-        $nombre_empleado=$row['nombre'];
-        $apellido_empleado=$row['apellido'];
-        $username_empleado=$row['username'];
-        $email_empleado=$row['email'];
-        $domicilio_empleado=$row['domicilio'];
-        $localidad_empleado=$row['localidad'];
-        $telefono_empleado=$row['telefono'];
-        $celular_empleado=$row['celular'];
-        $registro_empleado=$row['registro'];
-        $status_empleado=$row['status'];
-        $created_at_empleado=$row['created_at'];
+          $IDEMP=$row['IDEMP'];
+          $STRNSS=$row['STRNSS'];
+          $STRRFC=$row['STRRFC'];
+          $STRCUR=$row['STRCUR'];
+          $STRNOM=$row['STRNOM'];
+          $STRAPE=$row['STRAPE'];
+          $STRLOC=$row['STRLOC'];
+          $STRMUN=$row['STRMUN'];
+          $STREST=$row['STREST'];
+          $STRCP=$row['STRCP'];
+          $STRPAI=$row['STRPAI'];
+          $STRTEL=$row['STRTEL'];
+          $STRCOR=$row['STRCOR'];
+          $STRPWS=$row['STRPWS'];
+          $BITSUS=$row['BITSUS'];
+          $STRIMG=$row['STRIMG'];
+          $CREATE_AT=$row['CREATE_AT'];
     }
 
     $configuracion=mysqli_query($con, "select * from configuracion");
@@ -82,11 +86,11 @@ $user_ip = $_SERVER['REMOTE_ADDR'];
             <div class="user-nav">
                 <ul>
                     <li class="profile-photo">
-                        <img src="<?php echo $imagen_empleado ?>" height="40px" width="40px" alt="" class="img-circle">
+                        <img src="<?php echo $STRIMG ?>" height="40px" width="40px" alt="" class="img-circle">
                     </li>
                     <li class="dropdown settings">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                      <?php echo $nombre_empleado." ".$apellido_empleado; ?> <i class="fa fa-angle-down"></i>
+                      <?php echo $STRNOM." ".$STRAPE; ?> <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu animated fadeInDown">
                             <li>

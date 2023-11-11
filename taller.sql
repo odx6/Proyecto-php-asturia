@@ -72,21 +72,21 @@ INSERT INTO `configuracion` (`id`, `nombre`, `dni`, `actividad_economica`, `emai
 -- Estructura de tabla para la tabla `empleado`
 --
 
-CREATE TABLE `empleado` (
-  `id` int(11) NOT NULL,
-  `dni` varchar(10) DEFAULT NULL,
-  `imagen` varchar(255) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `apellido` varchar(50) NOT NULL,
-  `username` varchar(50) DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(60) NOT NULL,
-  `domicilio` varchar(100) NOT NULL,
-  `localidad` varchar(100) NOT NULL,
-  `telefono` varchar(20) DEFAULT NULL,
-  `celular` varchar(20) DEFAULT NULL,
-  `registro` varchar(20) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
+CREATE TABLE `TBLCATEMP` (
+  `STREMP` int(11) NOT NULL,
+  `STRNSS` varchar(15) DEFAULT NULL,
+  `STRRFC` varchar(15) NOT NULL,
+  `STRCUR` varchar(25) NOT NULL,
+  `STRNOM` varchar(50) NOT NULL,
+  `STRLOC` varchar(50) DEFAULT NULL,
+  `STRMUN` varchar(50) NOT NULL,
+  `STREST` varchar(50) NOT NULL,
+  `STRCP` varchar(10) NOT NULL,
+  `STRPAI` varchar(15) NOT NULL,
+  `STRTEL` varchar(12) DEFAULT NULL,
+  `STRCOR` varchar(30) DEFAULT NULL,
+  `STRPWS` varchar(30) DEFAULT NULL,
+  `STRREST` tinyint(1) NOT NULL DEFAULT 0,
   `kind` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
