@@ -76,9 +76,9 @@ if($action == 'ajax'){
 				$empleado=$row['fk_empleado'];
 				//Name Empleado 
 				if (isset($empleado) && $empleado != NULL) {
-					$Empleado = mysqli_query($con, "SELECT * FROM empleado WHERE id='$empleado'");
+					$Empleado = mysqli_query($con, "SELECT * FROM tblcatemp WHERE IDEMP='$empleado'");
 					$tem = mysqli_fetch_array($Empleado);
-					$NombreEmpleado = $tem['nombre'] ." ".$tem['apellido'];
+					$NombreEmpleado = $tem['STRNOM'] ." ".$tem['STRAPE'];
 				}
 				//
 				$Folio=$row['NumeroFolio'];

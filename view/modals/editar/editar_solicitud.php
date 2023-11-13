@@ -1,11 +1,11 @@
 <!-- Form Modal -->
 <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-    <form class="form-horizontal" role="form" method="post" id="update_register" name="update_register" >
+    <form class="form-horizontal" role="form" method="post" id="update_register" name="update_register">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"> Editar Empleado</h4>
+                <h4 class="modal-title" id="myModalLabel"> Editar Solicitud</h4>
             </div>
             <div class="modal-body">
                 <div id="loader2" class="text-center"></div>

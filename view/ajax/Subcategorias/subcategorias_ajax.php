@@ -1,12 +1,11 @@
 <?php
-// para mostrar datos y para busquedas mediante ide 
-include("is_logged.php"); //Archivo comprueba si el usuario esta logueado
+include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 /* Connect To Database*/
-require_once("../../config/config.php");
+require_once("../../../config/config.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
-	if ($delete = mysqli_query($con, "DELETE FROM tblcatemp WHERE IDEMP='$id'")) {
+	if ($delete = mysqli_query($con, "DELETE FROM tblcatsbc WHERE INTIDSBC='$id'")) {
 		$aviso = "Bien hecho!";
 		$msj = "Datos eliminados satisfactoriamente.";
 		$classM = "alert alert-success";
@@ -22,10 +21,10 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
 if ($action == 'ajax') {
 	$query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
-	$tables = "tblcatemp";
+	$tables = "tblcatsbc";
 	$campos = "*";
-	$sWhere = " STRNOM LIKE '%" . $query . "%'";
-	include 'pagination.php'; //include pagination file
+	$sWhere = " STRNOMSBC LIKE '%" . $query . "%'";
+	include '../pagination.php'; //include pagination file
 	//pagination variables
 	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
 	$per_page = intval($_REQUEST['per_page']); //how much records you want to show
@@ -39,7 +38,7 @@ if ($action == 'ajax') {
 		echo mysqli_error($con);
 	}
 	$total_pages = ceil($numrows / $per_page);
-	$reload = './empleados-view.php';
+	$reload = './subcategorias-view.php';
 	//main query to fetch the data
 	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
 	//loop through fetched data
@@ -58,52 +57,22 @@ if ($action == 'ajax') {
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>#ID</th>
-					<th>NSS</th>
-					<th>RFC</th>
-					<th>CURP</th>
-					<th>NOMBRE</th>
-					
-					<th>DOMICILIO</th>
-					<th>LOCALIDAD</th>
-					<th>MUNICIPIO</th>
-					<th>ESTADO</th>
-					<th>CODIGO POSTAL</th>
-					<th>PAIS</th>
-					<th>TELEFONO</th>
-					<th>CORREO</th>
-					<th>CONTRASEÑA</th>
-					<th>CREATE</th>
-					<th>ACCION</th>
-					<th></th>
-					
+					<th>#id Subcategoria</th>
+					<th>Nombre</th>
+					<th>Descripcion</th>
+                    <th>Estado</th>
+					<th>Fecha-Creacion</th>
+					<th>Accion</th>
 				</tr>
 			</thead>
 			<?php
 			$finales = 0;
 			while ($row = mysqli_fetch_array($query)) {
-				$IDEMP=$row['IDEMP'];
-				$STRNSS = $row['STRNSS'];
-				$STRRFC = $row['STRRFC'];
-				$STRCUR = $row['STRCUR'];
-				$STRNOM = $row['STRNOM'];
-				$STRAPE = $row['STRAPE'];
-				$STRLOC = $row['STRLOC'];
-				$STRMUN = $row['STRMUN'];
-				$STREST = $row['STREST'];
-				$STRCP = $row['STRCP'];
-				$STRPAI = $row['STRPAI'];
-				$STRTEL = $row['STRTEL'];
-				$STRCOR = $row['STRCOR'];
-				$STRPWS = $row['STRPWS'];
-				$BITSUS = $row['BITSUS'];
-				$STRIMG = $row['STRIMG'];
-				$CREATE_AT = $row['CREATE_AT'];
-
-				list($date, $hora) = explode(" ", $CREATE_AT);
-				list($Y, $m, $d) = explode("-", $date);
-				$fecha = $d . "-" . $m . "-" . $Y;
-
+				  $INTIDSBC=$row['INTIDSBC'];
+				  $STRNOMSBC=$row['STRNOMSBC'];
+				  $STRDESSBC=$row['STRDESBC'];
+				  $DTEHOR=$row['DTEHOR'];
+				  $BITSUS=$row['BITSUS'];
 
 				if ($BITSUS == 1) {
 					$lbl_status = "Activo";
@@ -112,38 +81,26 @@ if ($action == 'ajax') {
 					$lbl_status = "Inactivo";
 					$lbl_class = 'label label-danger';
 				}
+				
 				/*$kind=$row['kind'];*/
 
 				$finales++;
 			?>
 				<tbody>
 					<tr>
-						<td><?php echo $IDEMP?></td>
-						<td> <?php echo $STRNSS  ?> </td> 
-						<td> <?php echo $STRRFC  ?> </td> 
-						<td> <?php echo $STRCUR  ?> </td> 
-						<td> <?php echo $STRNOM . " " .$STRAPE  ?> </td> 
-						<td> <?php echo $STRLOC  ?> </td> 
-						<td> <?php echo $STRMUN  ?> </td> 
-						<td> <?php echo $STREST  ?> </td> 
-						<td> <?php echo $STRCP ?> </td> 					
-						<td> <?php echo $STRPAI  ?> </td> 
-						<td> <?php echo $STRTEL  ?> </td> 
-						<td> <?php echo $STRCOR  ?> </td> 
-						<td> <?php echo $BITSUS  ?> </td> 
-						
-						
-
+						<td><?php echo $INTIDSBC ?></td>
+						<td><?php echo $STRNOMSBC ?></td>
+						<td><?php echo $STRDESSBC?></td>
 						
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
-						<td><?php echo $fecha ?></td>
+						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">
 
-							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $IDEMP; ?>');"><i class="fa fa-edit"></i></button>
+							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDSBC; ?>');"><i class="fa fa-edit"></i></button>
 
-							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $IDEMP; ?>')"><i class="fa fa-trash-o"></i></button>
+							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDSBC; ?>')"><i class="fa fa-trash-o"></i></button>
 
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $IDEMP; ?>')"><i class="fa fa-eye"></i></button>
+							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDSBC; ?>')"><i class="fa fa-eye"></i></button>
 
 						</td>
 					</tr>

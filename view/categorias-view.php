@@ -11,7 +11,7 @@ if ($_SESSION['empleados'] == 1) {
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb  pull-right">
                         <li><a href="./?view=dashboard">Dashboard</a></li>
-                        <li class="active">Solicitud</li>
+                        <li class="active">Categorias</li>
 
                     </ul>
                     <!--breadcrumbs end -->
@@ -53,9 +53,9 @@ if ($_SESSION['empleados'] == 1) {
                 <div class="col-md-offset-10">
                     <!-- modals -->
                     <?php
-                    include "modals/agregar/Solicitud/agregar_solicitud.php";
-                    include "modals/editar/editar_solicitud.php";
-                    include "modals/mostrar/mostrar_solicitud.php";
+                    include "modals/agregar/agregar_categorias.php";
+                    include "modals/editar/editar_categoria.php";
+                    include "modals/mostrar/mostrar_categoria.php";
                     ?>
                     <!-- /end modals -->
 
@@ -82,7 +82,7 @@ if ($_SESSION['empleados'] == 1) {
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Datos de las Solicitudes</h3>
+                            <h3 class="panel-title">Datos de las Categorias</h3>
                             <div class="actions pull-right">
                                 <i class="fa fa-chevron-down"></i>
                                 <i class="fa fa-times"></i>
@@ -123,7 +123,7 @@ if ($_SESSION['empleados'] == 1) {
             };
             $("#loader").fadeIn('slow');
             $.ajax({
-                url: 'view/ajax/Mostrar_Solicitudes_ajax.php',
+                url: 'view/ajax/Categoria/Categorias_ajax.php',
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
@@ -158,7 +158,7 @@ if ($_SESSION['empleados'] == 1) {
                 };
 
                 $.ajax({
-                    url: 'view/ajax/solicitudes_ajax.php',
+                    url: 'view/ajax/Categoria/categorias_ajax.php',
                     data: parametros,
                     beforeSend: function(objeto) {
                         $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
@@ -177,12 +177,13 @@ if ($_SESSION['empleados'] == 1) {
         }
     </script>
     <script>
+        //agrega una categoria
         $("#new_register").submit(function(event) {
             $('#guardar_datos').attr("disabled", true);
             var parametros = $(this).serialize();
             $.ajax({
                 type: "POST",
-                url: "view/ajax/Solicitud/agregar_solicitud.php",
+                url: "view/ajax/agregar/agregar_categoria.php",
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#resultados_ajax").html("Enviando...");
@@ -210,7 +211,7 @@ if ($_SESSION['empleados'] == 1) {
             var parametros = $(this).serialize();
             $.ajax({
                 type: "POST",
-                url: "view/ajax/editar/editar_solicitud.php",
+                url: "view/ajax/editar/editar_categoria.php",
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#resultados_ajax").html("Enviando...");
@@ -233,12 +234,13 @@ if ($_SESSION['empleados'] == 1) {
     <script>
         //muestra el modal con los datos para posteriormente actualizar con el scrip de arriba 
         function editar(id) {
+           
             var parametros = {
                 "action": "ajax",
                 "id": id
             };
             $.ajax({
-                url: 'view/modals/editar/solicitud.php',
+                url: 'view/modals/editar/categoria.php',
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#loader2").html("<img src='./assets/img/ajax-loader.gif'>");
@@ -256,7 +258,7 @@ if ($_SESSION['empleados'] == 1) {
                 "id": id
             };
             $.ajax({
-                url: 'view/modals/mostrar/solicitud.php',
+                url: 'view/modals/mostrar/categoria.php',
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#loader3").html("<img src='./assets/img/ajax-loader.gif'>");

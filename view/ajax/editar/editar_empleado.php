@@ -80,16 +80,14 @@
 
 
 	// UPDATE data into database
-    $sql = "UPDATE tblcatemp SET STRNSS='".$STRNSS."', STRRFC='".$STRRFC."', STRCUR='".$STRCUR."', STRAPE='".$STRAPE."', STRDOM='".$STRDOM."', STRLOC
-    ='".$STRLOC
-    ."', STRMUN='".$STRMUN."', STREST='".$STREST."', STRCP='".$STRCP."', STRPAI='".$STRPAI."', STRTEL='".$STRTEL."',STRCOR='".$STRCOR."',STRPWS='".$STRPWS."',BITSUS='".$BITSUS."' WHERE IDEMP='".$id."' ";
+    $sql = "UPDATE tblcatemp SET STRNSS='".$STRNSS."', STRRFC='".$STRRFC."', STRCUR='".$STRCUR."', STRAPE='".$STRAPE."', STRDOM='".$STRDOM."', STRLOC='".$STRLOC ."', STRMUN='".$STRMUN."', STREST='".$STREST."', STRCP='".$STRCP."', STRPAI='".$STRPAI."', STRTEL='".$STRTEL."',STRCOR='".$STRCOR."',STRPWS='".$STRPWS."',BITSUS='".$BITSUS."' WHERE IDEMP='".$id."' ";
     $query = mysqli_query($con,$sql);
-
+   
     //Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
-    if(!empty(($password))){
+    /*if(!empty(($password))){
     	$sql_password = "UPDATE empleado SET password='".$password."' WHERE id='".$id."' ";
     	$query_password = mysqli_query($con,$sql_password);
-    }
+    }*/
 
     if($query){
 

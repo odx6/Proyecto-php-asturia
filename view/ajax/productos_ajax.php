@@ -99,7 +99,7 @@ if ($action == 'ajax') {
 					
 					if (isset($Subcategoria) && $Subcategoria != NULL) {
 						$tem = mysqli_fetch_array($Subcategoria);
-						if(isset($tem) && $tem != NULL)$SubcategoriaNombre = $tem['STRSBC'];
+						if(isset($tem) && $tem != NULL)$SubcategoriaNombre = $tem['STRNOMSBC'];
 						}
 				}
 				$MONPCOS = $row['MONPCOS'];

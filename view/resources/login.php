@@ -19,7 +19,7 @@
 		if ($row = mysqli_fetch_array($query)) {
 			
 				//$marcados = $user->list_mark($fetch->iduser);
-				$idempleado=intval($row['id']);
+				$idempleado=intval($row['IDEMP']);
 				$marcados=mysqli_query($con, "SELECT * FROM empleado_permisos WHERE idempleado=$idempleado");
 				$valores=array();
 

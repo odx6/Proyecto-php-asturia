@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"> Editar Empleado</h4>
+                <h4 class="modal-title" id="myModalLabel"> Editar Subcategoria</h4>
             </div>
             <div class="modal-body">
                 <div id="loader2" class="text-center"></div>

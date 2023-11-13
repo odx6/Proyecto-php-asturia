@@ -1,122 +1,173 @@
 <?php
-	session_start();
-	require_once ("../../../config/config.php");
-	if (isset($_GET["id"])){
-		$id=$_GET["id"];
-		$id=intval($id);
-		$sql="select * from empleado where id='$id'";
-		$query=mysqli_query($con,$sql);
-		$num=mysqli_num_rows($query);
-		if ($num==1){
-			$rw=mysqli_fetch_array($query);
-			$dni=$rw['dni'];
-			$imagen=$rw['imagen'];
-			$nombre=$rw['nombre'];
-			$apellido=$rw['apellido'];
-			$username=$rw['username'];
-			$email=$rw['email'];
-			$domicilio=$rw['domicilio'];
-			$localidad=$rw['localidad'];
-			$telefono=$rw['telefono'];
-			$celular=$rw['celular'];
-			$registro=$rw['registro'];
-			$status=$rw['status'];
-			$created_at=$rw['created_at'];
-		}
-	}	
-	else{exit;}
-?>
-<input type="hidden" value="<?php echo $id;?>" name="id" id="id">
+session_start();
+require_once("../../../config/config.php");
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
+    $id = intval($id);
+    $sql = "select * from tblcatemp where IDEMP='$id'";
+    $query = mysqli_query($con, $sql);
+    $num = mysqli_num_rows($query);
+    if ($num == 1) {
+        while ($row = mysqli_fetch_array($query)) {
+            $IDEMP = $row['IDEMP'];
+            $STRNSS = $row['STRNSS'];
+            $STRRFC = $row['STRRFC'];
+            $STRCUR = $row['STRCUR'];
+            $STRNOM = $row['STRNOM'];
+            $STRAPE = $row['STRAPE'];
+            $STRDOM = $row['STRDOM'];
+            $STRLOC = $row['STRLOC'];
+            $STRMUN = $row['STRMUN'];
+            $STREST = $row['STREST'];
+            $STRCP = $row['STRCP'];
+            $STRPAI = $row['STRPAI'];
+            $STRTEL = $row['STRTEL'];
+            $STRCOR = $row['STRCOR'];
+            $STRPWS = $row['STRPWS'];
+            $BITSUS = $row['BITSUS'];
+            $STRIMG = $row['STRIMG'];
+            $CREATE_AT = $row['CREATE_AT'];
 
-<div class="row">
-            <div class="col-md-3">
-                <!-- Profile Image -->
-                <div class="panel panel-primary">
-                    <div class="panel-body panel-profile">
-                        <div id="load_img">
-                            <img class="img-responsive" src="<?php echo $imagen; ?>" alt="Logotipo">
-                        </div>
-                        <h3 class="profile-username text-center"><?php echo $nombre . " " . $apellido; ?></h3>
-                        <p class="text-muted text-center mail-text"><?php echo $email; ?></p>
-                    </div>
-                </div>
-            </div>
+            list($date, $hora) = explode(" ", $CREATE_AT);
+            list($Y, $m, $d) = explode("-", $date);
+            $fecha = $d . "-" . $m . "-" . $Y;
+
+
+            if ($BITSUS == 1) {
+                $lbl_status = "Activo";
+                $lbl_class = 'label label-success';
+            } else {
+                $lbl_status = "Inactivo";
+                $lbl_class = 'label label-danger';
+            }
+        }
+    }
+} else {
+    exit;
+}
+?>
+<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 <div class="form-group">
-    <label for="dni" class="col-sm-4 control-label">DNI: </label>
-    <div class="col-sm-8">
-        <?php echo $dni;?>
+    <label for="dni" class="col-sm-2 control-label">NSS: </label>
+    <div class="col-sm-10">
+        <input type="text" required class="form-control" id="STRNSS" name="STRNSS" placeholder="NSS: "  value="<?php echo $STRNSS ?>"  >
     </div>
 </div>
 <div class="form-group">
-    <label for="nombre" class="col-sm-4 control-label">Nombre: </label>
-    <div class="col-sm-8">
-        <?php echo $nombre;?>
+    <label for="nombre" class="col-sm-2 control-label">RFC: </label>
+    <div class="col-sm-10">
+        <input type="text" required class="form-control" id="STRRFC" name="STRRFC" placeholder="RFC: " value="<?php echo $STRRFC ?>">
     </div>
 </div>
 <div class="form-group">
-    <label for="apellido" class="col-sm-4 control-label">Apellido: </label>
-    <div class="col-sm-8">
-        <?php echo $apellido;?>
+    <label for="apellido" class="col-sm-2 control-label">CURP: </label>
+    <div class="col-sm-10">
+        <input type="text" required class="form-control" id="STRCUR" name="STRCUR" placeholder="CURP: " value="<?php echo $STRCUR ?>">
     </div>
 </div>
 <div class="form-group">
-    <label for="usuario" class="col-sm-4 control-label">Usuario: </label>
-    <div class="col-sm-8">
-        <?php echo $username;?>
+    <label for="usuario" class="col-sm-2 control-label">Nombre: </label>
+    <div class="col-sm-10">
+        <input type="text" required class="form-control" id="STRNOM" name="STRNOM" placeholder="Nombre: " value="<?php echo $STRNOM ?>">
     </div>
 </div>
 <div class="form-group">
-    <label for="email" class="col-sm-4 control-label">Correo Electrónico: </label>
-    <div class="col-sm-8">
-       <?php echo $email;?>
-    </div>
-</div>
-<!-- <div class="form-group">
-    <label for="password" class="col-sm-2 control-label">Contraseña: </label>
-    <div class="col-sm-8">
-        <input type="password" class="form-control" id="password" name="password" placeholder="*******">
-        <p class="text-right text-muted">La contraseña solo se modifica si escribes algo!.</p>
-    </div>
-</div> -->
-<div class="form-group">
-    <label for="domicilio" class="col-sm-4 control-label">Domicilio: </label>
-    <div class="col-sm-8">
-        <?php echo $domicilio;?>
+    <label for="email" class="col-sm-2 control-label">Apellidos: </label>
+    <div class="col-sm-10">
+        <input type="text" required class="form-control" id="STRAPE" name="STRAPE" placeholder="Apellidos: " value="<?php echo $STRAPE ?>">
     </div>
 </div>
 <div class="form-group">
-    <label for="localidad" class="col-sm-4 control-label">Localidad: </label>
-    <div class="col-sm-8">
-        <?php echo $localidad;?>
+    <label for="password" class="col-sm-2 control-label">Domicilio: </label>
+    <div class="col-sm-10">
+        <input type="text" required class="form-control" id="STRDOM" name="STRDOM" placeholder="Domicilio" value="<?php echo $STRDOM ?>">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="localidad" class="col-sm-2 control-label">Localidad: </label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="STRLOC" name="STRLOC" placeholder="Localidad: " value="<?php echo $STRLOC ?>">
     </div>
 </div>
 <div class="form-group">
-    <label for="telefono" class="col-sm-4 control-label">Telefóno</label>
-    <div class="col-sm-8">
-        <?php echo $telefono;?>
+    <label for="telefono" class="col-sm-2 control-label">Municipio</label>
+    <div class="col-sm-10">
+        <input type="text" required class="form-control" id="STRMUN" name="STRMUN" placeholder="Municipio" value="<?php echo $STRMUN ?>">
     </div>
 </div>
 <div class="form-group">
-    <label for="celular" class="col-sm-4 control-label">Celular: </label>
-    <div class="col-sm-8">
-        <?php echo $celular;?>
+    <label for="celular" class="col-sm-2 control-label">Estado: </label>
+    <div class="col-sm-10">
+        <input type="text" required class="form-control" id="STREST" name="STREST" placeholder="Estado: " value="<?php echo $STREST ?>">
     </div>
 </div>
 <div class="form-group">
-    <label for="registro" class="col-sm-4 control-label">Registro: </label>
-    <div class="col-sm-8">
-       <?php echo $registro;?>
+    <label for="registro" class="col-sm-2 control-label">Codigo Postal: </label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="STRCP" name="STRCP" placeholder="Codigo: " value="<?php echo $STRCP ?>">
     </div>
 </div>
 <div class="form-group">
-    <label for="estado" class="col-sm-4 control-label">Estado: </label>
-    <div class="col-sm-8">
-        <?php echo ($status==1)?  "Activo" :  "Inactivo";?>
+    <label for="registro" class="col-sm-2 control-label">Pais: </label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="STRPAI" name="STRPAI" placeholder="Pais: " value="<?php echo $STRPAI ?>">
     </div>
 </div>
 <div class="form-group">
-    <label for="estado" class="col-sm-4 control-label">Fecha: </label>
-    <div class="col-sm-8">
-        <?php echo $created_at;?>
+    <label for="registro" class="col-sm-2 control-label">Telefono: </label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" id="STRTEL" name="STRTEL" placeholder="Telefono: " value="<?php echo $STRTEL ?>">
+    </div>
+</div>
+<div class="form-group">
+    <label for="registro" class="col-sm-2 control-label">Correo Electronico: </label>
+    <div class="col-sm-10">
+        <input type="email" class="form-control" id="STRCOR" name="STRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
+
+    </div>
+</div>
+<div class="form-group">
+    <label for="registro" class="col-sm-2 control-label">Contraseña: </label>
+    <div class="col-sm-10">
+        <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: " value="<?php echo $STRPWS ?>">
+    </div>
+</div>
+<div class="form-group">
+    <label for="registro" class="col-sm-2 control-label">Imagen: </label>
+    <div class="col-sm-10">
+        <input type="file" class="form-control" id="STRIMG" name="STRIMG" placeholder="imagen: " >
+    </div>
+</div>
+<div class="form-group">
+    <label for="estado" class="col-sm-2 control-label">Estado: </label>
+    <div class="col-sm-10">
+        <select class="form-control" name="BITSUS" id="BITSUS">
+            <option value="1">Activo</option>
+            <option value="2">Inactivo</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="permisos" class="col-sm-2 control-label">Permisos: </label>
+    <div class="col-sm-10">
+        <ul style="list-style: none;" id="permisos">
+            <?php
+            $rspta = mysqli_query($con, "SELECT * FROM permisos");
+
+            $marcados = mysqli_query($con, "SELECT * FROM empleado_permisos WHERE idempleado=$id");
+            $valores = array();
+
+            while ($per = $marcados->fetch_object()) {
+                array_push($valores, $per->idpermiso);
+            }
+
+            while ($reg = $rspta->fetch_object()) {
+                $sw = in_array($reg->id, $valores) ? 'checked' : '';
+                echo '<li> <input id="checks" type="checkbox" ' . $sw . '  name="permisos[]" value="' . $reg->id . '">' . $reg->nombre . '</li>';
+            }
+            ?>
+        </ul>
     </div>
 </div>

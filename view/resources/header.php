@@ -3,41 +3,42 @@
 
 $user_ip = $_SERVER['REMOTE_ADDR'];
 
-    if (!isset($_SESSION['user_id'])&& $_SESSION['user_id']==null) {
-        header("location: ./?view=index");
-        
-           
-            // Guarda $user_ip en la base de datos o utilízalo como necesites
-    }
+if (!isset($_SESSION['user_id']) && $_SESSION['user_id'] == null) {
+    header("location: ./?view=index");
 
-    $id=$_SESSION['user_id'];
-    $query=mysqli_query($con,"SELECT * from tblcatemp where IDEMP=$id");
-    while ($row=mysqli_fetch_array($query)) {
-          $IDEMP=$row['IDEMP'];
-          $STRNSS=$row['STRNSS'];
-          $STRRFC=$row['STRRFC'];
-          $STRCUR=$row['STRCUR'];
-          $STRNOM=$row['STRNOM'];
-          $STRAPE=$row['STRAPE'];
-          $STRLOC=$row['STRLOC'];
-          $STRMUN=$row['STRMUN'];
-          $STREST=$row['STREST'];
-          $STRCP=$row['STRCP'];
-          $STRPAI=$row['STRPAI'];
-          $STRTEL=$row['STRTEL'];
-          $STRCOR=$row['STRCOR'];
-          $STRPWS=$row['STRPWS'];
-          $BITSUS=$row['BITSUS'];
-          $STRIMG=$row['STRIMG'];
-          $CREATE_AT=$row['CREATE_AT'];
-    }
 
-    $configuracion=mysqli_query($con, "select * from configuracion");
-    $rw=mysqli_fetch_array($configuracion);
-    $nombre_empresa=$rw['nombre'];
+    // Guarda $user_ip en la base de datos o utilízalo como necesites
+}
+
+$id = $_SESSION['user_id'];
+$query = mysqli_query($con, "SELECT * from tblcatemp where IDEMP=$id");
+while ($row = mysqli_fetch_array($query)) {
+    $IDEMP = $row['IDEMP'];
+    $STRNSS = $row['STRNSS'];
+    $STRRFC = $row['STRRFC'];
+    $STRCUR = $row['STRCUR'];
+    $STRNOM = $row['STRNOM'];
+    $STRAPE = $row['STRAPE'];
+    $STRLOC = $row['STRLOC'];
+    $STRMUN = $row['STRMUN'];
+    $STREST = $row['STREST'];
+    $STRCP = $row['STRCP'];
+    $STRPAI = $row['STRPAI'];
+    $STRTEL = $row['STRTEL'];
+    $STRCOR = $row['STRCOR'];
+    $STRPWS = $row['STRPWS'];
+    $BITSUS = $row['BITSUS'];
+    $STRIMG = $row['STRIMG'];
+    $CREATE_AT = $row['CREATE_AT'];
+}
+
+$configuracion = mysqli_query($con, "select * from configuracion");
+$rw = mysqli_fetch_array($configuracion);
+$nombre_empresa = $rw['nombre'];
 ?>
 <!DOCTYPE html>
 <html class="no-js">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -75,7 +76,7 @@ $user_ip = $_SERVER['REMOTE_ADDR'];
         <header id="header">
             <!--logo start-->
             <div class="brand">
-                <a href="./?view=dashboard" ><span><?php echo $nombre_empresa; ?></span></a>
+                <a href="./?view=dashboard"><span><?php echo $nombre_empresa; ?></span></a>
             </div>
             <!--logo end-->
             <div class="toggle-navigation toggle-left">
@@ -90,7 +91,7 @@ $user_ip = $_SERVER['REMOTE_ADDR'];
                     </li>
                     <li class="dropdown settings">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                      <?php echo $STRNOM." ".$STRAPE; ?> <i class="fa fa-angle-down"></i>
+                            <?php echo $STRNOM . " " . $STRAPE; ?> <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu animated fadeInDown">
                             <li>
@@ -102,7 +103,7 @@ $user_ip = $_SERVER['REMOTE_ADDR'];
                             <li>
                                 <a href="#"><i class="fa fa-power-off"></i><?php echo $user_ip; ?></a>
                             </li>
-                           
+
                         </ul>
                     </li>
                 </ul>
@@ -111,41 +112,62 @@ $user_ip = $_SERVER['REMOTE_ADDR'];
         <!--sidebar left start-->
         <aside class="sidebar">
             <div id="leftside-navigation" class="nano">
-                                 <li >
-                        <a href="http://romasa.mx/"><i class="fa fa-cog"></i><span>Asturias</span></a>
-                    </li>
+                <li>
+                    <a href="http://romasa.mx/"><i class="fa fa-cog"></i><span>Asturias</span></a>
+                </li>
                 <ul class="nano-content">
-                    <?php if ($_SESSION['dashboard']==1) { ?>
-                    <li class="<?php if(isset($active1)){echo $active1;}?>">
-                        <a href="./?view=dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
-                    </li>
+                    <?php if ($_SESSION['dashboard'] == 1) { ?>
+                        <li class="<?php if (isset($active1)) {
+                                        echo $active1;
+                                    } ?>">
+                            <a href="./?view=dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
+                        </li>
 
 
                     <?php } ?>
-                    <?php if ($_SESSION['empleados']==1) { ?>
-                    <li class="<?php if(isset($active2)){echo $active2;}?>">
-                        <a href="./?view=empleados"><i class="fa fa-users"></i><span>Empleados</span></a>
-                    </li>
-                    <?php } ?>
-
-
-
-		    <?php if ($_SESSION['productos']==1) { ?>
-                    <li class="<?php if(isset($active2)){echo $active2;}?>">
-                        <a href="./?view=productos"><i class="fa fa-users"></i><span>Productos</span></a>
-                    </li>
-                    <?php } ?>
-                    <?php if ($_SESSION['empleados']==1) { ?>
-                    <li class="<?php if(isset($active2)){echo $active2;}?>">
-                        <a href="./?view=solicitud"><i class="fa fa-users"></i><span>Solicitud</span></a>
-                    </li>
+                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=empleados"><i class="fa fa-users"></i><span>Empleados</span></a>
+                        </li>
                     <?php } ?>
 
 
 
-                    
-                
-                   
+                    <?php if ($_SESSION['productos'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=productos"><i class="fa fa-users"></i><span>Productos</span></a>
+                        </li>
+                    <?php } ?>
+                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=solicitud"><i class="fa fa-users"></i><span>Solicitud</span></a>
+                        </li>
+                    <?php } ?>
+                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=categorias"><i class="fa fa-users"></i><span>Categoria</span></a>
+                        </li>
+                    <?php } ?>
+                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=subcategorias"><i class="fa fa-users"></i><span>Subcategoria</span></a>
+                        </li>
+                    <?php } ?>
+
+
+
+
+
                 </ul>
             </div>
         </aside>

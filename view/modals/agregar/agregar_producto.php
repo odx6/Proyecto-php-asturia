@@ -50,7 +50,7 @@
                                     // Iterar sobre los resultados y crear una opción para cada uno
 
                                     while ($fila = mysqli_fetch_assoc($resultado)) {
-                                        echo '<option value="' . $fila['INTIDCAT'] . '"  <?php if($categoria= $fila["INTIDCAT"]) selected ?>   >' . $fila['STRNOMCAT'] . '</option>';
+                                        echo '<option value="' . $fila['INTIDCAT'] . '"  <?php if($categoria= $fila["INTIDCAT"]) selected ?>   ' . $fila['STRNOMCAT'] . '</option>';
                                     }
                                 } else {
 

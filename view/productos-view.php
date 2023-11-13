@@ -189,6 +189,7 @@ if ($_SESSION['productos'] == 1) {
 
     <script>
         //Funcion que actualiza los datos de un podructo desde el modal editar 
+        /*
         $("#update_register").submit(function(event) {
             $('#actualizar_datos').attr("disabled", true);
             var parametros = $(this).serialize();
@@ -213,7 +214,7 @@ if ($_SESSION['productos'] == 1) {
             });
             event.preventDefault();
         });
-
+*/
         $("#update_register").submit(function(event) {
             event.preventDefault();
             $('#actualizar_datos').attr("disabled", true);

@@ -177,15 +177,19 @@
 <script>
     $( "#update_register" ).submit(function( event ) {
       $('#actualizar_datos').attr("disabled", true);
-     var parametros = $(this).serialize();
+      var formData = new FormData(this);
+     
          $.ajax({
                 type: "POST",
                 url: "view/ajax/editar/editar_empleado.php",
-                data: parametros,
+                data: formData,
+                processData: false, // Indicar a jQuery que no procese los datos
+                contentType: false, 
                  beforeSend: function(objeto){
                     $("#resultados_ajax").html("Enviando...");
                   },
                 success: function(datos){
+                 
                 $("#resultados_ajax").html(datos);
                 $('#actualizar_datos').attr("disabled", false);
                 load(1);

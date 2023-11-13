@@ -14,9 +14,9 @@
 
             //Name empleado 
             if (isset($fk_empleado) && $fk_empleado != NULL) {
-                $Empleado = mysqli_query($con, "SELECT * FROM empleado WHERE id='$fk_empleado'");
+                $Empleado = mysqli_query($con, "SELECT * FROM tblcatemp WHERE IDEMP='$fk_empleado'");
                 $tem = mysqli_fetch_array($Empleado);
-                $NombreEmpleado = $tem['nombre'] ." ".$tem['apellido'];
+                $NombreEmpleado = $tem['STRNOM'] ." ".$tem['STRAPE'];
             }
             //
 			$NumeroFolio=$rw['NumeroFolio'];
