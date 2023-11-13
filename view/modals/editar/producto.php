@@ -56,14 +56,14 @@ if (isset($_GET["id"])) {
 
 
         // Crear el elemento select
-        echo ' <select class="form-control" name="Categoria" id="Categoria">';
+        echo ' <select class="form-control  categorias" name="categoria" id="categoria">';
 
         if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
             // Iterar sobre los resultados y crear una opción para cada uno
 
             while ($fila = mysqli_fetch_assoc($resultado)) {
-                echo '<option value="' . $fila['INTIDCAT'] . '">' . $fila['STRNOMCAT'] . '</option>';
+                echo '<option value="' . $fila['INTIDCAT'] . '" >' . $fila['STRNOMCAT'] . '</option>';
             }
         } else {
 
@@ -78,11 +78,13 @@ if (isset($_GET["id"])) {
 
     </div>
 </div>
+
 <div class="form-group">
-    <label for="email" class="col-sm-2 control-label">Sub-categoria: </label>
+    <label for="subcategoria" class="col-sm-2 control-label">Subcategoria: </label>
     <div class="col-sm-10">
-    <select class="form-control" name="Subcategoria" id="Subcategoria">
-            <option value="<?php echo $subcategoria ?>" selected><?php echo $subcategoria ?></option>
+        <select class="form-control Subcategorias" name="Subcategoria" id="Subcategoria">
+
+            <option value="" selected desabled> seleccione una categoria primero</option>
         </select>
     </div>
 </div>

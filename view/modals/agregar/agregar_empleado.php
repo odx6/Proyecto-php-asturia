@@ -77,14 +77,15 @@
 
                     </div>
 
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" id="guardar_datos" class="btn btn-primary">Agregar</button>
+                    </div>
+                </form>
+                <!-- /end form  -->
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="submit" id="guardar_datos" class="btn btn-primary">Agregar</button>
-            </div>
-            </form>
-            <!-- /end form  -->
         </div>
-    </div>
     </div>
     <!-- End Form Modal -->

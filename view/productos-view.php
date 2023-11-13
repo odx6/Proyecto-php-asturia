@@ -188,33 +188,7 @@ if ($_SESSION['productos'] == 1) {
     </script>
 
     <script>
-        //Funcion que actualiza los datos de un podructo desde el modal editar 
-        /*
-        $("#update_register").submit(function(event) {
-            $('#actualizar_datos').attr("disabled", true);
-            var parametros = $(this).serialize();
-            $.ajax({
-                type: "POST",
-                url: "view/ajax/editar/editar_producto.php",
-                data: parametros,
-                beforeSend: function(objeto) {
-                    $("#resultados_ajax").html("Enviando...");
-                },
-                success: function(datos) {
-                    $("#resultados_ajax").html(datos);
-                    $('#actualizar_datos').attr("disabled", false);
-                    load(1);
-                    window.setTimeout(function() {
-                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                            $(this).remove();
-                        });
-                    }, 5000);
-                    $('#modal_update').modal('hide');
-                }
-            });
-            event.preventDefault();
-        });
-*/
+    
         $("#update_register").submit(function(event) {
             event.preventDefault();
             $('#actualizar_datos').attr("disabled", true);
@@ -264,6 +238,7 @@ if ($_SESSION['productos'] == 1) {
         }
 
         function mostrar(id) {
+
             var parametros = {
                 "action": "ajax",
                 "id": id
@@ -277,6 +252,9 @@ if ($_SESSION['productos'] == 1) {
                 success: function(data) {
                     $(".outer_div3").html(data).fadeIn('slow');
                     $("#loader3").html("");
+                        
+
+
                 }
             })
         }
@@ -292,6 +270,7 @@ if ($_SESSION['productos'] == 1) {
 
             document.body.innerHTML = contenidoOriginal;
         }
+        
     </script>
 <?php
 } else {

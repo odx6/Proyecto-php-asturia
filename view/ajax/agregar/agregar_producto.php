@@ -6,8 +6,8 @@
             $errors[] = "Codigo  está vacío.";
         }  elseif (empty($_POST['descripcion'])) {
             $errors[] = "Descripcion está vacío.";
-        }   elseif (empty($_POST['Categoria'])) {
-            $errors[] = "Categoria  está vacío.";
+        }   elseif (empty($_POST['categoria'])) {
+            $errors[] = "categoria  está vacío.";
         }  elseif (empty($_POST['Subcategoria'])) {
             $errors[] = "Subcategoria está vacío.";
         }  elseif (empty($_POST['precio'])) {
@@ -29,7 +29,7 @@
         	!empty($_POST['sku'])
         	&& !empty($_POST['codigo'])
         	&& !empty($_POST['descripcion'])
-			&& !empty($_POST['[Categoria'])
+			&& !empty($_POST['categoria'])
 			&& !empty($_POST['Subcategoria'])
 			&& !empty($_POST['precio'])
 			&& !empty($_POST['unidad'])
@@ -45,7 +45,7 @@
             $sku = mysqli_real_escape_string($con,(strip_tags($_POST["sku"],ENT_QUOTES)));
             $codigo = mysqli_real_escape_string($con,(strip_tags($_POST["codigo"],ENT_QUOTES)));
             $descripcion = mysqli_real_escape_string($con,(strip_tags($_POST["descripcion"],ENT_QUOTES)));
-            $categoria = mysqli_real_escape_string($con,(strip_tags($_POST["Categoria"],ENT_QUOTES)));
+            $categoria = mysqli_real_escape_string($con,(strip_tags($_POST["categoria"],ENT_QUOTES)));
             $subcategoria = mysqli_real_escape_string($con,(strip_tags($_POST["Subcategoria"],ENT_QUOTES)));
             $precio= mysqli_real_escape_string($con,(strip_tags($_POST["precio"],ENT_QUOTES)));
             $unidad = mysqli_real_escape_string($con,(strip_tags($_POST["unidad"],ENT_QUOTES)));
@@ -80,38 +80,17 @@
            
             $estado = mysqli_real_escape_string($con,(strip_tags($_POST["estado"],ENT_QUOTES)));
            /* $kind = mysqli_real_escape_string($con,(strip_tags($_POST["kind"],ENT_QUOTES)));*/
-			//$created_at=date("Y-m-d H:i:s");
+			$created_at=date("Y-m-d H:i:s");
 			//$imagen="view/resources/images/default.png";
 
 			//variable de los permisos 
             //$permisos = $_POST["permisos"];
 
 			//Write register in to database 
-			$sql = "INSERT INTO tblcatpro (STRSKU, STRCOD, STRDESPRO, INTIDCAT, INTIDSBC, MONPCOS, INTIDUNI, STRIMG, INTTIPUSO, BITSUS) 
-			VALUES('".$sku."','".$codigo."','".$descripcion."','".$categoria."','".$subcategoria."','".$precio."','".$unidad."','".$Imagen."','".$perteneceTaller."','".$estado."');";
+			$sql = "INSERT INTO tblcatpro (STRSKU, STRCOD, STRDESPRO, INTIDCAT, INTIDSBC, MONPCOS, INTIDUNI, STRIMG, INTTIPUSO, BITSUS,CREATE_AT) 
+			VALUES('".$sku."','".$codigo."','".$descripcion."','".$categoria."','".$subcategoria."','".$precio."','".$unidad."','".$Imagen."','".$perteneceTaller."','".$estado."','".$created_at."');";
 			$query_new = mysqli_query($con,$sql);
-            // if has been added successfully
-           /* if ($query_new) {
-
-            		$numeroMaximo="select max(id) as nuevo_empleado from empleado";
-            		$idusernew_sql=mysqli_query($con,$numeroMaximo);
-            		$idusernew_rw=mysqli_fetch_array($idusernew_sql);
-            		$idusernew=$idusernew_rw['nuevo_empleado'];	
-            		//agrego los permisos by amner saucedo sosa
-            		$num_element=0;
-					$sw=true;
-
-					while ($num_element < count($permisos))
-					{
-						$sql_detalle = "INSERT INTO empleado_permisos(idempleado, idpermiso) VALUES($idusernew, $permisos[$num_element])";
-						mysqli_query($con,$sql_detalle) or $sw = false;
-						$num_element=$num_element + 1;
-					}
-
-                $messages[] = "Empleado ha sido agregado con éxito.";
-            } else {
-                $errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
-            }*/
+           
 		} else {
 			$errors[] = "desconocido.";	
 		}

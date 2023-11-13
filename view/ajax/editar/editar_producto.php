@@ -29,7 +29,7 @@
         	!empty($_POST['sku'])
         	&& !empty($_POST['Codigo'])
         	&& !empty($_POST['Descripcion'])
-			&& !empty($_POST['Categoria'])
+			&& !empty($_POST['categoria'])
 			&& !empty($_POST['Subcategoria'])
 			/*&& !empty($_POST['password'])*/
 			&& !empty($_POST['Precio'])
@@ -45,7 +45,7 @@
     $sku = mysqli_real_escape_string($con,(strip_tags($_POST["sku"],ENT_QUOTES)));
     $Codigo = mysqli_real_escape_string($con,(strip_tags($_POST["Codigo"],ENT_QUOTES)));
     $Descripcion = mysqli_real_escape_string($con,(strip_tags($_POST["Descripcion"],ENT_QUOTES)));
-    $Categoria = mysqli_real_escape_string($con,(strip_tags($_POST["Categoria"],ENT_QUOTES)));
+    $categoria = mysqli_real_escape_string($con,(strip_tags($_POST["categoria"],ENT_QUOTES)));
     $Subcategoria = mysqli_real_escape_string($con,(strip_tags($_POST["Subcategoria"],ENT_QUOTES)));
     $Precio = mysqli_real_escape_string($con,(strip_tags($_POST["Precio"],ENT_QUOTES)));
     $Unidad = mysqli_real_escape_string($con,(strip_tags($_POST["Unidad"],ENT_QUOTES)));
@@ -91,7 +91,7 @@
 
 
 	// UPDATE data into database
-    $sql = "UPDATE tblcatpro SET STRSKU='".$sku."', STRCOD='".$Codigo."', STRDESPRO='".$Descripcion."', INTIDCAT='".$Categoria."', INTIDSBC='".$Subcategoria."', MONPCOS='".$Precio."', INTIDUNI='".$Unidad."', STRIMG='".$Imagen."',INTTIPUSO='".$PTAller."', BITSUS='".$estado."' WHERE STRSKU='".$id."' ";
+    $sql = "UPDATE tblcatpro SET STRSKU='".$sku."', STRCOD='".$Codigo."', STRDESPRO='".$Descripcion."', INTIDCAT='".$categoria."', INTIDSBC='".$Subcategoria."', MONPCOS='".$Precio."', INTIDUNI='".$Unidad."', STRIMG='".$Imagen."',INTTIPUSO='".$PTAller."', BITSUS='".$estado."' WHERE STRSKU='".$id."' ";
     $query = mysqli_query($con,$sql);
   //codigo para eliminar una img
   if($query && file_exists("../../../".$pathimg))unlink("../../../".$pathimg);

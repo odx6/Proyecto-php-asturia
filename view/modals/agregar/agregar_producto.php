@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="usuario" class="col-sm-2 control-label">Categoria: </label>
+                            <label for="usuario" reuired  class="col-sm-2 control-label">Categoria: </label>
 
                             <div class="col-sm-10">
                                 <?php
@@ -43,7 +43,7 @@
 
 
                                 // Crear el elemento select
-                                echo ' <select class="form-control" name="categoria" id="categoria">';
+                                echo ' <select class="form-control categorias" name="categoria" id="categoria">';
 
                                 if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
@@ -68,7 +68,7 @@
                         <div class="form-group">
                             <label for="subcategoria" class="col-sm-2 control-label">Subcategoria: </label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="Subcategoria" id="Subcategoria">
+                                <select class="form-control Subcategorias" name="Subcategoria" id="Subcategoria" required>
 
                                     <option value="" selected desabled> seleccione una categoria primero</option>
                                 </select>
@@ -77,13 +77,13 @@
                         <div class="form-group">
                             <label for="precio" class="col-sm-2 control-label">Precio: </label>
                             <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio">
+                                <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" required> 
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="unidad" class="col-sm-2 control-label">Unidad de medida : </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="unidad" name="unidad" placeholder="Unidad: ">
+                                <input type="text" class="form-control" id="unidad" name="unidad" placeholder="Unidad: " required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -95,21 +95,21 @@
                         <div class="form-group">
                             <label for="telefono" class="col-sm-2 control-label">Pertenece al taller</label>
                             <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="Ptaller" name="Ptaller" placeholder="Pertenece al taller">
+                                <input type="text" required class="form-control" id="Ptaller" name="Ptaller" placeholder="Pertenece al taller" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="telefono" class="col-sm-2 control-label">INITIPUSO</label>
                             <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="INITIPUSO" name="INITIPUSO" placeholder="INITIPUSO">
+                                <input type="text" required class="form-control" id="INITIPUSO" name="INITIPUSO" placeholder="INITIPUSO" requeired>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="estado" class="col-sm-2 control-label">Estado: </label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="estado" id="estado">
+                                <select class="form-control" name="estado" id="estado" required>
                                     <option value="1">Activo</option>
                                     <option value="2">Inactivo</option>
                                 </select>
