@@ -59,6 +59,7 @@ if ($action == 'ajax') {
 				<tr>
 					<th>#id Subcategoria</th>
 					<th>Nombre</th>
+					<th>Categoria</th>
 					<th>Descripcion</th>
                     <th>Estado</th>
 					<th>Fecha-Creacion</th>
@@ -69,6 +70,15 @@ if ($action == 'ajax') {
 			$finales = 0;
 			while ($row = mysqli_fetch_array($query)) {
 				  $INTIDSBC=$row['INTIDSBC'];
+				  $INTIDCAT=$row['INTIDCAT'];
+
+				  if (isset($INTIDCAT) && $INTIDCAT != NULL) {
+					$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
+					if (isset($Categoria) && $Categoria != NULL) {
+					$tem = mysqli_fetch_array($Categoria);
+					if(isset($tem) && $tem != NULL)$NombreCategoria = $tem['STRNOMCAT'];
+					}
+				}
 				  $STRNOMSBC=$row['STRNOMSBC'];
 				  $STRDESSBC=$row['STRDESBC'];
 				  $DTEHOR=$row['DTEHOR'];
@@ -90,6 +100,7 @@ if ($action == 'ajax') {
 					<tr>
 						<td><?php echo $INTIDSBC ?></td>
 						<td><?php echo $STRNOMSBC ?></td>
+						<td><?php  echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
 						<td><?php echo $STRDESSBC?></td>
 						
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
