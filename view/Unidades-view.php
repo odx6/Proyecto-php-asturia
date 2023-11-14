@@ -11,12 +11,12 @@ if ($_SESSION['empleados'] == 1) {
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb  pull-right">
                         <li><a href="./?view=dashboard">Dashboard</a></li>
-                        <li class="active">Solicitud</li>
+                        <li class="active">Unidades</li>
 
                     </ul>
                     <!--breadcrumbs end -->
                     <br>
-                    <h1 class="h1">Solicitud</h1>
+                    <h1 class="h1">Unidades</h1>
                 </div>
             </div>
 
@@ -24,24 +24,24 @@ if ($_SESSION['empleados'] == 1) {
                 <div class="col-xs-3">
 
                     <select id="miSelect">
-
+                       
                         <option value="pk_solicitud">Id Orden</option>
                         <option value="fk_empleado">Empleado</option>
                         <option value="fecha">fecha</option>
                         <option value="operador">operador</option>
                         <option value="NoCarro">Numero de carro</option>
                         <option value="Kilometraje">Kilometraje</option>
-                        <option value="DetallesServicio">Detalles del servico </option>
+                        <option value="DetallesServicio">Detalles del servico	</option>
                         <option value="Observaciones">Observaciones</option>
-
+                        
                         <!-- Agrega más opciones según las columnas que tengas -->
                     </select>
 
                     <div class="input-group">
 
-                        <input type="text" class="form-control" placeholder="Buscar por numero de folio" id='q' onkeyup="load(1,'solicitud','view/ajax/Mostrar_Solicitudes_ajax.php','./empresas-view.php');">
+                        <input type="text" class="form-control" placeholder="Buscar por numero de folio" id='q' onkeyup="load(1);">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" onclick="load(1,'solicitud','view/ajax/Mostrar_Solicitudes_ajax.php','./solicitud-view.php');"><i class='fa fa-search'></i></button>
+                            <button class="btn btn-default" type="button" onclick='load(1);'><i class='fa fa-search'></i></button>
                         </span>
                     </div><!-- /input-group -->
                 </div>
@@ -53,9 +53,9 @@ if ($_SESSION['empleados'] == 1) {
                 <div class="col-md-offset-10">
                     <!-- modals -->
                     <?php
-                    include "modals/agregar/Solicitud/agregar_solicitud.php";
-                    include "modals/editar/editar_solicitud.php";
-                    include "modals/mostrar/mostrar_solicitud.php";
+                    include "modals/agregar/agregar_subcategoria.php";
+                    include "modals/editar/editar_subcategoria.php";
+                    include "modals/mostrar/mostrar_subcategoria.php";
                     ?>
                     <!-- /end modals -->
 
@@ -82,7 +82,7 @@ if ($_SESSION['empleados'] == 1) {
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Datos de las Solicitudes</h3>
+                            <h3 class="panel-title">Datos de Unidad de Medida</h3>
                             <div class="actions pull-right">
                                 <i class="fa fa-chevron-down"></i>
                                 <i class="fa fa-times"></i>
@@ -102,67 +102,9 @@ if ($_SESSION['empleados'] == 1) {
     <?php
     include "resources/footer.php";
     ?>
-
-    <!--funcion buscar en la vista -->
     <script>
         $(function() {
-            load(1,'solicitud','view/ajax/Mostrar_Solicitudes_ajax.php');
-        });
-    </script>
-   
-    <script>
-        $("#new_register").submit(function(event) {
-            $('#guardar_datos').attr("disabled", true);
-            var parametros = $(this).serialize();
-            $.ajax({
-                type: "POST",
-                url: "view/ajax/Solicitud/agregar_solicitud.php",
-                data: parametros,
-                beforeSend: function(objeto) {
-                    $("#resultados_ajax").html("Enviando...");
-                },
-                success: function(datos) {
-                    $("#resultados_ajax").html(datos);
-                    $('#guardar_datos').attr("disabled", false);
-                    load(1);
-                    window.setTimeout(function() {
-                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                            $(this).remove();
-                        });
-                    }, 5000);
-                    $('#formModal').modal('hide');
-                }
-            });
-            event.preventDefault();
-        })
-        GuardarDatos("view/ajax/Solicitud/agregar_solicitud.php")
-    </script>
-
-    <script>
-        //Boton Actualizar desde modal editar
-        $("#update_register").submit(function(event) {
-            $('#actualizar_datos').attr("disabled", true);
-            var parametros = $(this).serialize();
-            $.ajax({
-                type: "POST",
-                url: "view/ajax/editar/editar_solicitud.php",
-                data: parametros,
-                beforeSend: function(objeto) {
-                    $("#resultados_ajax").html("Enviando...");
-                },
-                success: function(datos) {
-                    $("#resultados_ajax").html(datos);
-                    $('#actualizar_datos').attr("disabled", false);
-                    load(1);
-                    window.setTimeout(function() {
-                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                            $(this).remove();
-                        });
-                    }, 5000);
-                    $('#modal_update').modal('hide');
-                }
-            });
-            event.preventDefault();
+            load(1,'solicitud','view/ajax/Unidades/unidades_ajax.php');
         });
     </script>
 <?php

@@ -16,7 +16,7 @@ if ($_SESSION['empleados'] == 1) {
                     </ul>
                     <!--breadcrumbs end -->
                     <br>
-                    <h1 class="h1">Solicitud</h1>
+                    <h1 class="h1">Categorias</h1>
                 </div>
             </div>
 

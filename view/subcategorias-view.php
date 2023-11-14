@@ -11,12 +11,12 @@ if ($_SESSION['empleados'] == 1) {
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb  pull-right">
                         <li><a href="./?view=dashboard">Dashboard</a></li>
-                        <li class="active">Categorias</li>
+                        <li class="active">Subcategorias</li>
 
                     </ul>
                     <!--breadcrumbs end -->
                     <br>
-                    <h1 class="h1">Solicitud</h1>
+                    <h1 class="h1">Subcategorias</h1>
                 </div>
             </div>
 

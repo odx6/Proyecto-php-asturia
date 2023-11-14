@@ -56,13 +56,14 @@ if (isset($_GET["id"])) {
 
 
         // Crear el elemento select
-        echo ' <select class="form-control  categorias" name="categoria" id="categoria">';
+        echo ' <select class="form-control  categorias" name="categoria" id="categoria" onclick="mensaje();">';
 
         if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
             // Iterar sobre los resultados y crear una opción para cada uno
 
             while ($fila = mysqli_fetch_assoc($resultado)) {
+                if($categoria== $fila["INTIDCAT"]) $valor="selected";
                 echo '<option value="' . $fila['INTIDCAT'] . '" >' . $fila['STRNOMCAT'] . '</option>';
             }
         } else {
@@ -99,6 +100,7 @@ if (isset($_GET["id"])) {
         <input type="text" class="form-control" id="Unidad" name="Unidad" value="<?php echo $unidadMedida; ?>" placeholder="Unidad: ">
     </div>
 </div>
+
 <div class="form-group">
     <label for="localidad" class="col-sm-2 control-label">Imagen: </label>
     <div class="col-sm-10">

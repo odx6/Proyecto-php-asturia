@@ -61,7 +61,7 @@ if ($action == 'ajax') {
 					<th>Nombre</th>
 					<th>Categoria</th>
 					<th>Descripcion</th>
-                    <th>Estado</th>
+					<th>Estado</th>
 					<th>Fecha-Creacion</th>
 					<th>Accion</th>
 				</tr>
@@ -69,20 +69,20 @@ if ($action == 'ajax') {
 			<?php
 			$finales = 0;
 			while ($row = mysqli_fetch_array($query)) {
-				  $INTIDSBC=$row['INTIDSBC'];
-				  $INTIDCAT=$row['INTIDCAT'];
+				$INTIDSBC = $row['INTIDSBC'];
+				$INTIDCAT = $row['INTIDCAT'];
 
-				  if (isset($INTIDCAT) && $INTIDCAT != NULL) {
+				if (isset($INTIDCAT) && $INTIDCAT != NULL) {
 					$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
 					if (isset($Categoria) && $Categoria != NULL) {
-					$tem = mysqli_fetch_array($Categoria);
-					if(isset($tem) && $tem != NULL)$NombreCategoria = $tem['STRNOMCAT'];
+						$tem = mysqli_fetch_array($Categoria);
+						if (isset($tem) && $tem != NULL) $NombreCategoria = $tem['STRNOMCAT'];
 					}
 				}
-				  $STRNOMSBC=$row['STRNOMSBC'];
-				  $STRDESSBC=$row['STRDESBC'];
-				  $DTEHOR=$row['DTEHOR'];
-				  $BITSUS=$row['BITSUS'];
+				$STRNOMSBC = $row['STRNOMSBC'];
+				$STRDESSBC = $row['STRDESBC'];
+				$DTEHOR = $row['DTEHOR'];
+				$BITSUS = $row['BITSUS'];
 
 				if ($BITSUS == 1) {
 					$lbl_status = "Activo";
@@ -91,7 +91,7 @@ if ($action == 'ajax') {
 					$lbl_status = "Inactivo";
 					$lbl_class = 'label label-danger';
 				}
-				
+
 				/*$kind=$row['kind'];*/
 
 				$finales++;
@@ -100,9 +100,9 @@ if ($action == 'ajax') {
 					<tr>
 						<td><?php echo $INTIDSBC ?></td>
 						<td><?php echo $STRNOMSBC ?></td>
-						<td><?php  echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
-						<td><?php echo $STRDESSBC?></td>
-						
+						<td><?php echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
+						<td><?php echo $STRDESSBC ?></td>
+
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">

@@ -188,7 +188,6 @@ if ($_SESSION['productos'] == 1) {
     </script>
 
     <script>
-    
         $("#update_register").submit(function(event) {
             event.preventDefault();
             $('#actualizar_datos').attr("disabled", true);
@@ -233,6 +232,7 @@ if ($_SESSION['productos'] == 1) {
                 success: function(data) {
                     $(".outer_div2").html(data).fadeIn('slow');
                     $("#loader2").html("");
+                    $(".categorias").trigger('change');
                 }
             })
         }
@@ -252,7 +252,7 @@ if ($_SESSION['productos'] == 1) {
                 success: function(data) {
                     $(".outer_div3").html(data).fadeIn('slow');
                     $("#loader3").html("");
-                        
+
 
 
                 }
@@ -270,7 +270,6 @@ if ($_SESSION['productos'] == 1) {
 
             document.body.innerHTML = contenidoOriginal;
         }
-        
     </script>
 <?php
 } else {

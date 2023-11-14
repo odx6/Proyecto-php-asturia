@@ -163,6 +163,13 @@ $nombre_empresa = $rw['nombre'];
                             <a href="./?view=subcategorias"><i class="fa fa-users"></i><span>Subcategoria</span></a>
                         </li>
                     <?php } ?>
+                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=Unidades"><i class="fa fa-users"></i><span>Unidades de medida</span></a>
+                        </li>
+                    <?php } ?>
 
 
 

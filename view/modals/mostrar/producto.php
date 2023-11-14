@@ -14,6 +14,7 @@
 			//$nombre=$rw['nombre'];
 			$STRDESPRO=$rw['STRDESPRO'];
 			$INTIDCAT=$rw['INTIDCAT'];
+            
 			$INTIDSUBCAT=$rw['INTIDSBC'];
 			$MONPCOS=$rw['MONPCOS'];
 			$INTIDUNI=$rw['INTIDUNI'];

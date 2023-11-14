@@ -1,12 +1,12 @@
 <?php
-	include("is_logged.php");//Archivo comprueba si el usuario esta logueado
+	include("../is_logged.php");//Archivo comprueba si el usuario esta logueado
 	/* Connect To Database*/
-	require_once ("../../config/config.php");
+	require_once ("../../../config/config.php");
 	if (isset($_REQUEST["id"])){//codigo para eliminar 
 	$id=$_REQUEST["id"];
 	
 	$id=intval($id);
-	if($delete=mysqli_query($con, "DELETE FROM solicitud WHERE pk_solicitud='$id'")){
+	if($delete=mysqli_query($con, "DELETE FROM  tblcatuni WHERE INIDUNI='$id'")){
 		$aviso="Bien hecho!";
 		$msj="Datos eliminados satisfactoriamente.";
 		$classM="alert alert-success";
@@ -26,13 +26,13 @@ if($action == 'ajax'){
 	$Table=(isset($_REQUEST['table'])&& $_REQUEST['table'] !=NULL)?$_REQUEST['table']:'';
 	$Reload=(isset($_REQUEST['reload'])&& $_REQUEST['reload'] !=NULL)?$_REQUEST['reload']:'';
 
-	$tables="solicitud";
+	$tables="tblcatuni";
 	$campos="*";
 	//dependiendo de por que se quiera filtrar
 	//$sWhere=$column." LIKE '%".$query."%'";
-	$sWhere="pk_solicitud LIKE '%" .$query. "%'";
+	$sWhere=" STRNOMUNI LIKE '%" .$query. "%'";
 	
-	include 'pagination.php'; //include pagination file
+	include '../pagination.php'; //include pagination file
 	//pagination variables
 	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page']))?$_REQUEST['page']:1;
 	$per_page = intval($_REQUEST['per_page']); //how much records you want to show
@@ -78,23 +78,7 @@ if($action == 'ajax'){
         <?php 
 			$finales=0;
 			while($row = mysqli_fetch_array($query)){	
-				$id=$row['pk_solicitud'];
-				$empleado=$row['fk_empleado'];
-				//Name Empleado 
-				if (isset($empleado) && $empleado != NULL) {
-					$Empleado = mysqli_query($con, "SELECT * FROM tblcatemp WHERE IDEMP='$empleado'");
-					$tem = mysqli_fetch_array($Empleado);
-					$NombreEmpleado = $tem['STRNOM'] ." ".$tem['STRAPE'];
-				}
-				//
-				$Folio=$row['NumeroFolio'];
-				$Fecha=$row['fecha'];
-				$Operador=$row['operador'];
-				$Carro=$row['NoCarro'];
-				$Kilometraje=$row['Kilometraje'];
-				$Placas=$row['NoPlacas'];
-				$Detalles=$row['DetallesServicio'];
-				$Observacione=$row['Observaciones'];
+				$INTIDUNI=$row['INTIDUNI'];
 				
 				
 				
@@ -102,16 +86,8 @@ if($action == 'ajax'){
 		?>	
         <tbody>
             <tr>
-                <td><?php echo $id ?></td>
-                <td><?php echo $NombreEmpleado ?></td>
-                <td><?php echo $Folio ?></td>
-                <td><?php echo $Fecha ?></td>
-                <td><?php echo $Operador ?></td>
-                <td><?php echo $Carro ?></td>
-                <td><?php echo $Kilometraje ?></td>
-                <td><?php echo $Placas ?></td>
-                <td><?php echo $Detalles ?></td>
-                <td><?php echo $Observacione ?></td>
+                <td><?php echo $INTIDUNI ?></td>
+                
                 
                 <td class="text-right">
 
