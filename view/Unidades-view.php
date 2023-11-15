@@ -53,9 +53,9 @@ if ($_SESSION['empleados'] == 1) {
                 <div class="col-md-offset-10">
                     <!-- modals -->
                     <?php
-                    include "modals/agregar/agregar_subcategoria.php";
-                    include "modals/editar/editar_subcategoria.php";
-                    include "modals/mostrar/mostrar_subcategoria.php";
+                    include "modals/agregar/agregar_unidad.php";
+                    include "modals/editar/editar_unidad.php";
+                    include "modals/mostrar/mostrar_unidad.php";
                     ?>
                     <!-- /end modals -->
 
@@ -105,6 +105,60 @@ if ($_SESSION['empleados'] == 1) {
     <script>
         $(function() {
             load(1,'solicitud','view/ajax/Unidades/unidades_ajax.php');
+        });
+    </script>
+    <script>
+        $("#new_register").submit(function(event) {
+            $('#guardar_datos').attr("disabled", true);
+            var parametros = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "view/ajax/agregar/agregar_unidad.php",
+                data: parametros,
+                beforeSend: function(objeto) {
+                    $("#resultados_ajax").html("Enviando...");
+                },
+                success: function(datos) {
+                    $("#resultados_ajax").html(datos);
+                    $('#guardar_datos').attr("disabled", false);
+                    load(1,'solicitud','view/ajax/Unidades/unidades_ajax.php')
+                    window.setTimeout(function() {
+                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                    $('#formModal').modal('hide');
+                }
+            });
+            event.preventDefault();
+        })
+       
+    </script>
+    <script>
+        //Boton Actualizar desde modal editar
+        $("#update_register").submit(function(event) {
+            $('#actualizar_datos').attr("disabled", true);
+            var parametros = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "view/ajax/editar/editar_unidad.php",
+                data: parametros,
+                beforeSend: function(objeto) {
+                    $("#resultados_ajax").html("Enviando...");
+                },
+                success: function(datos) {
+                    $("#resultados_ajax").html(datos);
+                    $('#actualizar_datos').attr("disabled", false);
+                    load(1,'solicitud','view/ajax/Unidades/unidades_ajax.php')
+                    window.setTimeout(function() {
+                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                    $('#modal_update').modal('hide');
+                }
+            });
+            event.preventDefault();
         });
     </script>
 <?php

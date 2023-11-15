@@ -28,7 +28,7 @@ $(document).ready(function () {
 
       }
     });
-   
+
   });
   //load 
 
@@ -136,21 +136,21 @@ function editar(id, path) {
 //endeditar
 
 //mostrar
-function mostrar(id,path) {
+function mostrar(id, path) {
   var parametros = {
-      "action": "ajax",
-      "id": id
+    "action": "ajax",
+    "id": id
   };
   $.ajax({
-      url: path,
-      data: parametros,
-      beforeSend: function(objeto) {
-          $("#loader3").html("<img src='./assets/img/ajax-loader.gif'>");
-      },
-      success: function(data) {
-          $(".outer_div3").html(data).fadeIn('slow');
-          $("#loader3").html("");
-      }
+    url: path,
+    data: parametros,
+    beforeSend: function (objeto) {
+      $("#loader3").html("<img src='./assets/img/ajax-loader.gif'>");
+    },
+    success: function (data) {
+      $(".outer_div3").html(data).fadeIn('slow');
+      $("#loader3").html("");
+    }
   })
 }
 
@@ -170,7 +170,7 @@ function exportpf(historial) {
 }
 //
 
-function mensaje(){
+function mensaje() {
 
   $(".categorias").change(function () {
     var categoriaID = $(this).val();
@@ -181,7 +181,7 @@ function mensaje(){
       data: { categoria: categoriaID },
       dataType: 'json',
       success: function (response) {
-        //alert(response)
+       // alert(response)
         var len = response.length;
 
         if (len > 0) {
@@ -198,10 +198,25 @@ function mensaje(){
 
       }
     });
-   
+
   });
 }
 
-//
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $('#blah').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+
+function UploadImng(){
+  readURL(this);
+alert("Hola");
+}
+
 
 

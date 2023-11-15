@@ -1,8 +1,5 @@
 <?php
-
-
 $user_ip = $_SERVER['REMOTE_ADDR'];
-
 if (!isset($_SESSION['user_id']) && $_SESSION['user_id'] == null) {
     header("location: ./?view=index");
 
@@ -112,6 +109,8 @@ $nombre_empresa = $rw['nombre'];
         <!--sidebar left start-->
         <aside class="sidebar">
             <div id="leftside-navigation" class="nano">
+
+
                 <li>
                     <a href="http://romasa.mx/"><i class="fa fa-cog"></i><span>Asturias</span></a>
                 </li>
@@ -170,6 +169,7 @@ $nombre_empresa = $rw['nombre'];
                             <a href="./?view=Unidades"><i class="fa fa-users"></i><span>Unidades de medida</span></a>
                         </li>
                     <?php } ?>
+                    
 
 
 

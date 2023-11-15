@@ -6,7 +6,7 @@
 	$id=$_REQUEST["id"];
 	
 	$id=intval($id);
-	if($delete=mysqli_query($con, "DELETE FROM  tblcatuni WHERE INIDUNI='$id'")){
+	if($delete=mysqli_query($con, "DELETE FROM  tblcatuni WHERE INTIDUNI='$id'")){
 		$aviso="Bien hecho!";
 		$msj="Datos eliminados satisfactoriamente.";
 		$classM="alert alert-success";
@@ -62,16 +62,11 @@ if($action == 'ajax'){
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>#Id Orden </th>
-                <th> Empleado </th>
-                <th>No.Folio</th>
+                <th>#Id unidad </th>
+                <th>Nombre </th>
+                <th>Descripcion</th>
                 <th>Fecha</th>
-                <th>Operador</th>
-                <th>No.Carro</th>
-                <th>Kilometraje</th>
-                <th>No.Placas</th>
-                <th>Detalles del servicio</th>
-                <th>Observaciones</th>
+                <th>Estado</th>
                 <th>Accion</th>
             </tr>
         </thead>
@@ -79,29 +74,39 @@ if($action == 'ajax'){
 			$finales=0;
 			while($row = mysqli_fetch_array($query)){	
 				$INTIDUNI=$row['INTIDUNI'];
+				$STRNOMUNI=$row['STRNOMUNI'];
+				$STRDESUNI=$row['STRDESUNI'];
+				$DTEHOR=$row['DTEHOR'];
+				$BITSUS=$row['BITSUS'];
 				
-				
+				if ($BITSUS == 1) {
+					$lbl_status = "Activo";
+					$lbl_class = 'label label-success';
+				} else {
+					$lbl_status = "Inactivo";
+					$lbl_class = 'label label-danger';
+				}
 				
 				$finales++;
 		?>	
         <tbody>
             <tr>
                 <td><?php echo $INTIDUNI ?></td>
+                <td><?php echo $STRNOMUNI?></td>
+                <td><?php echo $STRDESUNI?></td>
+                <td><?php echo $DTEHOR?></td>
+                <td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
                 
                 
                 <td class="text-right">
 
-                    <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $id;?>','view/modals/editar/solicitud.php');"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDUNI;?>','view/modals/editar/unidad.php');"><i class="fa fa-edit"></i></button>
 
-                    <button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $id;?>','view/ajax/Mostrar_Solicitudes_ajax.php','solicitud')"><i class="fa fa-trash-o"></i></button>
+                    <button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDUNI;?>','view/ajax/Unidades/unidades_ajax.php')"><i class="fa fa-trash-o"></i></button>
 
-                    <button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $id;?>','view/modals/mostrar/solicitud.php')"><i class="fa fa-eye"></i></button>
+                    <button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDUNI;?>','view/modals/mostrar/unidad.php')"><i class="fa fa-eye"></i></button>
                    
-                    <form action="?view=Pdfs" method="post">
-    <input type="hidden" name="id" value="<?php echo $id;?>">
-	<button type="submit" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#"><i class="fa fa-eye"></i></button>
-</form>
-                </td>
+                    
             </tr>
         </tbody>
         <?php }?>	

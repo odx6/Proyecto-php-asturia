@@ -4,14 +4,14 @@ require_once("../../../config/config.php");
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $id = intval($id);
-    $sql = "select * from tblcatcat where INTIDCAT='$id'";
+    $sql = "select * from tblcatuni where INTIDUNI='$id'";
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
     if ($num == 1) {
         while ($row = mysqli_fetch_array($query)) {
 
-            $STRNOMCAT = $row['STRNOMCAT'];
-            $STRDESCAT = $row['STRDESCAT'];
+            $STRNOMUNI = $row['STRNOMUNI'];
+            $STRDESUNI= $row['STRDESUNI'];
             $DTEHOR = $row['DTEHOR'];
             $BITSUS = $row['BITSUS'];
 
@@ -27,13 +27,13 @@ if (isset($_GET["id"])) {
 <div class="form-group">
     <label for="dni" class="col-sm-2 control-label">Nombre : </label>
     <div class="col-sm-10">
-        <input type="text" required class="form-control" id="STRNOMCAT" name="STRNOMCAT" placeholder="Nombre Categoria: " value="<?php echo $STRNOMCAT ?>">
+        <input type="text" required class="form-control" id="STRNOMUNI" name="STRNOMUNI" placeholder="Nombre unidad: " value="<?php echo $STRNOMUNI ?>" >
     </div>
 </div>
 <div class="form-group">
     <label for="nombre" class="col-sm-2 control-label">Descripcion: </label>
     <div class="col-sm-10">
-        <input type="text" required class="form-control" id="STRDESCAT" name="STRDESCAT" placeholder="Descripcion: " value="<?php echo $STRDESCAT ?>">
+        <input type="text" required class="form-control" id="STRDESUNI" name="STRDESUNI" placeholder="Descripcion: " value="<?php echo $STRDESUNI ?>">
     </div>
 </div>
 
@@ -43,7 +43,7 @@ if (isset($_GET["id"])) {
     <div class="col-sm-10">
         <select class="form-control" name="BITSUS" id="BITSUS">
             <option value="1" <?php if($BITSUS==1 ) echo "selected"; ?>>Activo</option>
-            <option value="2" <?php if($BITSUS==2 ) echo "selected"; ?>>Inactivo</option>
+            <option value="2"  <?php if($BITSUS==2 ) echo "selected"; ?>>Inactivo</option>
         </select>
     </div>
 </div>

@@ -29,6 +29,9 @@
 ?>
 <input type="hidden" value="<?php echo $id;?>" name="id" id="id">
 <div class="form-group">
+<img width="300px" height="300px" src="<?php echo $STRIMG ?>" alt="Imagen Producto">
+</div>
+<div class="form-group">
     <label for="dni" class="col-sm-4 control-label">SKU: </label>
     <div class="col-sm-8">
         <?php echo $SKU;?>

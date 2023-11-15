@@ -135,7 +135,7 @@ if ($_SESSION['empleados'] == 1) {
             });
             event.preventDefault();
         })
-        GuardarDatos("view/ajax/Solicitud/agregar_solicitud.php")
+       
     </script>
 
     <script>

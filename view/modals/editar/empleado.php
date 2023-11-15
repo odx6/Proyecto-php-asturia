@@ -143,8 +143,8 @@ if (isset($_GET["id"])) {
     <label for="estado" class="col-sm-2 control-label">Estado: </label>
     <div class="col-sm-10">
         <select class="form-control" name="BITSUS" id="BITSUS">
-            <option value="1">Activo</option>
-            <option value="2">Inactivo</option>
+            <option value="1" <?php if($BITSUS==1 ) echo "selected"; ?>>Activo</option>
+            <option value="2" <?php if($BITSUS==2 ) echo "selected"; ?>>Inactivo</option>
         </select>
     </div>
 </div>

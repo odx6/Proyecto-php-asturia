@@ -16,13 +16,13 @@
                         <div class="form-group">
                             <label for="dni" class="col-sm-2 control-label">NSS: </label>
                             <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="STRNSS" name="STRNSS" placeholder="NSS: ">
+                                <input type="text" required class="form-control" id="STRNSS" name="STRNSS" placeholder="NSS: " pattern="^(\d{2})(\d{2})(\d{2})\d{5}$" title="El NSS debe tener 11 dígitos." >
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="nombre" class="col-sm-2 control-label">RFC: </label>
                             <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="STRRFC" name="STRRFC" placeholder="RFC: ">
+                                <input type="text" required class="form-control" id="STRRFC" name="STRRFC" placeholder="RFC: " >
                             </div>
                         </div>
                         <div class="form-group">
@@ -74,6 +74,76 @@
                                 <input type="text" class="form-control" id="STRCP" name="STRCP" placeholder="Codigo: ">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="registro" class="col-sm-2 control-label">Pais: </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="STRPAi" name="STRPAI" placeholder="Pais: ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="registro" class="col-sm-2 control-label">Pais: </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="STRPAI" name="STRPAI" placeholder="Pais: " >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="registro" class="col-sm-2 control-label">Telefono: </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="STRTEL" name="STRTEL" placeholder="Telefono: " >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="registro" class="col-sm-2 control-label">Correo Electronico: </label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="STRCOR" name="STRCOR" placeholder="Email: ">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="registro" class="col-sm-2 control-label">Contraseña: </label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: " >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="registro" class="col-sm-2 control-label">Imagen: </label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="STRIMG" name="STRIMG" placeholder="imagen: ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado" class="col-sm-2 control-label">Estado: </label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="BITSUS" id="BITSUS">
+                                    <option value="1">Activo</option>
+                                    <option value="2">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                        <label for="permisos" class="col-sm-2 control-label">Permisos: </label>
+                        <div class="col-sm-10">
+                            <ul style="list-style: none;" id="permisos">
+                                <?php 
+                                    require_once ("config/config.php");
+                                    $rspta = mysqli_query($con, "SELECT * FROM permisos");
+                                    $id=0;
+                                    $marcados = mysqli_query($con, "SELECT * FROM empleado_permisos WHERE idempleado=$id");
+                                    $valores=array();
+                                    while ($per = $marcados->fetch_object())
+                                    {
+                                        array_push($valores, $per->idpermiso);
+                                    }
+                                    while ($reg = $rspta->fetch_object())
+                                    {
+                                        $sw=in_array($reg->id,$valores)?'checked':'';
+                                        echo '<li> <input id="permisos" type="checkbox" '.$sw.'  name="permisos[]" value="'.$reg->id.'">'.$reg->nombre.'</li>';
+                                    }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
 
                     </div>
 

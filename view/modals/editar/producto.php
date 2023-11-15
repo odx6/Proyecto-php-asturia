@@ -14,6 +14,15 @@ if (isset($_GET["id"])) {
         $descripcion = $rw['STRDESPRO'];
         $categoria = $rw['INTIDCAT'];
         $subcategoria = $rw['INTIDSBC'];
+
+        if (isset($subcategoria) && $subcategoria != NULL) {
+            $Subcategoria = mysqli_query($con, "SELECT * FROM  tblcatsbc WHERE INTIDSBC='$subcategoria'");
+            
+            if (isset($Subcategoria) && $Subcategoria != NULL) {
+                $tem = mysqli_fetch_array($Subcategoria);
+                if(isset($tem) && $tem != NULL)$SubcategoriaNombre = $tem['STRNOMSBC'];
+                }
+        }
         $precio = $rw['MONPCOS'];
         $unidadMedida = $rw['INTIDUNI'];
         $imagen = $rw['STRIMG'];
@@ -25,6 +34,8 @@ if (isset($_GET["id"])) {
     exit;
 }
 ?>
+
+<div><img id="blah" src="#" alt="Imagen" /></div>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 <div class="form-group">
     <label for="dni" class="col-sm-2 control-label">SKU: </label>
@@ -35,13 +46,13 @@ if (isset($_GET["id"])) {
 <div class="form-group">
     <label for="nombre" class="col-sm-2 control-label">Codigo: </label>
     <div class="col-sm-10">
-        <input type="text" required class="form-control" id="Codigo" name="Codigo" value="<?php echo $codigo; ?>" placeholder="Codigo: ">
+        <input type="text" required class="form-control" id="codigo" name="codigo" value="<?php echo $codigo; ?>" placeholder="Codigo: ">
     </div>
 </div>
 <div class="form-group">
     <label for="apellido" class="col-sm-2 control-label">Descripcion: </label>
     <div class="col-sm-10">
-        <input type="text" required class="form-control" id="Descripcion" name="Descripcion" value="<?php echo $descripcion; ?>" placeholder="Descripcion: ">
+        <input type="text" required class="form-control" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" placeholder="Descripcion: ">
     </div>
 </div>
 <div class="form-group">
@@ -63,8 +74,8 @@ if (isset($_GET["id"])) {
             // Iterar sobre los resultados y crear una opción para cada uno
 
             while ($fila = mysqli_fetch_assoc($resultado)) {
-                if($categoria== $fila["INTIDCAT"]) $valor="selected";
-                echo '<option value="' . $fila['INTIDCAT'] . '" >' . $fila['STRNOMCAT'] . '</option>';
+                if ($categoria == $fila["INTIDCAT"]) $valor = "selected";
+                echo '<option value="' . $fila['INTIDCAT'] . '"' . $valor . "> " . $fila['STRNOMCAT'] . '</option>';
             }
         } else {
 
@@ -79,52 +90,112 @@ if (isset($_GET["id"])) {
     </div>
 </div>
 
+
 <div class="form-group">
     <label for="subcategoria" class="col-sm-2 control-label">Subcategoria: </label>
     <div class="col-sm-10">
-        <select class="form-control Subcategorias" name="Subcategoria" id="Subcategoria">
+        <select class="form-control Subcategorias" name="Subcategoria" id="Subcategoria" required>
 
-            <option value="" selected desabled> seleccione una categoria primero</option>
+            <option value="<?php echo $subcategoria; ?>" selected ><?php echo $SubcategoriaNombre; ?></option>
         </select>
     </div>
 </div>
 <div class="form-group">
-    <label for="password" class="col-sm-2 control-label">Precio: </label>
+    <label for="precio" class="col-sm-2 control-label">Precio: </label>
     <div class="col-sm-10">
-        <input type="text" class="form-control" id="Precio" name="Precio" value="<?php echo $precio; ?>" placeholder="Precio :">
+        <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required>
     </div>
 </div>
+
 <div class="form-group">
-    <label for="domicilio" class="col-sm-2 control-label">Unidad de Medida: </label>
+    <label for="usuario" reuired class="col-sm-2 control-label">Unidad de medida : </label>
+
     <div class="col-sm-10">
-        <input type="text" class="form-control" id="Unidad" name="Unidad" value="<?php echo $unidadMedida; ?>" placeholder="Unidad: ">
+        <?php
+
+        // Consulta SQL para obtener los datos
+        $consulta = "SELECT  INTIDUNI,STRNOMUNI FROM tblcatuni ORDER BY STRNOMUNI ASC";
+        $resultado = mysqli_query($con, $consulta);
+
+
+        // Crear el elemento select
+        echo ' <select class="form-control categorias" name="unidad" id="unidad">';
+
+        if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+            // Iterar sobre los resultados y crear una opción para cada uno
+
+            while ($fila = mysqli_fetch_assoc($resultado)) {
+                $valor = "";
+                if ($unidadMedida == $fila["INTIDUNI"]) $valor = "selected";
+                echo '<option value="' . $fila['INTIDUNI'] . '"' . $valor . "> " . $fila['STRNOMUNI'] . '</option>';
+            }
+        } else {
+
+            echo  '<option value="" disabled  selected >No hay categorias en la  bd agregue datos </option>';
+        }
+
+        echo '</select>';
+        ?>
+
+
+
+
     </div>
 </div>
 
 <div class="form-group">
     <label for="localidad" class="col-sm-2 control-label">Imagen: </label>
     <div class="col-sm-10">
-        <input type="file" name="imagefile" class="form-control" id="imagefile">
+        <input type="file" name="imagefile" class="form-control" id="imagefile" onchange="UploadImng()">
     </div>
 </div>
+
 <div class="form-group">
-    <label for="telefono" class="col-sm-2 control-label">En taller </label>
+    <label for="usuario" reuired class="col-sm-2 control-label">Tipo de uso: </label>
+
     <div class="col-sm-10">
-        <input type="text" required class="form-control" id="PTaller" name="PTaller" value="<?php echo $perteneceTaller; ?>" placeholder="PTaller">
+        <?php
+
+        // Consulta SQL para obtener los datos
+        $consulta = "SELECT  INTIDPUSO,STRNOMPUSO FROM tblcattus ORDER BY STRNOMPUSO ASC";
+        $resultado = mysqli_query($con, $consulta);
+
+
+        // Crear el elemento select
+        echo ' <select class="form-control " name="INTIDPUSO" id="STRNOMPUSO">';
+
+        if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+            // Iterar sobre los resultados y crear una opción para cada uno
+
+            while ($fila = mysqli_fetch_assoc($resultado)) {
+                $valor = "";
+                if ($perteneceTaller == $fila["INTIDPUSO"]) $valor = "selected";
+                echo '<option value="' . $fila['INTIDPUSO'] . '"' . $valor . "> " . $fila['STRNOMPUSO'] . '</option>';
+            }
+        } else {
+
+            echo  '<option value="" disabled  selected >No hay tipos de uso en la  bd agregue datos </option>';
+        }
+
+        echo '</select>';
+        ?>
+
+
+
+
     </div>
 </div>
+
 
 
 <div class="form-group">
     <label for="estado" class="col-sm-2 control-label">Estado: </label>
     <div class="col-sm-10">
-        <select class="form-control" name="estado" id="estado">
-            <option value="1" <?php if ($status == 1) {
-                                    echo "selected";
-                                } ?>>Activo</option>
-            <option value="2" <?php if ($status == 2) {
-                                    echo "selected";
-                                } ?>>Inactivo</option>
+        <select class="form-control" name="estado" id="estado" required>
+            <option value="1">Activo</option>
+            <option value="2">Inactivo</option>
         </select>
     </div>
 </div>

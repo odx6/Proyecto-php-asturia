@@ -17,6 +17,7 @@
                             <label for="sku" class="col-sm-2 control-label">SKU: </label>
                             <div class="col-sm-10">
                                 <input type="text" required class="form-control" id="sku" name="sku" placeholder="SKU: ">
+                                <span id="mispan"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -32,13 +33,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="usuario" reuired  class="col-sm-2 control-label">Categoria: </label>
+                            <label for="usuario" reuired class="col-sm-2 control-label">Categoria: </label>
 
                             <div class="col-sm-10">
                                 <?php
 
                                 // Consulta SQL para obtener los datos
-                                $consulta = "SELECT  INTIDCAT,STRNOMCAT FROM tblcatcat";
+                                $consulta = "SELECT  INTIDCAT,STRNOMCAT FROM tblcatcat ORDER BY STRNOMCAT ASC";
                                 $resultado = mysqli_query($con, $consulta);
 
 
@@ -77,34 +78,89 @@
                         <div class="form-group">
                             <label for="precio" class="col-sm-2 control-label">Precio: </label>
                             <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" required> 
+                                <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required>
                             </div>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="unidad" class="col-sm-2 control-label">Unidad de medida : </label>
+                            <label for="usuario" reuired class="col-sm-2 control-label">Unidad de medida : </label>
+
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="unidad" name="unidad" placeholder="Unidad: " required>
+                                <?php
+
+                                // Consulta SQL para obtener los datos
+                                $consulta = "SELECT  INTIDUNI,STRNOMUNI FROM tblcatuni ORDER BY STRNOMUNI ASC";
+                                $resultado = mysqli_query($con, $consulta);
+
+
+                                // Crear el elemento select
+                                echo ' <select class="form-control categorias" name="unidad" id="unidad">';
+
+                                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                                    // Iterar sobre los resultados y crear una opción para cada uno
+
+                                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                                        echo '<option value="' . $fila['INTIDUNI'] . '"  <?php if($categoria= $fila["INTIDUNI"]) selected ?>   ' . $fila['STRNOMUNI'] . '</option>';
+                                    }
+                                } else {
+
+                                    echo  '<option value="" disabled  selected >No hay categorias en la  bd agregue datos </option>';
+                                }
+
+                                echo '</select>';
+                                ?>
+
+
+
+
                             </div>
                         </div>
+                        
                         <div class="form-group">
                             <label for="localidad" class="col-sm-2 control-label">Imagen: </label>
                             <div class="col-sm-10">
                                 <input type="file" name="imagefile" class="form-control" id="imagefile">
                             </div>
                         </div>
+                       
                         <div class="form-group">
-                            <label for="telefono" class="col-sm-2 control-label">Pertenece al taller</label>
+                            <label for="usuario" reuired class="col-sm-2 control-label">Tipo de uso: </label>
+
                             <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="Ptaller" name="Ptaller" placeholder="Pertenece al taller" required>
+                                <?php
+
+                                // Consulta SQL para obtener los datos
+                                $consulta = "SELECT  INTIDPUSO,STRNOMPUSO FROM tblcattus ORDER BY STRNOMPUSO ASC";
+                                $resultado = mysqli_query($con, $consulta);
+
+
+                                // Crear el elemento select
+                                echo ' <select class="form-control " name="INTIDPUSO" id="STRNOMPUSO">';
+
+                                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                                    // Iterar sobre los resultados y crear una opción para cada uno
+
+                                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                                        
+                                        echo '<option value="' . $fila['INTIDPUSO'] . '"  <?php if($categoria= $fila["INTIDPUSO"]) selected ?>   ' . $fila['STRNOMPUSO'] . '</option>';
+                                    }
+                                } else {
+
+                                    echo  '<option value="" disabled  selected >No hay tipos de uso en la  bd agregue datos </option>';
+                                }
+
+                                echo '</select>';
+                                ?>
+
+
+
+
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="telefono" class="col-sm-2 control-label">INITIPUSO</label>
-                            <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="INITIPUSO" name="INITIPUSO" placeholder="INITIPUSO" requeired>
-                            </div>
-                        </div>
+                       
 
                         <div class="form-group">
                             <label for="estado" class="col-sm-2 control-label">Estado: </label>

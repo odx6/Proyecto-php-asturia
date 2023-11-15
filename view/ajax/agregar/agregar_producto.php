@@ -16,11 +16,9 @@
             $errors[] = "Unidad de medida está vacío.";
         }  elseif (empty($_FILES["imagefile"])) {
             $errors[] = "imagen está vacío.";
-        }  elseif (empty($_POST['Ptaller'])) {
-            $errors[] = "Pertenece al taller  está vacío.";
         } 
-		  elseif (empty($_POST['INITIPUSO'])) {
-            $errors[] = "INITIPUSO está vacío.";
+		  elseif (empty($_POST['INTIDPUSO'])) {
+            $errors[] = " Tipo de uso está vacío.";
         }  elseif (empty($_POST['estado'])) {
             $errors[] = "Estado está vacío.";
         } /* elseif (empty($_POST['kind'])) {
@@ -34,7 +32,7 @@
 			&& !empty($_POST['precio'])
 			&& !empty($_POST['unidad'])
 			&& !empty($_FILES["imagefile"])
-			&& !empty($_POST['Ptaller'])
+			&& !empty($_POST['INTIDPUSO'])
 			&& !empty($_POST['estado'])
 			
 			/*&& !empty($_POST['kind'])*/
@@ -75,7 +73,7 @@
            // $Imagen =$img_insert;
 		   $Imagen =$img_insert;
 
-            $perteneceTaller = mysqli_real_escape_string($con,(strip_tags($_POST["Ptaller"],ENT_QUOTES)));
+            $perteneceTaller = mysqli_real_escape_string($con,(strip_tags($_POST["INTIDPUSO"],ENT_QUOTES)));
           
            
             $estado = mysqli_real_escape_string($con,(strip_tags($_POST["estado"],ENT_QUOTES)));
@@ -90,6 +88,8 @@
 			$sql = "INSERT INTO tblcatpro (STRSKU, STRCOD, STRDESPRO, INTIDCAT, INTIDSBC, MONPCOS, INTIDUNI, STRIMG, INTTIPUSO, BITSUS,CREATE_AT) 
 			VALUES('".$sku."','".$codigo."','".$descripcion."','".$categoria."','".$subcategoria."','".$precio."','".$unidad."','".$Imagen."','".$perteneceTaller."','".$estado."','".$created_at."');";
 			$query_new = mysqli_query($con,$sql);
+
+	        if(!$query_new)$errors[]="no se agrego el producto";
            
 		} else {
 			$errors[] = "desconocido.";	

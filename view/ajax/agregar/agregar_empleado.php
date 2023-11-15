@@ -1,5 +1,6 @@
 <?php
 	include("../is_logged.php");//Archivo comprueba si el usuario esta logueado
+	
 	if (empty($_POST['STRNSS'])){
 			$errors[] = "NSS está vacío.";
 		}  elseif (empty($_POST['STRRFC'])) {
@@ -82,7 +83,7 @@
 
 			//variable de los permisos 
             $permisos = $_POST["permisos"];
-
+		   
 			//Write register in to database 
 			$sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT) VALUES('".$STRNSS."','".$STRRFC."','".$STRCUR."','".$STRNOM."','".$STRAPE."','".$STRDOM."','".$STRLOC."','".$STRMUN."','".$STREST."','".$STRCP."','".$STRPAI."','".$STRTEL."','".$STRCOR."','".$STRPWS."','".$BITSUS."','".$STRIMG."','".$CREATED_AT."');";
 			$query_new = mysqli_query($con,$sql);
