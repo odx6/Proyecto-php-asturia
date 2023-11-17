@@ -9,6 +9,10 @@
     <script src="assets/js/application.js"></script>
     <script src="assets/js/Asturias.js"></script>
     <script src="assets/js/Validaciones.js"></script>
+   
+ 
+
+   
 
     <!-- <script src="assets/plugins/selectpicker/bootstrap-select.min.js"></script> 
     <script type="text/javascript">
@@ -21,6 +25,8 @@
    <!--  <script src="assets/plugins/select2/js/select2.min.js"></script> 
 	<script type="text/javascript">
 	  	$('select').select2();
+         <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+          <script src="assets/js/sidebars.js"></script>
 	</script>  -->
     
 </body>

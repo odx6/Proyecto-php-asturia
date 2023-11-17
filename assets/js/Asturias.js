@@ -2,6 +2,8 @@
 
 $(document).ready(function () {
   //alert("cargado");
+ 
+  //load 
   $(".categorias").change(function () {
     var categoriaID = $(this).val();
     // alert("cambio en boton"+categoriaID);
@@ -13,7 +15,7 @@ $(document).ready(function () {
       success: function (response) {
         //alert(response)
         var len = response.length;
-
+  
         if (len > 0) {
           $(".Subcategorias").empty();
           for (var i = 0; i < len; i++) {
@@ -25,13 +27,11 @@ $(document).ready(function () {
           $(".Subcategorias").empty();
           $(".Subcategorias").append('<option value="" disabled  selected >No hay Subcategorias  en la  bd agregue datos </option>');
         }
-
+  
       }
     });
-
+  
   });
-  //load 
-
 
   // carga  todas las  solicitude  de las solicitudes
   //parametros por paginas tabla y columna por la cual se quiere buscar
@@ -49,6 +49,7 @@ $(document).ready(function () {
 
 
 });
+
 //'view/ajax/Mostrar_Solicitudes_ajax.php'
 function load(page, table, path, reload) {
 
@@ -207,7 +208,6 @@ function mensaje() {
 
   });
 }
-
 
 
 //funcion para cambiar las imagenes 

@@ -15,7 +15,7 @@ if (empty($_POST['sku'])) {
 	$errors[] = "precio está vacío.";
 } elseif (empty($_POST['unidad'])) {
 	$errors[] = "Unidad de medida está vacío.";
-} elseif (empty($_POST['INTIDPUSO'])) {
+}elseif (empty($_POST['INTIDPUSO'])) {
 	$errors[] = " Tipo de uso está vacío.";
 } elseif (empty($_POST['estado'])) {
 	$errors[] = "Estado está vacío.";
@@ -29,7 +29,6 @@ if (empty($_POST['sku'])) {
 	&& !empty($_POST['Subcategoria'])
 	&& !empty($_POST['precio'])
 	&& !empty($_POST['unidad'])
-
 	&& !empty($_POST['INTIDPUSO'])
 	&& !empty($_POST['estado'])
 
@@ -47,7 +46,7 @@ if (empty($_POST['sku'])) {
 	$unidad = mysqli_real_escape_string($con, (strip_tags($_POST["unidad"], ENT_QUOTES)));
 	$Imagen = "";
 	$pathimg = "";
-	if (empty($_FILES["STRIMG"])) {
+	if (empty($_FILES["STRIMG"]['name'])) {
 		$sqlimg = "SELECT STRIMG FROM `tblcatpro` WHERE STRSKU=$sku;";
 		$queyimg = mysqli_query($con, $sqlimg);
 		$num = mysqli_num_rows($queyimg);
@@ -100,7 +99,11 @@ if (empty($_POST['sku'])) {
 	$sql = "UPDATE tblcatpro SET STRSKU='" . $sku . "', STRCOD='" . $codigo . "', STRDESPRO='" . $descripcion . "', INTIDCAT='" . $categoria . "', INTIDSBC='" . $subcategoria . "', MONPCOS='" . $precio . "', INTIDUNI='" . $unidad . "', STRIMG='" . $Imagen . "',INTTIPUSO='" . $PTAller . "', BITSUS='" . $estado . "' WHERE STRSKU='" . $id . "' ";
 	$query = mysqli_query($con, $sql);
 	//codigo para eliminar una img
-	if ($query && file_exists("../../../" . $pathimg)) unlink("../../../" . $pathimg);
+	if ($query && !empty($pathimg )) {
+		if(file_exists("../../../" . $pathimg))
+		unlink("../../../" . $pathimg);
+
+	}
 	//
 	//Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
 

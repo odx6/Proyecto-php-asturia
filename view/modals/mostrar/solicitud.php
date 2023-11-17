@@ -25,64 +25,23 @@
 	else{exit;}
 ?>
 <input type="hidden" value="<?php echo $id;?>" name="id" id="id">
-<div class="form-group">
-    <label for="dni" class="col-sm-4 control-label">Id Orden: </label>
-    <div class="col-sm-8">
-        <?php echo $pk_solicitud;?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="nombre" class="col-sm-4 control-label">Empleado: </label>
-    <div class="col-sm-8">
-        <?php echo $fk_empleado;?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="apellido" class="col-sm-4 control-label">Numero De Folio: </label>
-    <div class="col-sm-8">
-        <?php echo $NumeroFolio;?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="usuario" class="col-sm-4 control-label">Fecha: </label>
-    <div class="col-sm-8">
-        <?php echo $fecha;?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="email" class="col-sm-4 control-label">Operador: </label>
-    <div class="col-sm-8">
-       <?php echo $operador;?>
-    </div>
+
+<div class="card" style="width: 50rem;">
+  <div class="card-header"> 
+  <strong>Id orden :<?php echo $pk_solicitud;?></strong> 
+  </div>
+  <ul class="list-group list-group-flush">
+    
+    <li class="list-group-item"> <strong>Empleado : </strong><?php echo $fk_empleado;?></li>
+    <li class="list-group-item"> <strong>Folio : </strong><?php echo $NumeroFolio;?></li>
+    <li class="list-group-item"> <strong>Fecha : </strong><?php echo $fecha;?></li>
+    <li class="list-group-item"> <strong>Operador : </strong><?php echo $operador;?></li>
+    <li class="list-group-item"> <strong>Numero de carro  : </strong><?php echo $NoCarro;?></li>
+    <li class="list-group-item"> <strong>Kilometraje  : </strong><?php echo $Kilometraje;?></li>
+    <li class="list-group-item"> <strong>Numero de placas : </strong><?php echo $NoPlacas;?></li>
+    <li class="list-group-item"> <strong>Detalles del Servicio : </strong><?php echo $DetallesServicio;?></li>
+    <li class="list-group-item"> <strong>Observaciones : </strong><?php echo $Observaciones;?></li>
+    
+  </ul>
 </div>
 
-<div class="form-group">
-    <label for="domicilio" class="col-sm-4 control-label">Numero De Carro: </label>
-    <div class="col-sm-8">
-        <?php echo $NoCarro;?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="localidad" class="col-sm-4 control-label">Kilometraje: </label>
-    <div class="col-sm-8">
-        <?php echo $Kilometraje;?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="telefono" class="col-sm-4 control-label">Placas</label>
-    <div class="col-sm-8">
-        <?php echo $NoPlacas;?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="celular" class="col-sm-4 control-label">Detalles Del Servicio: </label>
-    <div class="col-sm-8">
-        <?php echo $DetallesServicio;?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="registro" class="col-sm-4 control-label">Observaciones: </label>
-    <div class="col-sm-8">
-       <?php echo $Observaciones;?>
-    </div>
-</div>

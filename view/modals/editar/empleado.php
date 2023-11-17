@@ -133,12 +133,7 @@ if (isset($_GET["id"])) {
         <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: " value="<?php echo $STRPWS ?>">
     </div>
 </div>
-<div class="form-group">
-    <label for="registro" class="col-sm-2 control-label">Imagen: </label>
-    <div class="col-sm-10">
-        <input type="file" class="form-control" id="STRIMG" name="STRIMG" placeholder="imagen: " >
-    </div>
-</div>
+
 <div class="form-group">
     <label for="estado" class="col-sm-2 control-label">Estado: </label>
     <div class="col-sm-10">

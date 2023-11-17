@@ -123,7 +123,7 @@ if($action == 'ajax'){
                    
                     <form action="?view=Pdfs" method="post">
     <input type="hidden" name="id" value="<?php echo $id;?>">
-	<button type="submit" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#"><i class="fa fa-eye"></i></button>
+	<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#"><i class="fa fa-file-text" aria-hidden="true"></i></button>
 </form>
                 </td>
             </tr>

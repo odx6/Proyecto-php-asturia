@@ -105,21 +105,24 @@ $nombre_empresa = $rw['nombre'];
                     </li>
                 </ul>
             </div>
+
         </header>
         <!--sidebar left start-->
         <aside class="sidebar">
+           
+      
+
+           
             <div id="leftside-navigation" class="nano">
+                
 
-
-                <li>
-                    <a href="http://romasa.mx/"><i class="fa fa-cog"></i><span>Asturias</span></a>
-                </li>
                 <ul class="nano-content">
+                    
                     <?php if ($_SESSION['dashboard'] == 1) { ?>
                         <li class="<?php if (isset($active1)) {
                                         echo $active1;
                                     } ?>">
-                            <a href="./?view=dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
+                            <a href="./?view=dashboard"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span></a>
                         </li>
 
 
@@ -169,7 +172,7 @@ $nombre_empresa = $rw['nombre'];
                             <a href="./?view=Unidades"><i class="fa fa-users"></i><span>Unidades de medida</span></a>
                         </li>
                     <?php } ?>
-                    
+
 
 
 
@@ -177,5 +180,7 @@ $nombre_empresa = $rw['nombre'];
 
                 </ul>
             </div>
+            
+
         </aside>
         <!--sidebar left end-->

@@ -29,9 +29,7 @@
         $errors[] = "Correo Electronico está vacío.";
     } elseif (empty($_POST['STRPWS'])) {
         $errors[] = "Contraseña  está vacío.";
-    } elseif (empty($_FILES['STRIMG'])) {
-        $errors[] = "Imagen está vacío.";
-    } elseif (empty($_POST['BITSUS'])) {
+    }  elseif (empty($_POST['BITSUS'])) {
         $errors[] = "Estado está vacío.";
     } /* elseif (empty($_POST['kind'])) {
         $errors[] = "Kind está vacío.";
@@ -51,7 +49,6 @@
         && !empty($_POST['STRCOR'])
         && !empty($_POST['STRPWS'])
         && !empty($_POST['BITSUS'])
-        && !empty($_FILES['STRIMG'])
         /*&& !empty($_POST['kind'])*/
     ){
     require_once ("../../../config/config.php");//Contiene las variables de configuracion para conectar a la base de datos

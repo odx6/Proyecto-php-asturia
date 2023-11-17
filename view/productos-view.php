@@ -232,7 +232,7 @@ if ($_SESSION['productos'] == 1) {
                 success: function(data) {
                     $(".outer_div2").html(data).fadeIn('slow');
                     $("#loader2").html("");
-                    $(".categorias").trigger('change');
+                    
                 }
             })
         }
