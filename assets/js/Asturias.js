@@ -36,7 +36,13 @@ $(document).ready(function () {
   // carga  todas las  solicitude  de las solicitudes
   //parametros por paginas tabla y columna por la cual se quiere buscar
   //
+  $(document).on('change', 'input[type=file]', function(e) {
+    // Obtenemos la ruta temporal mediante el evento
+    var TmpPath = URL.createObjectURL(e.target.files[0]);
+    // Mostramos la ruta temporal
+    $("#EverCambio").attr("src", TmpPath);
 
+  });
 
   //end 
 
@@ -202,21 +208,44 @@ function mensaje() {
   });
 }
 
-function readURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      $('#blah').attr('src', e.target.result);
-    }
-    reader.readAsDataURL(input.files[0]);
-  }
+
+
+//funcion para cambiar las imagenes 
+//@param id
+function upload_image(id_user,table,columna,path,cl) {
+  $("#load_img").text('Cargando...');
+  var inputFileImage = document.getElementById("STRIMG");
+  var file = inputFileImage.files[0];
+  var data = new FormData();
+  data.append('imagefile', file);
+  data.append('id', id_user);
+  data.append('table', table);
+  data.append('columna', columna);
+  data.append('path', path);
+  data.append('cl', cl);
+
+  $.ajax({
+      url: "view/ajax/images/Cambio-img-generico.php", // Url to which the request is send
+      type: "POST", // Type of request to be send, called as method
+      data: data, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+      contentType: false, // The content type used when sending data to the server.
+      cache: false, // To unable request pages to be cached
+      processData: false, // To send DOMDocument or non processed data file it is set to false
+      success: function(data) // A function to be called if request succeeds
+      {
+          $("#load_img").html(data);
+
+      }
+  });
 }
 
+//Cambio de imagen 
 
-function UploadImng(){
-  readURL(this);
-alert("Hola");
+function cambio(url){
+  alert(url);
+  
+  $("#EverCambio").attr("src", url);
+
 }
-
 
 

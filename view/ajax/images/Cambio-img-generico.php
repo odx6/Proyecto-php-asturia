@@ -3,9 +3,13 @@
 	/* Connect To Database*/
 	require_once ("../../../config/config.php");
     //VARIABLES
-    $table="tblcatemp";
-    $columna="IDMEMP";
 
+   
+    $table= mysqli_real_escape_string($con,(strip_tags($_REQUEST['table'],ENT_QUOTES)));
+    $columna= mysqli_real_escape_string($con,(strip_tags($_REQUEST['columna'],ENT_QUOTES)));
+    $path= mysqli_real_escape_string($con,(strip_tags($_REQUEST['path'],ENT_QUOTES)));
+    $cl= mysqli_real_escape_string($con,(strip_tags($_REQUEST['cl'],ENT_QUOTES)));
+   
 	//
 	$id=intval($_REQUEST['id']);
 	$target_dir="../../resources/images/";
@@ -27,10 +31,11 @@
 		if ($imageFileZise>0){
 		move_uploaded_file($_FILES["imagefile"]["tmp_name"], $target_file);
 		$imagen=basename($_FILES["imagefile"]["name"]);
-		$img_update="STRIMG='view/resources/images/$image_name' ";
+		//$img_update="$cl'=$path$image_name' ";
+        $img_update = $cl . "='" . $path . $image_name . "'";
 
 		}else { $img_update="";}
-		    $sql = "UPDATE tblcatemp SET $img_update WHERE IDEMP='$id';";
+		    $sql = "UPDATE $table SET $img_update WHERE $columna='$id';";
 		    $query_new_insert = mysqli_query($con,$sql);
 
     if ($query_new_insert) {

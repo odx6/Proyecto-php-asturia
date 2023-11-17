@@ -79,7 +79,6 @@
            // $STRIMG = mysqli_real_escape_string($con,(strip_tags($_POST["STRIMG"],ENT_QUOTES)));
            /* $kind = mysqli_real_escape_string($con,(strip_tags($_POST["kind"],ENT_QUOTES)));*/
 			$CREATED_AT=date("Y-m-d H:i:s");
-			$STRIMG="view/resources/images/default.png";
 
 			//variable de los permisos 
             $permisos = $_POST["permisos"];

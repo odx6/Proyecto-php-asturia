@@ -16,14 +16,15 @@
                         <div class="form-group">
                             <label for="sku" class="col-sm-2 control-label">SKU: </label>
                             <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="sku" name="sku" placeholder="SKU: ">
-                                <span id="mispan"></span>
+                                <input type="text" required class="form-control" id="STRSKU" name="STRSKU" placeholder="SKU: " onchange="validarExistencia(this.value,'tblcatpro','STRSKU')">
+                                <span id="MSTRSKU"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="codigo" class="col-sm-2 control-label">Codigo: </label>
                             <div class="col-sm-10">
-                                <input type="text" required class="form-control" id="codigo" name="codigo" placeholder="Codigo: ">
+                                <input type="text" required class="form-control" id="STRCOD" name="STRCOD" placeholder="Codigo: "  onchange="validarExistencia(this.value,'tblcatpro','STRCOD')">
+                                <span id="MSTRCOD"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -117,12 +118,12 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
+                       <!-- <div class="form-group">
                             <label for="localidad" class="col-sm-2 control-label">Imagen: </label>
                             <div class="col-sm-10">
                                 <input type="file" name="imagefile" class="form-control" id="imagefile">
                             </div>
-                        </div>
+                        </div>-->
                        
                         <div class="form-group">
                             <label for="usuario" reuired class="col-sm-2 control-label">Tipo de uso: </label>

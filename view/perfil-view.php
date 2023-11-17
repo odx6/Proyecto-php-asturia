@@ -72,7 +72,7 @@ $CREATE_AT = $rw->CREATE_AT;
                                 </div>
                                 <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
                                 <div class="col-sm-4">
-                                    <input type="file" name="STRIMG" class="form-control" id="STRIMG" onchange="upload_image(<?php echo $id_user; ?>);">
+                                    <input type="file" name="STRIMG" class="form-control" id="STRIMG" onchange="upload_image(<?php echo $id_user; ?>,'tblcatemp','IDEMP','view/resources/images/','STRIMG');">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -163,9 +163,9 @@ $CREATE_AT = $rw->CREATE_AT;
 </section><!--main content end-->
 <?php include "resources/footer.php" ?>
 <script>
-    function upload_image(id_user) {
+    /*function upload_image(id_user,table,) {
         $("#load_img").text('Cargando...');
-        var inputFileImage = document.getElementById("imagefile");
+        var inputFileImage = document.getElementById("STRIMG");
         var file = inputFileImage.files[0];
         var data = new FormData();
         data.append('imagefile', file);
@@ -184,7 +184,7 @@ $CREATE_AT = $rw->CREATE_AT;
 
             }
         });
-    }
+    }*/
 </script>
 <script>
     $("#update_register").submit(function(event) {

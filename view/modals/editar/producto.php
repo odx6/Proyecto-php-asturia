@@ -17,11 +17,11 @@ if (isset($_GET["id"])) {
 
         if (isset($subcategoria) && $subcategoria != NULL) {
             $Subcategoria = mysqli_query($con, "SELECT * FROM  tblcatsbc WHERE INTIDSBC='$subcategoria'");
-            
+
             if (isset($Subcategoria) && $Subcategoria != NULL) {
                 $tem = mysqli_fetch_array($Subcategoria);
-                if(isset($tem) && $tem != NULL)$SubcategoriaNombre = $tem['STRNOMSBC'];
-                }
+                if (isset($tem) && $tem != NULL) $SubcategoriaNombre = $tem['STRNOMSBC'];
+            }
         }
         $precio = $rw['MONPCOS'];
         $unidadMedida = $rw['INTIDUNI'];
@@ -35,14 +35,31 @@ if (isset($_GET["id"])) {
 }
 ?>
 
-<div><img id="blah" src="#" alt="Imagen" /></div>
+<figure class="figure">
+    <img src="<?php echo $imagen; ?>" class="figure-img img-fluid rounded" alt="..." id="EverCambio">
+    <figcaption class="figure-caption">
+
+
+    </figcaption>
+
+</figure>
+<br>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
+
+<div class="form-group">
+    <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
+    <div class="col-sm-10">
+        <input type="file" name="STRIMG" class="form-control" id="STRIMG" >
+    </div>
+</div>
+
 <div class="form-group">
     <label for="dni" class="col-sm-2 control-label">SKU: </label>
     <div class="col-sm-10">
         <input type="text" required class="form-control" id="sku" name="sku" value="<?php echo $sku; ?>" placeholder="SKU: ">
     </div>
 </div>
+
 <div class="form-group">
     <label for="nombre" class="col-sm-2 control-label">Codigo: </label>
     <div class="col-sm-10">
@@ -74,6 +91,7 @@ if (isset($_GET["id"])) {
             // Iterar sobre los resultados y crear una opción para cada uno
 
             while ($fila = mysqli_fetch_assoc($resultado)) {
+                $valor = "";
                 if ($categoria == $fila["INTIDCAT"]) $valor = "selected";
                 echo '<option value="' . $fila['INTIDCAT'] . '"' . $valor . "> " . $fila['STRNOMCAT'] . '</option>';
             }
@@ -96,14 +114,14 @@ if (isset($_GET["id"])) {
     <div class="col-sm-10">
         <select class="form-control Subcategorias" name="Subcategoria" id="Subcategoria" required>
 
-            <option value="<?php echo $subcategoria; ?>" selected ><?php echo $SubcategoriaNombre; ?></option>
+            <option value="<?php echo $subcategoria; ?>" selected><?php echo $SubcategoriaNombre; ?></option>
         </select>
     </div>
 </div>
 <div class="form-group">
     <label for="precio" class="col-sm-2 control-label">Precio: </label>
     <div class="col-sm-10">
-        <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required>
+        <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php echo $precio; ?>">
     </div>
 </div>
 
@@ -144,12 +162,12 @@ if (isset($_GET["id"])) {
     </div>
 </div>
 
-<div class="form-group">
+<!--<div class="form-group">
     <label for="localidad" class="col-sm-2 control-label">Imagen: </label>
     <div class="col-sm-10">
         <input type="file" name="imagefile" class="form-control" id="imagefile" onchange="UploadImng()">
     </div>
-</div>
+</div>-->
 
 <div class="form-group">
     <label for="usuario" reuired class="col-sm-2 control-label">Tipo de uso: </label>

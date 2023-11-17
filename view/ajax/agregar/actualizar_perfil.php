@@ -38,7 +38,7 @@
 			&& !empty($_POST['telefono'])
 			&& !empty($_POST['celular'])
 			&& !empty($_POST['registro'])
-			// && !empty($_POST['estado'])
+			// && !empty($_POST['estado']) 
 			/*&& !empty($_POST['kind'])*/
         ){
 		require_once ("../../../config/config.php");//Contiene las variables de configuracion para conectar a la base de datos

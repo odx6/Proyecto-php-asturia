@@ -21,6 +21,7 @@
 			$STRIMG=$rw['STRIMG'];
 			$INTTIPUSO=$rw['INTTIPUSO'];
 			$BITSUS=$rw['BITSUS'];
+			$CREATE_AT=$rw['CREATE_AT'];
 			//$status=$rw['status'];
 			//$created_at=$rw['created_at'];
 		}
@@ -28,7 +29,7 @@
 	else{exit;}
 ?>
 <input type="hidden" value="<?php echo $id;?>" name="id" id="id">
-<div class="form-group">
+<!--<div class="form-group">
 <img width="300px" height="300px" src="<?php echo $STRIMG ?>" alt="Imagen Producto">
 </div>
 <div class="form-group">
@@ -62,13 +63,6 @@
        <?php echo $INTIDSUBCAT;?>
     </div>
 </div>
-<!-- <div class="form-group">
-    <label for="password" class="col-sm-2 control-label">Contraseña: </label>
-    <div class="col-sm-8">
-        <input type="password" class="form-control" id="password" name="password" placeholder="*******">
-        <p class="text-right text-muted">La contraseña solo se modifica si escribes algo!.</p>
-    </div>
-</div> -->
 <div class="form-group">
     <label for="domicilio" class="col-sm-4 control-label">Precio: </label>
     <div class="col-sm-8">
@@ -100,3 +94,27 @@
         <?php echo ($BITSUS==1)?  "Activo" :  "Inactivo";?>
     </div>
 </div>
+-->
+
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="<?php echo $STRIMG ?>" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"> <strong>SKU</strong>  :   <?php echo $SKU;?> </h5>
+        <p class="card-text"><strong>Codigo           :</strong> <?php echo $STRCODINT;?> </p>
+        <p class="card-text"><strong>Descripcion      :</strong> <?php echo $STRDESPRO;?> </p>
+        <p class="card-text"><strong>Categoria        : </strong><?php echo $INTIDCAT?> </p>
+        <p class="card-text"><strong>Subategoria      :</strong> <?php echo $INTIDSUBCAT;?> </p>
+        <p class="card-text"><strong>Precio           : </strong><?php echo $INTIDSUBCAT;?> </p>
+        <p class="card-text"><strong>Unidad de medida :</strong> <?php echo $INTIDSUBCAT;?> </p>
+        <p class="card-text"><strong>Tipo de uso      :</strong> <?php echo $INTIDSUBCAT;?> </p>
+        <p class="card-text"><strong>Estado           :</strong> <?php echo $INTIDSUBCAT;?> </p>
+        <p class="card-text"><small class="text-muted"> Fecha de creacion : <?php echo $CREATE_AT;?></small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
