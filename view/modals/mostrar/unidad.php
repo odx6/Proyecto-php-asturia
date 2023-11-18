@@ -14,7 +14,13 @@ if (isset($_GET["id"])) {
             $STRDESUNI= $row['STRDESUNI'];
             $DTEHOR = $row['DTEHOR'];
             $BITSUS = $row['BITSUS'];
-
+            if ($BITSUS == 1) {
+				$lbl_status = "Activo";
+				$lbl_class = 'label label-success';
+			} else {
+				$lbl_status = "Inactivo";
+				$lbl_class = 'label label-danger';
+			}
 
            
         }
@@ -24,27 +30,19 @@ if (isset($_GET["id"])) {
 }
 ?>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
-<div class="form-group">
-    <label for="dni" class="col-sm-2 control-label">Nombre : </label>
-    <div class="col-sm-10">
-        <input type="text" required class="form-control" id="STRNOMUNI" name="STRNOMUNI" placeholder="Nombre unidad: " value="<?php echo $STRNOMUNI ?>" >
-    </div>
-</div>
-<div class="form-group">
-    <label for="nombre" class="col-sm-2 control-label">Descripcion: </label>
-    <div class="col-sm-10">
-        <input type="text" required class="form-control" id="STRDESUNI" name="STRDESUNI" placeholder="Descripcion: " value="<?php echo $STRDESUNI ?>">
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label for="estado" class="col-sm-2 control-label">Estado: </label>
-    <div class="col-sm-10">
-        <select class="form-control" name="BITSUS" id="BITSUS">
-            <option value="1" <?php if($BITSUS==1 ) echo "selected"; ?>>Activo</option>
-            <option value="2"  <?php if($BITSUS==2 ) echo "selected"; ?>>Inactivo</option>
-        </select>
-    </div>
+<div class="card" style="width: 50rem;">
+  <div class="card-header"> 
+    
+  </div>
+  <ul class="list-group list-group-flush">
+    
+    <li class="list-group-item"> <strong>ID Unidad: </strong><?php echo $id;?></li>
+    <li class="list-group-item"> <strong>Nombre : </strong><?php echo $STRNOMUNI;?></li>
+    <li class="list-group-item"> <strong>Descripcion : </strong><?php echo $STRDESUNI;?></li>
+    <li class="list-group-item"> <strong>Estado : </strong><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></li>
+    <p class="card-text"><small class="text-muted"> Fecha de creacion : <?php echo $DTEHOR;?></small></p>
+    
+    
+  </ul>
 </div>
 

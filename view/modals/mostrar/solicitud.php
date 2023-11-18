@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	require_once ("../../../config/config.php");
+	require_once ("../../../config/funciones.php");
 	if (isset($_GET["id"])){
 		$id=$_GET["id"];
 		$id=intval($id);
@@ -32,7 +33,7 @@
   </div>
   <ul class="list-group list-group-flush">
     
-    <li class="list-group-item"> <strong>Empleado : </strong><?php echo $fk_empleado;?></li>
+    <li class="list-group-item"> <strong>Empleado : </strong><?php consultarNombre($fk_empleado,'tblcatemp','IDEMP','STRNOM'); echo "   "; consultarNombre($fk_empleado,'tblcatemp','IDEMP','STRAPE'); ?></li>
     <li class="list-group-item"> <strong>Folio : </strong><?php echo $NumeroFolio;?></li>
     <li class="list-group-item"> <strong>Fecha : </strong><?php echo $fecha;?></li>
     <li class="list-group-item"> <strong>Operador : </strong><?php echo $operador;?></li>

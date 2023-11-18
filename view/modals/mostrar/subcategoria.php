@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("../../../config/config.php");
+require_once("../../../config/funciones.php");
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $id = intval($id);
@@ -22,6 +23,13 @@ if (isset($_GET["id"])) {
             $STRDESBC = $row['STRDESBC'];
             $DTEHOR = $row['DTEHOR'];
             $BITSUS = $row['BITSUS'];
+            if ($BITSUS == 1) {
+				$lbl_status = "Activo";
+				$lbl_class = 'label label-success';
+			} else {
+				$lbl_status = "Inactivo";
+				$lbl_class = 'label label-danger';
+			}
         }
     }
 } else {
@@ -29,44 +37,21 @@ if (isset($_GET["id"])) {
 }
 ?>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
-<div class="form-group">
-    <label for="dni" class="col-sm-2 control-label"> IdCategoria : </label>
-    <div class="col-sm-10">
-        <span><?php echo $id ?></span>
-    </div>
-</div>
-<div class="form-group">
-    <label for="dni" class="col-sm-2 control-label"> CATEGORIA: </label>
-    <div class="col-sm-10">
-    <?php  echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="dni" class="col-sm-2 control-label"> Nombre: </label>
-    <div class="col-sm-10">
-        <?php echo $STRNOMSBC ?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="nombre" class="col-sm-2 control-label">Descripcion: </label>
-    <div class="col-sm-10">
-        <?php echo $STRDESBC ?>
-    </div>
-</div>
-<div class="form-group">
-    <label for="dni" class="col-sm-2 control-label"> Fecha de creacion: </label>
-    <div class="col-sm-10">
-        <?php echo $DTEHOR ?>
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label for="estado" class="col-sm-2 control-label">Estado: </label>
-    <div class="col-sm-10">
-        <select class="form-control" name="BITSUS" id="BITSUS">
-            <option value="1" ($BITSUS="1" ) selected>Activo</option>
-            <option value="2" ($BITSUS="2" ) selected>Inactivo</option>
-        </select>
-    </div>
+<input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
+<div class="card" style="width: 50rem;">
+  <div class="card-header"> 
+    
+  </div>
+  <ul class="list-group list-group-flush">
+    
+    <li class="list-group-item"> <strong>ID Subategoria: </strong><?php echo $INTIDSBC;?></li>
+   
+    <li class="list-group-item"> <strong>Categoria : </strong><?php  consultarNombre($INTIDCAT,'tblcatcat','INTIDCAT','STRNOMCAT'); ?></li>
+    <li class="list-group-item"> <strong>Nombre : </strong><?php echo $STRNOMSBC;?></li>
+    <li class="list-group-item"> <strong>Descripcion : </strong><?php echo $STRDESBC;?></li>
+    <li class="list-group-item"> <strong>Estado : </strong><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></li>
+    <p class="card-text"><small class="text-muted"> Fecha de creacion : <?php echo $DTEHOR;?></small></p>
+    
+    
+  </ul>
 </div>

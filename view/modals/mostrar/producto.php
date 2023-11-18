@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	require_once ("../../../config/config.php");
+	require_once ("../../../config/funciones.php");
 	if (isset($_GET["id"])){
 		$id=$_GET["id"];
 		$id=intval($id);
@@ -22,8 +23,14 @@
 			$INTTIPUSO=$rw['INTTIPUSO'];
 			$BITSUS=$rw['BITSUS'];
 			$CREATE_AT=$rw['CREATE_AT'];
-			//$status=$rw['status'];
-			//$created_at=$rw['created_at'];
+			if ($BITSUS == 1) {
+				$lbl_status = "Activo";
+				$lbl_class = 'label label-success';
+			} else {
+				$lbl_status = "Inactivo";
+				$lbl_class = 'label label-danger';
+			}
+			
 		}
 	}	
 	else{exit;}
@@ -40,12 +47,15 @@
         <h5 class="card-title"> <strong>SKU</strong>  :   <?php echo $SKU;?> </h5>
         <p class="card-text"><strong>Codigo           :</strong> <?php echo $STRCODINT;?> </p>
         <p class="card-text"><strong>Descripcion      :</strong> <?php echo $STRDESPRO;?> </p>
-        <p class="card-text"><strong>Categoria        : </strong><?php echo $INTIDCAT?> </p>
-        <p class="card-text"><strong>Subategoria      :</strong> <?php echo $INTIDSUBCAT;?> </p>
-        <p class="card-text"><strong>Precio           : </strong><?php echo $INTIDSUBCAT;?> </p>
-        <p class="card-text"><strong>Unidad de medida :</strong> <?php echo $INTIDSUBCAT;?> </p>
-        <p class="card-text"><strong>Tipo de uso      :</strong> <?php echo $INTIDSUBCAT;?> </p>
-        <p class="card-text"><strong>Estado           :</strong> <?php echo $INTIDSUBCAT;?> </p>
+        
+		<p class="card-text"><strong>Categoria    :</strong> <?php  consultarNombre($INTIDCAT,'tblcatcat','INTIDCAT','STRNOMCAT'); ?> </p>
+        <p class="card-text"><strong>Subategoria      :</strong> <?php  consultarNombre($INTIDSUBCAT,'tblcatsbc','INTIDSBC','STRNOMSBC'); ?> </p>
+        <p class="card-text"><strong>Precio           : </strong><?php echo $MONPCOS;?> </p>
+        <p class="card-text"><strong>Unidad de medida :</strong> <?php   consultarNombre($INTIDUNI,'tblcatuni','INTIDUNI','STRNOMUNI');?> </p>
+        <p class="card-text"><strong>Tipo de uso      :</strong> <?php  consultarNombre($INTTIPUSO,'tblcattus','INTIDPUSO','STRNOMPUSO');?> </p>
+        <p class="card-text"><strong>Estado           :</strong> <span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></p>
+		
+
         <p class="card-text"><small class="text-muted"> Fecha de creacion : <?php echo $CREATE_AT;?></small></p>
       </div>
     </div>

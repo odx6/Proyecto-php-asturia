@@ -15,6 +15,7 @@
 	$password=sha1(md5(mysqli_real_escape_string($con,(strip_tags($_POST["password"],ENT_QUOTES)))));
 
     $query = mysqli_query($con,"SELECT * FROM tblcatemp WHERE   STRCOR =\"$email\" AND STRPWS = \"$password\";");
+   // $query = mysqli_query($con,"SELECT * FROM tblcatemp WHERE   IDEMP=1");
 
 		if ($row = mysqli_fetch_array($query)) {
 			

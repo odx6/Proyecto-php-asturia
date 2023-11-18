@@ -20,3 +20,19 @@ if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
 
 
 ?>
+<?php
+// Genera un token único
+$token = md5(rand());
+
+// Guarda el token en la base de datos
+
+// Envía un correo electrónico de verificación al usuario
+$to = $email;
+$subject = "Verificación de correo electrónico";
+$message = "Haz clic en el siguiente enlace para verificar tu correo electrónico: www.tusitio.com/verificar.php?token=".$token;
+$headers = "From: noreply@tusitio.com";
+
+mail($to, $subject, $message, $headers);
+
+echo "Se ha enviado un correo electrónico de verificación a tu dirección de correo electrónico. Por favor, verifica tu correo electrónico.";
+?>
