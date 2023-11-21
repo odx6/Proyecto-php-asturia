@@ -47,6 +47,7 @@ if (isset($_GET["id"])) {
 }
 ?>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
+<input type="hidden" class="form-control" id="OLDSTRCOR" name="OLDSTRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
 <div class="form-group">
     <label for="dni" class="col-sm-2 control-label">NSS: </label>
     <div class="col-sm-10">
@@ -130,7 +131,7 @@ if (isset($_GET["id"])) {
 <div class="form-group">
     <label for="registro" class="col-sm-2 control-label">Contraseña: </label>
     <div class="col-sm-10">
-        <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: " value="<?php echo $STRPWS ?>">
+        <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: " >
     </div>
 </div>
 

@@ -1,6 +1,6 @@
 <?php
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
-
+include("../../../config/funciones.php");
 if (empty($_POST['STRNSS'])) {
 	$errors[] = "NSS está vacío.";
 } elseif (empty($_POST['STRRFC'])) {
@@ -80,15 +80,6 @@ if (empty($_POST['STRNSS'])) {
 	$CREATED_AT = date("Y-m-d H:i:s");
 	//verificacion de correo 
 	$token = md5(rand());
-	if (!filter_var($STRCOR, FILTER_VALIDATE_EMAIL)) {
-		$errors[] = "El correo que ingresaste no es correcto";
-	} else {
-		$subject = "Verificación de correo electrónico";
-		$message = "Haz clic en el siguiente enlace para verificar tu correo electrónico : http://localhost:8080/proyecto/?view=verificar?token=". $token."?correo=".$STRCOR;
-		$headers = "From: noreply@tusitio.com";
-
-		mail($to, $subject, $message, $headers);
-	}
 
 
 
@@ -96,7 +87,7 @@ if (empty($_POST['STRNSS'])) {
 	$permisos = $_POST["permisos"];
 
 	//Write register in to database 
-	$sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT) VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "');";
+	if(verificacionDeCorreo($STRCOR,$token)=="true")$sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "');";
 	$query_new = mysqli_query($con, $sql);
 	// if has been added successfully
 	if ($query_new) {

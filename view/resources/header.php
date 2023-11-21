@@ -144,28 +144,28 @@ $nombre_empresa = $rw['nombre'];
                             <a href="./?view=productos"><i class="fa fa-users"></i><span>Productos</span></a>
                         </li>
                     <?php } ?>
-                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                    <?php if ($_SESSION['solicitud'] == 1) { ?>
                         <li class="<?php if (isset($active2)) {
                                         echo $active2;
                                     } ?>">
                             <a href="./?view=solicitud"><i class="fa fa-users"></i><span>Solicitud</span></a>
                         </li>
                     <?php } ?>
-                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                    <?php if ($_SESSION['categorias'] == 1) { ?>
                         <li class="<?php if (isset($active2)) {
                                         echo $active2;
                                     } ?>">
                             <a href="./?view=categorias"><i class="fa fa-users"></i><span>Categoria</span></a>
                         </li>
                     <?php } ?>
-                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                    <?php if ($_SESSION['subcategorias'] == 1) { ?>
                         <li class="<?php if (isset($active2)) {
                                         echo $active2;
                                     } ?>">
                             <a href="./?view=subcategorias"><i class="fa fa-users"></i><span>Subcategoria</span></a>
                         </li>
                     <?php } ?>
-                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                    <?php if ($_SESSION['unidades'] == 1) { ?>
                         <li class="<?php if (isset($active2)) {
                                         echo $active2;
                                     } ?>">

@@ -1,5 +1,6 @@
 <?php
-    $active1="active";  
+    $active1="active"; 
+    
     include "resources/header.php";
 
     if ($_SESSION['dashboard']==1){

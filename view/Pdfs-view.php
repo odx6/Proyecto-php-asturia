@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])){
 	header("location: ./?view=index");//Redirecciona 
 	exit;
 }
-  if ($_SESSION['empleados']==1){
+  if ($_SESSION['solicitud']==1){
 	if (isset($_POST["id"])){
 		$id=$_POST["id"];
 		$id=intval($id);

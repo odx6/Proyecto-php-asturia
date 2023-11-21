@@ -14,7 +14,7 @@
 	$email=mysqli_real_escape_string($con,(strip_tags($_POST["email"],ENT_QUOTES)));
 	$password=sha1(md5(mysqli_real_escape_string($con,(strip_tags($_POST["password"],ENT_QUOTES)))));
 
-    $query = mysqli_query($con,"SELECT * FROM tblcatemp WHERE   STRCOR =\"$email\" AND STRPWS = \"$password\";");
+    $query = mysqli_query($con,"SELECT * FROM tblcatemp WHERE   STRCOR =\"$email\" AND STRPWS = \"$password\" AND VERIFICATE_AT	 IS NOT NULL;");
    // $query = mysqli_query($con,"SELECT * FROM tblcatemp WHERE   IDEMP=1");
 
 		if ($row = mysqli_fetch_array($query)) {
@@ -41,6 +41,10 @@
 				in_array(10,$valores)?$_SESSION['choque']=1:$_SESSION['choque']=0;
 				in_array(11,$valores)?$_SESSION['configuracion']=1:$_SESSION['configuracion']=0;
 				in_array(12,$valores)?$_SESSION['productos']=1:$_SESSION['productos']=0;
+				in_array(13,$valores)?$_SESSION['subcategorias']=1:$_SESSION['subcategorias']=0;
+				in_array(14,$valores)?$_SESSION['solicitud']=1:$_SESSION['solicitud']=0;
+				in_array(15,$valores)?$_SESSION['categorias']=1:$_SESSION['categorias']=0;
+				in_array(16,$valores)?$_SESSION['unidades']=1:$_SESSION['unidades']=0;
 
 				$_SESSION['user_id'] = $idempleado;
 				if($_SESSION['dashboard']==1){
