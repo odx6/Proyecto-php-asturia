@@ -35,185 +35,186 @@ if (isset($_GET["id"])) {
 }
 ?>
 
-<figure class="figure">
-    <img src="<?php echo $imagen; ?>" class="figure-img img-fluid rounded" alt="..." id="EverCambio">
-    <figcaption class="figure-caption">
 
-
-    </figcaption>
-
-</figure>
 <br>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
-
 <div class="form-group">
-    <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
-    <div class="col-sm-10">
-        <input type="file" name="STRIMG" class="form-control" id="STRIMG" >
-    </div>
-</div>
 
-<div class="form-group">
-    <label for="dni" class="col-sm-2 control-label">SKU: </label>
-    <div class="col-sm-10">
+    <div class="col-sm-6">
+        <label for="dni" class=" control-label">SKU: </label>
         <input type="text" required class="form-control" id="sku" name="sku" value="<?php echo $sku; ?>" placeholder="SKU: ">
     </div>
-</div>
 
-<div class="form-group">
-    <label for="nombre" class="col-sm-2 control-label">Codigo: </label>
-    <div class="col-sm-10">
+
+    <div class="col-sm-6">
+        <label for="nombre" class=" control-label">Codigo: </label>
         <input type="text" required class="form-control" id="codigo" name="codigo" value="<?php echo $codigo; ?>" placeholder="Codigo: ">
     </div>
 </div>
+
 <div class="form-group">
-    <label for="apellido" class="col-sm-2 control-label">Descripcion: </label>
-    <div class="col-sm-10">
-        <input type="text" required class="form-control" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" placeholder="Descripcion: ">
+
+    <div class="col-sm-12">
+        <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
+        <input type="file" name="STRIMG" class="form-control" id="STRIMG">
     </div>
 </div>
-<div class="form-group">
-    <label for="usuario" class="col-sm-2 control-label">Categoria: </label>
+<div class="card mb-3" style="max-width: 800px;">
+    <div class="row g-0">
+        <div class="col-md-6">
+            <img src="<?php echo $imagen ?>" class="img-fluid rounded-start" alt="..." id="EverCambio">
+        </div>
+        <div class="col-md-6">
+            <div class="card-body">
+                <!--empieza la card body-->
+                <div class="form-group">
+                   
+                    <div class="col-sm-6">
+                    <label for="apellido" class="control-label">Descripcion: </label>
+                        <input type="text" required class="form-control" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" placeholder="Descripcion: ">
+                    </div>
+                
+                    <label for="usuario" class="control-label">Categoria: </label>
 
-    <div class="col-sm-10">
-        <?php
+                    <div class="col-sm-6">
+                        <?php
 
-        // Consulta SQL para obtener los datos
-        $consulta = "SELECT  INTIDCAT,STRNOMCAT FROM tblcatcat";
-        $resultado = mysqli_query($con, $consulta);
-
-
-        // Crear el elemento select
-        echo ' <select class="form-control  categorias" name="categoria" id="categoria" onclick="mensaje();">';
-
-        if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
-
-            // Iterar sobre los resultados y crear una opción para cada uno
-
-            while ($fila = mysqli_fetch_assoc($resultado)) {
-                $valor = "";
-                if ($categoria == $fila["INTIDCAT"]) $valor = "selected";
-                echo '<option value="' . $fila['INTIDCAT'] . '"' . $valor . "> " . $fila['STRNOMCAT'] . '</option>';
-            }
-        } else {
-
-            echo  '<option value="" disabled  selected >No hay categorias en la  bd agregue datos </option>';
-        }
-
-        echo '</select>';
-        ?>
+                        // Consulta SQL para obtener los datos
+                        $consulta = "SELECT  INTIDCAT,STRNOMCAT FROM tblcatcat";
+                        $resultado = mysqli_query($con, $consulta);
 
 
+                        // Crear el elemento select
+                        echo ' <select class="form-control  categorias" name="categoria" id="categoria" onclick="mensaje();">';
 
-    </div>
-</div>
+                        if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
+                            // Iterar sobre los resultados y crear una opción para cada uno
 
-<div class="form-group">
-    <label for="subcategoria" class="col-sm-2 control-label">Subcategoria: </label>
-    <div class="col-sm-10">
-        <select class="form-control Subcategorias" name="Subcategoria" id="Subcategoria" required>
+                            while ($fila = mysqli_fetch_assoc($resultado)) {
+                                $valor = "";
+                                if ($categoria == $fila["INTIDCAT"]) $valor = "selected";
+                                echo '<option value="' . $fila['INTIDCAT'] . '"' . $valor . "> " . $fila['STRNOMCAT'] . '</option>';
+                            }
+                        } else {
 
-            <option value="<?php echo $subcategoria; ?>" selected><?php echo $SubcategoriaNombre; ?></option>
-        </select>
-    </div>
-</div>
-<div class="form-group">
-    <label for="precio" class="col-sm-2 control-label">Precio: </label>
-    <div class="col-sm-10">
-        <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php echo $precio; ?>">
-    </div>
-</div>
+                            echo  '<option value="" disabled  selected >No hay categorias en la  bd agregue datos </option>';
+                        }
 
-<div class="form-group">
-    <label for="usuario" reuired class="col-sm-2 control-label">Unidad de medida : </label>
-
-    <div class="col-sm-10">
-        <?php
-
-        // Consulta SQL para obtener los datos
-        $consulta = "SELECT  INTIDUNI,STRNOMUNI FROM tblcatuni ORDER BY STRNOMUNI ASC";
-        $resultado = mysqli_query($con, $consulta);
-
-
-        // Crear el elemento select
-        echo ' <select class="form-control categorias" name="unidad" id="unidad">';
-
-        if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
-
-            // Iterar sobre los resultados y crear una opción para cada uno
-
-            while ($fila = mysqli_fetch_assoc($resultado)) {
-                $valor = "";
-                if ($unidadMedida == $fila["INTIDUNI"]) $valor = "selected";
-                echo '<option value="' . $fila['INTIDUNI'] . '"' . $valor . "> " . $fila['STRNOMUNI'] . '</option>';
-            }
-        } else {
-
-            echo  '<option value="" disabled  selected >No hay categorias en la  bd agregue datos </option>';
-        }
-
-        echo '</select>';
-        ?>
+                        echo '</select>';
+                        ?>
 
 
 
-
-    </div>
-</div>
-
-<!--<div class="form-group">
-    <label for="localidad" class="col-sm-2 control-label">Imagen: </label>
-    <div class="col-sm-10">
-        <input type="file" name="imagefile" class="form-control" id="imagefile" onchange="UploadImng()">
-    </div>
-</div>-->
-
-<div class="form-group">
-    <label for="usuario" reuired class="col-sm-2 control-label">Tipo de uso: </label>
-
-    <div class="col-sm-10">
-        <?php
-
-        // Consulta SQL para obtener los datos
-        $consulta = "SELECT  INTIDPUSO,STRNOMPUSO FROM tblcattus ORDER BY STRNOMPUSO ASC";
-        $resultado = mysqli_query($con, $consulta);
+                    </div>
+                </div>
 
 
-        // Crear el elemento select
-        echo ' <select class="form-control " name="INTIDPUSO" id="STRNOMPUSO">';
+                <div class="form-group">
+                    
+                    <div class="col-sm-6">
+                    <label for="subcategoria" class=" control-label">Subcategoria: </label>
+                        <select class="form-control Subcategorias" name="Subcategoria" id="Subcategoria" required>
 
-        if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+                            <option value="<?php echo $subcategoria; ?>" selected><?php echo $SubcategoriaNombre; ?></option>
+                        </select>
+                    </div>
+              
+                    
+                    <div class="col-sm-6">
+                    <label for="precio" class=" control-label">Precio: </label>
+                        <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php echo $precio; ?>">
+                    </div>
+                </div>
 
-            // Iterar sobre los resultados y crear una opción para cada uno
+                <div class="form-group">
+                   
+                    <div class="col-sm-6">
+                    <label for="usuario" reuired class=" control-label">Unidad de medida : </label>
 
-            while ($fila = mysqli_fetch_assoc($resultado)) {
-                $valor = "";
-                if ($perteneceTaller == $fila["INTIDPUSO"]) $valor = "selected";
-                echo '<option value="' . $fila['INTIDPUSO'] . '"' . $valor . "> " . $fila['STRNOMPUSO'] . '</option>';
-            }
-        } else {
+                        <?php
 
-            echo  '<option value="" disabled  selected >No hay tipos de uso en la  bd agregue datos </option>';
-        }
+                        // Consulta SQL para obtener los datos
+                        $consulta = "SELECT  INTIDUNI,STRNOMUNI FROM tblcatuni ORDER BY STRNOMUNI ASC";
+                        $resultado = mysqli_query($con, $consulta);
 
-        echo '</select>';
-        ?>
+
+                        // Crear el elemento select
+                        echo ' <select class="form-control categorias" name="unidad" id="unidad">';
+
+                        if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                            // Iterar sobre los resultados y crear una opción para cada uno
+
+                            while ($fila = mysqli_fetch_assoc($resultado)) {
+                                $valor = "";
+                                if ($unidadMedida == $fila["INTIDUNI"]) $valor = "selected";
+                                echo '<option value="' . $fila['INTIDUNI'] . '"' . $valor . "> " . $fila['STRNOMUNI'] . '</option>';
+                            }
+                        } else {
+
+                            echo  '<option value="" disabled  selected >No hay categorias en la  bd agregue datos </option>';
+                        }
+
+                        echo '</select>';
+                        ?>
 
 
 
 
-    </div>
-</div>
+                    </div>
+                
+                    
+
+                    <div class="col-sm-6">
+                    <label for="usuario" reuired class="control-label">Tipo de uso: </label>
+                        <?php
+
+                        // Consulta SQL para obtener los datos
+                        $consulta = "SELECT  INTIDPUSO,STRNOMPUSO FROM tblcattus ORDER BY STRNOMPUSO ASC";
+                        $resultado = mysqli_query($con, $consulta);
+
+
+                        // Crear el elemento select
+                        echo ' <select class="form-control " name="INTIDPUSO" id="STRNOMPUSO">';
+
+                        if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                            // Iterar sobre los resultados y crear una opción para cada uno
+
+                            while ($fila = mysqli_fetch_assoc($resultado)) {
+                                $valor = "";
+                                if ($perteneceTaller == $fila["INTIDPUSO"]) $valor = "selected";
+                                echo '<option value="' . $fila['INTIDPUSO'] . '"' . $valor . "> " . $fila['STRNOMPUSO'] . '</option>';
+                            }
+                        } else {
+
+                            echo  '<option value="" disabled  selected >No hay tipos de uso en la  bd agregue datos </option>';
+                        }
+
+                        echo '</select>';
+                        ?>
 
 
 
-<div class="form-group">
-    <label for="estado" class="col-sm-2 control-label">Estado: </label>
-    <div class="col-sm-10">
-        <select class="form-control" name="estado" id="estado" required>
-            <option value="1">Activo</option>
-            <option value="2">Inactivo</option>
-        </select>
+
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                   
+                    <div class="col-sm-12">
+                    <label for="estado" class=" control-label">Estado: </label>
+                        <select class="form-control" name="estado" id="estado" required>
+                            <option value="1">Activo</option>
+                            <option value="2">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <!--- end card body-->
+            </div>
+        </div>
     </div>
 </div>

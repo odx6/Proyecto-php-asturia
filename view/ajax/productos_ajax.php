@@ -2,6 +2,7 @@
 include("is_logged.php"); //Archivo comprueba si el usuario esta logueado
 /* Connect To Database*/
 require_once("../../config/config.php");
+require_once("../../config/funciones.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
@@ -129,7 +130,7 @@ if ($action == 'ajax') {
 						<td><?php  echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
 						<td><?php echo   (isset($SubcategoriaNombre)) ? $SubcategoriaNombre : $INTIDSBC;?></td>
 						<td>$ <?php echo $MONPCOS ?> mxm</td>
-						<td><?php echo $INTIDUNI ?></td>
+						<td><?php   consultarNombre($INTIDUNI,'tblcatuni','INTIDUNI','STRNOMUNI'); ?></td>
 						<td>
 							<div>
 								<img width="50px" height="50px" src="<?php echo $STRIMG ?>" alt="Imagen Producto">
@@ -137,7 +138,7 @@ if ($action == 'ajax') {
 						</td>
 
 						
-						<td><?php echo $INTTIPUSO ?></td>
+						<td><?php   consultarNombre($INTTIPUSO,'tblcattus','INTIDPUSO','STRNOMPUSO'); ?></td>
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 
 						<td class="text-right">

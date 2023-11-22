@@ -9,9 +9,9 @@
     $columna= mysqli_real_escape_string($con,(strip_tags($_REQUEST['columna'],ENT_QUOTES)));
     $path= mysqli_real_escape_string($con,(strip_tags($_REQUEST['path'],ENT_QUOTES)));
     $cl= mysqli_real_escape_string($con,(strip_tags($_REQUEST['cl'],ENT_QUOTES)));
-   
-	//
 	$id=intval($_REQUEST['id']);
+
+
 	$target_dir="../../resources/images/";
 	$image_name = time()."_".basename($_FILES["imagefile"]["name"]);
 	$target_file = $target_dir .$image_name ;

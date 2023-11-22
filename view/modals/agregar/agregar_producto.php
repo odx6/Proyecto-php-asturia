@@ -38,7 +38,7 @@
                         <div class="card mb-3" style="max-width: 800px;">
                             <div class="row g-0">
                                 <div class="col-md-6">
-                                    <img src="<?php echo $STRIMG ?>" class="img-fluid rounded-start" alt="..." id="EverCambio">
+                                    <img src="view/resources/images/Default/productoinit.png" class="img-fluid rounded-start" alt="..." id="EverCambio">
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card-body">
@@ -175,7 +175,7 @@
 
                                         <div class="form-group">
                                            
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                             <label for="estado" class=" control-label">Estado: </label>
                                                 <select class="form-control col-sm-10" name="estado" id="estado" required>
                                                     <option value="1">Activo</option>
