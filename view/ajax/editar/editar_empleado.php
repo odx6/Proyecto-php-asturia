@@ -29,6 +29,9 @@ if (empty($_POST['STRNSS'])) {
     $errors[] = "Correo Electronico está vacío.";
 } elseif (empty($_POST['BITSUS'])) {
     $errors[] = "Estado está vacío.";
+}
+elseif (empty($_POST['permisos'])) {
+    $errors[] = "los permisos estan vacios.";
 } /* elseif (empty($_POST['kind'])) {
         $errors[] = "Kind está vacío.";
     }*/ elseif (
@@ -46,6 +49,7 @@ if (empty($_POST['STRNSS'])) {
     && !empty($_POST['STRTEL'])
     && !empty($_POST['STRCOR'])
     && !empty($_POST['BITSUS'])
+    && !empty($_POST['permisos'])
     /*&& !empty($_POST['kind'])*/
 ) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos

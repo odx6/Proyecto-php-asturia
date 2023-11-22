@@ -154,7 +154,7 @@ if (isset($_GET["id"])) {
 
             $marcados = mysqli_query($con, "SELECT * FROM empleado_permisos WHERE idempleado=$id");
             $valores = array();
-
+            
             while ($per = $marcados->fetch_object()) {
                 array_push($valores, $per->idpermiso);
             }

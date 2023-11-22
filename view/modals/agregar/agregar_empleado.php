@@ -4,7 +4,7 @@
 
     <!-- Form Modal -->
     <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" enctype="multipart/form-data">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <!-- form  -->
                 <form class="form-horizontal" role="form" method="post" id="new_register" name="new_register">
@@ -16,15 +16,17 @@
                         <div class="row g-2">
                             <div class="col-sm">
                                 <div class="form-group">
-                                    <label for="dni" class="col-sm-2 control-label">NSS: </label>
-                                    <div class="col-sm-3">
+                                    
+                                    <div class="col-sm-5">
+                                    <label for="STRNSS" class="col-sm-2 control-label">NSS: </label>
                                         <input type="text" required class="form-control" id="STRNSS" name="STRNSS" placeholder="NSS: " pattern="^(\d{2})(\d{2})(\d{2})\d{5}$" title="El NSS debe tener 11 dígitos." onchange="validarExistencia(this.value,'tblcatemp','STRNSS')">
                                         <span id="MSTRNSS"></span>
                                     </div>
 
                                
-                                    <label for="nombre" class="col-sm-2 control-label">RFC: </label>
-                                    <div class="col-sm-4">
+                                    
+                                    <div class="col-sm-5">
+                                    <label for="STRRFC" class="col-sm-2 control-label">RFC: </label>
                                         <input type="text" required class="form-control" id="STRRFC" name="STRRFC" placeholder="RFC: " pattern="^([A-ZÑ&]{3,4})(\\d{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z|\\d]{3})$" onchange="validarExistencia(this.value,'tblcatemp','STRRFC')">
                                         <span id="MSTRRFC"></span>
                                     </div>

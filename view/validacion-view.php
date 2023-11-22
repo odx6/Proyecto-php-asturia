@@ -3,8 +3,10 @@
 require_once ("./config/config.php");
     //Archivo comprueba si el usuario esta logueado	
 include_once "./vendor/autoload.php";
-$correo=$_GET['correo'];
-$token=$_GET['token'];
+
+$correo = mysqli_real_escape_string($con,(strip_tags($_GET["correo"],ENT_QUOTES)));
+$token = mysqli_real_escape_string($con,(strip_tags($_GET["token"],ENT_QUOTES)));
+
 $VALIDATE_AT = date("Y-m-d H:i:s");
 
 //echo $correo."   ".$token;
@@ -13,7 +15,7 @@ if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
     $errors[] = "El correo que ingresaste no es correcto";
 }else{
 
-    if (isset($_GET["correo"]) && isset($_GET["token"])) {
+    if (isset($token) && isset($correo)) {
         $correo = $_GET["correo"];
         $token=$_GET["token"];
         

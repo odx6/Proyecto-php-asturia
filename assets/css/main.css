@@ -376,7 +376,7 @@ li.dropdown ul.dropdown-menu.alert>li h1 {
 
 #leftside-navigation ul li {
     list-style-type: none;
-    border-bottom: 1px solid rgba(255, 255, 255, .05)
+   /* border-bottom: 1px solid rgba(255, 255, 255, .05)*/
 }
 
 #leftside-navigation ul li a {
@@ -821,8 +821,9 @@ fieldset[disabled] .btn {
 .btn-default,
 a.btn-default:link,
 a.btn-default:visited {
-    color: #fff;
-    background-color: #bdc3c7
+    color: #1abc9c;
+    background-color: #293949;
+    
 }
 
 .btn-default.active,
@@ -1562,11 +1563,11 @@ fieldset[disabled] .btn-warning:hover {
 
 .dropdown-menu>li>a {
     color: #797979;
-    -webkit-border-radius: 3px;
+   /* -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
-    border-radius: 3px
+    border-radius: 3px*/
 }
 
 .dropdown-menu .divider {

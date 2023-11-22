@@ -46,6 +46,10 @@ $nombre_empresa = $rw['nombre'];
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!--cdn para bootstrap5-->
+    <!--<link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--cdn para end bootstrap5-->
+
     <!-- Fonts from Font Awsome -->
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <!-- CSS Animate -->
@@ -66,6 +70,8 @@ $nombre_empresa = $rw['nombre'];
 
     <!-- <link rel="stylesheet" href="assets/plugins/selectpicker/bootstrap-select.min.css"> -->
     <!-- <link rel="stylesheet" href="assets/plugins/select2/css/select2.css"> -->
+
+
 </head>
 
 <body>
@@ -97,9 +103,6 @@ $nombre_empresa = $rw['nombre'];
                             <li>
                                 <a href="./?view=logout"><i class="fa fa-power-off"></i> Salir</a>
                             </li>
-                            <li>
-                                <a href="#"><i class="fa fa-power-off"></i><?php echo $user_ip; ?></a>
-                            </li>
 
                         </ul>
                     </li>
@@ -109,18 +112,18 @@ $nombre_empresa = $rw['nombre'];
         </header>
         <!--sidebar left start-->
         <aside class="sidebar">
-           
-      
 
-           
+
+
+
             <div id="leftside-navigation" class="nano">
-                
 
-                <ul class="nano-content">
-                    
+
+             <!--   <ul class="nano-content">
+
                     <?php if ($_SESSION['dashboard'] == 1) { ?>
-                        <li class="<?php if (isset($active1)) {
-                                        echo $active1;
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
                                     } ?>">
                             <a href="./?view=dashboard"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span></a>
                         </li>
@@ -178,9 +181,83 @@ $nombre_empresa = $rw['nombre'];
 
 
 
-                </ul>
+                </ul>-->
+                <!--menu casa-->
+                <div class="btn-group-vertical btn-group-justified">
+                <div class="btn-group ">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-home" aria-hidden="true"></i>&nbspHome
+                        
+                    </button>
+                    <ul class="dropdown-menu">
+                    <?php if ($_SESSION['dashboard'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=dashboard"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span></a>
+                        </li>
+
+
+                    <?php } ?>
+                    <?php if ($_SESSION['empleados'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=empleados"><i class="fa fa-users"></i><span>Empleados</span></a>
+                        </li>
+                    <?php } ?>
+                   
+
+                    </ul>
+                </div>
+            </div>
+            <!--menu casa-->
+            <!--productos-->
+            <div class="btn-group-vertical btn-group-justified">
+                <div class="btn-group ">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-th" aria-hidden="true"></i>&nbspProductos
+                       
+                    </button>
+                    <ul class="dropdown-menu">
+                    <?php if ($_SESSION['productos'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=productos"><i class="fa fa-users"></i><span>&nbspProductos</span></a>
+                        </li>
+                    <?php } ?>
+                   
+                    <?php if ($_SESSION['categorias'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=categorias"><i class="fa fa-users"></i><span>&nbspCategoria</span></a>
+                        </li>
+                    <?php } ?>
+                    <?php if ($_SESSION['subcategorias'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=subcategorias"><i class="fa fa-users"></i><span>&nbspSubcategoria</span></a>
+                        </li>
+                    <?php } ?>
+                    <?php if ($_SESSION['unidades'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=Unidades"><i class="fa fa-users"></i><span>Unidades de medida</span></a>
+                        </li>
+                    <?php } ?>
+
+                    </ul>
+                </div>
+            </div>
+            <!--end-productos-->
             </div>
             
 
+
         </aside>
+
         <!--sidebar left end-->

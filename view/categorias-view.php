@@ -24,16 +24,16 @@ if ($_SESSION['categorias'] == 1) {
                 <div class="col-xs-3">
 
                     <select id="miSelect">
-                       
+
                         <option value="pk_solicitud">Id Orden</option>
                         <option value="fk_empleado">Empleado</option>
                         <option value="fecha">fecha</option>
                         <option value="operador">operador</option>
                         <option value="NoCarro">Numero de carro</option>
                         <option value="Kilometraje">Kilometraje</option>
-                        <option value="DetallesServicio">Detalles del servico	</option>
+                        <option value="DetallesServicio">Detalles del servico </option>
                         <option value="Observaciones">Observaciones</option>
-                        
+
                         <!-- Agrega más opciones según las columnas que tengas -->
                     </select>
 
@@ -110,8 +110,8 @@ if ($_SESSION['categorias'] == 1) {
         });
         // carga  todas las  solicitude  de las solicitudes
         function load(page) {
-            var  column=$("#miSelect").val();
-            
+            var column = $("#miSelect").val();
+
             var query = $("#q").val();
             var per_page = $("#per_page").val();
             var parametros = {
@@ -234,7 +234,7 @@ if ($_SESSION['categorias'] == 1) {
     <script>
         //muestra el modal con los datos para posteriormente actualizar con el scrip de arriba 
         function editar(id) {
-           
+
             var parametros = {
                 "action": "ajax",
                 "id": id

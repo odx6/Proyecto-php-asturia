@@ -33,6 +33,9 @@ if (empty($_POST['STRNSS'])) {
 	$errors[] = "Imagen está vacío.";
 } elseif (empty($_POST['BITSUS'])) {
 	$errors[] = "Estado está vacío.";
+} 
+elseif (empty($_POST['permisos'])) {
+	$errors[] = "Los permisos no puden estar vacios.";
 } /* elseif (empty($_POST['kind'])) {
             $errors[] = "Kind está vacío.";
         }*/ elseif (
@@ -52,6 +55,7 @@ if (empty($_POST['STRNSS'])) {
 	&& !empty($_POST['STRPWS'])
 	&& !empty($_POST['BITSUS'])
 	&& !empty($_FILES['STRIMG'])
+	&& !empty($_FILES['permisos'])
 	/*&& !empty($_POST['kind'])*/
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
