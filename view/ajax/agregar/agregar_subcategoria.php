@@ -18,6 +18,7 @@
 			
 			// escaping, additionally removing everything that could be (html/javascript-) code
             $STRNOMSBC = mysqli_real_escape_string($con,(strip_tags($_POST["STRNOMSBC"],ENT_QUOTES)));
+			$STRNOMSBC=strtoupper($STRNOMSBC);
             $STRDESSBC = mysqli_real_escape_string($con,(strip_tags($_POST["STRDESSBC"],ENT_QUOTES)));
             $INTIDCAT = mysqli_real_escape_string($con,(strip_tags($_POST["INTIDCAT"],ENT_QUOTES)));
             $BITSUS = mysqli_real_escape_string($con,(strip_tags($_POST["BITSUS"],ENT_QUOTES)));

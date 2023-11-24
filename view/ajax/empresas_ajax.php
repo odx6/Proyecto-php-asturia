@@ -26,6 +26,8 @@
 			$classM="alert alert-danger";
 			$times="&times;";
 		}	
+
+		
 		
 }
 

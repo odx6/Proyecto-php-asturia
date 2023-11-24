@@ -49,7 +49,7 @@ if (isset($_GET["id"])) {
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 <input type="hidden" class="form-control" id="OLDSTRCOR" name="OLDSTRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
 <div class="col-md-6">
-    <img src="<?php echo $STRIMG ?>" alt="..." class="img-circle" id="EverCambio">
+    <img src="<?php echo $STRIMG ?>" alt="..." class="img-circle EverCambio" >
     <br>
     <label for="registro" class=" control-label">Imagen: </label>
     <input type="file" class="form-control" id="STRIMG" name="STRIMG" placeholder="imagen: ">

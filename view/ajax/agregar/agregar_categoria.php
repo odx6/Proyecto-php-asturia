@@ -15,6 +15,7 @@
 			
 			// escaping, additionally removing everything that could be (html/javascript-) code
             $STRNOMCAT = mysqli_real_escape_string($con,(strip_tags($_POST["STRNOMCAT"],ENT_QUOTES)));
+			$STRNOMCAT=strtoupper($STRNOMCAT);
             $STRDESCAT = mysqli_real_escape_string($con,(strip_tags($_POST["STRDESCAT"],ENT_QUOTES)));
             $BITSUS = mysqli_real_escape_string($con,(strip_tags($_POST["BITSUS"],ENT_QUOTES)));
             $BITSUS = mysqli_real_escape_string($con,(strip_tags($_POST["BITSUS"],ENT_QUOTES)));

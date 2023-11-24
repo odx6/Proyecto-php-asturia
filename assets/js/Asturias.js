@@ -40,7 +40,7 @@ $(document).ready(function () {
     // Obtenemos la ruta temporal mediante el evento
     var TmpPath = URL.createObjectURL(e.target.files[0]);
     // Mostramos la ruta temporal
-    $("#EverCambio").attr("src", TmpPath);
+    $(".EverCambio").attr("src", TmpPath);
 
   });
 

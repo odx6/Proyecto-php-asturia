@@ -21,7 +21,7 @@
 		) {
 	
 		require_once ("../../../config/config.php");//Contiene las variables de configuracion para conectar a la base de datos
-
+		
 		// escaping, additionally removing everything that could be (html/javascript-) code
 		$id=intval($_POST['id']);
         $empresa = mysqli_real_escape_string($con,(strip_tags($_POST["empresa"],ENT_QUOTES)));

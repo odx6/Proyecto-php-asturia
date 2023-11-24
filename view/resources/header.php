@@ -70,6 +70,23 @@ $nombre_empresa = $rw['nombre'];
 
     <!-- <link rel="stylesheet" href="assets/plugins/selectpicker/bootstrap-select.min.css"> -->
     <!-- <link rel="stylesheet" href="assets/plugins/select2/css/select2.css"> -->
+    <style>
+        .btnLeft {
+
+            text-align: left;
+
+            color: #1abc9c;
+            text-decoration: none;
+            display: block;
+            padding: 18px 0 18px 25px;
+            font-size: 12px;
+            outline: 0;
+            -webkit-transition: all 200ms ease-in;
+            -o-transition: all 200ms ease-in;
+            -moz-transition: all 200ms ease-in;
+
+        }
+    </style>
 
 
 </head>
@@ -117,9 +134,25 @@ $nombre_empresa = $rw['nombre'];
 
 
             <div id="leftside-navigation" class="nano">
+                <ul class="nano-content">
+                    <?php if ($_SESSION['dashboard'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=dashboard"><i class="fa fa-home" aria-hidden="true"></i><span>Inicio</span></a>
+                        </li>
+                    <?php } ?>
+                    <?php if ($_SESSION['solicitud'] == 1) { ?>
+                        <li class="<?php if (isset($active2)) {
+                                        echo $active2;
+                                    } ?>">
+                            <a href="./?view=solicitud"><i class="fa fa-users"></i><span>Solicitud</span></a>
+                        </li>
+                    <?php } ?>
 
+                </ul>
 
-             <!--   <ul class="nano-content">
+                <!--   <ul class="nano-content">
 
                     <?php if ($_SESSION['dashboard'] == 1) { ?>
                         <li class="<?php if (isset($active2)) {
@@ -183,79 +216,58 @@ $nombre_empresa = $rw['nombre'];
 
                 </ul>-->
                 <!--menu casa-->
+                <!--menu casa-->
+                <!--productos-->
                 <div class="btn-group-vertical btn-group-justified">
-                <div class="btn-group ">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-home" aria-hidden="true"></i>&nbspHome
-                        
-                    </button>
-                    <ul class="dropdown-menu">
-                    <?php if ($_SESSION['dashboard'] == 1) { ?>
-                        <li class="<?php if (isset($active2)) {
-                                        echo $active2;
-                                    } ?>">
-                            <a href="./?view=dashboard"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span></a>
-                        </li>
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-default  btnLeft dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-th" aria-hidden="true"></i>&nbspCatalogo
 
+                        </button>
+                        <ul class="dropdown-menu">
+                            <?php if ($_SESSION['productos'] == 1) { ?>
+                                <li class="<?php if (isset($active2)) {
+                                                echo $active2;
+                                            } ?>">
+                                    <a href="./?view=productos"><i class="fa fa-users"></i><span>&nbspProductos</span></a>
+                                </li>
+                            <?php } ?>
 
-                    <?php } ?>
-                    <?php if ($_SESSION['empleados'] == 1) { ?>
-                        <li class="<?php if (isset($active2)) {
-                                        echo $active2;
-                                    } ?>">
-                            <a href="./?view=empleados"><i class="fa fa-users"></i><span>Empleados</span></a>
-                        </li>
-                    <?php } ?>
-                   
+                            <?php if ($_SESSION['categorias'] == 1) { ?>
+                                <li class="<?php if (isset($active2)) {
+                                                echo $active2;
+                                            } ?>">
+                                    <a href="./?view=categorias"><i class="fa fa-users"></i><span>&nbspCategoria</span></a>
+                                </li>
+                            <?php } ?>
+                            <?php if ($_SESSION['subcategorias'] == 1) { ?>
+                                <li class="<?php if (isset($active2)) {
+                                                echo $active2;
+                                            } ?>">
+                                    <a href="./?view=subcategorias"><i class="fa fa-users"></i><span>&nbspSubcategoria</span></a>
+                                </li>
+                            <?php } ?>
+                            <?php if ($_SESSION['unidades'] == 1) { ?>
+                                <li class="<?php if (isset($active2)) {
+                                                echo $active2;
+                                            } ?>">
+                                    <a href="./?view=Unidades"><i class="fa fa-users"></i><span>Unidades de medida</span></a>
+                                </li>
+                            <?php } ?>
+                            <?php if ($_SESSION['empleados'] == 1) { ?>
+                                <li class="<?php if (isset($active2)) {
+                                                echo $active2;
+                                            } ?>">
+                                    <a href="./?view=empleados"><i class="fa fa-users"></i><span>Empleados</span></a>
+                                </li>
+                            <?php } ?>
 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <!--menu casa-->
-            <!--productos-->
-            <div class="btn-group-vertical btn-group-justified">
-                <div class="btn-group ">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-th" aria-hidden="true"></i>&nbspProductos
-                       
-                    </button>
-                    <ul class="dropdown-menu">
-                    <?php if ($_SESSION['productos'] == 1) { ?>
-                        <li class="<?php if (isset($active2)) {
-                                        echo $active2;
-                                    } ?>">
-                            <a href="./?view=productos"><i class="fa fa-users"></i><span>&nbspProductos</span></a>
-                        </li>
-                    <?php } ?>
-                   
-                    <?php if ($_SESSION['categorias'] == 1) { ?>
-                        <li class="<?php if (isset($active2)) {
-                                        echo $active2;
-                                    } ?>">
-                            <a href="./?view=categorias"><i class="fa fa-users"></i><span>&nbspCategoria</span></a>
-                        </li>
-                    <?php } ?>
-                    <?php if ($_SESSION['subcategorias'] == 1) { ?>
-                        <li class="<?php if (isset($active2)) {
-                                        echo $active2;
-                                    } ?>">
-                            <a href="./?view=subcategorias"><i class="fa fa-users"></i><span>&nbspSubcategoria</span></a>
-                        </li>
-                    <?php } ?>
-                    <?php if ($_SESSION['unidades'] == 1) { ?>
-                        <li class="<?php if (isset($active2)) {
-                                        echo $active2;
-                                    } ?>">
-                            <a href="./?view=Unidades"><i class="fa fa-users"></i><span>Unidades de medida</span></a>
-                        </li>
-                    <?php } ?>
+                <!--end-productos-->
+             
 
-                    </ul>
-                </div>
-            </div>
-            <!--end-productos-->
-            </div>
-            
 
 
         </aside>

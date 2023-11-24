@@ -20,7 +20,7 @@
                             <?php
 
                             // Consulta SQL para obtener los datos
-                            $consulta = "SELECT  INTIDCAT,STRNOMCAT FROM tblcatcat";
+                            $consulta = "SELECT  INTIDCAT,STRNOMCAT FROM tblcatcat  ORDER BY STRNOMCAT ASC";
                             $resultado = mysqli_query($con, $consulta);
 
 

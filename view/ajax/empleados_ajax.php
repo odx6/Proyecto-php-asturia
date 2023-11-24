@@ -6,16 +6,31 @@ require_once("../../config/config.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
-	if ($delete = mysqli_query($con, "DELETE FROM tblcatemp WHERE IDEMP='$id'")) {
-		$aviso = "Bien hecho!";
-		$msj = "Datos eliminados satisfactoriamente.";
-		$classM = "alert alert-success";
-		$times = "&times;";
-	} else {
-		$aviso = "Aviso!";
-		$msj = "Error al eliminar los datos " . mysqli_error($con);
+	try {
+		if ($delete = mysqli_query($con, "DELETE FROM tblcatemp WHERE IDEMP='$id'")) {
+			$aviso = "Bien hecho!";
+			$msj = "Datos eliminados satisfactoriamente.";
+			$classM = "alert alert-success";
+			$times = "&times;";
+		} else {
+			$aviso = "Aviso!";
+			$msj = "Error al eliminar los datos " . mysqli_error($con);
+			$classM = "alert alert-danger";
+			$times = "&times;";
+		}
+	} catch (mysqli_sql_exception $e) {
+		if ($e->getCode() == 1451) {
+			$aviso = "Aviso!";
+			$msj = "El dato que intentas eliminar tiene relacion con otros registros por favor verifica que no dependa de otros registros Codigo de Error:" . $e->getCode();
+			$classM = "alert alert-danger";
+			$times = "&times;";
+		} else {
+			$aviso = "Aviso!";
+		$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
 		$classM = "alert alert-danger";
 		$times = "&times;";
+		}
+		
 	}
 }
 
@@ -63,26 +78,18 @@ if ($action == 'ajax') {
 					<th>RFC</th>
 					<th>CURP</th>
 					<th>NOMBRE</th>
-					
-					<th>DOMICILIO</th>
-					<th>LOCALIDAD</th>
-					<th>MUNICIPIO</th>
-					<th>ESTADO</th>
-					<th>CODIGO POSTAL</th>
-					<th>PAIS</th>
 					<th>TELEFONO</th>
 					<th>CORREO</th>
-					<th>CONTRASEÑA</th>
-					<th>CREATE</th>
+					<th>CREACION</th>
 					<th>ACCION</th>
 					<th></th>
-					
+
 				</tr>
 			</thead>
 			<?php
 			$finales = 0;
 			while ($row = mysqli_fetch_array($query)) {
-				$IDEMP=$row['IDEMP'];
+				$IDEMP = $row['IDEMP'];
 				$STRNSS = $row['STRNSS'];
 				$STRRFC = $row['STRRFC'];
 				$STRCUR = $row['STRCUR'];
@@ -118,23 +125,18 @@ if ($action == 'ajax') {
 			?>
 				<tbody>
 					<tr>
-						<td><?php echo $IDEMP?></td>
-						<td> <?php echo $STRNSS  ?> </td> 
-						<td> <?php echo $STRRFC  ?> </td> 
-						<td> <?php echo $STRCUR  ?> </td> 
-						<td> <?php echo $STRNOM . " " .$STRAPE  ?> </td> 
-						<td> <?php echo $STRLOC  ?> </td> 
-						<td> <?php echo $STRMUN  ?> </td> 
-						<td> <?php echo $STREST  ?> </td> 
-						<td> <?php echo $STRCP ?> </td> 					
-						<td> <?php echo $STRPAI  ?> </td> 
-						<td> <?php echo $STRTEL  ?> </td> 
-						<td> <?php echo $STRCOR  ?> </td> 
-						<td> <?php echo $BITSUS  ?> </td> 
-						
-						
+						<td><?php echo $IDEMP ?></td>
+						<td> <?php echo $STRNSS  ?> </td>
+						<td> <?php echo $STRRFC  ?> </td>
+						<td> <?php echo $STRCUR  ?> </td>
+						<td> <?php echo $STRNOM . " " . $STRAPE  ?> </td>
+						<td> <?php echo $STRTEL  ?> </td>
+						<td> <?php echo $STRCOR  ?> </td>
 
-						
+
+
+
+
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 						<td><?php echo $fecha ?></td>
 						<td class="text-right">

@@ -14,7 +14,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="col-md-6">
-                            <img src="view/resources/images/Default/perfil.png" alt="..." class="img-circle" id="EverCambio">
+                            <img src="view/resources/images/Default/perfil.png" alt="..." class="img-circle EverCambio" >
                             <br>
                             <label for="registro" class=" control-label">Imagen: </label>
                             <input type="file" class="form-control" id="STRIMG" name="STRIMG" placeholder="imagen: ">

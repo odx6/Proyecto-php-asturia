@@ -6,16 +6,32 @@
 	$id=$_REQUEST["id"];
 	
 	$id=intval($id);
-	if($delete=mysqli_query($con, "DELETE FROM solicitud WHERE pk_solicitud='$id'")){
-		$aviso="Bien hecho!";
-		$msj="Datos eliminados satisfactoriamente.";
-		$classM="alert alert-success";
-		$times="&times;";	
-	}else{
-		$aviso="Aviso!";
-		$msj="Error al eliminar los datos ".mysqli_error($con);
-		$classM="alert alert-danger";
-		$times="&times;";					
+	
+	try {
+		if (($delete=mysqli_query($con, "DELETE FROM solicitud WHERE pk_solicitud='$id'"))) {
+			$aviso = "Bien hecho!";
+			$msj = "Datos eliminados satisfactoriamente.";
+			$classM = "alert alert-success";
+			$times = "&times;";
+		} else {
+			$aviso = "Aviso!";
+			$msj = "Error al eliminar los datos " . mysqli_error($con);
+			$classM = "alert alert-danger";
+			$times = "&times;";
+		}
+	} catch (mysqli_sql_exception $e) {
+		if ($e->getCode() == 1451) {
+			$aviso = "Aviso!";
+			$msj = "El dato que intentas eliminar tiene relacion con otros registros por favor verifica que no dependa de otros registros Codigo de Error:" . $e->getCode();
+			$classM = "alert alert-danger";
+			$times = "&times;";
+		} else {
+			$aviso = "Aviso!";
+		$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
+		$classM = "alert alert-danger";
+		$times = "&times;";
+		}
+		
 	}
 }
 

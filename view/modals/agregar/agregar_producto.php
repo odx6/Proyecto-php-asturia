@@ -38,7 +38,7 @@
                         <div class="card mb-3" style="max-width: 800px;">
                             <div class="row g-0">
                                 <div class="col-md-6">
-                                    <img src="view/resources/images/Default/productoinit.png" class="img-fluid rounded-start" alt="..." id="EverCambio">
+                                    <img src="view/resources/images/Default/productoinit.png" class="img-fluid rounded-start EverCambio" alt="..." >
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card-body">

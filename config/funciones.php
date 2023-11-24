@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Carga el autoloader de Composer
-  //include_once "../../../vendor/autoload.php";
+  include_once "../../../vendor/autoload.php";
 
 // Crea una nueva instancia de PHPMailer
 function  consultarNombre($id,$tabla,$columna,$columnaN){

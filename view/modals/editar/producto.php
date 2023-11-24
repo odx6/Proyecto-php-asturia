@@ -62,7 +62,7 @@ if (isset($_GET["id"])) {
 <div class="card mb-3" style="max-width: 800px;">
     <div class="row g-0">
         <div class="col-md-6">
-            <img src="<?php echo $imagen ?>" class="img-fluid rounded-start" alt="..." id="EverCambio">
+            <img src="<?php echo $imagen ?>" class="img-fluid rounded-start EverCambio" alt="..." >
         </div>
         <div class="col-md-6">
             <div class="card-body">
