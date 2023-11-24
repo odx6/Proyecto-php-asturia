@@ -47,7 +47,7 @@ function validarExistencia(campo, tabla, columna) {
 
     //alert("HOLA DESDE FUNCION" + campo + " " + tabla + " " + columna)
     $.ajax({
-        url: './view/ajax/Validaciones/Validacion-campo-generico.php',
+        url: './view/ajax/Validaciones/validacion-campo-generico.php',
         type: 'post',
         data: {
             campo: campo,

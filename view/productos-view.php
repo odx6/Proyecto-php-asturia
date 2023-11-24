@@ -3,6 +3,8 @@ $active2 = "active";
 include "resources/header.php";
 if ($_SESSION['productos'] == 1) {
     //verifica si tiene permiso al modulo 
+    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
 ?>
     <!--main content start-->
     <section class="main-content-wrapper">
@@ -11,7 +13,7 @@ if ($_SESSION['productos'] == 1) {
                 <div class="col-md-12">
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb  pull-right">
-                        <li><a href="./?view=dashboard">Dashboard</a></li>
+                        <li><a href="./?view=dashboard">Dashboard <?php echo $actual_link?></a></li>
                         <li class="active">Productos</li>
 
                     </ul>

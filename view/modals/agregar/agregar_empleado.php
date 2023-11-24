@@ -53,7 +53,7 @@
 
                                     <div class="col-sm-3">
                                         <label for="STRRFC" class=" control-label">RFC: </label>
-                                        <input type="text" required class="form-control" id="STRRFC" name="STRRFC" placeholder="RFC: " pattern="^([A-ZÑ&]{3,4})(\\d{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z|\\d]{3})$" onchange="validarExistencia(this.value,'tblcatemp','STRRFC')">
+                                        <input type="text" required class="form-control" id="STRRFC" name="STRRFC" placeholder="RFC: "  onchange="validarExistencia(this.value,'tblcatemp','STRRFC')">
                                         <span id="MSTRRFC"></span>
                                     </div>
 

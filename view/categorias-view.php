@@ -50,7 +50,7 @@ if ($_SESSION['categorias'] == 1) {
                     <div id="loader" class="text-center"></div>
                 </div>
 
-                <div class="col-md-offset-10">
+                <div class="col-md-offset-6" style="display: inline-block;">
                     <!-- modals -->
                     <?php
                     include "modals/agregar/agregar_categorias.php";

@@ -33,12 +33,9 @@ if (empty($_POST['STRNSS'])) {
 	$errors[] = "Imagen está vacío.";
 } elseif (empty($_POST['BITSUS'])) {
 	$errors[] = "Estado está vacío.";
-} 
-elseif (empty($_POST['permisos'])) {
+} elseif (empty($_POST['permisos'])) {
 	$errors[] = "Los permisos no puden estar vacios.";
-} /* elseif (empty($_POST['kind'])) {
-            $errors[] = "Kind está vacío.";
-        }*/ elseif (
+} elseif (
 	!empty($_POST['STRNSS'])
 	&& !empty($_POST['STRRFC'])
 	&& !empty($_POST['STRCUR'])
@@ -55,7 +52,7 @@ elseif (empty($_POST['permisos'])) {
 	&& !empty($_POST['STRPWS'])
 	&& !empty($_POST['BITSUS'])
 	&& !empty($_FILES['STRIMG'])
-	&& !empty($_FILES['permisos'])
+	&& !empty($_POST['permisos'])
 	/*&& !empty($_POST['kind'])*/
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
@@ -91,7 +88,8 @@ elseif (empty($_POST['permisos'])) {
 	$permisos = $_POST["permisos"];
 
 	//Write register in to database 
-	if(verificacionDeCorreo($STRCOR,$token)=="true")$sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "');";
+	if (verificacionDeCorreo($STRCOR, $token) == "true") $sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) 
+	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "');";
 	$query_new = mysqli_query($con, $sql);
 	// if has been added successfully
 	if ($query_new) {

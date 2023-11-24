@@ -50,7 +50,7 @@ if ($_SESSION['solicitud'] == 1) {
                     <div id="loader" class="text-center"></div>
                 </div>
 
-                <div class="col-md-offset-12">
+                <div class="col-md-offset-6" style="display: inline-block;">
                     <!-- modals -->
                     <?php
                     include "modals/agregar/Solicitud/agregar_solicitud.php";

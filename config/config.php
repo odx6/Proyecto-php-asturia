@@ -8,13 +8,10 @@
 
 	$con=@mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     if(!$con){
-        @die("<h2 style='text-align:center'>Imposible conectarse a la base de datos! </h2>".mysqli_error($con));
+        //@die("<h2 style='text-align:center'>Imposible conectarse a la base de datos! </h2>".mysqli_error($con));
+        echo "no se pudo conectar";
     }
     if (@mysqli_connect_errno()) {
         @die("Conexión falló: ".mysqli_connect_errno()." : ". mysqli_connect_error());
     }
-
-
-    
 ?>
-

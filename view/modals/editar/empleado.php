@@ -169,7 +169,7 @@ if (isset($_GET["id"])) {
 
             <div class="col-sm-4">
                 <label for="registro" class=" control-label">Contraseña: </label>
-                <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: " required>
+                <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: ">
             </div>
             <div class="col-sm-4">
                 <label for="registro" class=" control-label">Estado: </label>

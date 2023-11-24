@@ -68,7 +68,8 @@ function  verificacionDeCorreo($correo,$token){
       // Configura el cuerpo del correo electrónico
       $mail->isHTML(TRUE);
       $mail->Subject = 'verificacion de correo';
-      $mail->Body = "Haz clic en el siguiente enlace para verificar tu correo electrónico : HTML http://localhost:8080/proyecto/?view=validacion&token=$token&correo=$correo";
+      //$mail->Body = "Haz clic en el siguiente enlace para verificar tu correo electrónico : HTML http://localhost:8080/proyecto/?view=validacion&token=$token&correo=$correo";
+        $mail->Body = "Haz clic en el siguiente enlace para verificar tu correo electrónico : HTML https://romasa.000webhostapp.com/validacion&token=$token&correo=$correo";
       $mail->AltBody = "Haz clic en el siguiente enlace para verificar tu correo electrónico : HTML http://localhost:8080/proyecto/?view=verificar?token='$token'?correo='$correo' ";
       $mail->send();
       $boleean="true";
