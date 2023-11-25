@@ -5,17 +5,7 @@ require_once("../../../config/config.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
-	if ($delete = mysqli_query($con, "DELETE FROM tblcatcat WHERE INTIDCAT='$id'")) {
-		$aviso = "Bien hecho!";
-		$msj = "Datos eliminados satisfactoriamente.";
-		$classM = "alert alert-success";
-		$times = "&times;";
-	} else {
-		$aviso = "Aviso!";
-		$msj = "Error al eliminar los datos " . mysqli_error($con);
-		$classM = "alert alert-danger";
-		$times = "&times;";
-	}
+	
 	try {
 		if ($delete = mysqli_query($con, "DELETE FROM tblcatcat WHERE INTIDCAT='$id'")) {
 			$aviso = "Bien hecho!";

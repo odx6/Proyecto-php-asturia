@@ -141,7 +141,7 @@ $CREATE_AT = $rw->CREATE_AT;
                             <div class="form-group">
                                 <label for="registro" class="col-sm-2 control-label">Contraseña: </label>
                                 <div class="col-sm-4">
-                                    <input type="password" required name="STRPWS" class="form-control" id="STRPWS" placeholder="Contraseña: " value="<?php echo $STRPWS ?>">
+                                    <input type="password" name="STRPWS" class="form-control" id="STRPWS" placeholder="Contraseña: " >
                                 </div>
                                 <label for="password" class="col-sm-2 control-label">Estado: </label>
                                 <div class="col-sm-4">
