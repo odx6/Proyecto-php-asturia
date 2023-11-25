@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 	session_start();
-
+	
 	$view = isset($_GET['view']) ? $_GET['view'] : 'index';
 	
 	require('config/config.php');

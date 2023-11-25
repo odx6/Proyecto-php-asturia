@@ -13,13 +13,13 @@ if ($_SESSION['productos'] == 1) {
                 <div class="col-md-12">
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb  pull-right">
-                        <li><a href="./?view=dashboard">Dashboard <?php echo $actual_link?></a></li>
+                        <li><a href="./?view=dashboard">Dashboard </a></li>
                         <li class="active">Productos</li>
 
                     </ul>
                     <!--breadcrumbs end -->
                     <br>
-                    <h1 class="h1">Productos</h1>
+                    <h1 class="h1">Productos </h1>
                 </div>
             </div>
 

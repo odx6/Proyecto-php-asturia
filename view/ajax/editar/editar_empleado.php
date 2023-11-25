@@ -1,6 +1,7 @@
 <?php
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 include("../../../config/funciones.php");	
+include("../../../config/verificarCorreo.php");	
 if (empty($_POST['STRNSS'])) {
     $errors[] = "NSS está vacío.";
 } elseif (empty($_POST['STRRFC'])) {
