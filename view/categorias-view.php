@@ -158,7 +158,7 @@ if ($_SESSION['categorias'] == 1) {
                 };
 
                 $.ajax({
-                    url: 'view/ajax/Categoria/categorias_ajax.php',
+                    url: 'view/ajax/Categoria/Categorias_ajax.php',
                     data: parametros,
                     beforeSend: function(objeto) {
                         $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");

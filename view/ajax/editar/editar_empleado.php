@@ -73,10 +73,50 @@ elseif (empty($_POST['permisos'])) {
     $OLDSTRCOR = mysqli_real_escape_string($con, (strip_tags($_POST["OLDSTRCOR"], ENT_QUOTES)));
 
     if (!empty($_POST['STRPWS'])) $STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
+    $id = intval($_POST['id']);
 
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
+    if (empty($_FILES["STRIMG"]['name'])) {
+		$sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
+		$queyimg = mysqli_query($con, $sqlimg);
+		$num = mysqli_num_rows($queyimg);
+		if ($num == 1) {
+			$row = mysqli_fetch_array($queyimg);
+			$Imagen = $row['STRIMG'];
+		}
+	} else {
+		$sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
+		$queyimg = mysqli_query($con, $sqlimg);
+		$num = mysqli_num_rows($queyimg);
+		if ($num == 1) {
+			$row = mysqli_fetch_array($queyimg);
+			$pathimg = $row['STRIMG'];
+		}
 
-    $id = intval($_POST['id']);
+
+		//UPDATE IMG 
+		//Agregar imagen
+		$target_dir = "../../resources/images/Empleados/";
+		$image_name = time() . "_" . basename($_FILES["STRIMG"]["name"]);
+		$target_file = $target_dir . $image_name;
+		$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+		$imageFileZise = $_FILES["STRIMG"]["size"];
+
+		if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
+			$errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
+		} else if ($imageFileZise > 1048576) { //1048576 byte=1MB
+			$errors[] = "<p>Lo sentimos, pero el archivo es demasiado grande. Selecciona logo de menos de 1MB</p>";
+		} else {
+			/* Fin Validacion*/
+			if ($imageFileZise > 0) {
+				move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
+				$imagen = basename($_FILES["STRIMG"]["name"]);
+				$Imagen = "view/resources/images/Empleados/$image_name";
+			}
+		}
+    }
+
+    
     //variable de los permisos 
     $permisos = $_POST["permisos"];
     if($OLDSTRCOR !=$STRCOR){
@@ -89,11 +129,16 @@ elseif (empty($_POST['permisos'])) {
 
     // UPDATE data into database
     if (!empty($_POST['STRPWS'])) {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC ."', STRIMG='".$Imagen."', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     } else {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC ."', STRIMG='".$Imagen."', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     }
     $query = mysqli_query($con, $sql);
+    if ($query && !empty($pathimg ) && $pathimg != "view/resources/images/Default/perfil.png") {
+		if(file_exists("../../../" . $pathimg))
+		unlink("../../../" . $pathimg);
+
+	}
 
     //Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
     /*if(!empty(($password))){

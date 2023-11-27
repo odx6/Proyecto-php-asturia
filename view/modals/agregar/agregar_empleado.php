@@ -17,7 +17,7 @@
                             <img src="view/resources/images/Default/perfil.png" alt="..." class="img-circle EverCambio" >
                             <br>
                             <label for="registro" class=" control-label">Imagen: </label>
-                            <input type="file" class="form-control" id="STRIMG" name="STRIMG" placeholder="imagen: ">
+                            <input type="file" class="form-control validarBtn" id="STRIMG" name="STRIMG" placeholder="imagen: ">
 
                         </div>
                         <div class="form-group">
@@ -154,8 +154,8 @@
 
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" id="guardar_datos" class="btn btn-primary">Agregar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="guardar_datos" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
                 <!-- /end form  -->

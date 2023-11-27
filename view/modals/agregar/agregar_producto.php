@@ -32,7 +32,7 @@
 
                             <div class="col-sm-12">
                                 <label for="imagefile" class="control-label">Imagen: </label>
-                                <input type="file" name="STRIMG" class="form-control" id="STRIMG">
+                                <input type="file" name="STRIMG" class="form-control validarBtn" id="STRIMG" >
                             </div>
                         </div>
                         <div class="card mb-3" style="max-width: 800px;">
@@ -191,8 +191,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" id="guardar_datos" class="btn btn-primary">Agregar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="guardar_datos" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
                 <!-- /end form  -->

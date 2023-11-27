@@ -3,7 +3,7 @@ session_start();
 require_once("../../../config/config.php");
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-    $id = intval($id);
+
     $sql = "select * from tblcatpro where STRSKU='$id'";
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
@@ -56,7 +56,7 @@ if (isset($_GET["id"])) {
 
     <div class="col-sm-12">
         <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
-        <input type="file" name="STRIMG" class="form-control" id="STRIMG">
+        <input type="file" name="STRIMG" class="form-control validarBtn" id="STRIMG">
     </div>
 </div>
 <div class="card mb-3" style="max-width: 800px;">

@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
   //alert("cargado");
- 
+
   //load 
   $(".categorias").change(function () {
     var categoriaID = $(this).val();
@@ -15,7 +15,7 @@ $(document).ready(function () {
       success: function (response) {
         //alert(response)
         var len = response.length;
-  
+
         if (len > 0) {
           $(".Subcategorias").empty();
           for (var i = 0; i < len; i++) {
@@ -27,25 +27,50 @@ $(document).ready(function () {
           $(".Subcategorias").empty();
           $(".Subcategorias").append('<option value="" disabled  selected >No hay Subcategorias  en la  bd agregue datos </option>');
         }
-  
+
       }
     });
-  
+
   });
+ /* $('.validarBtn').change(function (e) {
+    // alert("listo")
+    
+  });*/
+
 
   // carga  todas las  solicitude  de las solicitudes
   //parametros por paginas tabla y columna por la cual se quiere buscar
   //
-  $(document).on('change', 'input[type=file]', function(e) {
+  /*$(document).on('change', 'input[type=file]', function (e) {
     // Obtenemos la ruta temporal mediante el evento
     var TmpPath = URL.createObjectURL(e.target.files[0]);
     // Mostramos la ruta temporal
+    if(){
+
+
+    }
     $(".EverCambio").attr("src", TmpPath);
 
-  });
+    
+
+  });*/
 
   //end 
+  $(document).on('change', 'input[type=file]', function (e) {
+    var inputValor = $(this).val();
+    if (validarURLImagen(inputValor)) {
+      // alert("es valida");
+      var TmpPath = URL.createObjectURL(e.target.files[0]);
+      $(".EverCambio").attr("src", TmpPath);
+      // La URL de la imagen es válida, puedes realizar acciones adicionales aquí.
+    } else {
+      alert("por favor ingresa un archivo valido para la imagen");
+      $(this).val('');
+      $('.EverCambio').attr("src", 'view/resources/images/Default/productoinit.png');
+    }
+    
 
+  });
 
 
 });
@@ -188,7 +213,7 @@ function mensaje() {
       data: { categoria: categoriaID },
       dataType: 'json',
       success: function (response) {
-       // alert(response)
+        // alert(response)
         var len = response.length;
 
         if (len > 0) {
@@ -212,7 +237,7 @@ function mensaje() {
 
 //funcion para cambiar las imagenes 
 //@param id
-function upload_image(id_user,table,columna,path,cl) {
+function upload_image(id_user, table, columna, path, cl) {
   $("#load_img").text('Cargando...');
   var inputFileImage = document.getElementById("STRIMG");
   var file = inputFileImage.files[0];
@@ -225,27 +250,39 @@ function upload_image(id_user,table,columna,path,cl) {
   data.append('cl', cl);
 
   $.ajax({
-      url: "view/ajax/images/Cambio-img-generico.php", // Url to which the request is send
-      type: "POST", // Type of request to be send, called as method
-      data: data, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-      contentType: false, // The content type used when sending data to the server.
-      cache: false, // To unable request pages to be cached
-      processData: false, // To send DOMDocument or non processed data file it is set to false
-      success: function(data) // A function to be called if request succeeds
-      {
-          $("#load_img").html(data);
+    url: "view/ajax/images/Cambio-img-generico.php", // Url to which the request is send
+    type: "POST", // Type of request to be send, called as method
+    data: data, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+    contentType: false, // The content type used when sending data to the server.
+    cache: false, // To unable request pages to be cached
+    processData: false, // To send DOMDocument or non processed data file it is set to false
+    success: function (data) // A function to be called if request succeeds
+    {
+      $("#load_img").html(data);
 
-      }
+    }
   });
 }
 
 //Cambio de imagen 
 
-function cambio(url){
+function cambio(url) {
   alert(url);
-  
+
   $("#EverCambio").attr("src", url);
 
 }
+//validar img
 
 
+function validarURLImagen(url) {
+  // Expresión regular para validar URLs de imágenes (formatos comunes)
+  var regex = /\.(jpeg|jpg|gif|png|bmp)$/i;
+  return regex.test(url);
+}
+
+
+function  validarImg(){
+  alert("hola");
+}
+//end-validar img

@@ -35,7 +35,8 @@ if (empty($_POST['sku'])) {
 	/*&& !empty($_POST['kind'])*/
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-
+	//$id = $_POST["id"];
+	$id=mysqli_real_escape_string($con, (strip_tags($_POST["id"], ENT_QUOTES)));
 	// escaping, additionally removing everything that could be (html/javascript-) code
 	$sku = mysqli_real_escape_string($con, (strip_tags($_POST["sku"], ENT_QUOTES)));
 	$codigo = mysqli_real_escape_string($con, (strip_tags($_POST["codigo"], ENT_QUOTES)));
@@ -47,7 +48,7 @@ if (empty($_POST['sku'])) {
 	$Imagen = "";
 	$pathimg = "";
 	if (empty($_FILES["STRIMG"]['name'])) {
-		$sqlimg = "SELECT STRIMG FROM `tblcatpro` WHERE STRSKU=$sku;";
+		$sqlimg = "SELECT STRIMG FROM tblcatpro WHERE STRSKU='$id';";
 		$queyimg = mysqli_query($con, $sqlimg);
 		$num = mysqli_num_rows($queyimg);
 		if ($num == 1) {
@@ -55,7 +56,7 @@ if (empty($_POST['sku'])) {
 			$Imagen = $row['STRIMG'];
 		}
 	} else {
-		$sqlimg = "SELECT STRIMG FROM `tblcatpro` WHERE STRSKU=$sku;";
+		$sqlimg = "SELECT STRIMG FROM tblcatpro WHERE STRSKU='$id';";
 		$queyimg = mysqli_query($con, $sqlimg);
 		$num = mysqli_num_rows($queyimg);
 		if ($num == 1) {
@@ -90,7 +91,7 @@ if (empty($_POST['sku'])) {
 	}
 	$PTAller = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDPUSO"], ENT_QUOTES)));
 	$estado = mysqli_real_escape_string($con, (strip_tags($_POST["estado"], ENT_QUOTES)));
-	$id = intval($_POST['id']);
+	
 	//variable de los permisos 
 	// $permisos = $_POST["permisos"];
 
@@ -99,7 +100,7 @@ if (empty($_POST['sku'])) {
 	$sql = "UPDATE tblcatpro SET STRSKU='" . $sku . "', STRCOD='" . $codigo . "', STRDESPRO='" . $descripcion . "', INTIDCAT='" . $categoria . "', INTIDSBC='" . $subcategoria . "', MONPCOS='" . $precio . "', INTIDUNI='" . $unidad . "', STRIMG='" . $Imagen . "',INTTIPUSO='" . $PTAller . "', BITSUS='" . $estado . "' WHERE STRSKU='" . $id . "' ";
 	$query = mysqli_query($con, $sql);
 	//codigo para eliminar una img
-	if ($query && !empty($pathimg )) {
+	if ($query && !empty($pathimg ) && $pathimg != "view/resources/images/Default/productoDefault.png") {
 		if(file_exists("../../../" . $pathimg))
 		unlink("../../../" . $pathimg);
 

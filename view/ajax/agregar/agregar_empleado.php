@@ -30,9 +30,7 @@ if (empty($_POST['STRNSS'])) {
 	$errors[] = "Correo Electronico está vacío.";
 } elseif (empty($_POST['STRPWS'])) {
 	$errors[] = "Contraseña  está vacío.";
-} elseif (empty($_FILES['STRIMG'])) {
-	$errors[] = "Imagen está vacío.";
-} elseif (empty($_POST['BITSUS'])) {
+}  elseif (empty($_POST['BITSUS'])) {
 	$errors[] = "Estado está vacío.";
 } elseif (empty($_POST['permisos'])) {
 	$errors[] = "Los permisos no puden estar vacios.";
@@ -52,7 +50,7 @@ if (empty($_POST['STRNSS'])) {
 	&& !empty($_POST['STRCOR'])
 	&& !empty($_POST['STRPWS'])
 	&& !empty($_POST['BITSUS'])
-	&& !empty($_FILES['STRIMG'])
+	
 	&& !empty($_POST['permisos'])
 	/*&& !empty($_POST['kind'])*/
 ) {
@@ -76,7 +74,36 @@ if (empty($_POST['STRNSS'])) {
 	$STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
 	$BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
 	$CREATED_AT = date("Y-m-d H:i:s");
-	$STRIMG = "view/resources/images/default.png";
+	if (empty($_FILES["STRIMG"]['name'])) {
+		$STRIMG = "view/resources/images/Default/perfil.png";
+	} else {
+		
+
+		//UPDATE IMG 
+		//Agregar imagen
+		$target_dir = "../../resources/images/Empleados/";
+		$image_name = time() . "_" . basename($_FILES["STRIMG"]["name"]);
+		$target_file = $target_dir . $image_name;
+		$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+		$imageFileZise = $_FILES["STRIMG"]["size"];
+
+		if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
+			$errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
+		} else if ($imageFileZise > 1048576) { //1048576 byte=1MB
+			$errors[] = "<p>Lo sentimos, pero el archivo es demasiado grande. Selecciona logo de menos de 1MB</p>";
+		} else {
+			/* Fin Validacion*/
+			if ($imageFileZise > 0) {
+				move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
+				$imagen = basename($_FILES["STRIMG"]["name"]);
+				$Imagen = "view/resources/images/Empleados/$image_name";
+			}
+		}
+		//END UPDATE IMG 
+
+	}
+
+	
 	// $STRIMG = mysqli_real_escape_string($con,(strip_tags($_POST["STRIMG"],ENT_QUOTES)));
 	/* $kind = mysqli_real_escape_string($con,(strip_tags($_POST["kind"],ENT_QUOTES)));*/
 	$CREATED_AT = date("Y-m-d H:i:s");

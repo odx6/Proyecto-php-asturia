@@ -52,7 +52,7 @@ if (isset($_GET["id"])) {
     <img src="<?php echo $STRIMG ?>" alt="..." class="img-circle EverCambio" >
     <br>
     <label for="registro" class=" control-label">Imagen: </label>
-    <input type="file" class="form-control" id="STRIMG" name="STRIMG" placeholder="imagen: ">
+    <input type="file" class="form-control validarBtn" id="STRIMG" name="STRIMG" placeholder="imagen: ">
 
 </div>
 <div class="form-group">

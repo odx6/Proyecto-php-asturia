@@ -4,7 +4,7 @@ require_once("../../../config/config.php");
 require_once("../../../config/funciones.php");
 if (isset($_GET["id"])) {
 	$id = $_GET["id"];
-	$id = intval($id);
+	
 	$sql = "select * from tblcatpro where STRSKU='$id'";
 	$query = mysqli_query($con, $sql);
 	$num = mysqli_num_rows($query);

@@ -6,11 +6,20 @@ require_once("../../config/funciones.php");
 
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
-	$id = intval($id);
-	
+
+	$sql = mysqli_query($con, "SELECT STRIMG FROM tblcatpro WHERE STRSKU='$id'");
+	while ($fila = mysqli_fetch_array($sql)) {
+		$URL = $fila['STRIMG'];  // reemplaza 'nombre_de_columna' con el nombre de la columna que deseas imprimir
+	}
+
+
 	try {
 		if (($delete = mysqli_query($con, "DELETE FROM tblcatpro WHERE STRSKU='$id'"))) {
-			$aviso = "Bien hecho!";
+			if ($delete && !empty($URL) && $URL != "view/resources/images/Default/productoDefault.png") {
+				if (file_exists("../../".$URL ))
+					unlink("../../".$URL);
+			}
+			$aviso = "Bien hecho!"."../../../". $URL;
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
@@ -28,11 +37,10 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$times = "&times;";
 		} else {
 			$aviso = "Aviso!";
-		$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
-		$classM = "alert alert-danger";
-		$times = "&times;";
+			$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
+			$classM = "alert alert-danger";
+			$times = "&times;";
 		}
-		
 	}
 }
 
@@ -84,7 +92,7 @@ if ($action == 'ajax') {
 					<th>Unidad Medida</th>
 					<th>Imagen</th>
 					<th>Taller</th>
-					
+
 
 					<th>Estado</th>
 
@@ -104,8 +112,8 @@ if ($action == 'ajax') {
 				if (isset($INTIDCAT) && $INTIDCAT != NULL) {
 					$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
 					if (isset($Categoria) && $Categoria != NULL) {
-					$tem = mysqli_fetch_array($Categoria);
-					if(isset($tem) && $tem != NULL)$NombreCategoria = $tem['STRNOMCAT'];
+						$tem = mysqli_fetch_array($Categoria);
+						if (isset($tem) && $tem != NULL) $NombreCategoria = $tem['STRNOMCAT'];
 					}
 				}
 				//ENDCONSULTA
@@ -114,16 +122,16 @@ if ($action == 'ajax') {
 				$INTIDSBC = $row['INTIDSBC'];
 				if (isset($INTIDSBC) && $INTIDSBC != NULL) {
 					$Subcategoria = mysqli_query($con, "SELECT * FROM  tblcatsbc WHERE INTIDSBC='$INTIDSBC'");
-					
+
 					if (isset($Subcategoria) && $Subcategoria != NULL) {
 						$tem = mysqli_fetch_array($Subcategoria);
-						if(isset($tem) && $tem != NULL)$SubcategoriaNombre = $tem['STRNOMSBC'];
-						}
+						if (isset($tem) && $tem != NULL) $SubcategoriaNombre = $tem['STRNOMSBC'];
+					}
 				}
 				$MONPCOS = $row['MONPCOS'];
 				$INTIDUNI = $row['INTIDUNI'];
 				$STRIMG = $row['STRIMG'];
-				
+
 				$INTTIPUSO = $row['INTTIPUSO'];
 
 
@@ -134,7 +142,7 @@ if ($action == 'ajax') {
 					$lbl_status = "Inactivo";
 					$lbl_class = 'label label-danger';
 				}
-				
+
 				/*$kind=$row['kind'];*/
 
 				$finales++;
@@ -144,18 +152,18 @@ if ($action == 'ajax') {
 						<td><?php echo $sku ?></td>
 						<td><?php echo $codigo ?></td>
 						<td><?php echo $descripcion ?></td>
-						<td><?php  echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
-						<td><?php echo   (isset($SubcategoriaNombre)) ? $SubcategoriaNombre : $INTIDSBC;?></td>
+						<td><?php echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
+						<td><?php echo (isset($SubcategoriaNombre)) ? $SubcategoriaNombre : $INTIDSBC; ?></td>
 						<td>$ <?php echo $MONPCOS ?> mxm</td>
-						<td><?php   consultarNombre($INTIDUNI,'tblcatuni','INTIDUNI','STRNOMUNI'); ?></td>
+						<td><?php consultarNombre($INTIDUNI, 'tblcatuni', 'INTIDUNI', 'STRNOMUNI'); ?></td>
 						<td>
 							<div>
 								<img width="50px" height="50px" src="<?php echo $STRIMG ?>" alt="Imagen Producto">
 							</div>
 						</td>
 
-						
-						<td><?php   consultarNombre($INTTIPUSO,'tblcattus','INTIDPUSO','STRNOMPUSO'); ?></td>
+
+						<td><?php consultarNombre($INTTIPUSO, 'tblcattus', 'INTIDPUSO', 'STRNOMPUSO'); ?></td>
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 
 						<td class="text-right">
