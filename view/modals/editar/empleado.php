@@ -48,16 +48,17 @@ if (isset($_GET["id"])) {
 ?>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
 <input type="hidden" class="form-control" id="OLDSTRCOR" name="OLDSTRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
-<div class="col-md-6">
+<div class="col-md-4">
     <img src="<?php echo $STRIMG ?>" alt="..." class="img-circle EverCambio" >
     <br>
     <label for="registro" class=" control-label">Imagen: </label>
     <input type="file" class="form-control validarBtn" id="STRIMG" name="STRIMG" placeholder="imagen: ">
 
 </div>
-<div class="form-group">
+
+    <div class="col-sm-4">
+    <div class="form-group">
     <label for="permisos" class=" control-label">Permisos: </label>
-    <div class="col-sm-6">
         <ul style="list-style: none;" id="permisos">
             <?php
             $rspta = mysqli_query($con, "SELECT * FROM permisos");
@@ -105,29 +106,45 @@ if (isset($_GET["id"])) {
                 <label for="usuario" class=" control-label">Nombre: </label>
                 <input type="text" required class="form-control" id="STRNOM" name="STRNOM" placeholder="Nombre: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios" value="<?php echo $STRNOM ?>">
             </div>
-        </div>
-        <div class="form-group">
-
             <div class="col-sm-3">
                 <label for="email" class=" control-label">Apellidos: </label>
                 <input type="text" required class="form-control" id="STRAPE" name="STRAPE" placeholder="Apellidos: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios" value="<?php echo $STRAPE ?>">
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-3">
                 <label for="registro" class=" control-label">Telefono: </label>
                 <input type="text" class="form-control" id="STRTEL" name="STRTEL" placeholder="Telefono: " required value="<?php echo $STRTEL ?>">
             </div>
-
-
-
-            <div class="col-sm-3">
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4">
                 <label for="localidad" class=" control-label">Localidad: </label>
                 <input type="text" required class="form-control" id="STRLOC" name="STRLOC" placeholder="Localidad: " value="<?php echo $STRLOC ?>">
             </div>
+            <div class="col-sm-4">
+                <label for="telefono" class=" control-label">Municipio</label>
+                <input type="text" required class="form-control" id="STRMUN" name="STRMUN" placeholder="Municipio" value="<?php echo $STRMUN ?>">
+            </div>
+
+
+            <div class="col-sm-4">
+                <label for="celular" class=" control-label">Estado: </label>
+                <input type="text" required class="form-control" id="STREST" name="STREST" placeholder="Estado: " value="<?php echo $STREST ?>">
+            </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-12">
+            <div class="col-sm-4">
                 <label for="password" class=" control-label">Domicilio: </label>
                 <input type="text" required class="form-control" id="STRDOM" name="STRDOM" placeholder="Domicilio" value="<?php echo $STRDOM ?>">
+            </div>
+            <div class="col-sm-4">
+                <label for="registro" class=" control-label">Codigo Postal: </label>
+                <input type="text" required class="form-control" id="STRCP" name="STRCP" placeholder="Codigo: " value="<?php echo $STRCP ?>">
+            </div>
+
+
+            <div class="col-sm-4">
+                <label for="registro" class=" control-label">Pais: </label>
+                <input type="text" class="form-control" id="STRPAI" name="STRPAI" placeholder="Pais: " required value="<?php echo $STRPAI ?>">
             </div>
         </div>
 
@@ -136,28 +153,10 @@ if (isset($_GET["id"])) {
     <div class="col-sm">
         <div class="form-group">
 
-            <div class="col-sm-3">
-                <label for="telefono" class=" control-label">Municipio</label>
-                <input type="text" required class="form-control" id="STRMUN" name="STRMUN" placeholder="Municipio" value="<?php echo $STRMUN ?>">
-            </div>
+        
 
 
-            <div class="col-sm-3">
-                <label for="celular" class=" control-label">Estado: </label>
-                <input type="text" required class="form-control" id="STREST" name="STREST" placeholder="Estado: " value="<?php echo $STREST ?>">
-            </div>
-
-
-            <div class="col-sm-3">
-                <label for="registro" class=" control-label">Codigo Postal: </label>
-                <input type="text" required class="form-control" id="STRCP" name="STRCP" placeholder="Codigo: " value="<?php echo $STRCP ?>">
-            </div>
-
-
-            <div class="col-sm-3">
-                <label for="registro" class=" control-label">Pais: </label>
-                <input type="text" class="form-control" id="STRPAI" name="STRPAI" placeholder="Pais: " required value="<?php echo $STRPAI ?>">
-            </div>
+           
         </div>
         <div class="form-group">
             <div class="col-sm-4">
