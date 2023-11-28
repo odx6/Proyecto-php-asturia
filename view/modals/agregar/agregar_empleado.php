@@ -13,16 +13,17 @@
                         <h4 class="modal-title" id="myModalLabel"> Nuevo Empleado</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <img src="view/resources/images/Default/perfil.png" alt="..." class="img-circle EverCambio" >
                             <br>
                             <label for="registro" class=" control-label">Imagen: </label>
                             <input type="file" class="form-control validarBtn" id="STRIMG" name="STRIMG" placeholder="imagen: ">
 
                         </div>
-                        <div class="form-group">
+                        
+                            <div class="col-sm-4">
+                            <div class="form-group">
                             <label for="permisos" class=" control-label">Permisos: </label>
-                            <div class="col-sm-6">
                                 <ul style="list-style: none;" id="permisos">
                                     <?php
                                     require_once("config/config.php");
@@ -69,60 +70,53 @@
                                         <label for="usuario" class=" control-label">Nombre: </label>
                                         <input type="text" required class="form-control" id="STRNOM" name="STRNOM" placeholder="Nombre: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios">
                                     </div>
-                                </div>
-                                <div class="form-group">
-
                                     <div class="col-sm-3">
                                         <label for="email" class=" control-label">Apellidos: </label>
                                         <input type="text" required class="form-control" id="STRAPE" name="STRAPE" placeholder="Apellidos: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios">
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <label for="registro" class=" control-label">Telefono: </label>
                                         <input type="text" class="form-control" id="STRTEL" name="STRTEL" placeholder="Telefono: " required>
                                     </div>
-
-
-
-                                    <div class="col-sm-3">
+                                    
+                                </div>
+                                <div class="form-group">
+                                <div class="col-sm-4">
                                         <label for="localidad" class=" control-label">Localidad: </label>
                                         <input type="text" required class="form-control" id="STRLOC" name="STRLOC" placeholder="Localidad: ">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <label for="password" class=" control-label">Domicilio: </label>
-                                        <input type="text" required class="form-control" id="STRDOM" name="STRDOM" placeholder="Domicilio">
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-sm">
-                                <div class="form-group">
-
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <label for="telefono" class=" control-label">Municipio</label>
                                         <input type="text" required class="form-control" id="STRMUN" name="STRMUN" placeholder="Municipio">
                                     </div>
-
-
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <label for="celular" class=" control-label">Estado: </label>
                                         <input type="text" required class="form-control" id="STREST" name="STREST" placeholder="Estado: ">
                                     </div>
-
-
-                                    <div class="col-sm-3">
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <label for="password" class=" control-label">Domicilio: </label>
+                                        <input type="text" required class="form-control" id="STRDOM" name="STRDOM" placeholder="Domicilio">
+                                    </div>
+                                    <div class="col-sm-4">
                                         <label for="registro" class=" control-label">Codigo Postal: </label>
                                         <input type="text" required class="form-control" id="STRCP" name="STRCP" placeholder="Codigo: ">
                                     </div>
 
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <label for="registro" class=" control-label">Pais: </label>
                                         <input type="text" class="form-control" id="STRPAI" name="STRPAI" placeholder="Pais: " required>
                                     </div>
+
                                 </div>
+
+                            </div>
+
+                            <div class="col-sm">
+                             
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <label for="registro" class=" control-label">Correo Electronico: </label>

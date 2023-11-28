@@ -1,7 +1,7 @@
 <?php
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 include("../../../config/funciones.php");
-include("../../../config/vericarCorreo.php");
+include("../../../config/verificarCorreo.php");
 if (empty($_POST['STRNSS'])) {
 	$errors[] = "NSS está vacío.";
 } elseif (empty($_POST['STRRFC'])) {
@@ -96,7 +96,7 @@ if (empty($_POST['STRNSS'])) {
 			if ($imageFileZise > 0) {
 				move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
 				$imagen = basename($_FILES["STRIMG"]["name"]);
-				$Imagen = "view/resources/images/Empleados/$image_name";
+				$STRIMG = "view/resources/images/Empleados/$image_name";
 			}
 		}
 		//END UPDATE IMG 
