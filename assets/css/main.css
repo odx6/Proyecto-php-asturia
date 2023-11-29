@@ -1,6 +1,6 @@
 body {
-    color: #5D5F63;
-    background: #293949;
+    color: #000000;
+    background:white;
     font-family: 'Open Sans', sans-serif;
     padding: 0;
     margin: 0;
@@ -355,7 +355,7 @@ li.dropdown ul.dropdown-menu.alert>li h1 {
 .sidebar {
     width: 240px;
     height: 100%;
-    background: #293949;
+    background: white;
     position: absolute;
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
@@ -380,11 +380,11 @@ li.dropdown ul.dropdown-menu.alert>li h1 {
 }
 
 #leftside-navigation ul li a {
-    color: #aeb2b7;
+    color:black;
     text-decoration: none;
     display: block;
     padding: 18px 0 18px 25px;
-    font-size: 12px;
+    font-size: 16px;
     outline: 0;
     -webkit-transition: all 200ms ease-in;
     -o-transition: all 200ms ease-in;
@@ -429,7 +429,7 @@ li.dropdown ul.dropdown-menu.alert>li h1 {
 
 #leftside-navigation ul li a:hover,
 #leftside-navigation ul li.active>a {
-    color: #1abc9c
+    color: black
 }
 
 .btn-primary+.dropdown-menu>li>a:active,
@@ -821,8 +821,8 @@ fieldset[disabled] .btn {
 .btn-default,
 a.btn-default:link,
 a.btn-default:visited {
-    color: #1abc9c;
-    background-color: #293949;
+    color: #000000;
+    background-color: #ffffff;
     
 }
 
@@ -1550,8 +1550,8 @@ fieldset[disabled] .btn-warning:hover {
 }
 
 .dropdown-menu {
-    background-color: #F6F6F6;
-    border-color: #CACFD2;
+    background-color:white;
+    border-color: white;
     -webkit-box-shadow: none;
     box-shadow: none;
     padding: 6px

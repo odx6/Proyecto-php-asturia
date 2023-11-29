@@ -75,11 +75,11 @@ $nombre_empresa = $rw['nombre'];
 
             text-align: left;
 
-            color: #1abc9c;
+            color: black;
             text-decoration: none;
             display: block;
             padding: 18px 0 18px 25px;
-            font-size: 12px;
+            font-size: 16px;
             outline: 0;
             -webkit-transition: all 200ms ease-in;
             -o-transition: all 200ms ease-in;

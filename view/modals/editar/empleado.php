@@ -102,18 +102,19 @@ if (isset($_GET["id"])) {
             </div>
 
 
-            <div class="col-sm-3">
-                <label for="usuario" class=" control-label">Nombre: </label>
-                <input type="text" required class="form-control" id="STRNOM" name="STRNOM" placeholder="Nombre: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios" value="<?php echo $STRNOM ?>">
-            </div>
+          
             
         </div>
         <div class="class form-group">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+                <label for="usuario" class=" control-label">Nombre: </label>
+                <input type="text" required class="form-control" id="STRNOM" name="STRNOM" placeholder="Nombre: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios" value="<?php echo $STRNOM ?>">
+            </div>
+        <div class="col-sm-4">
                 <label for="email" class=" control-label">Apellidos: </label>
                 <input type="text" required class="form-control" id="STRAPE" name="STRAPE" placeholder="Apellidos: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios" value="<?php echo $STRAPE ?>">
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <label for="registro" class=" control-label">Telefono: </label>
                 <input type="text" class="form-control" id="STRTEL" name="STRTEL" placeholder="Telefono: " required value="<?php echo $STRTEL ?>">
             </div>

@@ -12,17 +12,26 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 	}
 
 	try {
-		if ($delete = mysqli_query($con, "DELETE FROM tblcatemp WHERE IDEMP='$id'")) {
-			if (($delete = mysqli_query($con, "DELETE FROM tblcatemp WHERE IDEMP='$id'"))) {
+		if ($delete = mysqli_query($con, "DELETE FROM tblcatemp WHERE IDEMP='$id' AND IDEMP !=1") ) {
+			if (($delete = mysqli_query($con, "DELETE FROM tblcatemp WHERE IDEMP='$id'  AND IDEMP !=1"))) {
 				if ($delete && !empty($URL) && $URL != "view/resources/images/Default/perfil.png") {
 					if (file_exists("../../".$URL ))
 						unlink("../../".$URL);
 				}
 			}
-			$aviso = "Bien hecho!";
+			if($id==1){
+				$aviso = "Adverteccia!";
+			$msj = "No puedes Eliminar a un administrador.";
+			$classM = "alert alert-danger";
+			$times = "&times;";
+
+			}else{
+				$aviso = "Bien hecho!";
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
+			}
+			
 		} else {
 			$aviso = "Aviso!";
 			$msj = "Error al eliminar los datos " . mysqli_error($con);
