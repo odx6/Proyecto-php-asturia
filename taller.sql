@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 29-11-2023 a las 22:34:14
+-- Tiempo de generación: 30-11-2023 a las 00:26:10
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -55,20 +55,6 @@ CREATE TABLE `empleado_permisos` (
   `idempleado` int(11) NOT NULL,
   `idpermiso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Volcado de datos para la tabla `empleado_permisos`
---
-
-INSERT INTO `empleado_permisos` (`idempleado_permiso`, `idempleado`, `idpermiso`) VALUES
-(469, 1, 1),
-(470, 1, 2),
-(479, 1, 11),
-(480, 1, 12),
-(481, 1, 13),
-(482, 1, 14),
-(483, 1, 15),
-(484, 1, 16);
 
 -- --------------------------------------------------------
 
@@ -135,23 +121,6 @@ CREATE TABLE `solicitud` (
   `Observaciones` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `solicitud`
---
-
-INSERT INTO `solicitud` (`pk_solicitud`, `fk_empleado`, `NumeroFolio`, `fecha`, `operador`, `NoCarro`, `Kilometraje`, `NoPlacas`, `DetallesServicio`, `Observaciones`) VALUES
-(1002, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna'),
-(1003, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna'),
-(1004, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna'),
-(1005, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna'),
-(1010, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna'),
-(1020, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna'),
-(2747, 1, '1234', '2023-11-14', 'Everardo Alvaro Agustin cruz ', '50', '422646', 'ry-31617', 'cambiar motor', 'NINGUNA'),
-(5759, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna'),
-(5763, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna'),
-(5794, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna'),
-(5799, 1, '2638', '2023-11-14', 'Ramon carmona', '58', '222563', 'wr-2485', 'Cambio de llantas traseras ', 'ninguna');
-
 -- --------------------------------------------------------
 
 --
@@ -180,14 +149,6 @@ CREATE TABLE `tblcatcat` (
   `BITSUS` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Volcado de datos para la tabla `tblcatcat`
---
-
-INSERT INTO `tblcatcat` (`INTIDCAT`, `STRNOMCAT`, `STRDESCAT`, `DTEHOR`, `BITSUS`) VALUES
-(6, 'coches', 'pintura par  coche', '2023-11-15 22:20:52', 1),
-(7, 'CATEGORIA7', 'es una categoria', '2023-11-23 16:48:12', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -211,7 +172,7 @@ CREATE TABLE `tblcatemp` (
   `STRCOR` text NOT NULL,
   `STRPWS` text NOT NULL DEFAULT '0',
   `BITSUS` int(1) NOT NULL,
-  `STRIMG` text NOT NULL DEFAULT 'view/resources/images/default.png',
+  `STRIMG` text NOT NULL DEFAULT '\'view/resources/images/Default/perfil.png\'',
   `CREATE_AT` datetime NOT NULL DEFAULT current_timestamp(),
   `TOKEN` text NOT NULL,
   `VERIFICATE_AT` datetime DEFAULT NULL
@@ -222,8 +183,7 @@ CREATE TABLE `tblcatemp` (
 --
 
 INSERT INTO `tblcatemp` (`IDEMP`, `STRNSS`, `STRRFC`, `STRCUR`, `STRNOM`, `STRAPE`, `STRDOM`, `STRLOC`, `STRMUN`, `STREST`, `STRCP`, `STRPAI`, `STRTEL`, `STRCOR`, `STRPWS`, `BITSUS`, `STRIMG`, `CREATE_AT`, `TOKEN`, `VERIFICATE_AT`) VALUES
-(1, '543434', '123', 'SDJK544S44A', 'Administrador', 'Administrador', 'las casa num213', 'santa luci', 'santa cruz xoxocotlan ', 'Oaxaca', '71230', 'Mexico', '9152905212', 'admin@admin.com', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, 'view/resources/images/Default/perfil.png', '2023-11-11 10:11:13', '', '2023-11-21 13:13:27'),
-(24, '12345678910', 'AUCE970202BW4', 'AUCE970202HOCGRVO3', 'Everardo Alvaro', 'Agustin Cruz', 'las casas 912 #206', 'oaxaca', 'santa cruz amilpaz', 'oaxaca', '71230', 'mexico', '9515887515', 'r41325833@gmail.com', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 2, 'view/resources/images/Default/perfil.png', '2023-11-29 21:32:24', '3337b51c5cf1f0377d0f0310c6281687', NULL);
+(1, '543434', '123', 'SDJK544S44A', 'Administrador', 'Administrador', 'las casa num213', 'santa luci', 'santa cruz xoxocotlan ', 'Oaxaca', '71230', 'Mexico', '9152905212', 'admin@admin.com', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', 1, 'view/resources/images/Default/perfil.png', '2023-11-11 10:11:13', '', '2023-11-21 13:13:27');
 
 -- --------------------------------------------------------
 
@@ -245,13 +205,6 @@ CREATE TABLE `tblcatpro` (
   `CREATE_AT` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `tblcatpro`
---
-
-INSERT INTO `tblcatpro` (`STRSKU`, `STRCOD`, `STRDESPRO`, `INTIDSBC`, `MONPCOS`, `INTIDUNI`, `STRIMG`, `INTTIPUSO`, `BITSUS`, `INTIDCAT`, `CREATE_AT`) VALUES
-('12345689', 'BUJIA314', 'BUJIA AGREGADA 12', 4, 45, 5, 'view/resources/images/Productos/1701114375_productoDefault.png', 3, 1, 7, '2023-11-27 20:46:15');
-
 -- --------------------------------------------------------
 
 --
@@ -266,13 +219,6 @@ CREATE TABLE `tblcatsbc` (
   `DTEHOR` datetime NOT NULL,
   `BITSUS` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Volcado de datos para la tabla `tblcatsbc`
---
-
-INSERT INTO `tblcatsbc` (`INTIDSBC`, `INTIDCAT`, `STRNOMSBC`, `STRDESBC`, `DTEHOR`, `BITSUS`) VALUES
-(4, 7, 'TORNILLOS', 'tornillos para tabla roca', '2023-11-23 19:10:35', 1);
 
 -- --------------------------------------------------------
 
@@ -324,13 +270,6 @@ CREATE TABLE `tblcatuni` (
   `DTEHOR` datetime NOT NULL,
   `BITSUS` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Volcado de datos para la tabla `tblcatuni`
---
-
-INSERT INTO `tblcatuni` (`INTIDUNI`, `STRNOMUNI`, `STRDESUNI`, `DTEHOR`, `BITSUS`) VALUES
-(5, 'Centimetros', 'se mide en centrimetros ', '2023-11-15 21:03:41', 1);
 
 -- --------------------------------------------------------
 
@@ -528,7 +467,7 @@ ALTER TABLE `configuracion`
 -- AUTO_INCREMENT de la tabla `empleado_permisos`
 --
 ALTER TABLE `empleado_permisos`
-  MODIFY `idempleado_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=599;
+  MODIFY `idempleado_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=611;
 
 --
 -- AUTO_INCREMENT de la tabla `empresa`
