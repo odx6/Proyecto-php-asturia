@@ -31,9 +31,7 @@ if (empty($_POST['STRNSS'])) {
 } elseif (empty($_POST['BITSUS'])) {
     $errors[] = "Estado está vacío.";
 }
-elseif (empty($_POST['permisos'])) {
-    $errors[] = "los permisos estan vacios.";
-} /* elseif (empty($_POST['kind'])) {
+ /* elseif (empty($_POST['kind'])) {
         $errors[] = "Kind está vacío.";
     }*/ elseif (
     !empty($_POST['STRNSS'])
@@ -50,7 +48,7 @@ elseif (empty($_POST['permisos'])) {
     && !empty($_POST['STRTEL'])
     && !empty($_POST['STRCOR'])
     && !empty($_POST['BITSUS'])
-    && !empty($_POST['permisos'])
+   
     /*&& !empty($_POST['kind'])*/
 ) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
@@ -118,7 +116,15 @@ elseif (empty($_POST['permisos'])) {
 
     
     //variable de los permisos 
-    $permisos = $_POST["permisos"];
+    
+    if(empty($_POST['permisos'])){$BITSUS =2;
+	}else{
+		
+		$permisos = $_POST["permisos"];
+	
+	}
+
+
     if($OLDSTRCOR !=$STRCOR){
         $token = md5(rand());
         $sql = "UPDATE tblcatemp SET TOKEN='$token', VERIFICATE_AT=NULL WHERE STRNSS='".$STRNSS."' ";
@@ -147,18 +153,19 @@ elseif (empty($_POST['permisos'])) {
     }*/
 
     if ($query) {
-
+        
         $sqldel = "DELETE FROM empleado_permisos WHERE idempleado='$id'";
         if (mysqli_query($con, $sqldel)) {
 
             $num_element = 0;
             $sw = true;
-
+            if(!empty($_POST['permisos'])){
             while ($num_element < count($permisos)) {
                 $sql_detalle = "INSERT INTO empleado_permisos(idempleado, idpermiso) VALUES('$id', '$permisos[$num_element]')";
                 mysqli_query($con, $sql_detalle) or $sw = false;
                 $num_element = $num_element + 1;
             }
+        }
             $return = $sw;
         }
 

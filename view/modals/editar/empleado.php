@@ -106,11 +106,14 @@ if (isset($_GET["id"])) {
                 <label for="usuario" class=" control-label">Nombre: </label>
                 <input type="text" required class="form-control" id="STRNOM" name="STRNOM" placeholder="Nombre: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios" value="<?php echo $STRNOM ?>">
             </div>
-            <div class="col-sm-3">
+            
+        </div>
+        <div class="class form-group">
+        <div class="col-sm-6">
                 <label for="email" class=" control-label">Apellidos: </label>
                 <input type="text" required class="form-control" id="STRAPE" name="STRAPE" placeholder="Apellidos: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios" value="<?php echo $STRAPE ?>">
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-6">
                 <label for="registro" class=" control-label">Telefono: </label>
                 <input type="text" class="form-control" id="STRTEL" name="STRTEL" placeholder="Telefono: " required value="<?php echo $STRTEL ?>">
             </div>
@@ -174,7 +177,7 @@ if (isset($_GET["id"])) {
                 <label for="registro" class=" control-label">Estado: </label>
                 <select class="form-control" name="BITSUS" id="BITSUS">
                     <option value="1" <?php if ($BITSUS == 1) echo "selected"; ?>>Activo</option>
-                    <option value="2" <?php if ($BITSUS == 2) echo "selected"; ?>>Inactivo</option>
+                    <option value="2" <?php if ($BITSUS == 0) echo "selected"; ?>>Inactivo</option>
                 </select>
             </div>
         </div>

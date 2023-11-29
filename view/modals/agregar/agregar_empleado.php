@@ -14,16 +14,16 @@
                     </div>
                     <div class="modal-body">
                         <div class="col-md-4">
-                            <img src="view/resources/images/Default/perfil.png" alt="..." class="img-circle EverCambio" >
+                            <img src="view/resources/images/Default/perfil.png" alt="..." class="img-circle EverCambio">
                             <br>
                             <label for="registro" class=" control-label">Imagen: </label>
                             <input type="file" class="form-control validarBtn" id="STRIMG" name="STRIMG" placeholder="imagen: ">
 
                         </div>
-                        
-                            <div class="col-sm-4">
+
+                        <div class="col-sm-4">
                             <div class="form-group">
-                            <label for="permisos" class=" control-label">Permisos: </label>
+                                <label for="permisos" class=" control-label">Permisos: </label>
                                 <ul style="list-style: none;" id="permisos">
                                     <?php
                                     require_once("config/config.php");
@@ -54,7 +54,7 @@
 
                                     <div class="col-sm-3">
                                         <label for="STRRFC" class=" control-label">RFC: </label>
-                                        <input type="text" required class="form-control" id="STRRFC" name="STRRFC" placeholder="RFC: "  onchange="validarExistencia(this.value,'tblcatemp','STRRFC')">
+                                        <input type="text" required class="form-control" id="STRRFC" name="STRRFC" placeholder="RFC: " onchange="validarExistencia(this.value,'tblcatemp','STRRFC')">
                                         <span id="MSTRRFC"></span>
                                     </div>
 
@@ -66,22 +66,27 @@
                                     </div>
 
 
-                                    <div class="col-sm-3">
-                                        <label for="usuario" class=" control-label">Nombre: </label>
-                                        <input type="text" required class="form-control" id="STRNOM" name="STRNOM" placeholder="Nombre: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label for="email" class=" control-label">Apellidos: </label>
-                                        <input type="text" required class="form-control" id="STRAPE" name="STRAPE" placeholder="Apellidos: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label for="registro" class=" control-label">Telefono: </label>
-                                        <input type="text" class="form-control" id="STRTEL" name="STRTEL" placeholder="Telefono: " required>
-                                    </div>
                                     
+                                   
+
                                 </div>
                                 <div class="form-group">
                                 <div class="col-sm-4">
+                                        <label for="usuario" class=" control-label">Nombre: </label>
+                                        <input type="text" required class="form-control" id="STRNOM" name="STRNOM" placeholder="Nombre: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios">
+                                    </div>
+                                <div class="col-sm-4">
+                                        <label for="email" class=" control-label">Apellidos: </label>
+                                        <input type="text" required class="form-control" id="STRAPE" name="STRAPE" placeholder="Apellidos: " pattern="^[A-Za-z\s]+$" title="El nombre debe contener solo letras y espacios">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="registro" class=" control-label">Telefono: </label>
+                                        <input type="text" class="form-control" id="STRTEL" name="STRTEL" placeholder="Telefono: " required>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4">
                                         <label for="localidad" class=" control-label">Localidad: </label>
                                         <input type="text" required class="form-control" id="STRLOC" name="STRLOC" placeholder="Localidad: ">
                                     </div>
@@ -93,7 +98,7 @@
                                         <label for="celular" class=" control-label">Estado: </label>
                                         <input type="text" required class="form-control" id="STREST" name="STREST" placeholder="Estado: ">
                                     </div>
-                                   
+
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-4">
@@ -116,7 +121,7 @@
                             </div>
 
                             <div class="col-sm">
-                             
+
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <label for="registro" class=" control-label">Correo Electronico: </label>
@@ -137,7 +142,7 @@
                                         </select>
                                     </div>
                                 </div>
-                               
+
 
 
 

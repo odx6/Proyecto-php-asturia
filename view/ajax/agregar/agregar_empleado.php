@@ -32,9 +32,7 @@ if (empty($_POST['STRNSS'])) {
 	$errors[] = "Contraseña  está vacío.";
 }  elseif (empty($_POST['BITSUS'])) {
 	$errors[] = "Estado está vacío.";
-} elseif (empty($_POST['permisos'])) {
-	$errors[] = "Los permisos no puden estar vacios.";
-} elseif (
+}  elseif (
 	!empty($_POST['STRNSS'])
 	&& !empty($_POST['STRRFC'])
 	&& !empty($_POST['STRCUR'])
@@ -51,7 +49,7 @@ if (empty($_POST['STRNSS'])) {
 	&& !empty($_POST['STRPWS'])
 	&& !empty($_POST['BITSUS'])
 	
-	&& !empty($_POST['permisos'])
+	
 	/*&& !empty($_POST['kind'])*/
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
@@ -109,11 +107,17 @@ if (empty($_POST['STRNSS'])) {
 	$CREATED_AT = date("Y-m-d H:i:s");
 	//verificacion de correo 
 	$token = md5(rand());
-
+	
 
 
 	//variable de los permisos 
-	$permisos = $_POST["permisos"];
+	if(empty($_POST['permisos'])){$BITSUS =2;
+	}else{
+		
+		$permisos = $_POST["permisos"];
+	
+	}
+	
 
 	//Write register in to database 
 	if (verificacionDeCorreo($STRCOR, $token) == "true") $sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) 
@@ -121,8 +125,8 @@ if (empty($_POST['STRNSS'])) {
 	$query_new = mysqli_query($con, $sql);
 	// if has been added successfully
 	if ($query_new) {
-
-		$numeroMaximo = "select max(IDEMP) as nuevo_empleado from tblcatemp";
+		if(!empty($_POST['permisos'])){
+			$numeroMaximo = "select max(IDEMP) as nuevo_empleado from tblcatemp";
 		$idusernew_sql = mysqli_query($con, $numeroMaximo);
 		$idusernew_rw = mysqli_fetch_array($idusernew_sql);
 		$idusernew = $idusernew_rw['nuevo_empleado'];
@@ -137,6 +141,11 @@ if (empty($_POST['STRNSS'])) {
 		}
 
 		$messages[] = "Empleado ha sido agregado con éxito.";
+		}else{
+
+			$messages[] = "Empleado ha sido agregado con éxito, sin permisos.";
+		}
+		
 	} else {
 		$errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
 	}
