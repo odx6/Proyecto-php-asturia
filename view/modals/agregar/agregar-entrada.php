@@ -18,7 +18,7 @@
 
                         <input type="hidden" required class="form-control" id="IDEMP" name="IDEMP" placeholder="Folio:" value="<?php echo $id ?>">
                         <div class="col-sm-4">
-                            <label for="usuario" reuired class="control-label">INTIDTOP: </label>
+                            <label for="INTIDTOP" reuired class="control-label">INTIDTOP: </label>
                             <?php
 
                             // Consulta SQL para obtener los datos
@@ -56,7 +56,7 @@
                             </select>
                         </div>
                         <div class="col-sm-4">
-                            <label for="usuario" reuired class="control-label">ALMACEN: </label>
+                            <label for="INTIDALM" reuired class="control-label">ALMACEN: </label>
                             <?php
 
                             // Consulta SQL para obtener los datos
@@ -93,7 +93,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-6">
-                            <label for="INTFOL" class="col-sm-2 control-label">Folio: </label>
+                            <label for="INTFOL" class=" control-label">Folio: </label>
                             <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: ">
                             <span id="MINTFOL"></span>
                         </div>
@@ -106,13 +106,24 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="col-sm-6">
-                            <label for="INTTIPMOV" class=" control-label">Buscar: </label>
-                            <select class="form-control col-sm-10 INTTIPMOV" name="INTTIPMOV" id="INTTIPMOV" required>
+                            <label for="INTIPMOV" class=" control-label">Buscar: </label>
+                            <select class="form-control col-sm-10 INTIPMOV" name="INTIPMOV" id="INTIPMOV" required style="margin-bottom: 5px;">
                                 <option value="STRSKU">SKU</option>
                                 <option value="STRCOD">Codigo</option>
                                 <option value="STRDES">Descripcion</option>
 
                             </select>
+                           <div>
+                           <label for="STRREF" class=" control-label">Referencia: </label>
+                           
+                           <input type="text" required class="form-control" id="STRREF" name="STRREF" placeholder="Referencia: ">
+                           <span id="STRREF"></span>
+
+                           </div>
+                           
+
+
+
                         </div>
                         <div class="col-sm-6">
                             <label for="INTTIPMOV" class=" control-label">por</label>
@@ -122,18 +133,28 @@
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" onclick='mostrarProductos()'><i class='fa fa-search'></i></button>
                                 </span>
-                            </div><!-- /input-group -->
-                        </div><!-- /input-group -->
+
+                                
+
+                            </div>
+                            <label for="INTCAN" class=" control-label">Cantidad</label>
+
+                            <input type="number" required class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: " >
+                            <span id="INTCAN"></span>
+
+
+                        </div>
                         <div class="col-sm-12">
-                            <select multiple size="20" class="form-control" onclick="agregarInventario()" id="outproduct">
-                                <option> <strong>hola</strong>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                            <select multiple size="10" class="form-control"  id="outproduct" style="margin-bottom: 5px;">
+                                <option disabled>Ninguna busqueda</option>
                             </select>
 
                         </div>
+                        <div class="cpl-sm-12 modal-footer">
+                            
+                        <button type="button"  class="btn btn-warning" onclick="agregarInventario()">Agregar <i class="fa fa-plus"></i></button>
+                        </div>
+                  
                     </div>
 
 
@@ -146,35 +167,24 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">SKU</th>
-                                        <th scope="col">precio</th>
-                                        <th scope="col">cantidad</th>
-                                        <th scope="col">referencia</th>
-                                        <th scope="col">total</th>
-                                        <th scope="col">Eliminar</th>
+                                        <th scope="col">pre.</th>
+                                        <th scope="col">cant.</th>
+                                        <th scope="col">ref.</th>
+                                        <th scope="col">tot./u</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>
 
-                                            <input type="text" required class="form-control" id="STRDESSBC" name="STRDESSBC" placeholder="Descripcion: ">
-
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
+                                   
                                 </tbody>
                             </table>
+                            
                         </div>
+                        <div class="col-sm-8"><label for="MONCTOPRO" class=" control-label">Total</label></div>
+                        
+                        <div class="col-sm-4"><input type="number" required class="form-control static" id="MONCTOPRO" name="MONCTOPRO" placeholder="Total: " readonly >
+                    <br></div>
 
 
                     </div>

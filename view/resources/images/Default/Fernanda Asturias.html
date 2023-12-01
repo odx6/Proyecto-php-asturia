@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://localhost:8080/proyecto/?view=Entradas -->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths" style=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fernanda Asturias</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="http://localhost:8080/proyecto/assets/img/favicon.ico" type="image/x-icon">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="./Fernanda Asturias_files/bootstrap.min.css">
+    <!--cdn para bootstrap5-->
+    <!--<link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--cdn para end bootstrap5-->
+
+    <!-- Fonts from Font Awsome -->
+    <link rel="stylesheet" href="./Fernanda Asturias_files/font-awesome.min.css">
+    <!-- CSS Animate -->
+    <link rel="stylesheet" href="./Fernanda Asturias_files/animate.css">
+    <!-- Custom styles for this theme -->
+    <link rel="stylesheet" href="./Fernanda Asturias_files/main.css">
+    <!-- Vector Map  -->
+    <link rel="stylesheet" href="./Fernanda Asturias_files/jquery-jvectormap-1.2.2.css">
+    <!-- ToDos  -->
+    <link rel="stylesheet" href="./Fernanda Asturias_files/todos.css">
+    <!-- Morris  -->
+    <link rel="stylesheet" href="./Fernanda Asturias_files/morris.css">
+    <!-- Fonts -->
+    <link href="./Fernanda Asturias_files/css" rel="stylesheet" type="text/css">
+    <link href="./Fernanda Asturias_files/css(1)" rel="stylesheet" type="text/css">
+    <!-- Feature detection -->
+    <script src="./Fernanda Asturias_files/modernizr-2.6.2.min.js.download"></script>
+
+    <!-- <link rel="stylesheet" href="assets/plugins/selectpicker/bootstrap-select.min.css"> -->
+    <!-- <link rel="stylesheet" href="assets/plugins/select2/css/select2.css"> -->
+    <style>
+        .btnLeft {
+
+            text-align: left;
+
+            color: black;
+            text-decoration: none;
+            display: block;
+            padding: 18px 0 18px 25px;
+            font-size: 16px;
+            outline: 0;
+            -webkit-transition: all 200ms ease-in;
+            -o-transition: all 200ms ease-in;
+            -moz-transition: all 200ms ease-in;
+
+        }
+    </style>
+
+
+</head>
+
+<body style="" class="modal-open">
+    <section id="container">
+        <header id="header">
+            <!--logo start-->
+            <div class="brand">
+                <a href="http://localhost:8080/proyecto/?view=dashboard"><span>Fernanda Asturias</span></a>
+            </div>
+            <!--logo end-->
+            <div class="toggle-navigation toggle-left">
+                <button type="button" class="btn btn-default" id="toggle-left" data-toggle="tooltip" data-placement="right" title="" data-original-title="Ocultar Menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+            <div class="user-nav">
+                <ul>
+                    <li class="profile-photo">
+                        <img src="./Fernanda Asturias_files/perfil.png" height="40px" width="40px" alt="" class="img-circle">
+                    </li>
+                    <li class="dropdown settings">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="http://localhost:8080/proyecto/?view=Entradas#">
+                            Administrador Administrador <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInDown">
+                            <li>
+                                <a href="http://localhost:8080/proyecto/?view=perfil"><i class="fa fa-user"></i> Mi Perfil</a>
+                            </li>
+                            <li>
+                                <a href="http://localhost:8080/proyecto/?view=logout"><i class="fa fa-power-off"></i> Salir</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </header>
+        <!--sidebar left start-->
+        <aside class="sidebar">
+
+
+
+
+            <div id="leftside-navigation" class="nano">
+                <ul class="nano-content">
+                                            <li class="active">
+                            <a href="http://localhost:8080/proyecto/?view=dashboard"><i class="fa fa-home" aria-hidden="true"></i><span>Inicio</span></a>
+                        </li>
+                    
+
+                </ul>
+
+                <!--   <ul class="nano-content">
+
+                                            <li class="active">
+                            <a href="./?view=dashboard"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span></a>
+                        </li>
+
+
+                                                                <li class="active">
+                            <a href="./?view=empleados"><i class="fa fa-users"></i><span>Empleados</span></a>
+                        </li>
+                    
+
+
+                                            <li class="active">
+                            <a href="./?view=productos"><i class="fa fa-users"></i><span>Productos</span></a>
+                        </li>
+                                                                                                    
+
+
+
+
+
+                </ul>-->
+                <!--menu casa-->
+                <!--menu casa-->
+                <!--productos-->
+                <div class="btn-group-vertical btn-group-justified">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-default  btnLeft dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-th" aria-hidden="true"></i>&nbsp;Catalogo
+
+                        </button>
+                        <ul class="dropdown-menu">
+                                                            <li class="active">
+                                    <a href="http://localhost:8080/proyecto/?view=productos"><i class="fa fa-users"></i><span>&nbsp;Productos</span></a>
+                                </li>
+                            
+                                                                                                                                                <li class="active">
+                                    <a href="http://localhost:8080/proyecto/?view=empleados"><i class="fa fa-users"></i><span>Empleados</span></a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <!--end-productos-->
+
+                <div id="leftside-navigation" class="nano">
+                    <ul class="nano-content">
+
+                        
+                    </ul>
+
+                    <div class="btn-group-vertical btn-group-justified">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-default  btnLeft dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-th" aria-hidden="true"></i>&nbsp;Inventarios
+
+                        </button>
+                        <ul class="dropdown-menu">
+                            
+                                                            <li class="active">
+                                    <a href="http://localhost:8080/proyecto/?view=Entradas"><i class="fa fa-users"></i><span>&nbsp;Entradas y Salidas</span></a>
+                                </li>
+                            
+                            
+
+                        </ul>
+                    </div>
+                </div>
+                <!--end-productos-->
+
+
+
+        </div></div></aside>
+
+        <!--sidebar left end-->    <!--main content start-->
+    <section class="main-content-wrapper">
+        <section id="main-content">
+            <div class="row">
+                <div class="col-md-12">
+                        <!--breadcrumbs start -->
+                        <ul class="breadcrumb  pull-right">
+                            <li><a href="http://localhost:8080/proyecto/?view=dashboard">Inicio</a></li>
+                            <li class="active">Entradas y Salidas</li>
+                        </ul>
+                        <!--breadcrumbs end -->
+                        <br>
+                    <h1 class="h1">Entradas y Salidas </h1>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Buscar por nombre" id="q" onkeyup="load(1);">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="load(1);"><i class="fa fa-search"></i></button>
+                      </span>
+                    </div><!-- /input-group -->
+                </div>
+                <div class="col-xs-3"></div>
+                <div class="col-xs-1">
+                    <div id="loader" class="text-center"></div>
+                </div>
+
+                <div class="col-md-offset-6" style="display: inline-block;">
+                    <!-- modals -->
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#formModal"><i class="fa fa-plus"></i> Nuevo</button>
+<button class="btn btn-danger" data-toggle="modal" data-target="#" onclick="exportpf(&quot;peticionajax&quot;)"><i class="fa fa-plus"></i>Exportar</button>
+
+
+<!-- Form Modal -->
+<div class="modal fade in" id="formModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: block;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- form  -->
+            <form class="form-horizontal" role="form" method="post" id="new_register" name="new_register" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar Entrada o Salida</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+
+                        <input type="hidden" required="" class="form-control" id="IDEMP" name="IDEMP" placeholder="Folio:" value="1">
+                        <div class="col-sm-4">
+                            <label for="usuario" reuired="" class="control-label">INTIDTOP: </label>
+                             <select class="form-control " name="INTIDTOP" id="INTIDTOP"><option value="1" <?php="" if($intidtop="$fila[&quot;INTIDTOP&quot;])" selected="" ?="">   PRUEBA 1</option></select>
+
+                        </div>
+
+
+                        <div class="col-sm-4">
+                            <label for="INTTIPMOV" class=" control-label">Movimiento: </label>
+                            <select class="form-control col-sm-10" name="INTTIPMOV" id="INTTIPMOV" required="">
+                                <option value="1">Entrada</option>
+                                <option value="2">Salida</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="usuario" reuired="" class="control-label">ALMACEN: </label>
+                             <select class="form-control " name="INTIDALM" id="INTIDALM"><option value="1" <?php="" if($intidalm="$fila[&quot;INTIDALM&quot;])" selected="" ?="">   ALMACEN 1 PRUEBA</option></select>
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <label for="INTFOL" class="col-sm-2 control-label">Folio: </label>
+                            <input type="text" required="" class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: ">
+                            <span id="MINTFOL"></span>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="STROBS" class=" control-label">Descripcion: </label>
+                            <input type="text" required="" class="form-control" id="STROBS" name="STROBS" placeholder="Descripcion: ">
+                            <span id="STROBS"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-sm-6">
+                            <label for="INTTIPMOV" class=" control-label">Buscar: </label>
+                            <select class="form-control col-sm-10 INTTIPMOV" name="INTTIPMOV" id="INTTIPMOV" required="" style="margin-bottom: 5px;">
+                                <option value="STRSKU">SKU</option>
+                                <option value="STRCOD">Codigo</option>
+                                <option value="STRDES">Descripcion</option>
+
+                            </select>
+                           <div>
+                           <label for="STRREF" class=" control-label">Referencia: </label>
+                           
+                           <input type="text" required="" class="form-control" id="STRREF" name="STRREF" placeholder="Referencia: ">
+                           <span id="STRREF"></span>
+
+                           </div>
+                           
+
+
+
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="INTTIPMOV" class=" control-label">por</label>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Buscar por nombre" id="campo" onkeyup="mostrarProductos()">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" onclick="mostrarProductos()"><i class="fa fa-search"></i></button>
+                                </span>
+
+                                
+
+                            </div>
+                            <label for="INTCAN" class=" control-label">Cantidad</label>
+
+                            <input type="number" required="" class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: ">
+                            <span id="INTCAN"></span>
+
+
+                        </div>
+                        <div class="col-sm-12">
+                            <select multiple="" size="10" class="form-control" id="outproduct" style="margin-bottom: 5px;">
+                                <option disabled="">Ninguna busqueda</option>
+                            </select>
+
+                        </div>
+                        <div class="cpl-sm-12 modal-footer">
+                            
+                        <button type="button" class="btn btn-warning" onclick="agregarInventario()">Agregar <i class="fa fa-plus"></i></button>
+                        </div>
+                  
+                    </div>
+
+
+                    <div class="col-sm-6">
+
+
+                        <div class="col-sm-12">
+                            <table class="table caption-top" id="miTabla">
+                                <caption>Productos Agregados</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">SKU</th>
+                                        <th scope="col">precio</th>
+                                        <th scope="col">cantidad</th>
+                                        <th scope="col">referencia</th>
+                                        <th scope="col">total</th>
+                                        <th scope="col">Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>
+
+                                            <input type="text" required="" class="form-control" id="STRDESSBC" name="STRDESSBC" placeholder="Descripcion: ">
+
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="guardar_datos" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+            <!-- /end form  -->
+        </div>
+    </div>
+</div>
+<!-- End Form Modal --><!-- Form Modal -->
+<div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <form class="form-horizontal" role="form" method="post" id="update_register" name="update_register">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel"> Editar Empleado</h4>
+            </div>
+            <div class="modal-body">
+                <div id="loader2" class="text-center"></div>
+                <div class="outer_div2"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" id="actualizar_datos" class="btn btn-success">Actualizar</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+<!-- End Form Modal --><!-- Form Modal -->
+<div class="modal fade" id="modal_show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <form class="form-horizontal" role="form">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel"> Datos Del Empleado</h4>
+            </div>
+            <div class="modal-body">
+                <div id="loader3" class="text-center"></div>
+                <div class="outer_div3"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+   </form>
+    </div>
+</div>
+<!-- End Form Modal -->                    <!-- /end modals -->
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Mostrar <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li class="active" onclick="per_page(15);" id="15"><a href="http://localhost:8080/proyecto/?view=Entradas#">15</a></li>
+                            <li onclick="per_page(25);" id="25"><a href="http://localhost:8080/proyecto/?view=Entradas#">25</a></li>
+                            <li onclick="per_page(50);" id="50"><a href="http://localhost:8080/proyecto/?view=Entradas#">50</a></li>
+                            <li onclick="per_page(100);" id="100"><a href="http://localhost:8080/proyecto/?view=Entradas#">100</a></li>
+                            <li onclick="per_page(1000000);" id="1000000"><a href="http://localhost:8080/proyecto/?view=Entradas#">Todos</a></li>
+                        </ul>
+                    </div>
+                    <input type="hidden" id="per_page" value="15">
+                </div>
+            </div>
+
+            
+
+            <div id="resultados_ajax"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Datos de los Empleados</h3>
+                            <div class="actions pull-right">
+                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-times"></i>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <div class="outer_div" id="peticionajax">		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>#ID</th>
+					<th>NSS</th>
+					<th>RFC</th>
+					<th>CURP</th>
+					<th>NOMBRE</th>
+					<th>TELEFONO</th>
+					<th>CORREO</th>
+					<th>CREACION</th>
+					<th>ACCION</th>
+					<th></th>
+
+				</tr>
+			</thead>
+							<tbody>
+					<tr>
+						<td>1</td>
+						<td> 543434 </td>
+						<td> 123 </td>
+						<td> SDJK544S44A </td>
+						<td> Administrador Administrador </td>
+						<td> 9152905212 </td>
+						<td> admin@admin.com </td>
+
+
+
+
+
+						<td><span class="label label-success">Activo</span></td>
+						<td>11-11-2023</td>
+						<td class="text-right">
+
+							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar(&#39;1&#39;);"><i class="fa fa-edit"></i></button>
+
+							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar(&#39;1&#39;)"><i class="fa fa-trash-o"></i></button>
+
+							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar(&#39;1&#39;)"><i class="fa fa-eye"></i></button>
+
+						</td>
+					</tr>
+				</tbody>
+							<tbody>
+					<tr>
+						<td>25</td>
+						<td> 22345678911 </td>
+						<td> GOMJ80082556 </td>
+						<td> AUCE970202HOCGRV03 </td>
+						<td> Everardo Agustin </td>
+						<td> 9515925212 </td>
+						<td> r41325833@gmail.com </td>
+
+
+
+
+
+						<td><span class="label label-success">Activo</span></td>
+						<td>30-11-2023</td>
+						<td class="text-right">
+
+							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar(&#39;25&#39;);"><i class="fa fa-edit"></i></button>
+
+							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar(&#39;25&#39;)"><i class="fa fa-trash-o"></i></button>
+
+							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar(&#39;25&#39;)"><i class="fa fa-eye"></i></button>
+
+						</td>
+					</tr>
+				</tbody>
+						<tfoot>
+				<tr>
+					<td colspan="10">
+						Mostrando 1 al 2 de 2 registros<ul class="pagination pagination-sm no-margin pull-right"><li class="disabled"><span><a>‹ Anterior</a></span></li><li class="active"><a>1</a></li><li class="disabled"><span><a>Siguiente ›</a></span></li></ul>					</td>
+				</tr>
+			</tfoot>
+		</table>
+</div><!-- Datos ajax Final --> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>       
+
+        </section>
+    </section><!--main content end-->
+
+    </section><!-- /end container  -->
+
+    <!--Global JS-->
+    <script src="./Fernanda Asturias_files/jquery-1.10.2.min.js.download"></script>
+    <script src="./Fernanda Asturias_files/bootstrap.min.js.download"></script>
+    <script src="./Fernanda Asturias_files/waypoints.min.js.download"></script>
+    <script src="./Fernanda Asturias_files/jquery.nanoscroller.min.js.download"></script>
+    <script src="./Fernanda Asturias_files/application.js.download"></script>
+    <script src="./Fernanda Asturias_files/Asturias.js.download"></script>
+    <script src="./Fernanda Asturias_files/Validaciones.js.download"></script>
+   
+ 
+
+   
+
+    <!-- <script src="assets/plugins/selectpicker/bootstrap-select.min.js"></script> 
+    <script type="text/javascript">
+    $('.selectpicker').selectpicker({
+      style: 'btn-primary',
+      size: 5
+    });
+    </script> --> 
+
+   <!--  <script src="assets/plugins/select2/js/select2.min.js"></script> 
+	<script type="text/javascript">
+	  	$('select').select2();
+         <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+          <script src="assets/js/sidebars.js"></script>
+	</script>  -->
+    
+
+
+<script>
+    $(function() {
+        load(1);
+    });
+
+    function load(page){
+        var query=$("#q").val();
+        var per_page=$("#per_page").val();
+        var parametros = {"action":"ajax","page":page,'query':query,'per_page':per_page};
+        $("#loader").fadeIn('slow');
+        $.ajax({
+            url:'view/ajax/empleados_ajax.php',
+            data: parametros,
+             beforeSend: function(objeto){
+            $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
+          },
+            success:function(data){
+                $(".outer_div").html(data).fadeIn('slow');
+                $("#loader").html("");
+            }
+        })
+    }
+    
+    function per_page(valor){
+        $("#per_page").val(valor);
+        load(1);
+        $('.dropdown-menu li' ).removeClass( "active" );
+        $("#"+valor).addClass( "active" );
+    }
+</script>
+<script>
+    function eliminar(id){
+        if(confirm('Esta acción  eliminará de forma permanente al empleado \n\n Desea continuar?')){
+            var page=1;
+            var query=$("#q").val();
+            var per_page=$("#per_page").val();
+            var parametros = {"action":"ajax","page":page,"query":query,"per_page":per_page,"id":id};
+            
+            $.ajax({
+                url:'view/ajax/empleados_ajax.php',
+                data: parametros,
+                 beforeSend: function(objeto){
+                $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
+              },
+                success:function(data){
+                    $(".outer_div").html(data).fadeIn('slow');
+                    $("#loader").html("");
+                    window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove();});}, 5000);
+                }
+            })
+        }
+    }
+</script>
+<script>
+   
+    //nuevo form data
+    $("#new_register").submit(function(event) {
+            event.preventDefault();
+            $('#guardar_datos').attr("disabled", true);
+
+            var formData = new FormData(this); // Crear un objeto FormData
+
+            $.ajax({
+                type: "POST",
+                url: "view/ajax/agregar/agregar_empleado.php",
+                data: formData, // Usar el objeto FormData como los datos de la petición
+                processData: false, // Indicar a jQuery que no procese los datos
+                contentType: false, // Indicar a jQuery que no establezca el tipo de contenido
+                beforeSend: function(objeto) {
+                    $("#resultados_ajax").html("Enviando...");
+                },
+                success: function(datos) {
+                    $("#resultados_ajax").html(datos);
+                    $('#guardar_datos').attr("disabled", false);
+                    load(1);
+                    window.setTimeout(function() {
+                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    }, 5000);
+                    $('#formModal').modal('hide');
+                }
+            });
+        });
+
+</script>
+
+<script>
+    $( "#update_register" ).submit(function( event ) {
+      $('#actualizar_datos').attr("disabled", true);
+      var formData = new FormData(this);
+     
+         $.ajax({
+                type: "POST",
+                url: "view/ajax/editar/editar_empleado.php",
+                data: formData,
+                processData: false, // Indicar a jQuery que no procese los datos
+                contentType: false, 
+                 beforeSend: function(objeto){
+                    $("#resultados_ajax").html("Enviando...");
+                  },
+                success: function(datos){
+                 
+                $("#resultados_ajax").html(datos);
+                $('#actualizar_datos').attr("disabled", false);
+                load(1);
+                window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove();});}, 5000);
+                $('#modal_update').modal('hide');
+              }
+        });
+      event.preventDefault();
+    });
+</script>
+<script>
+    function editar(id){
+       
+        var parametros = {"action":"ajax","id":id};
+        $.ajax({
+                url:'view/modals/editar/empleado.php',
+                data: parametros,
+                 beforeSend: function(objeto){
+                $("#loader2").html("<img src='./assets/img/ajax-loader.gif'>");
+              },
+                success:function(data){
+                    $(".outer_div2").html(data).fadeIn('slow');
+                    $("#loader2").html("");
+                }
+            })
+    }
+    
+    function mostrar(id){
+        var parametros = {"action":"ajax","id":id};
+        $.ajax({
+                url:'view/modals/mostrar/empleado.php',
+                data: parametros,
+                 beforeSend: function(objeto){
+                $("#loader3").html("<img src='./assets/img/ajax-loader.gif'>");
+              },
+                success:function(data){
+                    $(".outer_div3").html(data).fadeIn('slow');
+                    $("#loader3").html("");
+                }
+            })
+    }
+    function exportpf(historial){
+       alert(historial);
+  var contenido= document.getElementById(historial).innerHTML;
+     var contenidoOriginal= document.body.innerHTML;
+
+     document.body.innerHTML = contenido;
+
+     window.print();
+
+     document.body.innerHTML = contenidoOriginal;
+    }
+</script>
+<div class="modal-backdrop fade in"></div></body></html>

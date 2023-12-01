@@ -1,11 +1,8 @@
 
-var contador = 0;
-var TotalP=0;
 
-var inventario=[];
 $(document).ready(function () {
   //alert("cargado"); 
-  
+    
   //load 
   $(".categorias").change(function () {
     var categoriaID = $(this).val();
@@ -35,10 +32,10 @@ $(document).ready(function () {
     });
 
   });
-  /* $('.validarBtn').change(function (e) {
-     // alert("listo")
-     
-   });*/
+ /* $('.validarBtn').change(function (e) {
+    // alert("listo")
+    
+  });*/
 
 
   // carga  todas las  solicitude  de las solicitudes
@@ -71,7 +68,7 @@ $(document).ready(function () {
       $(this).val('');
       $('.EverCambio').attr("src", 'view/resources/images/Default/productoinit.png');
     }
-
+    
 
   });
 
@@ -285,7 +282,7 @@ function validarURLImagen(url) {
 }
 
 
-function validarImg() {
+function  validarImg(){
   alert("hola");
 }
 
@@ -297,110 +294,60 @@ function per_page(valor) {
 }
 
 
-function agregarInventario() {
-  valor = $('#outproduct').val();
-  texto = $('#outproduct').text();
-  cantidad = $('#INTCAN').val();
-  referencia = $('#STRREF').val();
-  var precio = document.querySelector("#outproduct > option").dataset.info
-  var celdas = document.querySelectorAll('.total td');
-    
-   
-  // Iterar sobre las celdas y hacer algo con cada una
-  celdas.forEach(function (celda) {
-    // Hacer algo con la celda, por ejemplo, imprimir su contenido
-    console.log(celda.textContent);
-  });
+function agregarInventario(){
+valor=$('#outproduct').val();
+texto=$('#outproduct').text();
+cantidad=$('#INTCAN').val();
+referencia=$('#STRREF').val();
 
-    TotalP=TotalP+CalcularTotal(precio, cantidad);
-    $('#MONCTOPRO').val(TotalP);
 
-    inventario.push({
-      "SKU": valor,
-      "STRREF": referencia,
-      "INTCANT": cantidad,
-      "MONPRCOS": precio,
-      "MONCTOPRO":CalcularTotal(precio, cantidad)
-  });
- //CONVERTIRLO A JSON
 
- var jsoninventario = JSON.stringify(inventario, null, 2);
- console.log(jsoninventario);
- //
-  // Imprimiendo el valor
-  //console.log(precio);
+alert("hola"+valor+"texto"+ texto+" referencia"+referencia+" Cantidad"+cantidad);
+var nuevaFila = $("<tr> <th scope='row'>"+valor+"</th> <td>"+valor+"</td> <td>"+cantidad+"</td> <td>"+referencia"</td> </tr>");
 
- /*alert("valor"+contador);
-
-  //alert("hola" + valor + "precio" + precio + " referencia" + referencia + " Cantidad" + cantidad + "total");
-  var nuevaFila = $("<tr> <th scope='row'>" + valor + "</th> <td>" + precio + "</td> <td>" + cantidad + "</td> <td>" + referencia + "</td> <td class='total'>" + CalcularTotal(precio, cantidad) + "</td> </tr>");
-   contador++;
-  // Agregar la nueva fila al cuerpo de la tabla
-  $("#miTabla tbody").append(nuevaFila);*/
-
-  var tabla = document.getElementById("miTabla");
-var cuerpoTabla = tabla.getElementsByTagName("tbody")[0];
-
-// Iterar sobre cada libro en el array y agregar una fila a la tabla por cada libro
-inventario.forEach(function(invent) {
-    // Crear una nueva fila
-    var fila = cuerpoTabla.insertRow();
-
-    // Insertar celdas en la fila
-    var celdaId = fila.insertCell(0);
-    var celdaTitulo = fila.insertCell(1);
-    var celdaAutor = fila.insertCell(2);
-    var celdaAnio = fila.insertCell(3);
-    var celdaGenero = fila.insertCell(4);
-
-    // Llenar las celdas con datos del libro
-    celdaId.textContent = libro.id;
-    celdaTitulo.textContent = libro.titulo;
-    celdaAutor.textContent = libro.autor;
-    celdaAnio.textContent = libro.anioPublicacion;
-    celdaGenero.textContent = libro.genero;
-});
-
+// Agregar la nueva fila al cuerpo de la tabla
+$("#miTabla tbody").append(nuevaFila);
+  
 }
 
 
 
-function mostrarProductos() {
+function mostrarProductos(){
+ 
+ 
+  valor=$('.INTTIPMOV').val();
+  campo=$('#campo').val();
 
+  
+ //alert("Hola funcion buscar productos"+valor+" campo"+campo);
+ var parametros = {
+  "columna": valor,
+  "tabla":'tblcatpro',
+  "campo":campo
+  
+};
 
-  valor = $('.INTIPMOV').val();
-  campo = $('#campo').val();
+$.ajax({
+  url:'./view/ajax/Funciones/Buscar.php',
+  type: 'post',
+  data: parametros,
+  dataType: 'json',
+  beforeSend: function (objeto) {
+    $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
+  },
+  success: function (data) {
+    //sku=data[1].STRSKU;
+    //alert(sku);
+   
+        var select = $('#outproduct');
+        select.empty();
+        $.each(data, function(i, dato) {
 
-
-  //alert("Hola funcion buscar productos"+valor+" campo"+campo);
-  var parametros = {
-    "columna": valor,
-    "tabla": 'tblcatpro',
-    "campo": campo
-
-  };
-
-  $.ajax({
-    url: './view/ajax/Funciones/Buscar.php',
-    type: 'post',
-    data: parametros,
-    dataType: 'json',
-    beforeSend: function (objeto) {
-      $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
-    },
-    success: function (data) {
-      //sku=data[1].STRSKU;
-      //alert(sku);
-
-      var select = $('#outproduct');
-      select.empty();
-      $.each(data, function (i, dato) {
-
-        select.append('<option value="' + dato.STRSKU + '" data-info="' + dato.MONPCOS + '"><b>SKU :&nbsp</b>  ' + dato.STRSKU + '&nbspCodigo :  &nbsp' + dato.STRCOD + '</option>');
-      });
+            select.append('<option value="' + dato.STRSKU + '" data-info="'+dato.MONPCOS+'"><b>SKU :&nbsp</b>  '+dato.STRSKU+'&nbspCodigo :  &nbsp' + dato.STRCOD +'</option>');
+        });
     }
 
-  })
+})
 
 
 
@@ -409,12 +356,5 @@ function mostrarProductos() {
 
 
 }
-
+ 
 //end-validar img
-
-
-function CalcularTotal(precio, cantidad) {
-
-  if (precio != null && cantidad != null && cantidad > 0 && precio > 0) return precio * cantidad;
-
-}
