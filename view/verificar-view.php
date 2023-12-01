@@ -9,7 +9,7 @@ require './vendor/autoload.php';
 // Crea una nueva instancia de PHPMailer
 $mail = new PHPMailer(TRUE);
 $token = md5(rand());
-$correo="r41325833@gmail.com";
+$correo = "r41325833@gmail.com";
 try {
     // Configura el servidor de correo
     $mail->isSMTP();
@@ -29,11 +29,10 @@ try {
     $mail->Subject = 'El asunto';
     $mail->Body = "Haz clic en el siguiente enlace para verificar tu correo electrónico : HTML http://localhost:8080/proyecto/?view=validacion&token=$token&correo=$correo";
     $mail->AltBody = "Haz clic en el siguiente enlace para verificar tu correo electrónico : HTML http://localhost:8080/proyecto/?view=verificar?token='$token'?correo='$correo' ";
-    
+
     $mail->send();
     echo "El correo electrónico se envió correctamente.";
 } catch (Exception $e) {
     // Muestra un mensaje de error si algo sale mal
     echo "El correo electrónico no se pudo enviar. Error de PHPMailer: {$mail->ErrorInfo}";
 }
-?>

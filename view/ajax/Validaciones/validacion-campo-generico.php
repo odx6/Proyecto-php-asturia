@@ -15,14 +15,14 @@ if (empty($_POST['campo']) && empty($_POST['tabla']) && empty($_POST['columna'])
 
 
 
-   $sql="SELECT count(*) AS numrows FROM ".$tabla."   WHERE   ".$columna."=". $campo ."; ";
+    $sql = "SELECT count(*) AS numrows FROM " . $tabla . "   WHERE   " . $columna . "=" . $campo . "; ";
 
-    
+
     $count_query   = mysqli_query($con, $sql = "SELECT count(*) AS numrows FROM " . $tabla . " WHERE " . $columna . " = '" . $campo . "';");
     if ($row = mysqli_fetch_array($count_query)) {
         $numrows = $row['numrows'];
     } else {
-        echo mysqli_error($con,$sql);
+        echo mysqli_error($con, $sql);
     }
 
 

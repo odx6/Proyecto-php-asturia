@@ -1,6 +1,6 @@
 <?php
 
-	require './vendor/autoload.php'; // Carga el archivo autoloader de Composer
+require './vendor/autoload.php'; // Carga el archivo autoloader de Composer
 
 // Crequire 'vendor/autoload.php'; // Asegúrate de incluir el autoloader de DOMPDF
 
@@ -181,9 +181,4 @@ header('Content-Disposition: inline; filename="plantilla_firmas.pdf"');
 echo $pdfData;
 
 // Abre el PDF en una nueva ventana utilizando JavaScript
-
-
 ?>
-
-
-

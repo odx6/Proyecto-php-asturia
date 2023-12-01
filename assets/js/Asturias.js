@@ -1,8 +1,8 @@
 
 
 $(document).ready(function () {
-  //alert("cargado");
-
+  //alert("cargado"); 
+    
   //load 
   $(".categorias").change(function () {
     var categoriaID = $(this).val();
@@ -285,4 +285,74 @@ function validarURLImagen(url) {
 function  validarImg(){
   alert("hola");
 }
+
+function per_page(valor) {
+  $("#per_page").val(valor);
+  load(1);
+  $('.dropdown-menu li').removeClass("active");
+  $("#" + valor).addClass("active");
+}
+
+
+function agregarInventario(){
+valor=$('#outproduct').val();
+texto=$('#outproduct').text();
+
+
+
+alert("hola"+valor+ texto);
+var nuevaFila = $("<tr> <th scope='row'>"+valor+"</th> <td>"+valor+"</td> <td>Otto</td> <td>@mdo</td> </tr>");
+
+// Agregar la nueva fila al cuerpo de la tabla
+$("#miTabla tbody").append(nuevaFila);
+  
+}
+
+
+
+function mostrarProductos(){
+ 
+ 
+  valor=$('.INTTIPMOV').val();
+  campo=$('#campo').val();
+
+  
+ //alert("Hola funcion buscar productos"+valor+" campo"+campo);
+ var parametros = {
+  "columna": valor,
+  "tabla":'tblcatpro',
+  "campo":campo
+  
+};
+
+$.ajax({
+  url:'./view/ajax/Funciones/Buscar.php',
+  type: 'post',
+  data: parametros,
+  dataType: 'json',
+  beforeSend: function (objeto) {
+    $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
+  },
+  success: function (data) {
+    //sku=data[1].STRSKU;
+    //alert(sku);
+   
+        var select = $('#outproduct');
+        select.empty();
+        $.each(data, function(i, dato) {
+
+            select.append('<option value="' + dato.STRSKU + '" data-info="'+dato.MONPCOS+'"><b>SKU :&nbsp</b>  '+dato.STRSKU+'&nbspCodigo :  &nbsp' + dato.STRCOD +'</option>');
+        });
+    }
+
+})
+
+
+
+
+
+
+
+}
+ 
 //end-validar img

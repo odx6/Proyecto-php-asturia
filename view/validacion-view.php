@@ -1,11 +1,11 @@
 <?php
 
-require_once ("./config/config.php");
-    //Archivo comprueba si el usuario esta logueado	
+require_once("./config/config.php");
+//Archivo comprueba si el usuario esta logueado	
 include_once "./vendor/autoload.php";
 
-$correo = mysqli_real_escape_string($con,(strip_tags($_GET["correo"],ENT_QUOTES)));
-$token = mysqli_real_escape_string($con,(strip_tags($_GET["token"],ENT_QUOTES)));
+$correo = mysqli_real_escape_string($con, (strip_tags($_GET["correo"], ENT_QUOTES)));
+$token = mysqli_real_escape_string($con, (strip_tags($_GET["token"], ENT_QUOTES)));
 
 $VALIDATE_AT = date("Y-m-d H:i:s");
 
@@ -13,47 +13,35 @@ $VALIDATE_AT = date("Y-m-d H:i:s");
 //echo $sql = "select * from tblcatemp where STRCOR=".$correo.";";
 if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
     $errors[] = "El correo que ingresaste no es correcto";
-}else{
+} else {
 
     if (isset($token) && isset($correo)) {
         $correo = $_GET["correo"];
-        $token=$_GET["token"];
-        
+        $token = $_GET["token"];
+
         $sql = "select * from tblcatemp where STRCOR='$correo' AND TOKEN='$token';";
         $query = mysqli_query($con, $sql);
         $num = mysqli_num_rows($query);
-        if ($num == 1){
-    
-            $rw=mysqli_fetch_array($query);
-            $IDEMP=$rw['IDEMP'];
-            if(isset( $IDEMP)){
-                $sql = "UPDATE tblcatemp SET TOKEN='', VERIFICATE_AT='".$VALIDATE_AT."' WHERE IDEMP='".$IDEMP."' ";
+        if ($num == 1) {
+
+            $rw = mysqli_fetch_array($query);
+            $IDEMP = $rw['IDEMP'];
+            if (isset($IDEMP)) {
+                $sql = "UPDATE tblcatemp SET TOKEN='', VERIFICATE_AT='" . $VALIDATE_AT . "' WHERE IDEMP='" . $IDEMP . "' ";
                 $query = mysqli_query($con, $sql);
-                if( $query){
+                if ($query) {
                     //echo "correcto";
                     header("location: ./?view=exito");
-               exit;
-                }else{
+                    exit;
+                } else {
                     header("location: ./?view=fail");
                 }
             }
-            
-        
-        }else{
-    
+        } else {
+
             header("location: ./?view=fail");
         }
     } else {
         exit;
     }
-
 }
-
-
-
-
-
-
-
-
-?>

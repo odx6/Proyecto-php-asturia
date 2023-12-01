@@ -30,9 +30,9 @@ if (empty($_POST['STRNSS'])) {
 	$errors[] = "Correo Electronico está vacío.";
 } elseif (empty($_POST['STRPWS'])) {
 	$errors[] = "Contraseña  está vacío.";
-}  elseif (empty($_POST['BITSUS'])) {
+} elseif (empty($_POST['BITSUS'])) {
 	$errors[] = "Estado está vacío.";
-}  elseif (
+} elseif (
 	!empty($_POST['STRNSS'])
 	&& !empty($_POST['STRRFC'])
 	&& !empty($_POST['STRCUR'])
@@ -48,8 +48,8 @@ if (empty($_POST['STRNSS'])) {
 	&& !empty($_POST['STRCOR'])
 	&& !empty($_POST['STRPWS'])
 	&& !empty($_POST['BITSUS'])
-	
-	
+
+
 	/*&& !empty($_POST['kind'])*/
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
@@ -75,7 +75,7 @@ if (empty($_POST['STRNSS'])) {
 	if (empty($_FILES["STRIMG"]['name'])) {
 		$STRIMG = "view/resources/images/Default/perfil.png";
 	} else {
-		
+
 
 		//UPDATE IMG 
 		//Agregar imagen
@@ -101,23 +101,23 @@ if (empty($_POST['STRNSS'])) {
 
 	}
 
-	
+
 	// $STRIMG = mysqli_real_escape_string($con,(strip_tags($_POST["STRIMG"],ENT_QUOTES)));
 	/* $kind = mysqli_real_escape_string($con,(strip_tags($_POST["kind"],ENT_QUOTES)));*/
 	$CREATED_AT = date("Y-m-d H:i:s");
 	//verificacion de correo 
 	$token = md5(rand());
-	
+
 
 
 	//variable de los permisos 
-	if(empty($_POST['permisos'])){$BITSUS =2;
-	}else{
-		
+	if (empty($_POST['permisos'])) {
+		$BITSUS = 2;
+	} else {
+
 		$permisos = $_POST["permisos"];
-	
 	}
-	
+
 
 	//Write register in to database 
 	if (verificacionDeCorreo($STRCOR, $token) == "true") $sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) 
@@ -125,27 +125,26 @@ if (empty($_POST['STRNSS'])) {
 	$query_new = mysqli_query($con, $sql);
 	// if has been added successfully
 	if ($query_new) {
-		if(!empty($_POST['permisos'])){
+		if (!empty($_POST['permisos'])) {
 			$numeroMaximo = "select max(IDEMP) as nuevo_empleado from tblcatemp";
-		$idusernew_sql = mysqli_query($con, $numeroMaximo);
-		$idusernew_rw = mysqli_fetch_array($idusernew_sql);
-		$idusernew = $idusernew_rw['nuevo_empleado'];
-		//agrego los permisos by amner saucedo sosa
-		$num_element = 0;
-		$sw = true;
+			$idusernew_sql = mysqli_query($con, $numeroMaximo);
+			$idusernew_rw = mysqli_fetch_array($idusernew_sql);
+			$idusernew = $idusernew_rw['nuevo_empleado'];
+			//agrego los permisos by amner saucedo sosa
+			$num_element = 0;
+			$sw = true;
 
-		while ($num_element < count($permisos)) {
-			$sql_detalle = "INSERT INTO empleado_permisos(idempleado, idpermiso) VALUES($idusernew, $permisos[$num_element])";
-			mysqli_query($con, $sql_detalle) or $sw = false;
-			$num_element = $num_element + 1;
-		}
+			while ($num_element < count($permisos)) {
+				$sql_detalle = "INSERT INTO empleado_permisos(idempleado, idpermiso) VALUES($idusernew, $permisos[$num_element])";
+				mysqli_query($con, $sql_detalle) or $sw = false;
+				$num_element = $num_element + 1;
+			}
 
-		$messages[] = "Empleado ha sido agregado con éxito.";
-		}else{
+			$messages[] = "Empleado ha sido agregado con éxito.";
+		} else {
 
 			$messages[] = "Empleado ha sido agregado con éxito, sin permisos.";
 		}
-		
 	} else {
 		$errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
 	}

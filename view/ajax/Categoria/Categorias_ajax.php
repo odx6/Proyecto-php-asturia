@@ -5,7 +5,7 @@ require_once("../../../config/config.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
-	
+
 	try {
 		if ($delete = mysqli_query($con, "DELETE FROM tblcatcat WHERE INTIDCAT='$id'")) {
 			$aviso = "Bien hecho!";
@@ -26,11 +26,10 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$times = "&times;";
 		} else {
 			$aviso = "Aviso!";
-		$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
-		$classM = "alert alert-danger";
-		$times = "&times;";
+			$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
+			$classM = "alert alert-danger";
+			$times = "&times;";
 		}
-		
 	}
 }
 
@@ -76,7 +75,7 @@ if ($action == 'ajax') {
 					<th>#id Categoria</th>
 					<th>Nombre</th>
 					<th>Descripcion</th>
-                    <th>Estado</th>
+					<th>Estado</th>
 					<th>Fecha-Creacion</th>
 					<th>Accion</th>
 				</tr>
@@ -84,11 +83,11 @@ if ($action == 'ajax') {
 			<?php
 			$finales = 0;
 			while ($row = mysqli_fetch_array($query)) {
-				  $INTIDCAT=$row['INTIDCAT'];
-				  $STRNOMCAT=$row['STRNOMCAT'];
-				  $STRDESCAT=$row['STRDESCAT'];
-				  $DTEHOR=$row['DTEHOR'];
-				  $BITSUS=$row['BITSUS'];
+				$INTIDCAT = $row['INTIDCAT'];
+				$STRNOMCAT = $row['STRNOMCAT'];
+				$STRDESCAT = $row['STRDESCAT'];
+				$DTEHOR = $row['DTEHOR'];
+				$BITSUS = $row['BITSUS'];
 
 				if ($BITSUS == 1) {
 					$lbl_status = "Activo";
@@ -97,7 +96,7 @@ if ($action == 'ajax') {
 					$lbl_status = "Inactivo";
 					$lbl_class = 'label label-danger';
 				}
-				
+
 				/*$kind=$row['kind'];*/
 
 				$finales++;
@@ -106,8 +105,8 @@ if ($action == 'ajax') {
 					<tr>
 						<td><?php echo $INTIDCAT ?></td>
 						<td><?php echo $STRNOMCAT ?></td>
-						<td><?php echo $STRDESCAT?></td>
-						
+						<td><?php echo $STRDESCAT ?></td>
+
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">

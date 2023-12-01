@@ -20,7 +20,7 @@
       style: 'btn-primary',
       size: 5
     });
-    </script> -->
+    </script> --> 
 
    <!--  <script src="assets/plugins/select2/js/select2.min.js"></script> 
 	<script type="text/javascript">

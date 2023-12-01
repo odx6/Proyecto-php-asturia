@@ -24,16 +24,16 @@ if ($_SESSION['unidades'] == 1) {
                 <div class="col-xs-3">
 
                     <select id="miSelect">
-                       
+
                         <option value="pk_solicitud">Id Orden</option>
                         <option value="fk_empleado">Empleado</option>
                         <option value="fecha">fecha</option>
                         <option value="operador">operador</option>
                         <option value="NoCarro">Numero de carro</option>
                         <option value="Kilometraje">Kilometraje</option>
-                        <option value="DetallesServicio">Detalles del servico	</option>
+                        <option value="DetallesServicio">Detalles del servico </option>
                         <option value="Observaciones">Observaciones</option>
-                        
+
                         <!-- Agrega más opciones según las columnas que tengas -->
                     </select>
 
@@ -104,7 +104,7 @@ if ($_SESSION['unidades'] == 1) {
     ?>
     <script>
         $(function() {
-            load(1,'solicitud','view/ajax/Unidades/unidades_ajax.php');
+            load(1, 'solicitud', 'view/ajax/Unidades/unidades_ajax.php');
         });
     </script>
     <script>
@@ -121,7 +121,7 @@ if ($_SESSION['unidades'] == 1) {
                 success: function(datos) {
                     $("#resultados_ajax").html(datos);
                     $('#guardar_datos').attr("disabled", false);
-                    load(1,'solicitud','view/ajax/Unidades/unidades_ajax.php')
+                    load(1, 'solicitud', 'view/ajax/Unidades/unidades_ajax.php')
                     window.setTimeout(function() {
                         $(".alert").fadeTo(500, 0).slideUp(500, function() {
                             $(this).remove();
@@ -132,7 +132,6 @@ if ($_SESSION['unidades'] == 1) {
             });
             event.preventDefault();
         })
-       
     </script>
     <script>
         //Boton Actualizar desde modal editar
@@ -149,7 +148,7 @@ if ($_SESSION['unidades'] == 1) {
                 success: function(datos) {
                     $("#resultados_ajax").html(datos);
                     $('#actualizar_datos').attr("disabled", false);
-                    load(1,'solicitud','view/ajax/Unidades/unidades_ajax.php')
+                    load(1, 'solicitud', 'view/ajax/Unidades/unidades_ajax.php')
                     window.setTimeout(function() {
                         $(".alert").fadeTo(500, 0).slideUp(500, function() {
                             $(this).remove();

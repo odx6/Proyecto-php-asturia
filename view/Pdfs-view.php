@@ -1,42 +1,44 @@
 <?php
-$active2="active";
-		require_once ("./config/config.php");
-    //Archivo comprueba si el usuario esta logueado	
-    include_once "./vendor/autoload.php";
-    use Dompdf\Dompdf;
-    session_start();
-if (!isset($_SESSION['user_id'])){
-	header("location: ./?view=index");//Redirecciona 
-	exit;
-}
-  if ($_SESSION['solicitud']==1){
-	if (isset($_POST["id"])){
-		$id=$_POST["id"];
-		$id=intval($id);
-		$sql="select * from solicitud where pk_solicitud='$id'";
-		$query=mysqli_query($con,$sql);
-		$num=mysqli_num_rows($query);
-		if ($num==1){
-			$rw=mysqli_fetch_array($query);
-			$pk_solicitud=$rw['pk_solicitud'];
-			$fk_empleado=$rw['fk_empleado'];
-			$NumeroFolio=$rw['NumeroFolio'];
-			$fecha=$rw['fecha'];
-			$operador=$rw['operador'];
-			$NoCarro=$rw['NoCarro'];
-			$Kilometraje=$rw['Kilometraje'];
-			$NoPlacas=$rw['NoPlacas'];
-			$DetallesServicio=$rw['DetallesServicio'];
-			$Observaciones=$rw['Observaciones'];
-			
-		}
-	}	
-	else{exit;}
+$active2 = "active";
+require_once("./config/config.php");
+//Archivo comprueba si el usuario esta logueado	
+include_once "./vendor/autoload.php";
 
- 
-$dompdf = new Dompdf();
-$NoOrden=4;
-$html='<!DOCTYPE html>
+use Dompdf\Dompdf;
+
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("location: ./?view=index"); //Redirecciona 
+    exit;
+}
+if ($_SESSION['solicitud'] == 1) {
+    if (isset($_POST["id"])) {
+        $id = $_POST["id"];
+        $id = intval($id);
+        $sql = "select * from solicitud where pk_solicitud='$id'";
+        $query = mysqli_query($con, $sql);
+        $num = mysqli_num_rows($query);
+        if ($num == 1) {
+            $rw = mysqli_fetch_array($query);
+            $pk_solicitud = $rw['pk_solicitud'];
+            $fk_empleado = $rw['fk_empleado'];
+            $NumeroFolio = $rw['NumeroFolio'];
+            $fecha = $rw['fecha'];
+            $operador = $rw['operador'];
+            $NoCarro = $rw['NoCarro'];
+            $Kilometraje = $rw['Kilometraje'];
+            $NoPlacas = $rw['NoPlacas'];
+            $DetallesServicio = $rw['DetallesServicio'];
+            $Observaciones = $rw['Observaciones'];
+        }
+    } else {
+        exit;
+    }
+
+
+    $dompdf = new Dompdf();
+    $NoOrden = 4;
+    $html = '<!DOCTYPE html>
 <html>
 <head>
     <style>
@@ -129,11 +131,11 @@ $html='<!DOCTYPE html>
         <table class="invoice-table">
             <tr>
                 <th>Id Orden :</th>
-                <th>'.$pk_solicitud.'</th>
+                <th>' . $pk_solicitud . '</th>
                 <th>No. de Folio :</th>
-                <th>'.$NumeroFolio.'</th>
+                <th>' . $NumeroFolio . '</th>
                 <th>Fecha</th>
-                <th>'.$fecha.'</th>
+                <th>' . $fecha . '</th>
             </tr>
           
         </table>
@@ -141,7 +143,7 @@ $html='<!DOCTYPE html>
          <table class="invoice-table">
             <tr>
                 <th>Operador </th>
-                <th>'.$operador.'</th>
+                <th>' . $operador . '</th>
               
             </tr>
           
@@ -149,25 +151,25 @@ $html='<!DOCTYPE html>
          <table class="invoice-table">
             <tr>
                 <th>No. de Carro :</th>
-                <th>'.$NoCarro.'</th>
+                <th>' . $NoCarro . '</th>
                 <th>Kilometraje :</th>
-                <th>'.$Kilometraje.'</th>
+                <th>' . $Kilometraje . '</th>
                 <th>No.Placas :</th>
-                <th>'.$NoPlacas.'</th>
+                <th>' . $NoPlacas . '</th>
               
             </tr>
           
         </table>
          <h5>Detalles de Servicio</h5>
-         <textarea row="30">'.$DetallesServicio.'</textarea>
+         <textarea row="30">' . $DetallesServicio . '</textarea>
           <h5>Observaciones</h5>
-         <textarea row="30">'.$Observaciones.' </textarea>
+         <textarea row="30">' . $Observaciones . ' </textarea>
         <div><h1>ORDEN DE SERVICIO-TALLER</h1></div>
 
         <div class="signature">
         <br>
             <p>AUTORIZO</p> 
-            <p>'.$fk_empleado.'</p><br>
+            <p>' . $fk_empleado . '</p><br>
             <p>__________________________</p>
         </div>
         <div class="signature">
@@ -183,14 +185,12 @@ $html='<!DOCTYPE html>
 </body>
 </html>
 ';
-$dompdf->loadHtml($html);
-$dompdf->render();
-header("Content-type: application/pdf");
-header("Content-Disposition: inline; filename=documento.pdf");
-echo $dompdf->output();
-
-}else{
-  require 'resources/acceso_prohibido.php';
+    $dompdf->loadHtml($html);
+    $dompdf->render();
+    header("Content-type: application/pdf");
+    header("Content-Disposition: inline; filename=documento.pdf");
+    echo $dompdf->output();
+} else {
+    require 'resources/acceso_prohibido.php';
 }
-ob_end_flush(); 
-?>
+ob_end_flush();

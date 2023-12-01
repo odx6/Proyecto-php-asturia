@@ -115,7 +115,7 @@ $CREATE_AT = $rw->CREATE_AT;
                                     <input type="text" required name="STREST" class="form-control" id="STREST" placeholder="Estado: " value="<?php echo $STREST ?>">
                                 </div>
                             </div>
-                          
+
                             <div class="form-group">
                                 <label for="registro" class="col-sm-2 control-label">Codigo Postal: </label>
                                 <div class="col-sm-4">
@@ -124,7 +124,7 @@ $CREATE_AT = $rw->CREATE_AT;
                                 <label for="password" class="col-sm-2 control-label">Pais: </label>
                                 <div class="col-sm-4">
                                     <input type="text" name="STRPAI" class="form-control" id="STRPAI" placeholder="Pais: " value="<?php echo $STRPAI ?>">
-                                   
+
                                 </div>
                             </div>
                             <div class="form-group">
@@ -134,18 +134,18 @@ $CREATE_AT = $rw->CREATE_AT;
                                 </div>
                                 <label for="password" class="col-sm-2 control-label">Email: </label>
                                 <div class="col-sm-4">
-                                    <input type="email" name="STRCOR" class="form-control" id="STRCOR" placeholder="Email: "  value="<?php echo $STRCOR ?>">
-                                    
+                                    <input type="email" name="STRCOR" class="form-control" id="STRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
+
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="registro" class="col-sm-2 control-label">Contraseña: </label>
                                 <div class="col-sm-4">
-                                    <input type="password" name="STRPWS" class="form-control" id="STRPWS" placeholder="Contraseña: " >
+                                    <input type="password" name="STRPWS" class="form-control" id="STRPWS" placeholder="Contraseña: ">
                                 </div>
                                 <label for="password" class="col-sm-2 control-label">Estado: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="BITSUS" class="form-control" id="BITSUS" placeholder="Estado: "  value="<?php echo $BITSUS ?>">
+                                    <input type="text" name="BITSUS" class="form-control" id="BITSUS" placeholder="Estado: " value="<?php echo $BITSUS ?>">
                                 </div>
                             </div>
                             <div class="form-group">

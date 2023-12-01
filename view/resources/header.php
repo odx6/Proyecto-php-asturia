@@ -142,7 +142,7 @@ $nombre_empresa = $rw['nombre'];
                             <a href="./?view=dashboard"><i class="fa fa-home" aria-hidden="true"></i><span>Inicio</span></a>
                         </li>
                     <?php } ?>
-                   
+
 
                 </ul>
 
@@ -260,19 +260,43 @@ $nombre_empresa = $rw['nombre'];
                     </div>
                 </div>
                 <!--end-productos-->
-             
-                <div id="leftside-navigation" class="nano">
-                <ul class="nano-content">
-                    
-                    <?php if ($_SESSION['solicitud'] == 1) { ?>
-                        <li class="<?php if (isset($active2)) {
-                                        echo $active2;
-                                    } ?>">
-                            <a href="./?view=solicitud"><i class="fa fa-users"></i><span>Solicitud</span></a>
-                        </li>
-                    <?php } ?>
 
-                </ul>
+                <div id="leftside-navigation" class="nano">
+                    <ul class="nano-content">
+
+                        <?php if ($_SESSION['solicitud'] == 1) { ?>
+                            <li class="<?php if (isset($active2)) {
+                                            echo $active2;
+                                        } ?>">
+                                <a href="./?view=solicitud"><i class="fa fa-users"></i><span>Solicitud</span></a>
+                            </li>
+                        <?php } ?>
+
+                    </ul>
+
+                    <div class="btn-group-vertical btn-group-justified">
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-default  btnLeft dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-th" aria-hidden="true"></i>&nbspInventarios
+
+                        </button>
+                        <ul class="dropdown-menu">
+                            
+                            <?php if ($_SESSION['empleados'] == 1) { ?>
+                                <li class="<?php if (isset($active2)) {
+                                                echo $active2;
+                                            } ?>">
+                                    <a href="./?view=Entradas"><i class="fa fa-users"></i><span>&nbspEntradas y Salidas</span></a>
+                                </li>
+                            <?php } ?>
+
+                            
+
+                        </ul>
+                    </div>
+                </div>
+                <!--end-productos-->
+
 
 
         </aside>
