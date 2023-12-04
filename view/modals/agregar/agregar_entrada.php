@@ -106,8 +106,8 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="col-sm-6">
-                            <label for="INTIPMOV" class=" control-label">Buscar: </label>
-                            <select class="form-control col-sm-10 INTIPMOV" name="INTIPMOV" id="INTIPMOV" required style="margin-bottom: 5px;">
+                            <label for="columna" class=" control-label">Buscar: </label>
+                            <select class="form-control col-sm-10 columna" name="columna" id="columna" required style="margin-bottom: 5px;">
                                 <option value="STRSKU">SKU</option>
                                 <option value="STRCOD">Codigo</option>
                                 <option value="STRDES">Descripcion</option>

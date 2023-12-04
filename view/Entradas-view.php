@@ -36,7 +36,7 @@
                 <div class="col-md-offset-6" style="display: inline-block;">
                     <!-- modals -->
                         <?php 
-                            include "modals/agregar/agregar-entrada.php";
+                            include "modals/agregar/agregar_entrada.php";
                             include "modals/editar/editar_empleado.php";
                             include "modals/mostrar/mostrar_empleado.php";
                         ?>
@@ -146,12 +146,14 @@
     $("#new_register").submit(function(event) {
             event.preventDefault();
             $('#guardar_datos').attr("disabled", true);
-
-            var formData = new FormData(this); // Crear un objeto FormData
+            console.log(JSON.stringify(inventario));
+            inventario=JSON.stringify(inventario);
+            var formData = new FormData(this); 
+            formData.append('inventario',inventario);// Crear un objeto FormData
 
             $.ajax({
                 type: "POST",
-                url: "view/ajax/agregar/agregar_empleado.php",
+                url: "view/ajax/agregar/agregar_entrada.php",
                 data: formData, // Usar el objeto FormData como los datos de la petición
                 processData: false, // Indicar a jQuery que no procese los datos
                 contentType: false, // Indicar a jQuery que no establezca el tipo de contenido

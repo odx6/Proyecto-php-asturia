@@ -303,6 +303,7 @@ function agregarInventario() {
   cantidad = $('#INTCAN').val();
   referencia = $('#STRREF').val();
   var precio = document.querySelector("#outproduct > option").dataset.info
+  var unidad = document.querySelector("#outproduct > option").dataset.unidad
   var celdas = document.querySelectorAll('.total td');
     
    
@@ -319,6 +320,7 @@ function agregarInventario() {
       "SKU": valor,
       "STRREF": referencia,
       "INTCANT": cantidad,
+      "INTIDUNI":unidad,
       "MONPRCOS": precio,
       "MONCTOPRO":CalcularTotal(precio, cantidad)
   });
@@ -328,7 +330,7 @@ function agregarInventario() {
  console.log(jsoninventario);
  //
   // Imprimiendo el valor
-  //console.log(precio);
+  //console.log(precio); 
 
  /*alert("valor"+contador);
 
@@ -341,25 +343,44 @@ function agregarInventario() {
   var tabla = document.getElementById("miTabla");
 var cuerpoTabla = tabla.getElementsByTagName("tbody")[0];
 
-// Iterar sobre cada libro en el array y agregar una fila a la tabla por cada libro
-inventario.forEach(function(invent) {
+// Iterar sobre cada inventario en el array y agregar una fila a la tabla por cada inventario
+/*inventario.forEach(function(Elemento) {
     // Crear una nueva fila
     var fila = cuerpoTabla.insertRow();
 
     // Insertar celdas en la fila
-    var celdaId = fila.insertCell(0);
-    var celdaTitulo = fila.insertCell(1);
-    var celdaAutor = fila.insertCell(2);
-    var celdaAnio = fila.insertCell(3);
-    var celdaGenero = fila.insertCell(4);
+    var CALLSKU = fila.insertCell(0);
+    var CELLREF = fila.insertCell(1);
+    var CELLCAT = fila.insertCell(2);
+    var CELLPRECIO = fila.insertCell(3);
+    var CELLTOTAL = fila.insertCell(4);
 
-    // Llenar las celdas con datos del libro
-    celdaId.textContent = libro.id;
-    celdaTitulo.textContent = libro.titulo;
-    celdaAutor.textContent = libro.autor;
-    celdaAnio.textContent = libro.anioPublicacion;
-    celdaGenero.textContent = libro.genero;
-});
+    // Llenar las celdas con datos del Elemento
+    CALLSKU.textContent = Elemento.SKU;
+    CELLREF.textContent = Elemento.STRREF;
+    CELLCAT.textContent = Elemento.INTCANT;
+    CELLPRECIO.textContent = Elemento.MONPRCOS;
+    CELLTOTAL.textContent = Elemento.MONCTOPRO;
+});*/
+
+   Elemento= inventario[inventario.length-1];
+   console.log(Elemento.SKU);
+   // Crear una nueva fila
+   var fila = cuerpoTabla.insertRow();
+
+   // Insertar celdas en la fila
+   var CALLSKU = fila.insertCell(0);
+   var CELLREF = fila.insertCell(1);
+   var CELLCAT = fila.insertCell(2);
+   var CELLPRECIO = fila.insertCell(3);
+   var CELLTOTAL = fila.insertCell(4);
+
+   // Llenar las celdas con datos del Elemento
+   CALLSKU.textContent = Elemento.SKU;
+   CELLREF.textContent = Elemento.STRREF;
+   CELLCAT.textContent = Elemento.INTCANT;
+   CELLPRECIO.textContent = Elemento.MONPRCOS;
+   CELLTOTAL.textContent = Elemento.MONCTOPRO;
 
 }
 
@@ -368,7 +389,7 @@ inventario.forEach(function(invent) {
 function mostrarProductos() {
 
 
-  valor = $('.INTIPMOV').val();
+  valor = $('.columna').val();
   campo = $('#campo').val();
 
 
@@ -396,7 +417,7 @@ function mostrarProductos() {
       select.empty();
       $.each(data, function (i, dato) {
 
-        select.append('<option value="' + dato.STRSKU + '" data-info="' + dato.MONPCOS + '"><b>SKU :&nbsp</b>  ' + dato.STRSKU + '&nbspCodigo :  &nbsp' + dato.STRCOD + '</option>');
+        select.append('<option value="' + dato.STRSKU + '" data-info="' + dato.MONPCOS +'" data-unidad="' + dato.INTIDUNI +'"    ><b>SKU :&nbsp</b>  ' + dato.STRSKU + '&nbspCodigo :  &nbsp' + dato.STRCOD + '</option>');
       });
     }
 
