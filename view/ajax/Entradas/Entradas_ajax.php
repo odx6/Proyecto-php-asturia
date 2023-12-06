@@ -2,6 +2,7 @@
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 /* Connect To Database*/
 require_once("../../../config/config.php");
+require_once("../../../config/funciones.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
@@ -53,7 +54,7 @@ if ($action == 'ajax') {
 		echo mysqli_error($con);
 	}
 	$total_pages = ceil($numrows / $per_page);
-	$reload = './subcategorias-view.php';
+	$reload = './Entradas-view.php';
 	//main query to fetch the data
 	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
 	//loop through fetched data
@@ -80,19 +81,22 @@ if ($action == 'ajax') {
 					<th>Empleado</th>
 					<th>Almacen</th>
 					<th>Hora de creacion</th>
+					<th>Accion</th>
 				</tr>
 			</thead>
 			<?php
 			$finales = 0;
 			while ($row = mysqli_fetch_array($query)) {
 				$INTIDINV = $row['INTIDINV'];
-				$DTEHOR = $row['DTE$DTEHOR'];
+				$DTEHOR = $row['DTEFEC'];
 				$INTIDTOP = $row['INTIDTOP'];
-				$INTTIMOV = $row['INTTIMOV'];
+				$INTTIMOV = $row['INTTIPMOV'];
 				$INTFOL = $row['INTFOL'];
 				$IDEMPLE= $row['IDEMP'];
+				$STROBS= $row['STROBS'];
 				$DTEHOR = $row['DTEHOR'];
 				$INTALM = $row['INTALM'];
+				$DTEHOR = $row['DTEHOR'];
 				
 
 				/*$kind=$row['kind'];*/
@@ -102,11 +106,12 @@ if ($action == 'ajax') {
 				<tbody>
 					<tr>
 						<td><?php echo $INTIDINV ?></td>
-						<td><?php echo $STRNOMSBC ?></td>
-						<td><?php echo (isset($NombreCategoria)) ? $NombreCategoria : $DTEHOR; ?></td>
-						<td><?php echo $STRDESSBC ?></td>
-
-						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
+						<td><?php echo $DTEHOR ?></td>
+						<td><?php echo consultarNombre($INTIDTOP, 'tblcattop', 'INTIDTOP', 'STRNOMTPO');  ?></td>
+						<td><?php echo ($INTTIMOV == 1) ?  "Entrada": "Salida"; ?></td>
+						<td><?php echo $INTFOL ?></td>
+						<td><?php consultarNombre($IDEMPLE, 'tblcatemp', 'IDEMP', 'STRNOM'); ?></td>
+						<td><?php echo $STROBS ?></td>
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">
 

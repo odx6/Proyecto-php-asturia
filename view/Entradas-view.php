@@ -65,7 +65,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Datos de los Empleados</h3>
+                            <h3 class="panel-title">Datos dEL INVENTARIO</h3>
                             <div class="actions pull-right">
                                 <i class="fa fa-chevron-down"></i>
                                 <i class="fa fa-times"></i>
@@ -96,7 +96,7 @@
         var parametros = {"action":"ajax","page":page,'query':query,'per_page':per_page};
         $("#loader").fadeIn('slow');
         $.ajax({
-            url:'view/ajax/empleados_ajax.php',
+            url:'view/ajax/Entradas/Entradas_ajax.php',
             data: parametros,
              beforeSend: function(objeto){
             $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
@@ -124,7 +124,7 @@
             var parametros = {"action":"ajax","page":page,"query":query,"per_page":per_page,"id":id};
             
             $.ajax({
-                url:'view/ajax/empleados_ajax.php',
+                url:'view/ajax/Entradas/Entradas_ajax.php',
                 data: parametros,
                  beforeSend: function(objeto){
                 $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
@@ -209,7 +209,7 @@
        
         var parametros = {"action":"ajax","id":id};
         $.ajax({
-                url:'view/modals/editar/empleado.php',
+                url:'view/modals/editar/Entrada.php',
                 data: parametros,
                  beforeSend: function(objeto){
                 $("#loader2").html("<img src='./assets/img/ajax-loader.gif'>");
