@@ -18,6 +18,9 @@ if (isset($_GET["id"])) {
             $STROBS = $row['STROBS'];
             $INTALM = $row['INTALM'];
             $DTEHOR = $row['DTEHOR'];
+
+            $sql="SELECT * FROM tblinvdet where INTIDINV='$id'";
+            $query=mysqli_query($con,$sql);
            
         }
     }
@@ -115,7 +118,7 @@ if (isset($_GET["id"])) {
         <span id="STROBS"></span>
     </div>
 </div>
-<div class="col-sm-6">
+<div class="col-sm-12">
     <div class="col-sm-6">
         <label for="columna" class=" control-label">Buscar: </label>
         <select class="form-control col-sm-10 columna" name="columna" id="columna" required style="margin-bottom: 5px;">
@@ -169,7 +172,7 @@ if (isset($_GET["id"])) {
 </div>
 
 
-<div class="col-sm-6">
+<div class="col-sm-12">
 
 
     <div class="col-sm-12">
@@ -186,6 +189,13 @@ if (isset($_GET["id"])) {
                 </tr>
             </thead>
             <tbody>
+             <?php 
+             foreach($query as $producto){
+
+                echo $producto->SKU;
+             }
+             
+             ?>
 
 
             </tbody>

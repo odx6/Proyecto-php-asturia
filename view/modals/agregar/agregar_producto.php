@@ -43,7 +43,7 @@
                                 <div class="col-md-6">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            
+                                           
                                             <div class="col-sm-6">
                                             <label for="descripcion" class=" control-label">Descripcion: </label>
                                                 <input type="text" required class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion: ">
@@ -62,13 +62,14 @@
 
                                                 // Crear el elemento select
                                                 echo ' <select class="form-control categorias" name="categoria" id="categoria">';
+                                                echo '  <option selected disabled > Seleccione una categoria</option>';
 
                                                 if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
                                                     // Iterar sobre los resultados y crear una opción para cada uno
 
                                                     while ($fila = mysqli_fetch_assoc($resultado)) {
-                                                        echo '<option value="' . $fila['INTIDCAT'] . '"  <?php if($categoria= $fila["INTIDCAT"]) selected ?>   ' . $fila['STRNOMCAT'] . '</option>';
+                                                        echo '<option value="' . $fila['INTIDCAT'] . '"  <?php if($categoria= $fila["INTIDCAT"])  ?>   ' . $fila['STRNOMCAT'] . '</option>';
                                                     }
                                                 } else {
 

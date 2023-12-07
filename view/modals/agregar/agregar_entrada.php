@@ -104,7 +104,7 @@
                             <span id="STROBS"></span>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="col-sm-6">
                             <label for="columna" class=" control-label">Buscar: </label>
                             <select class="form-control col-sm-10 columna" name="columna" id="columna" required style="margin-bottom: 5px;">
@@ -158,7 +158,7 @@
                     </div>
 
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
 
 
                         <div class="col-sm-12">
