@@ -3,6 +3,8 @@ var contador = 0;
 var TotalP = 0;
 var countinv = 0;
 
+
+
 var inventario = [];
 $(document).ready(function () {
   //alert("cargado"); 
@@ -34,6 +36,10 @@ $(document).ready(function () {
 
       }
     });
+
+
+
+
 
   });
   /* $('.validarBtn').change(function (e) {
@@ -330,7 +336,9 @@ function agregarInventario() {
   //CONVERTIRLO A JSON
   countinv++;
   var jsoninventario = JSON.stringify(inventario, null, 2);
-  console.log(jsoninventario);
+
+  $('#Count').val(countinv);
+  // console.log(jsoninventario);
   //
   // Imprimiendo el valor
   //console.log(precio); 
@@ -367,7 +375,7 @@ function agregarInventario() {
   });*/
 
   Elemento = inventario[inventario.length - 1];
-  console.log(Elemento.SKU);
+  //console.log(Elemento.SKU);
   // Crear una nueva fila
   var fila = cuerpoTabla.insertRow();
 
@@ -382,6 +390,7 @@ function agregarInventario() {
 
   // Llenar las celdas con datos del Elemento
   COUNT.textContent = countinv;
+
   CALLSKU.textContent = Elemento.SKU;
   CELLREF.textContent = Elemento.STRREF;
   CELLCAT.textContent = Elemento.INTCANT;
@@ -390,75 +399,97 @@ function agregarInventario() {
   var boton = document.createElement('button');
   boton.innerHTML = '<i class="fa fa-trash-o"></i>';
   boton.type = 'button';
+  COUNT.setAttribute("id", valor);
+  boton.setAttribute("data-info", countinv);
 
 
- boton.className = 'btn btn-danger btn-square btn-xs';
+  boton.className = 'btn btn-danger btn-square btn-xs';
 
   // Establecer el atributo data-toggle del botón
-  
+
   // Establecer el atributo data-target del botón
 
 
   // Agregar un escuchador de eventos al botón para llamar a la función validarImg() cuando se haga clic en el botón
   boton.onclick = function () {
-    validarImg(parametro);
+    EliminarArrayInsert(COUNT.textContent);
   }
-    Accion.appendChild(boton);
+  Accion.appendChild(boton);
 
-  }
-
-
-
-  function mostrarProductos() {
+}
 
 
-    valor = $('.columna').val();
-    campo = $('#campo').val();
+
+function mostrarProductos() {
 
 
-    //alert("Hola funcion buscar productos"+valor+" campo"+campo);
-    var parametros = {
-      "columna": valor,
-      "tabla": 'tblcatpro',
-      "campo": campo
-
-    };
-
-    $.ajax({
-      url: './view/ajax/Funciones/Buscar.php',
-      type: 'post',
-      data: parametros,
-      dataType: 'json',
-      beforeSend: function (objeto) {
-        $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
-      },
-      success: function (data) {
-        //sku=data[1].STRSKU;
-        //alert(sku);
-
-        var select = $('#outproduct');
-        select.empty();
-        $.each(data, function (i, dato) {
-
-          select.append('<option value="' + dato.STRSKU + '" data-info="' + dato.MONPCOS + '" data-unidad="' + dato.INTIDUNI + '"    ><b>SKU :&nbsp</b>  ' + dato.STRSKU + '&nbspCodigo :  &nbsp' + dato.STRCOD + '</option>');
-        });
-      }
-
-    })
+  valor = $('.columna').val();
+  campo = $('#campo').val();
 
 
+  //alert("Hola funcion buscar productos"+valor+" campo"+campo);
+  var parametros = {
+    "columna": valor,
+    "tabla": 'tblcatpro',
+    "campo": campo
+
+  };
+
+  $.ajax({
+    url: './view/ajax/Funciones/Buscar.php',
+    type: 'post',
+    data: parametros,
+    dataType: 'json',
+    beforeSend: function (objeto) {
+      $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
+    },
+    success: function (data) {
+      //sku=data[1].STRSKU;
+      //alert(sku);
+
+      var select = $('#outproduct');
+      select.empty();
+      $.each(data, function (i, dato) {
+
+        select.append('<option value="' + dato.STRSKU + '" data-info="' + dato.MONPCOS + '" data-unidad="' + dato.INTIDUNI + '"    ><b>SKU :&nbsp</b>  ' + dato.STRSKU + '&nbspCodigo :  &nbsp' + dato.STRCOD + '</option>');
+      });
+    }
+
+  })
 
 
 
 
 
-  }
-
-  //end-validar img
 
 
-  function CalcularTotal(precio, cantidad) {
+}
 
-    if (precio != null && cantidad != null && cantidad > 0 && precio > 0) return precio * cantidad;
+//end-validar img
 
-  }
+
+function CalcularTotal(precio, cantidad) {
+
+  if (precio != null && cantidad != null && cantidad > 0 && precio > 0) return precio * cantidad;
+
+}
+
+function EliminarArrayInsert(parametro) {
+  var tabla = document.getElementById("miTabla");
+
+  elemento=inventario[parametro-1];
+  SKU=elemento.SKU[0];
+  STRREF=elemento.STRREF;
+  cantidad=elemento.INTCANT;
+  total=elemento.MONCTOPRO;
+  alert("SKU"+SKU+"STRREF"+STRREF+"CANTIDAD"+cantidad+"Total"+total);
+  tabla.deleteRow(parametro);
+  countinv--;
+ console.log(inventario);
+ // alert("Hola"+parametro);
+  inventario.splice(parametro-1, 1);
+  $('#Count').val(countinv);
+  TotalP=TotalP-total;
+  $('#MONCTOPRO').val(TotalP);
+}
+

@@ -37,7 +37,7 @@
                     <!-- modals -->
                         <?php 
                             include "modals/agregar/agregar_entrada.php";
-                            include "modals/editar/editar_empleado.php";
+                            include "modals/editar/editar_entrada.php";
                             include "modals/mostrar/mostrar_empleado.php";
                         ?>
                     <!-- /end modals -->
@@ -206,7 +206,7 @@
 </script>
 <script>
     function editar(id){
-       
+       id=1;
         var parametros = {"action":"ajax","id":id};
         $.ajax({
                 url:'view/modals/editar/Entrada.php',
