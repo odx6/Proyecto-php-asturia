@@ -19,10 +19,11 @@ if (isset($_GET["id"])) {
             $INTALM = $row['INTALM'];
             $DTEHOR = $row['DTEHOR'];
 
-            $sql="SELECT * FROM tblinvdet where INTIDINV='$id'";
-            $query=mysqli_query($con,$sql);
+           
            
         }
+        $SQL="SELECT * FROM tblinvdet where INTIDINV='$id'";
+        $query2=mysqli_query($con,$SQL);
     }
 } else {
     exit;
@@ -189,13 +190,7 @@ if (isset($_GET["id"])) {
                 </tr>
             </thead>
             <tbody>
-             <?php 
-             foreach($query as $producto){
-
-                echo $producto->SKU;
-             }
-             
-             ?>
+            
 
 
             </tbody>

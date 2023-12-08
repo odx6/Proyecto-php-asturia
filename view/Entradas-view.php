@@ -37,7 +37,7 @@
                     <!-- modals -->
                         <?php 
                             include "modals/agregar/agregar_entrada.php";
-                            include "modals/editar/editar_empleado.php";
+                            include "modals/editar/editar_entrada.php";
                             include "modals/mostrar/mostrar_empleado.php";
                         ?>
                     <!-- /end modals -->

@@ -166,11 +166,13 @@
                                 <caption>Productos Agregados</caption>
                                 <thead>
                                     <tr>
+                                        <th scope="col">Indice</th>
                                         <th scope="col">SKU</th>
                                         <th scope="col">pre.</th>
                                         <th scope="col">cant.</th>
                                         <th scope="col">ref.</th>
                                         <th scope="col">tot./u</th>
+                                        <th scope="col">Accion</th>
                                         
                                     </tr>
                                 </thead>
@@ -181,11 +183,27 @@
                             </table>
                             
                         </div>
-                        <div class="col-sm-8"><label for="MONCTOPRO" class=" control-label">Total</label></div>
-                        
-                        <div class="col-sm-4"><input type="number" required class="form-control static" id="MONCTOPRO" name="MONCTOPRO" placeholder="Total: " readonly >
-                    <br></div>
+                        <div class="col-sm-6">
+                            <div class="col-sm-6">
+                                <label for="MONCTOPRO" class=" control-label">Total</label>
+                            </div>
+                            <div class="col-sm-6"><input type="number" required class="form-control static" id="MONCTOPRO" name="MONCTOPRO" placeholder="Total: " readonly>
+                            </div>
 
+
+
+                        </div>
+                        <div class="col-sm-6">
+
+                            <div class="col-sm-6">
+                                <label for="Count" class=" control-label">Total de productos</label>
+                            </div>
+                            <div class="col-sm-6"><input type="number" required class="form-control static" id="Count" name="Count" placeholder="Total: " readonly>
+                            </div>
+
+                            <br>
+
+                        </div>
 
                     </div>
 
