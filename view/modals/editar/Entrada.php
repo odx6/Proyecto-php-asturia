@@ -12,15 +12,14 @@ if (isset($_GET["id"])) {
             $INTIDINV = $row['INTIDINV'];
             $INTIDTOP = $row['INTIDTOP'];
             $INTTIPMOV = $row['INTTIPMOV'];
-            $INTTIPMOV = $row['INTTIPMOV'];
+           
             $INTFOL = $row['INTFOL'];
             $IDEMP = $row['IDEMP'];
             $STROBS = $row['STROBS'];
             $INTALM = $row['INTALM'];
             $DTEHOR = $row['DTEHOR'];
 
-            $sql="SELECT * FROM tblinvdet where INTIDINV='$id'";
-            $query=mysqli_query($con,$sql);
+           
            
         }
     }
@@ -180,22 +179,45 @@ if (isset($_GET["id"])) {
             <caption>Productos Agregados</caption>
             <thead>
                 <tr>
+                    <th scope="col">Numero</th>
                     <th scope="col">SKU</th>
                     <th scope="col">pre.</th>
                     <th scope="col">cant.</th>
                     <th scope="col">ref.</th>
                     <th scope="col">tot./u</th>
+                    <th scope="col">Accion</th>
 
                 </tr>
             </thead>
             <tbody>
+            
              <?php 
-             foreach($query as $producto){
-
-                echo $producto->SKU;
-             }
-             
-             ?>
+            $sql = "SELECT  * FROM  tblinvdet  WHERE INTIDINV='$id'";
+            $query = mysqli_query($con, $sql);
+    
+    
+            // Crear el elemento select
+           
+    
+            if (isset($query) && $query != NULL &&  mysqli_num_rows($query) > 0) {
+    
+                // Iterar sobre los resultados y crear una opción para cada uno
+    
+                while ($fila = mysqli_fetch_assoc($query)) {
+                    
+                    echo '<tr id="'.$fila['SKU'].'">';
+                  //  echo '<Td >'.$fila['SKU'].'</Td>'.'<Td>'.$fila['STRREF'].'</Td>'.'<Td>'.$fila['INTCAN'].'</Td>'.'<Td>'.$fila['MONPRCOS'].'</Td>'.'<Td>'.$fila['MONCTOPRO'].'</Td>'.'<td> <button type="button"   class="btn btn-danger btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="validarImg()" ><i class="fa fa-edit"></i></button></td>';
+                  echo '<Td >'.$fila['SKU'].'</Td>'.'<Td>'.$fila['STRREF'].'</Td>'.'<Td>'.$fila['INTCAN'].'</Td>'.'<Td>'.$fila['MONPRCOS'].'</Td>'.'<Td>'.$fila['MONCTOPRO'].'</Td>'.'<td> <button type="button"   class="btn btn-danger btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="validarImg(\''.$fila['SKU'].'\')" ><i class="fa fa-edit"></i></button></td>';
+                  echo '</tr>';
+                }
+            } else {
+    
+                echo  '<option value="" disabled  selected >No se registraron productos  </option>';
+            }
+    
+            echo '</select>';
+            ?>
+            
 
 
             </tbody>

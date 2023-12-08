@@ -166,11 +166,14 @@
                                 <caption>Productos Agregados</caption>
                                 <thead>
                                     <tr>
+                                        <th scope="col">Conteo</th>
                                         <th scope="col">SKU</th>
+
                                         <th scope="col">pre.</th>
                                         <th scope="col">cant.</th>
                                         <th scope="col">ref.</th>
                                         <th scope="col">tot./u</th>
+                                        <th scope="col">Accion</th>
                                         
                                     </tr>
                                 </thead>
