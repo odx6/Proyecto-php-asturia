@@ -18,19 +18,14 @@ if (isset($_GET["id"])) {
             $STROBS = $row['STROBS'];
             $INTALM = $row['INTALM'];
             $DTEHOR = $row['DTEHOR'];
-
-           
-           
         }
-        $SQL="SELECT * FROM tblinvdet where INTIDINV='$id'";
-        $query2=mysqli_query($con,$SQL);
     }
 } else {
     exit;
 }
 ?>
 <div class="form-group">
-    
+
     <input type="hidden" required class="form-control" id="INTIDINV" name="INTIDINV" placeholder="Folio:" value="<?php echo $id ?>">
     <div class="col-sm-4">
         <label for="INTIDTOP" reuired class="control-label">INTIDTOP: </label>
@@ -109,13 +104,13 @@ if (isset($_GET["id"])) {
 <div class="form-group">
     <div class="col-sm-6">
         <label for="INTFOL" class=" control-label">Folio: </label>
-        <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: " value="<?php echo $INTFOL?>">
+        <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: " value="<?php echo $INTFOL ?>">
         <span id="MINTFOL"></span>
     </div>
 
     <div class="col-sm-6">
         <label for="STROBS" class=" control-label">Descripcion: </label>
-        <input type="text" required class="form-control" id="STROBS" name="STROBS" placeholder="Descripcion: " value="<?php echo $STROBS?>">
+        <input type="text" required class="form-control" id="STROBS" name="STROBS" placeholder="Descripcion: " value="<?php echo $STROBS ?>">
         <span id="STROBS"></span>
     </div>
 </div>
@@ -177,7 +172,7 @@ if (isset($_GET["id"])) {
 
 
     <div class="col-sm-12">
-        <table class="table caption-top" id="miTabla">
+        <table class="table caption-top" id="miTablaUpdate">
             <caption>Productos Agregados</caption>
             <thead>
                 <tr>
@@ -190,7 +185,32 @@ if (isset($_GET["id"])) {
                 </tr>
             </thead>
             <tbody>
-            
+            <?php 
+            $sql = "SELECT  * FROM  tblinvdet  WHERE INTIDINV='$id'";
+            $query = mysqli_query($con, $sql);
+    
+    
+            // Crear el elemento select
+           
+    
+            if (isset($query) && $query != NULL &&  mysqli_num_rows($query) > 0) {
+    
+                // Iterar sobre los resultados y crear una opción para cada uno
+    
+                while ($fila = mysqli_fetch_assoc($query)) {
+                    
+                    echo '<tr id="'.$fila['SKU'].'">';
+                  //  echo '<Td >'.$fila['SKU'].'</Td>'.'<Td>'.$fila['STRREF'].'</Td>'.'<Td>'.$fila['INTCAN'].'</Td>'.'<Td>'.$fila['MONPRCOS'].'</Td>'.'<Td>'.$fila['MONCTOPRO'].'</Td>'.'<td> <button type="button"   class="btn btn-danger btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="validarImg()" ><i class="fa fa-edit"></i></button></td>';
+                  echo '<Td >'.$fila['SKU'].'</Td>'.'<Td>'.$fila['STRREF'].'</Td>'.'<Td>'.$fila['INTCAN'].'</Td>'.'<Td>'.$fila['MONPRCOS'].'</Td>'.'<Td>'.$fila['MONCTOPRO'].'</Td>'.'<td> <button type="button"   class="btn btn-danger btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="validarImg(\''.$fila['SKU'].'\')" ><i class="fa fa-trash-o"></i></i></button></td>';
+                  echo '</tr>';
+                }
+            } else {
+    
+                echo  '<option value="" disabled  selected >No se registraron productos  </option>';
+            }
+    
+            echo '</select>';
+            ?>
 
 
             </tbody>

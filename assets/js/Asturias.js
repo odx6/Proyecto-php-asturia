@@ -3,6 +3,8 @@ var contador = 0;
 var TotalP = 0;
 
 var inventario = [];
+
+
 $(document).ready(function () {
   //alert("cargado"); 
 
@@ -33,8 +35,10 @@ $(document).ready(function () {
 
       }
     });
+    
 
   });
+ 
   /* $('.validarBtn').change(function (e) {
      // alert("listo")
      
@@ -328,17 +332,7 @@ function agregarInventario() {
 
   var jsoninventario = JSON.stringify(inventario, null, 2);
   console.log(jsoninventario);
-  //
-  // Imprimiendo el valor
-  //console.log(precio); 
 
-  /*alert("valor"+contador);
- 
-   //alert("hola" + valor + "precio" + precio + " referencia" + referencia + " Cantidad" + cantidad + "total");
-   var nuevaFila = $("<tr> <th scope='row'>" + valor + "</th> <td>" + precio + "</td> <td>" + cantidad + "</td> <td>" + referencia + "</td> <td class='total'>" + CalcularTotal(precio, cantidad) + "</td> </tr>");
-    contador++;
-   // Agregar la nueva fila al cuerpo de la tabla
-   $("#miTabla tbody").append(nuevaFila);*/
 
   var tabla = document.getElementById("miTabla");
   var cuerpoTabla = tabla.getElementsByTagName("tbody")[0];
@@ -390,24 +384,7 @@ function agregarInventario() {
   var numeroElementos = inventario.length;
    $('#Count').val(numeroElementos);
 
-  /* Elemento= inventario[inventario.length-1];
-   console.log(Elemento.SKU);
-   // Crear una nueva fila
-   var fila = cuerpoTabla.insertRow();
-
-   // Insertar celdas en la fila
-   var CALLSKU = fila.insertCell(0);
-   var CELLREF = fila.insertCell(1);
-   var CELLCAT = fila.insertCell(2);
-   var CELLPRECIO = fila.insertCell(3);
-   var CELLTOTAL = fila.insertCell(4);
-
-   // Llenar las celdas con datos del Elemento
-   CALLSKU.textContent = Elemento.SKU;
-   CELLREF.textContent = Elemento.STRREF;
-   CELLCAT.textContent = Elemento.INTCANT;
-   CELLPRECIO.textContent = Elemento.MONPRCOS;
-   CELLTOTAL.textContent = Elemento.MONCTOPRO;*/
+  
 
 }
 
@@ -460,7 +437,7 @@ function mostrarProductos() {
 
 //end-validar img
 function EliminarArrayInsert(variable){
-  alert(variable);
+  //alert(variable);
    elemento=inventario[variable];
    SKU=elemento.SKU[0];
    STRREF=elemento.STRREF;

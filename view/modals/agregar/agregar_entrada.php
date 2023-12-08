@@ -168,9 +168,10 @@
                                     <tr>
                                         <th scope="col">Indice</th>
                                         <th scope="col">SKU</th>
-                                        <th scope="col">pre.</th>
-                                        <th scope="col">cant.</th>
                                         <th scope="col">ref.</th>
+                                        <th scope="col">cant.</th>
+                                        <th scope="col">pre.</th>
+                                       
                                         <th scope="col">tot./u</th>
                                         <th scope="col">Accion</th>
                                         
