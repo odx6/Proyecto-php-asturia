@@ -387,6 +387,8 @@ function agregarInventario() {
   
   
   });
+  var numeroElementos = inventario.length;
+   $('#Count').val(numeroElementos);
 
   /* Elemento= inventario[inventario.length-1];
    console.log(Elemento.SKU);
