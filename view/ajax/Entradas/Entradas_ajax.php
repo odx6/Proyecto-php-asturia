@@ -80,6 +80,8 @@ if ($action == 'ajax') {
 					<th>Folio</th>
 					<th>Empleado</th>
 					<th>Almacen</th>
+					<th>Descripcion</th>
+
 					<th>Hora de creacion</th>
 					<th>Accion</th>
 				</tr>
@@ -111,6 +113,7 @@ if ($action == 'ajax') {
 						<td><?php echo ($INTTIMOV == 1) ?  "Entrada": "Salida"; ?></td>
 						<td><?php echo $INTFOL ?></td>
 						<td><?php consultarNombre($IDEMPLE, 'tblcatemp', 'IDEMP', 'STRNOM'); ?></td>
+						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
 						<td><?php echo $STROBS ?></td>
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">

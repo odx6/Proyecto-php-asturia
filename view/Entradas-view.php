@@ -206,7 +206,7 @@
 </script>
 <script>
     function editar(id){
-       
+        
         var parametros = {"action":"ajax","id":id};
         $.ajax({
                 url:'view/modals/editar/Entrada.php',
@@ -217,6 +217,7 @@
                 success:function(data){
                     $(".outer_div2").html(data).fadeIn('slow');
                     $("#loader2").html("");
+                    MostrarProductos(id);
                 }
             })
     }

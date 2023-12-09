@@ -117,7 +117,7 @@ if (isset($_GET["id"])) {
 <div class="col-sm-12">
     <div class="col-sm-6">
         <label for="columna" class=" control-label">Buscar: </label>
-        <select class="form-control col-sm-10 columna" name="columna" id="columna" required style="margin-bottom: 5px;">
+        <select class="form-control col-sm-10 columnaU" name="columnaU" id="columnaU" required style="margin-bottom: 5px;">
             <option value="STRSKU">SKU</option>
             <option value="STRCOD">Codigo</option>
             <option value="STRDES">Descripcion</option>
@@ -126,7 +126,7 @@ if (isset($_GET["id"])) {
         <div>
             <label for="STRREF" class=" control-label">Referencia: </label>
 
-            <input type="text" required class="form-control" id="STRREF" name="STRREF" placeholder="Referencia: ">
+            <input type="text" required class="form-control" id="STRREFU" name="STRREF" placeholder="Referencia: ">
             <span id="STRREF"></span>
 
         </div>
@@ -139,9 +139,9 @@ if (isset($_GET["id"])) {
         <label for="INTTIPMOV" class=" control-label">por</label>
 
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Buscar por nombre" id="campo" onkeyup="mostrarProductos()">
+            <input type="text" class="form-control" placeholder="Buscar por nombre" id="campoU" onkeyup="mostrarProductosUpdate()">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button" onclick='mostrarProductos()'><i class='fa fa-search'></i></button>
+                <button class="btn btn-default" type="button" onclick='mostrarProductosUpdate()'><i class='fa fa-search'></i></button>
             </span>
 
 
@@ -149,20 +149,20 @@ if (isset($_GET["id"])) {
         </div>
         <label for="INTCAN" class=" control-label">Cantidad</label>
 
-        <input type="number" required class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: ">
+        <input type="number" required class="form-control" id="INTCANU" name="INTCAN" placeholder="cantidad: ">
         <span id="INTCAN"></span>
 
 
     </div>
     <div class="col-sm-12">
-        <select multiple size="10" class="form-control" id="outproduct" style="margin-bottom: 5px;">
+        <select multiple size="10" class="form-control" id="outproductU" style="margin-bottom: 5px;">
             <option disabled>Ninguna busqueda</option>
         </select>
 
     </div>
     <div class="cpl-sm-12 modal-footer">
 
-        <button type="button" class="btn btn-warning" onclick="agregarInventario()">Agregar <i class="fa fa-plus"></i></button>
+        <button type="button" class="btn btn-warning" onclick="agregarUpdate()">Agregar <i class="fa fa-plus"></i></button>
     </div>
 
 </div>
@@ -176,6 +176,7 @@ if (isset($_GET["id"])) {
             <caption>Productos Agregados</caption>
             <thead>
                 <tr>
+                    <th scope="col">Indice</th>
                     <th scope="col">SKU</th>
                     <th scope="col">pre.</th>
                     <th scope="col">cant.</th>
@@ -185,43 +186,35 @@ if (isset($_GET["id"])) {
                 </tr>
             </thead>
             <tbody>
-            <?php 
-            $sql = "SELECT  * FROM  tblinvdet  WHERE INTIDINV='$id'";
-            $query = mysqli_query($con, $sql);
-    
-    
-            // Crear el elemento select
-           
-    
-            if (isset($query) && $query != NULL &&  mysqli_num_rows($query) > 0) {
-    
-                // Iterar sobre los resultados y crear una opción para cada uno
-    
-                while ($fila = mysqli_fetch_assoc($query)) {
-                    
-                    echo '<tr id="'.$fila['SKU'].'">';
-                  //  echo '<Td >'.$fila['SKU'].'</Td>'.'<Td>'.$fila['STRREF'].'</Td>'.'<Td>'.$fila['INTCAN'].'</Td>'.'<Td>'.$fila['MONPRCOS'].'</Td>'.'<Td>'.$fila['MONCTOPRO'].'</Td>'.'<td> <button type="button"   class="btn btn-danger btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="validarImg()" ><i class="fa fa-edit"></i></button></td>';
-                  echo '<Td >'.$fila['SKU'].'</Td>'.'<Td>'.$fila['STRREF'].'</Td>'.'<Td>'.$fila['INTCAN'].'</Td>'.'<Td>'.$fila['MONPRCOS'].'</Td>'.'<Td>'.$fila['MONCTOPRO'].'</Td>'.'<td> <button type="button"   class="btn btn-danger btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="validarImg(\''.$fila['SKU'].'\')" ><i class="fa fa-trash-o"></i></i></button></td>';
-                  echo '</tr>';
-                }
-            } else {
-    
-                echo  '<option value="" disabled  selected >No se registraron productos  </option>';
-            }
-    
-            echo '</select>';
-            ?>
+               
 
 
             </tbody>
         </table>
 
     </div>
-    <div class="col-sm-8"><label for="MONCTOPRO" class=" control-label">Total</label></div>
+    <div class="col-sm-6">
+        <div class="col-sm-6">
+            <label for="MONCTOPRO" class=" control-label">Total</label>
+        </div>
+        <div class="col-sm-6"><input type="number" required class="form-control static" id="MONCTOPROU" name="MONCTOPRO" placeholder="Total: " readonly>
+        </div>
 
-    <div class="col-sm-4"><input type="number" required class="form-control static" id="MONCTOPRO" name="MONCTOPRO" placeholder="Total: " readonly>
-        <br>
+
+
     </div>
+    <div class="col-sm-6">
+
+        <div class="col-sm-6">
+            <label for="Count" class=" control-label">Total de productos</label>
+        </div>
+        <div class="col-sm-6"><input type="number" required class="form-control static" id="CountU" name="CountU" placeholder="Total: " readonly>
+        </div>
+
+        <br>
+
+    </div>
+
 
 
 </div>
