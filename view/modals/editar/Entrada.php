@@ -2,6 +2,7 @@
 session_start();
 require_once("../../../config/config.php");
 if (isset($_GET["id"])) {
+    $idempleado= $_SESSION['user_id'];
     $id = $_GET["id"];
     $id = intval($id);
     $sql = "select * from tblinv where INTIDINV='$id'";
@@ -24,8 +25,11 @@ if (isset($_GET["id"])) {
     exit;
 }
 ?>
+
+
 <div class="form-group">
 
+    <input type="hidden" required class="form-control" id="IDEMP" name="IDEMP" placeholder="Folio:" value="<?php echo $idempleado ?>">
     <input type="hidden" required class="form-control" id="INTIDINV" name="INTIDINV" placeholder="Folio:" value="<?php echo $id ?>">
     <div class="col-sm-4">
         <label for="INTIDTOP" reuired class="control-label">INTIDTOP: </label>
@@ -126,7 +130,7 @@ if (isset($_GET["id"])) {
         <div>
             <label for="STRREF" class=" control-label">Referencia: </label>
 
-            <input type="text" required class="form-control" id="STRREFU" name="STRREF" placeholder="Referencia: ">
+            <input type="text"  class="form-control" id="STRREFU" name="STRREF" placeholder="Referencia: ">
             <span id="STRREF"></span>
 
         </div>
@@ -149,7 +153,7 @@ if (isset($_GET["id"])) {
         </div>
         <label for="INTCAN" class=" control-label">Cantidad</label>
 
-        <input type="number" required class="form-control" id="INTCANU" name="INTCAN" placeholder="cantidad: ">
+        <input type="number"  class="form-control" id="INTCANU" name="INTCAN" placeholder="cantidad: ">
         <span id="INTCAN"></span>
 
 

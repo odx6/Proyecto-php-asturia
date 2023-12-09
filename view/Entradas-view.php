@@ -146,7 +146,7 @@
     $("#new_register").submit(function(event) {
             event.preventDefault();
             $('#guardar_datos').attr("disabled", true);
-            console.log(JSON.stringify(inventario));
+           
             inventario=JSON.stringify(inventario);
             var formData = new FormData(this); 
             formData.append('inventario',inventario);// Crear un objeto FormData
@@ -179,11 +179,12 @@
 <script>
     $( "#update_register" ).submit(function( event ) {
       $('#actualizar_datos').attr("disabled", true);
+      inventario=JSON.stringify(inventarioUpdate);
       var formData = new FormData(this);
-     
+      formData.append('inventario',inventario);
          $.ajax({
                 type: "POST",
-                url: "view/ajax/editar/editar_empleado.php",
+                url: "view/ajax/editar/editar_entrada.php",
                 data: formData,
                 processData: false, // Indicar a jQuery que no procese los datos
                 contentType: false, 
@@ -218,6 +219,7 @@
                     $(".outer_div2").html(data).fadeIn('slow');
                     $("#loader2").html("");
                     MostrarProductos(id);
+                    TotalUpdate=0;
                 }
             })
     }
