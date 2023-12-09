@@ -68,9 +68,30 @@ if (empty($_POST['IDEMP'])) {
     $created_at = date("Y-m-d H:i:s");
 
     $sql = "UPDATE tblinv SET INTIDTOP='" . $INTIDTOP . "',INTTIPMOV='" . $INTTIPMOV ."',INTFOL='".$INTFOL."', IDEMP='" . $IDEMP . "',INTALM='" . $INTIDALM ."',STROBS='" . $STROBS ."' WHERE INTIDINV='" . $id . "' ";
+    $sql2="SELECT * FROM `tblinvdet`  WHERE INTIDINV='$id' ORDER BY  INTIDINV   ASC;";
+    $query_new1 = mysqli_query($con, $sql2);
+    if (isset($query_new1) && $query_new1 != NULL &&  mysqli_num_rows($query_new1) > 0) {
+
+        // Iterar sobre los resultados y crear una opción para cada uno
+
+        while ($fila = mysqli_fetch_assoc($query_new1)) {
+
+        //tiene que buscar uno por uno para no eliminarlo 
+        if(in_array($fila['INTIDDET'],$datos[0])){
+        
+
+        }else{
+            $identificador=$fila['INTIDDET'];
+            $sql3="DELETE FROM `tblinvdet` WHERE INTIDDET='$identificador';";
+            $query_new2 = mysqli_query($con, $sql3);
+            
+        }
+        
+        
 
 
-   
+        }
+    }
     
 
 

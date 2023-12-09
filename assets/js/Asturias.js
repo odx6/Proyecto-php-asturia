@@ -642,7 +642,7 @@ function MostrarProductos(id) {
 }
 
 function agregarUpdate(){
-  valor = $('#outproductU').val();
+ let valor = $('#outproductU').val();
   texto = $('#outproductU').text();
   cantidad = $('#INTCANU').val();
   referencia = $('#STRREFU').val();

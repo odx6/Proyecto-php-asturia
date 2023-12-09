@@ -20,7 +20,7 @@
 			$times = "&times;";
 		}
 	} catch (mysqli_sql_exception $e) {
-		if ($e->getCode() == 1451) {
+		if ($e->getCode() == 1451) { 
 			$aviso = "Aviso!";
 			$msj = "El dato que intentas eliminar tiene relacion con otros registros por favor verifica que no dependa de otros registros Codigo de Error:" . $e->getCode();
 			$classM = "alert alert-danger";
