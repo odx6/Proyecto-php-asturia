@@ -6,7 +6,7 @@ require_once("../../config/funciones.php");
 
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
-	$id = intval($id);
+	
 	
 	try {
 		if (($delete = mysqli_query($con, "DELETE FROM tblcatpro WHERE STRSKU='$id'"))) {

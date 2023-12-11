@@ -1,4 +1,19 @@
 <?php
+
+function  SeEncuentra($dato ,$arrays){
+    //Esta funcion busca en un arreglo si se encuentra el valor proporcionado
+      $flag=false;
+
+    foreach($arrays as $array){
+
+
+        if(in_array($dato,$array))  $flag=true;
+
+        
+    }
+    return $flag;
+
+}
 // CODIGO 
 include("../is_logged.php");
 //DECODIFICA LOS DATOS ENVIADOS
@@ -76,8 +91,9 @@ if (empty($_POST['IDEMP'])) {
 
         while ($fila = mysqli_fetch_assoc($query_new1)) {
 
-        //tiene que buscar uno por uno para no eliminarlo 
-        if(in_array($fila['INTIDDET'],$datos[0])){
+        //tiene que buscar uno por uno para no eliminarlo
+        
+        if(SeEncuentra($fila['INTIDDET'],$datos) ==1){
         
 
         }else{
@@ -99,38 +115,42 @@ if (empty($_POST['IDEMP'])) {
     $query_new = mysqli_query($con, $sql);
     $id;
 
-   /* if ($query_new) {
+    if ($query_new) {
 
         // La inserción fue exitosa
-        $id_insertado = mysqli_insert_id($con);
+        $id_insertado = $id;
+      
+        
         if (is_array($datos)) {
             // Recorrer el array con foreach e imprimir sus valores
-            foreach ($datos as $elemento) {
-                /*foreach ($elemento as $clave => $valor) {
-                    echo $clave . ': ' . (is_array($valor) ? implode(', ', $valor) : $valor) . '<br>';
+            $Pronuevos = array_filter($datos, function($item) {
+                return !array_key_exists('id', $item);
+            });
+            foreach ($Pronuevos as $pro) {
+                
+              
+
+                    $created_at=date("Y-m-d H:i:s");
+                    $created_at2=date("Y-m-d");
+                    $SQL=" INSERT INTO tblinvdet( 
+                    INTIDINV,
+                     SKU,
+                      STRREF,
+                       INTCAN, 
+                       INTIDUNI, 
+                       MONPRCOS,
+                        MONCTOPRO,
+                         DTEHOR)
+                       VALUES('" . $id_insertado . "','" . $pro['sku'][0] . "','".$pro['referencia']."','".$pro['cantidad']."','".$pro['unidad'] ."','". $pro['precio']."','".$pro['total']."','" .$created_at ."');";
+                        $query_new = mysqli_query($con, $SQL);
+    
+    
+                    $sql2="INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
+                    VALUES ('" . $id_insertado ."','" .$created_at2 . "','" . $pro['sku'][0] . "','".$pro['referencia']."','".$pro['cantidad']."','".$pro['unidad'] ."','". $pro['precio']."','".$pro['total']."','".$INTTIPMOV."','".$INTIDALM."','" .$created_at ."');";
+                     $query_new2 = mysqli_query($con, $sql2);
                 }
-                echo '<br>';
-
                
-                $created_at=date("Y-m-d H:i:s");
-                $created_at2=date("Y-m-d");
-                $SQL=" INSERT INTO tblinvdet( 
-                INTIDINV,
-                 SKU,
-                  STRREF,
-                   INTCAN, 
-                   INTIDUNI, 
-                   MONPRCOS,
-                    MONCTOPRO,
-                     DTEHOR)
-                   VALUES('" . $id_insertado . "','" . $elemento['SKU'][0] . "','".$elemento['STRREF']."','".$elemento['INTCANT']."','".$elemento['INTIDUNI'] ."','". $elemento['MONPRCOS']."','".$elemento['MONCTOPRO']."','" .$created_at ."');";
-                    $query_new = mysqli_query($con, $SQL);
-
-
-                $sql2="INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
-                VALUES ('" . $id_insertado ."','" .$created_at2 . "','" . $elemento['SKU'][0] . "','".$elemento['STRREF']."','".$elemento['INTCANT']."','".$elemento['INTIDUNI'] ."','". $elemento['MONPRCOS']."','".$elemento['MONCTOPRO']."','".$INTTIPMOV."','".$INTIDALM."','" .$created_at ."');";
-                 $query_new2 = mysqli_query($con, $sql2);
-            }
+            
         } else {
             echo 'El JSON no es un array válido.';
         }
@@ -139,7 +159,7 @@ if (empty($_POST['IDEMP'])) {
     } else {
         // La inserción falló
         echo mysqli_error($con); // Muestra el error específico
-    }*/
+    }
     if (!$query_new) $errors[] = "no se agrego el producto";
 
 
