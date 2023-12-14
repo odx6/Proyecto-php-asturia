@@ -31,20 +31,12 @@
 
 				in_array(1,$valores)?$_SESSION['dashboard']=1:$_SESSION['dashboard']=0;
 				in_array(2,$valores)?$_SESSION['empleados']=1:$_SESSION['empleados']=0;
-				in_array(3,$valores)?$_SESSION['taller']=1:$_SESSION['taller']=0;
-				in_array(4,$valores)?$_SESSION['seguro']=1:$_SESSION['seguro']=0;
-				in_array(5,$valores)?$_SESSION['empresa']=1:$_SESSION['empresa']=0;
-				in_array(6,$valores)?$_SESSION['sector']=1:$_SESSION['sector']=0;
-				in_array(7,$valores)?$_SESSION['vehiculo']=1:$_SESSION['vehiculo']=0;
-				in_array(8,$valores)?$_SESSION['tarjeta']=1:$_SESSION['tarjeta']=0;
-				in_array(9,$valores)?$_SESSION['reparaciones']=1:$_SESSION['reparaciones']=0;
-				in_array(10,$valores)?$_SESSION['choque']=1:$_SESSION['choque']=0;
-				in_array(11,$valores)?$_SESSION['configuracion']=1:$_SESSION['configuracion']=0;
-				in_array(12,$valores)?$_SESSION['productos']=1:$_SESSION['productos']=0;
-				in_array(13,$valores)?$_SESSION['subcategorias']=1:$_SESSION['subcategorias']=0;
-				in_array(14,$valores)?$_SESSION['solicitud']=1:$_SESSION['solicitud']=0;
-				in_array(15,$valores)?$_SESSION['categorias']=1:$_SESSION['categorias']=0;
-				in_array(16,$valores)?$_SESSION['unidades']=1:$_SESSION['unidades']=0;
+				in_array(3,$valores)?$_SESSION['configuracion']=1:$_SESSION['configuracion']=0;
+				in_array(4,$valores)?$_SESSION['productos']=1:$_SESSION['productos']=0;
+				in_array(5,$valores)?$_SESSION['subcategorias']=1:$_SESSION['subcategorias']=0;
+				in_array(6,$valores)?$_SESSION['solicitud']=1:$_SESSION['solicitud']=0;
+				in_array(7,$valores)?$_SESSION['categorias']=1:$_SESSION['categorias']=0;
+				in_array(8,$valores)?$_SESSION['unidades']=1:$_SESSION['unidades']=0;
 
 				$_SESSION['user_id'] = $idempleado;
 				if($_SESSION['dashboard']==1){

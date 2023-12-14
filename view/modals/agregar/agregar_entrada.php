@@ -14,9 +14,9 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="form-group">
+                    <input type="hidden" required class="form-control" id="IDEMP" name="IDEMP" placeholder="Folio:" value="<?php echo $id ?>">
+                    <div class="">
 
-                        <input type="hidden" required class="form-control" id="IDEMP" name="IDEMP" placeholder="Folio:" value="<?php echo $id ?>">
                         <div class="col-sm-4">
                             <label for="INTIDTOP" reuired class="control-label">INTIDTOP: </label>
                             <?php
@@ -91,7 +91,7 @@
 
 
                     </div>
-                    <div class="form-group">
+                    <div class="">
                         <div class="col-sm-6">
                             <label for="INTFOL" class=" control-label">Folio: </label>
                             <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: ">
@@ -113,14 +113,14 @@
                                 <option value="STRDES">Descripcion</option>
 
                             </select>
-                           <div>
-                           <label for="STRREF" class=" control-label">Referencia: </label>
-                           
-                           <input type="text" required class="form-control" id="STRREF" name="STRREF" placeholder="Referencia: ">
-                           <span id="STRREF"></span>
+                            <div>
+                                <label for="STRREF" class=" control-label">Referencia: </label>
 
-                           </div>
-                           
+                                <input type="text" required class="form-control" id="STRREF" name="STRREF" placeholder="Referencia: ">
+                                <span id="STRREF"></span>
+
+                            </div>
+
 
 
 
@@ -134,27 +134,27 @@
                                     <button class="btn btn-default" type="button" onclick='mostrarProductos()'><i class='fa fa-search'></i></button>
                                 </span>
 
-                                
+
 
                             </div>
                             <label for="INTCAN" class=" control-label">Cantidad</label>
 
-                            <input type="number" required class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: " >
+                            <input type="number" required class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: ">
                             <span id="INTCAN"></span>
 
 
                         </div>
                         <div class="col-sm-12">
-                            <select multiple size="10" class="form-control"  id="outproduct" style="margin-bottom: 5px;">
+                            <select multiple size="10" class="form-control" id="outproduct" style="margin-bottom: 5px;">
                                 <option disabled>Ninguna busqueda</option>
                             </select>
 
                         </div>
                         <div class="cpl-sm-12 modal-footer">
-                            
-                        <button type="button"  class="btn btn-warning" onclick="agregarInventario()">Agregar <i class="fa fa-plus"></i></button>
+
+                            <button type="button" class="btn btn-warning" onclick="agregarInventario()">Agregar <i class="fa fa-plus"></i></button>
                         </div>
-                  
+
                     </div>
 
 
@@ -171,18 +171,18 @@
                                         <th scope="col">ref.</th>
                                         <th scope="col">cant.</th>
                                         <th scope="col">pre.</th>
-                                       
+
                                         <th scope="col">tot./u</th>
                                         <th scope="col">Accion</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                   
+
                                 </tbody>
                             </table>
-                            
+
                         </div>
                         <div class="col-sm-6">
                             <div class="col-sm-6">

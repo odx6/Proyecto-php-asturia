@@ -38,7 +38,7 @@
                         <?php 
                             include "modals/agregar/agregar_entrada.php";
                             include "modals/editar/editar_entrada.php";
-                            include "modals/mostrar/mostrar_empleado.php";
+                            include "modals/mostrar/mostrar_entrada.php";
                         ?>
                     <!-- /end modals -->
                     
@@ -181,7 +181,10 @@
       $('#actualizar_datos').attr("disabled", true);
       inventario=JSON.stringify(inventarioUpdate);
       var formData = new FormData(this);
+
+      INTTIPMOVU=$('#INTTIPMOVU').val();
       formData.append('inventario',inventario);
+      formData.append('INTTIPMOVU',INTTIPMOVU);
          $.ajax({
                 type: "POST",
                 url: "view/ajax/editar/editar_entrada.php",
@@ -212,14 +215,13 @@
         $.ajax({
                 url:'view/modals/editar/Entrada.php',
                 data: parametros,
-                 beforeSend: function(objeto){
-                $("#loader2").html("<img src='./assets/img/ajax-loader.gif'>");
-              },
+                 
                 success:function(data){
                     $(".outer_div2").html(data).fadeIn('slow');
                     $("#loader2").html("");
                     MostrarProductos(id);
                     TotalUpdate=0;
+                    
                 }
             })
     }
@@ -227,7 +229,7 @@
     function mostrar(id){
         var parametros = {"action":"ajax","id":id};
         $.ajax({
-                url:'view/modals/mostrar/empleado.php',
+                url:'view/modals/mostrar/Entrada.php',
                 data: parametros,
                  beforeSend: function(objeto){
                 $("#loader3").html("<img src='./assets/img/ajax-loader.gif'>");

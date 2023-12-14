@@ -1,11 +1,11 @@
 <!-- Form Modal -->
 <div class="modal fade" id="modal_show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
     <form class="form-horizontal" role="form">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"> Datos De la entrada</h4>
+                <h4 class="modal-title" id="myModalLabel"> Datos Del Inventario</h4>
             </div>
             <div class="modal-body">
                 <div id="loader3" class="text-center"></div>

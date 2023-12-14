@@ -29,21 +29,13 @@ if (empty($_POST['IDEMP'])) {
     $errors[] = "El empleado esta vacio está vacío.";
 } elseif (empty($_POST['INTIDTOP'])) {
     $errors[] = "Tipo de movimiento  está vacío.";
-} elseif (empty($_POST['INTTIPMOV'])) {
-    $errors[] = "Entrada o salida no valida";
-} elseif (empty($_POST['INTIDALM'])) {
+}elseif (empty($_POST['INTIDALM'])) {
     $errors[] = "El campo almacen esta vacio.";
 } elseif (empty($_POST['INTFOL'])) {
     $errors[] = "El folio esta vacio.";
 } elseif (empty($_POST['STROBS'])) {
     $errors[] = "Descripcion del movimiento  está vacío.";
-} elseif (empty($_POST['STRREF'])) {
-    $errors[] = "referencia está vacío.";
-} elseif (empty($_POST['INTCAN'])) {
-    $errors[] = "Cantidad está vacío.";
-} elseif (empty($_POST['MONCTOPRO'])) {
-    $errors[] = "Total está vacío.";
-} elseif (empty($_POST['inventario'])) {
+}   elseif (empty($_POST['inventario'])) {
     $errors[] = "Los productos está vacío.";
 }  elseif (empty($_POST['INTIDINV'])) {
     $errors[] = "Error al enviar datos.";
@@ -52,13 +44,13 @@ if (empty($_POST['IDEMP'])) {
         }*/ elseif (
     !empty($_POST['IDEMP'])
     && !empty($_POST['INTIDTOP'])
-    && !empty($_POST['INTTIPMOV'])
+    
     && !empty($_POST['INTIDALM'])
     && !empty($_POST['INTFOL'])
     && !empty($_POST['STROBS'])
-    && !empty($_POST['STRREF'])
-    && !empty($_POST['MONCTOPRO'])
-    && !empty($_POST['INTCAN'])
+    
+  
+  
     && !empty($_POST['INTIDINV'])
     && !empty($_POST['inventario'])
 
@@ -71,18 +63,16 @@ if (empty($_POST['IDEMP'])) {
     $id = intval($_POST["INTIDINV"]);
     $IDEMP = mysqli_real_escape_string($con, (strip_tags($_POST["IDEMP"], ENT_QUOTES)));
     $INTIDTOP = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDTOP"], ENT_QUOTES)));
-    $INTTIPMOV = mysqli_real_escape_string($con, (strip_tags($_POST["INTTIPMOV"], ENT_QUOTES)));
+     if(!empty($_POST['INTTIPMOVU']))$INTTIPMOV = mysqli_real_escape_string($con, (strip_tags($_POST["INTTIPMOVU"], ENT_QUOTES)));
     $INTIDALM = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDALM"], ENT_QUOTES)));
     $INTFOL = mysqli_real_escape_string($con, (strip_tags($_POST["INTFOL"], ENT_QUOTES)));
     $STROBS = mysqli_real_escape_string($con, (strip_tags($_POST["STROBS"], ENT_QUOTES)));
-    $STRREF = mysqli_real_escape_string($con, (strip_tags($_POST["STRREF"], ENT_QUOTES)));
-    $MONCTOPRO = mysqli_real_escape_string($con, (strip_tags($_POST["MONCTOPRO"], ENT_QUOTES)));
-    $INTCAN = mysqli_real_escape_string($con, (strip_tags($_POST["INTCAN"], ENT_QUOTES)));
+    
     $estado = mysqli_real_escape_string($con, (strip_tags($_POST["MONCTOPRO"], ENT_QUOTES)));
     $FECHA = date("Y-m-d");
     $created_at = date("Y-m-d H:i:s");
 
-    $sql = "UPDATE tblinv SET INTIDTOP='" . $INTIDTOP . "',INTTIPMOV='" . $INTTIPMOV ."',INTFOL='".$INTFOL."', IDEMP='" . $IDEMP . "',INTALM='" . $INTIDALM ."',STROBS='" . $STROBS ."' WHERE INTIDINV='" . $id . "' ";
+     if(!empty($_POST['INTTIPMOVU'])){$sql = "UPDATE tblinv SET INTIDTOP='" . $INTIDTOP . "',INTTIPMOV='" . $INTTIPMOV ."',INTFOL='".$INTFOL."', IDEMP='" . $IDEMP . "',INTALM='" . $INTIDALM ."',STROBS='" . $STROBS ."' WHERE INTIDINV='" . $id . "' ";}else{$sql = "UPDATE tblinv SET INTIDTOP='" . $INTIDTOP  ."',INTFOL='".$INTFOL."', IDEMP='" . $IDEMP . "',INTALM='" . $INTIDALM ."',STROBS='" . $STROBS ."' WHERE INTIDINV='" . $id . "' ";} 
     $sql2="SELECT * FROM `tblinvdet`  WHERE INTIDINV='$id' ORDER BY  INTIDINV   ASC;";
     $query_new1 = mysqli_query($con, $sql2);
     if (isset($query_new1) && $query_new1 != NULL &&  mysqli_num_rows($query_new1) > 0) {

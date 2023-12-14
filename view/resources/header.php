@@ -289,6 +289,13 @@ $nombre_empresa = $rw['nombre'];
                                     <a href="./?view=Entradas"><i class="fa fa-users"></i><span>&nbspEntradas y Salidas</span></a>
                                 </li>
                             <?php } ?>
+                            <?php if ($_SESSION['empleados'] == 1) { ?>
+                                <li class="<?php if (isset($active2)) {
+                                                echo $active2;
+                                            } ?>">
+                                    <a href="./?view=Entradas"><i class="fa fa-users"></i><span>Verificacion de Salida</span></a>
+                                </li>
+                            <?php } ?>
 
                             
 

@@ -64,9 +64,9 @@ if (isset($_GET["id"])) {
 
     <div class="col-sm-4">
         <label for="INTTIPMOV" class=" control-label">Movimiento: </label>
-        <select class="form-control col-sm-10" name="INTTIPMOV" id="INTTIPMOV" required>
-            <option value="1">Entrada</option>
-            <option value="2">Salida</option>
+        <select class="form-control col-sm-10 " name="INTTIPMOV" id="INTTIPMOVU" required >
+            <option value="1" <?php if($INTTIPMOV ==1 ) echo "selected"; ?> >Entrada</option>
+            <option value="2"  <?php if($INTTIPMOV ==2 ) echo "selected"; ?>>Salida</option>
         </select>
     </div>
     <div class="col-sm-4">
@@ -159,7 +159,7 @@ if (isset($_GET["id"])) {
 
     </div>
     <div class="col-sm-12">
-        <select multiple size="10" class="form-control" id="outproductU" style="margin-bottom: 5px;">
+        <select multiple size="10" class="form-control" id="outproductU" style="margin-bottom: 5px;" onchange="vselect()">
             <option disabled>Ninguna busqueda</option>
         </select>
 
@@ -186,6 +186,7 @@ if (isset($_GET["id"])) {
                     <th scope="col">cant.</th>
                     <th scope="col">ref.</th>
                     <th scope="col">tot./u</th>
+                    <th scope="col">Accion</th>
 
                 </tr>
             </thead>
