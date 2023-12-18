@@ -93,7 +93,6 @@ if ($action == 'ajax') {
 			</thead>
 			<?php
 			$finales = 0;
-			
 			while ($row = mysqli_fetch_array($query)) {
 				$sku = $row['STRSKU'];
 				$codigo = $row['STRCOD'];
@@ -161,11 +160,9 @@ if ($action == 'ajax') {
 
 						<td class="text-right">
 
-							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $sku; ?>');"><i class="fa fa-edit"></i></button>
+							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal"  onclick="HistorialEntradassalidas('<?php echo $sku; ?>')"><i class="fa fa-list-alt" aria-hidden="true"></i></button>
 
-							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $sku; ?>')"><i class="fa fa-trash-o"></i></button>
-
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $sku; ?>')"><i class="fa fa-eye"></i></button>
+							
 
 						</td>
 					</tr>

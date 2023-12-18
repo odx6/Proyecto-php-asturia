@@ -140,7 +140,7 @@
                             <label for="INTCAN" class=" control-label">Cantidad</label>
 
                             <input type="number" required class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: ">
-                            <span id="INTCAN"></span>
+                            <span id="MINTCAN"></span>
 
 
                         </div>

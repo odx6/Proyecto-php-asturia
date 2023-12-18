@@ -1,0 +1,107 @@
+<?php
+
+
+session_start();
+require_once("../../config/config.php");
+require_once("../../config/funciones.php");
+
+
+if (isset($_GET["id"])) {
+	$id = $_GET["id"];
+	$id = intval($id);
+	$sql = "select * from tbltarinv where SKU='$id'  order by DTEFEC";
+	$query = mysqli_query($con, $sql);
+	$num = mysqli_num_rows($query);
+} else {
+	exit;
+}
+if ($num > 0) {
+?>
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4"></div>
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>#ID</th>
+				<th>FECHA</th>
+				<th>SKU</th>
+				<th>REFERENCIA</th>
+				<th>CANTIDAD</th>
+				<th>PRECIO</th>
+				<th>Total</th>
+				<th>Tipo e/s</th>
+				<th>Almacen</th>
+
+
+			</tr>
+		</thead>
+		<?php
+		$finales = 0;
+		$sumaEntradas = 0;
+		$sumaSalidas = 0;
+		$total = 0;
+		while ($row = mysqli_fetch_array($query)) {
+
+			$INTIDTAR = $row['INTIDTAR'];
+			$INTIDINV = $row['INTIDINV'];
+			$DTEFEC = $row['DTEFEC'];
+			$SKU = $row['SKU'];
+			$STRREF = $row['STRREF'];
+			$INTCAN = $row['INTCAN'];
+
+
+			$INTIDUNI = $row['INTIDUNI'];
+			$MONPRCOS = $row['MONPRCOS'];
+			$MONCTOPRO = $row['MONCTOPRO'];
+			$INTTIMOV = $row['INTTIPMOV'];
+			if ($INTTIMOV == 1) $sumaEntradas += $INTCAN;
+			if ($INTTIMOV == 2) $sumaSalidas += $INTCAN;
+
+			$INTALM = $row['INTALM'];
+			$DTEHOR = $row['DTEHOR'];
+
+			if ($INTTIMOV == 1) {
+				$lbl_status = "Entrada";
+				$lbl_class = 'label label-success';
+			} else {
+				$lbl_status = "Salida";
+				$lbl_class = 'label label-danger';
+			}
+		
+
+			/*$kind=$row['kind'];*/
+
+			$finales++;
+		?>
+			<tbody>
+				<tr>
+					<td><?php echo $INTIDTAR ?></td>
+					<td><?php echo $DTEFEC ?></td>
+					<td><?php echo $SKU ?></td>
+					<td><?php echo $STRREF ?></td>
+					<td><?php echo $INTCAN."&nbspmxm" ?></td>
+					<td><?php echo $MONPRCOS ?></td>
+					<td><?php echo $MONCTOPRO."&nbspmxm" ?></td>
+					<td></strong> <span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
+					<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM');?></td>
+
+				</tr>
+			</tbody>
+		<?php } ?>
+
+	</table>
+
+	<?php $total = $sumaEntradas - $sumaSalidas;
+	  ?>
+	<div class="col-sm-4"><p><strong>Numero de entradas Totales</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas;?></strong></p></div>
+	<div class="col-sm-4"><strong>Numero de salidas Totales</strong> &nbsp &nbsp <strong><?php echo $sumaSalidas;?></strong></div>
+	<div class="col-sm-4"><strong>stock disponible</strong> &nbsp &nbsp <strong><?php echo $total;?></strong></div>
+<?php
+
+} else {
+	echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
+}
+
+?>

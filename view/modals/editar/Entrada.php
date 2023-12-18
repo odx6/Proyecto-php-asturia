@@ -154,7 +154,7 @@ if (isset($_GET["id"])) {
         <label for="INTCAN" class=" control-label">Cantidad</label>
 
         <input type="number"  class="form-control" id="INTCANU" name="INTCAN" placeholder="cantidad: ">
-        <span id="INTCAN"></span>
+        <span id="MINTCANU"></span>
 
 
     </div>
