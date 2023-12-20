@@ -26,7 +26,7 @@ if ($_SESSION['productos'] == 1) {
             <div class="row">
                 <div class="col-xs-3">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Buscar por nombre" id='q' onkeyup="load(1);">
+                        <input type="text" class="form-control" placeholder="Buscar por Descripción" id='q' onkeyup="load(1);">
 
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" onclick='load(1);'><i class='fa fa-search'></i></button>

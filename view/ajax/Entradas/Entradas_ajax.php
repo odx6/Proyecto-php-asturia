@@ -90,7 +90,7 @@ if ($action == 'ajax') {
 			$finales = 0;
 			while ($row = mysqli_fetch_array($query)) {
 				$INTIDINV = $row['INTIDINV'];
-				$DTEHOR = $row['DTEFEC'];
+				$DTEFEC = $row['DTEFEC'];
 				$INTIDTOP = $row['INTIDTOP'];
 				$INTTIMOV = $row['INTTIPMOV'];
 				$INTFOL = $row['INTFOL'];
@@ -108,7 +108,7 @@ if ($action == 'ajax') {
 				<tbody>
 					<tr>
 						<td><?php echo $INTIDINV ?></td>
-						<td><?php echo $DTEHOR ?></td>
+						<td><?php echo $DTEFEC  ?></td>
 						<td><?php echo consultarNombre($INTIDTOP, 'tblcattop', 'INTIDTOP', 'STRNOMTPO');  ?></td>
 						<td><?php echo ($INTTIMOV == 1) ?  "Entrada": "Salida"; ?></td>
 						<td><?php echo $INTFOL ?></td>

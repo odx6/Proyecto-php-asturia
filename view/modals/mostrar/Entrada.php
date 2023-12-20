@@ -33,17 +33,21 @@ if (isset($_GET["id"])) {
 
 <div class="col-sm-6">
    
-    <div class="col-sm-6"> <STROng>Fecha :</STROng></div>
+    <div class="col-sm-6"> <STROng><i class="fa fa-calendar-o" aria-hidden="true"></i> &nbsp;Fecha :</STROng></div>
     <div class="col-sm-6"><?php echo $DTEFEC ?></div>
-    <div class="col-sm-6"><STRong>Folio :</STRong></div>
+    <div class="col-sm-6"><STRong><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp;Folio :</STRong></div>
     <div class="col-sm-6"><?php echo $INTFOL ?></div>
 
 </div>
 <div class="col-sm-6">
-    <div class="col-sm-6"> <STROng>Descripcion :</STROng></div>
+    <div class="col-sm-6"> <STROng><i class="fa fa-comments" aria-hidden="true"></i> &nbsp;Descripcion :</STROng></div>
     <div class="col-sm-6"><?php echo $STROBS ?></div>
-    <div class="col-sm-6"><STRong>Almacen :</STRong></div>
+    <div class="col-sm-6"><STRong><i class="fa fa-map-marker" aria-hidden="true"></i> &nbsp;Almacen :</STRong></div>
     <div class="col-sm-6"><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></div>
+</div>
+<div class="col-md-12">
+
+<p>&nbsp;</p>
 </div>
 <table class="table table-bordered table-striped">
     <thead>

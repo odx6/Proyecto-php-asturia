@@ -14,23 +14,17 @@ if (empty($_POST['IDEMP'])) {
     $errors[] = "El empleado esta vacio está vacío.";
 } elseif (empty($_POST['INTIDTOP'])) {
     $errors[] = "Tipo de movimiento  está vacío.";
-} elseif (empty($_POST['INTTIPMOV'])) {
-    $errors[] = "Entrada o salida no valida";
 } elseif (empty($_POST['INTIDALM'])) {
     $errors[] = "El campo almacen esta vacio.";
 } elseif (empty($_POST['INTFOL'])) {
     $errors[] = "El folio esta vacio.";
 } elseif (empty($_POST['STROBS'])) {
     $errors[] = "Descripcion del movimiento  está vacío.";
-} elseif (empty($_POST['STRREF'])) {
-    $errors[] = "referencia está vacío.";
-} elseif (empty($_POST['INTCAN'])) {
-    $errors[] = "Cantidad está vacío.";
-} elseif (empty($_POST['MONCTOPRO'])) {
-    $errors[] = "Total está vacío.";
-} elseif (empty($_POST['inventario'])) {
-    $errors[] = "Total está vacío.";
-} /* elseif (empty($_POST['kind'])) {
+}   elseif (empty($_POST['inventario'])) {
+    $errors[] = "inventario está vacío.";
+} elseif (count($datos) <=0) {
+    $errors[] = "Error no se puede ingresar una entrada o salida sin productos.";
+}/* elseif (empty($_POST['kind'])) {
             $errors[] = "Kind está vacío.";
         }*/ elseif (
     !empty($_POST['IDEMP'])
@@ -39,10 +33,9 @@ if (empty($_POST['IDEMP'])) {
     && !empty($_POST['INTIDALM'])
     && !empty($_POST['INTFOL'])
     && !empty($_POST['STROBS'])
-    && !empty($_POST['STRREF'])
-    && !empty($_POST['MONCTOPRO'])
-    && !empty($_POST['INTCAN'])
     && !empty($_POST['inventario'])
+    && is_array($datos)
+    && count($datos) >0
 
     /*&& !empty($_POST['kind'])*/
 ) {
@@ -55,10 +48,7 @@ if (empty($_POST['IDEMP'])) {
     $INTIDALM = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDALM"], ENT_QUOTES)));
     $INTFOL = mysqli_real_escape_string($con, (strip_tags($_POST["INTFOL"], ENT_QUOTES)));
     $STROBS = mysqli_real_escape_string($con, (strip_tags($_POST["STROBS"], ENT_QUOTES)));
-    $STRREF = mysqli_real_escape_string($con, (strip_tags($_POST["STRREF"], ENT_QUOTES)));
-    $MONCTOPRO = mysqli_real_escape_string($con, (strip_tags($_POST["MONCTOPRO"], ENT_QUOTES)));
-    $INTCAN = mysqli_real_escape_string($con, (strip_tags($_POST["INTCAN"], ENT_QUOTES)));
-    $estado = mysqli_real_escape_string($con, (strip_tags($_POST["MONCTOPRO"], ENT_QUOTES)));
+   
     $FECHA = date("Y-m-d");
     $created_at = date("Y-m-d H:i:s");
 
@@ -88,7 +78,7 @@ if (empty($_POST['IDEMP'])) {
 
         // La inserción fue exitosa
         $id_insertado = mysqli_insert_id($con);
-        if (is_array($datos)) {
+        if (is_array($datos)  ) {
             // Recorrer el array con foreach e imprimir sus valores
             foreach ($datos as $elemento) {
                 /*foreach ($elemento as $clave => $valor) {
@@ -117,7 +107,12 @@ if (empty($_POST['IDEMP'])) {
                  $query_new2 = mysqli_query($con, $sql2);
             }
         } else {
-            echo 'El JSON no es un array válido.';
+           
+           echo  '<div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error! No se agrego ningun  producto al inventario  no se puede agregar un inventario vacio </strong>
+            
+        </div>';
         }
 
         

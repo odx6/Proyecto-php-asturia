@@ -15,7 +15,7 @@
                 <div class="modal-body">
 
                     <input type="hidden" required class="form-control" id="IDEMP" name="IDEMP" placeholder="Folio:" value="<?php echo $id ?>">
-                    <div class="">
+                    <div class="col-sm-12">
 
                         <div class="col-sm-4">
                             <label for="INTIDTOP" reuired class="control-label">INTIDTOP: </label>
@@ -91,7 +91,7 @@
 
 
                     </div>
-                    <div class="">
+                    <div class="col-sm-12">
                         <div class="col-sm-6">
                             <label for="INTFOL" class=" control-label">Folio: </label>
                             <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: ">
@@ -116,7 +116,7 @@
                             <div>
                                 <label for="STRREF" class=" control-label">Referencia: </label>
 
-                                <input type="text" required class="form-control" id="STRREF" name="STRREF" placeholder="Referencia: ">
+                                <input type="text"  class="form-control" id="STRREF" name="STRREF" placeholder="Referencia: ">
                                 <span id="STRREF"></span>
 
                             </div>
@@ -139,7 +139,7 @@
                             </div>
                             <label for="INTCAN" class=" control-label">Cantidad</label>
 
-                            <input type="number" required class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: ">
+                            <input type="number"  class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: ">
                             <span id="MINTCAN"></span>
 
 

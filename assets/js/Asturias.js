@@ -525,7 +525,7 @@ function mostrarProductos() {
       select.empty();
       $.each(data, function (i, dato) {
 
-        select.append('<option value="' + dato.STRSKU + '" data-info="' + dato.MONPCOS + '" data-unidad="' + dato.INTIDUNI + '"    ><b>SKU :&nbsp</b>  ' + dato.STRSKU + '&nbspCodigo :  &nbsp' + dato.STRCOD + '</option>');
+        select.append('<option value="' + dato.STRSKU + '" data-info="' + dato.MONPCOS + '" data-unidad="' + dato.INTIDUNI + '"    ><b>SKU :&nbsp</b>  ' + dato.STRSKU + '&nbsp CODIGO :  &nbsp' + dato.STRCOD + '</option>');
       });
 
     }
@@ -570,7 +570,7 @@ function mostrarProductosUpdate() {
       select.empty();
       $.each(data, function (i, dato) {
 
-        select.append('<option value="' + dato.STRSKU + '" data-info="' + dato.MONPCOS + '" data-unidad="' + dato.INTIDUNI + '"    ><b>SKU :&nbsp</b>  ' + dato.STRSKU + '&nbspCodigo :  &nbsp' + dato.STRCOD + '&nbspDescripcion :  &nbsp' + dato.STRDESPRO + '</option>');
+        select.append('<option value="' + dato.STRSKU + '" data-info="' + dato.MONPCOS + '" data-unidad="' + dato.INTIDUNI + '"    ><b>SKU :&nbsp</b>  ' + dato.STRSKU + '&nbspCODIGO :  &nbsp' + dato.STRCOD + '&nbspDESCRIPCIÓN :  &nbsp' + dato.STRDESPRO + '</option>');
       });
     }
 

@@ -2,7 +2,7 @@
 session_start();
 require_once("../../../config/config.php");
 if (isset($_GET["id"])) {
-    $idempleado= $_SESSION['user_id'];
+    $idempleado = $_SESSION['user_id'];
     $id = $_GET["id"];
     $id = intval($id);
     $sql = "select * from tblinv where INTIDINV='$id'";
@@ -27,10 +27,11 @@ if (isset($_GET["id"])) {
 ?>
 
 
-<div class="form-group">
 
-    <input type="hidden" required class="form-control" id="IDEMP" name="IDEMP" placeholder="Folio:" value="<?php echo $idempleado ?>">
-    <input type="hidden" required class="form-control" id="INTIDINV" name="INTIDINV" placeholder="Folio:" value="<?php echo $id ?>">
+
+<input type="hidden" required class="form-control" id="IDEMP" name="IDEMP" placeholder="Folio:" value="<?php echo $idempleado ?>">
+<input type="hidden" required class="form-control" id="INTIDINV" name="INTIDINV" placeholder="Folio:" value="<?php echo $id ?>">
+<div class="col-sm-12">
     <div class="col-sm-4">
         <label for="INTIDTOP" reuired class="control-label">INTIDTOP: </label>
         <?php
@@ -64,9 +65,9 @@ if (isset($_GET["id"])) {
 
     <div class="col-sm-4">
         <label for="INTTIPMOV" class=" control-label">Movimiento: </label>
-        <select class="form-control col-sm-10 " name="INTTIPMOV" id="INTTIPMOVU" required >
-            <option value="1" <?php if($INTTIPMOV ==1 ) echo "selected"; ?> >Entrada</option>
-            <option value="2"  <?php if($INTTIPMOV ==2 ) echo "selected"; ?>>Salida</option>
+        <select class="form-control col-sm-10 " name="INTTIPMOV" id="INTTIPMOVU" required>
+            <option value="1" <?php if ($INTTIPMOV == 1) echo "selected"; ?>>Entrada</option>
+            <option value="2" <?php if ($INTTIPMOV == 2) echo "selected"; ?>>Salida</option>
         </select>
     </div>
     <div class="col-sm-4">
@@ -103,21 +104,22 @@ if (isset($_GET["id"])) {
 
 
 
-
-</div>
-<div class="form-group">
-    <div class="col-sm-6">
-        <label for="INTFOL" class=" control-label">Folio: </label>
-        <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: " value="<?php echo $INTFOL ?>">
-        <span id="MINTFOL"></span>
     </div>
 
-    <div class="col-sm-6">
-        <label for="STROBS" class=" control-label">Descripcion: </label>
-        <input type="text" required class="form-control" id="STROBS" name="STROBS" placeholder="Descripcion: " value="<?php echo $STROBS ?>">
-        <span id="STROBS"></span>
+    <div class="col-sm-12">
+        <div class="col-sm-6">
+            <label for="INTFOL" class=" control-label">Folio: </label>
+            <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: " value="<?php echo $INTFOL ?>">
+            <span id="MINTFOL"></span>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="STROBS" class=" control-label">Descripcion: </label>
+            <input type="text" required class="form-control" id="STROBS" name="STROBS" placeholder="Descripcion: " value="<?php echo $STROBS ?>">
+            <span id="STROBS"></span>
+        </div>
     </div>
-</div>
+
 <div class="col-sm-12">
     <div class="col-sm-6">
         <label for="columna" class=" control-label">Buscar: </label>
@@ -130,7 +132,7 @@ if (isset($_GET["id"])) {
         <div>
             <label for="STRREF" class=" control-label">Referencia: </label>
 
-            <input type="text"  class="form-control" id="STRREFU" name="STRREF" placeholder="Referencia: ">
+            <input type="text" class="form-control" id="STRREFU" name="STRREF" placeholder="Referencia: ">
             <span id="STRREF"></span>
 
         </div>
@@ -139,6 +141,7 @@ if (isset($_GET["id"])) {
 
 
     </div>
+
     <div class="col-sm-6">
         <label for="INTTIPMOV" class=" control-label">por</label>
 
@@ -153,7 +156,7 @@ if (isset($_GET["id"])) {
         </div>
         <label for="INTCAN" class=" control-label">Cantidad</label>
 
-        <input type="number"  class="form-control" id="INTCANU" name="INTCAN" placeholder="cantidad: ">
+        <input type="number" class="form-control" id="INTCANU" name="INTCAN" placeholder="cantidad: ">
         <span id="MINTCANU"></span>
 
 
@@ -182,16 +185,16 @@ if (isset($_GET["id"])) {
                 <tr>
                     <th scope="col">Indice</th>
                     <th scope="col">SKU</th>
-                    <th scope="col">pre.</th>
-                    <th scope="col">cant.</th>
                     <th scope="col">ref.</th>
+                    <th scope="col">cant.</th>
+                    <th scope="col">pre.</th>
                     <th scope="col">tot./u</th>
                     <th scope="col">Accion</th>
 
                 </tr>
             </thead>
             <tbody>
-               
+
 
 
             </tbody>

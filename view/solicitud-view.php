@@ -23,7 +23,7 @@ if ($_SESSION['solicitud'] == 1) {
             <div class="row">
                 <div class="col-xs-3">
 
-                    <select id="miSelect">
+                    <select class="form-control" id="miSelect">
 
                         <option value="pk_solicitud">Id Orden</option>
                         <option value="fk_empleado">Empleado</option>
@@ -36,7 +36,7 @@ if ($_SESSION['solicitud'] == 1) {
 
                         <!-- Agrega más opciones según las columnas que tengas -->
                     </select>
-
+                    <br>
                     <div class="input-group">
 
                         <input type="text" class="form-control" placeholder="Buscar por numero de folio" id='q' onkeyup="load(1,'solicitud','view/ajax/Mostrar_Solicitudes_ajax.php','./empresas-view.php');">

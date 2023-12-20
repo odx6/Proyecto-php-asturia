@@ -39,6 +39,8 @@ if (empty($_POST['IDEMP'])) {
     $errors[] = "Los productos está vacío.";
 }  elseif (empty($_POST['INTIDINV'])) {
     $errors[] = "Error al enviar datos.";
+}  elseif (count($datos) <=0) {
+    $errors[] = "Error no se puede ingresar una entrada o salida sin productos.";
 } /* elseif (empty($_POST['kind'])) {
             $errors[] = "Kind está vacío.";
         }*/ elseif (
@@ -53,7 +55,8 @@ if (empty($_POST['IDEMP'])) {
   
     && !empty($_POST['INTIDINV'])
     && !empty($_POST['inventario'])
-
+    && is_array($datos)
+    && count($datos) >0
     /*&& !empty($_POST['kind'])*/
 ) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos

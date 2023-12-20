@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-xs-3">
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Buscar por nombre" id='q' onkeyup="load(1);">
+                      <input type="text" class="form-control" placeholder="Buscar por fecha" id='q' onkeyup="load(1);">
                       <span class="input-group-btn">
                         <button class="btn btn-default" type="button" onclick='load(1);'><i class='fa fa-search'></i></button>
                       </span>
@@ -146,11 +146,12 @@
     $("#new_register").submit(function(event) {
             event.preventDefault();
             $('#guardar_datos').attr("disabled", true);
-           
+            INTTIPMOV=$('#INTTIPMOV').val();
             inventario=JSON.stringify(inventario);
             var formData = new FormData(this); 
-            formData.append('inventario',inventario);// Crear un objeto FormData
 
+            formData.append('inventario',inventario);// Crear un objeto FormData
+            formData.append('INTTIPMOV',INTTIPMOV);
             $.ajax({
                 type: "POST",
                 url: "view/ajax/agregar/agregar_entrada.php",

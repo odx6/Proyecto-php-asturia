@@ -33,7 +33,7 @@ if ($_SESSION['categorias'] == 1) {
                         <option value="Kilometraje">Kilometraje</option>
                         <option value="DetallesServicio">Detalles del servico </option>
                         <option value="Observaciones">Observaciones</option>
-
+                        
                         <!-- Agrega más opciones según las columnas que tengas -->
                     </select>
 

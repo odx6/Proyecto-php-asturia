@@ -80,8 +80,8 @@ if ($num > 0) {
 					<td><?php echo $DTEFEC ?></td>
 					<td><?php echo $SKU ?></td>
 					<td><?php echo $STRREF ?></td>
-					<td><?php echo $INTCAN."&nbspmxm" ?></td>
-					<td><?php echo $MONPRCOS ?></td>
+					<td><?php echo $INTCAN ?></td>
+					<td><?php echo $MONPRCOS."&nbspmxm" ?></td>
 					<td><?php echo $MONCTOPRO."&nbspmxm" ?></td>
 					<td></strong> <span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 					<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM');?></td>
