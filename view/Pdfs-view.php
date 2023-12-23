@@ -185,6 +185,7 @@ if ($_SESSION['solicitud'] == 1) {
 </body>
 </html>
 ';
+
     $dompdf->loadHtml($html);
     $dompdf->render();
     header("Content-type: application/pdf");

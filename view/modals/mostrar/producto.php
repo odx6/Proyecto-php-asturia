@@ -35,29 +35,111 @@ if (isset($_GET["id"])) {
 	exit;
 }
 ?>
+
+
+
+<br>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
+<div class="form-group">
 
-<div class="card mb-3" style="max-width: 540px;">
-	<div class="row g-0">
-		<div class="col-md-4">
-			<img src="<?php echo $STRIMG ?>" class="img-fluid rounded-start" alt="...">
-		</div>
-		<div class="col-md-8">
-			<div class="card-body">
-				<h5 class="card-title"> <strong>SKU</strong> : <?php echo $SKU; ?> </h5>
-				<p class="card-text"><strong>Codigo :</strong> <?php echo $STRCODINT; ?> </p>
-				<p class="card-text"><strong>Descripcion :</strong> <?php echo $STRDESPRO; ?> </p>
-
-				<p class="card-text"><strong>Categoria :</strong> <?php consultarNombre($INTIDCAT, 'tblcatcat', 'INTIDCAT', 'STRNOMCAT'); ?> </p>
-				<p class="card-text"><strong>Subategoria :</strong> <?php consultarNombre($INTIDSUBCAT, 'tblcatsbc', 'INTIDSBC', 'STRNOMSBC'); ?> </p>
-				<p class="card-text"><strong>Precio : </strong><?php echo $MONPCOS; ?> </p>
-				<p class="card-text"><strong>Unidad de medida :</strong> <?php consultarNombre($INTIDUNI, 'tblcatuni', 'INTIDUNI', 'STRNOMUNI'); ?> </p>
-				<p class="card-text"><strong>Tipo de uso :</strong> <?php consultarNombre($INTTIPUSO, 'tblcattus', 'INTIDPUSO', 'STRNOMPUSO'); ?> </p>
-				<p class="card-text"><strong>Estado :</strong> <span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></p>
+    <div class="col-sm-6">
+        <label for="dni" class=" control-label">SKU: </label>
+        <input type="text" readonly class="form-control" id="sku" name="sku" value="<?php echo $SKU; ?>" placeholder="SKU: ">
+    </div>
 
 
-				<p class="card-text"><small class="text-muted"> Fecha de creacion : <?php echo $CREATE_AT; ?></small></p>
-			</div>
-		</div>
-	</div>
+    <div class="col-sm-6">
+        <label for="nombre" class=" control-label">Codigo: </label>
+        <input type="text" readonly class="form-control" id="codigo" name="codigo" value="<?php echo $STRCODINT; ?>" placeholder="Codigo: ">
+    </div>
 </div>
+
+<div class="form-group">
+
+    <div class="col-sm-12">
+        <label for="apellido" class="control-label">Descripcion: </label>
+        <input type="text" readonly class="form-control" id="descripcion" name="descripcion" value="<?php echo $STRDESPRO; ?>" placeholder="Descripcion: ">
+    </div>
+</div>
+<div class="card mb-3" style="max-width: 800px;">
+    <div class="row g-0">
+        <div class="col-md-6">
+            <img src="<?php echo $STRIMG ?>" class="img-fluid rounded-start EverCambio" alt="...">
+        </div>
+        <div class="col-md-6">
+            <div class="card-body">
+                <!--empieza la card body-->
+                <div class="form-group">
+
+                    <div class="col-sm-6">
+
+                        <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
+                        <input type="text" readonly name="STRIMG" class="form-control " id="STRIMG" value="imagen" readonly>
+                    </div>
+
+                   
+                    <div class="col-sm-6">
+					<label for="usuario" class="control-label">Categoria: </label>
+
+					<input type="text" required class="form-control" id="precio" readonly name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php consultarNombre($INTIDCAT, 'tblcatcat', 'INTIDCAT', 'STRNOMCAT'); ?>">
+                       
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+
+                    <div class="col-sm-6">
+                        <label for="subcategoria" class=" control-label">Subcategoria: </label>
+                      <input type="text" class="form-control" value="<?php consultarNombre($INTIDSUBCAT, 'tblcatsbc', 'INTIDSBC', 'STRNOMSBC'); ?>" readonly>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <label for="precio" class=" control-label">Precio: </label>
+                        <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php echo $MONPCOS; ?>" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <div class="col-sm-6">
+                        <label for="usuario" reuired class=" control-label"> Medida : </label>
+
+                    <input type="text" class="form-control" value="<?php consultarNombre($INTIDUNI, 'tblcatuni', 'INTIDUNI', 'STRNOMUNI'); ?> " readonly>
+
+
+
+                    </div>
+
+
+
+                    <div class="col-sm-6">
+                        <label for="usuario" reuired class="control-label">Tipo de uso: </label>
+                       
+						<input type="text" class="form-control" value="<?php consultarNombre($INTTIPUSO, 'tblcattus', 'INTIDPUSO', 'STRNOMPUSO'); ?>" readonly>
+
+
+
+
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <div class="col-sm-12">
+                        <label for="estado" class=" control-label">Estado: </label>
+                        <select readonly class="form-control" name="estado" id="estado" required>
+                            <option value="1">Activo</option>
+                            <option value="2">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <!--- end card body-->
+            </div>
+        </div>
+    </div>
+</div>
+

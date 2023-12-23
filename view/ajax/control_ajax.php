@@ -17,9 +17,17 @@ if (isset($_GET["id"])) {
 }
 if ($num > 0) {
 ?>
-	<div class="col-sm-4"></div>
-	<div class="col-sm-4"></div>
-	<div class="col-sm-4"></div>
+<?php
+$sumaEntradas=0;
+$sumaSalidas=0;
+
+
+?>
+<?php $total = $sumaEntradas - $sumaSalidas;
+	  ?>
+	<div class="col-sm-4"><p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas;?></strong></p></div>
+	<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas;?></strong></div>
+	<div class="col-sm-4"><strong> <i class="fa fa-archive" aria-hidden="true"></i> &nbsp;STOCK DISPONIBLE</strong> &nbsp &nbsp <strong><?php echo $total;?></strong></div>
 	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
@@ -92,11 +100,8 @@ if ($num > 0) {
 
 	</table>
 
-	<?php $total = $sumaEntradas - $sumaSalidas;
-	  ?>
-	<div class="col-sm-4"><p><strong>Numero de entradas Totales</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas;?></strong></p></div>
-	<div class="col-sm-4"><strong>Numero de salidas Totales</strong> &nbsp &nbsp <strong><?php echo $sumaSalidas;?></strong></div>
-	<div class="col-sm-4"><strong>stock disponible</strong> &nbsp &nbsp <strong><?php echo $total;?></strong></div>
+	
+	
 <?php
 
 } else {

@@ -55,25 +55,26 @@ if (isset($_GET["id"])) {
 <div class="form-group">
 
     <div class="col-sm-12">
-        <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
-        <input type="file" name="STRIMG" class="form-control validarBtn" id="STRIMG">
+        <label for="apellido" class="control-label">Descripcion: </label>
+        <input type="text" required class="form-control" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" placeholder="Descripcion: ">
     </div>
 </div>
 <div class="card mb-3" style="max-width: 800px;">
     <div class="row g-0">
         <div class="col-md-6">
-            <img src="<?php echo $imagen ?>" class="img-fluid rounded-start EverCambio" alt="..." >
+            <img src="<?php echo $imagen ?>" class="img-fluid rounded-start EverCambio" alt="...">
         </div>
         <div class="col-md-6">
             <div class="card-body">
                 <!--empieza la card body-->
                 <div class="form-group">
-                   
+
                     <div class="col-sm-6">
-                    <label for="apellido" class="control-label">Descripcion: </label>
-                        <input type="text" required class="form-control" id="descripcion" name="descripcion" value="<?php echo $descripcion; ?>" placeholder="Descripcion: ">
+
+                        <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
+                        <input type="file" name="STRIMG" class="form-control validarBtn" id="STRIMG">
                     </div>
-                
+
                     <label for="usuario" class="control-label">Categoria: </label>
 
                     <div class="col-sm-6">
@@ -111,26 +112,26 @@ if (isset($_GET["id"])) {
 
 
                 <div class="form-group">
-                    
+
                     <div class="col-sm-6">
-                    <label for="subcategoria" class=" control-label">Subcategoria: </label>
+                        <label for="subcategoria" class=" control-label">Subcategoria: </label>
                         <select class="form-control Subcategorias" name="Subcategoria" id="Subcategoria" required>
 
                             <option value="<?php echo $subcategoria; ?>" selected><?php echo $SubcategoriaNombre; ?></option>
                         </select>
                     </div>
-              
-                    
+
+
                     <div class="col-sm-6">
-                    <label for="precio" class=" control-label">Precio: </label>
+                        <label for="precio" class=" control-label">Precio: </label>
                         <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php echo $precio; ?>">
                     </div>
                 </div>
 
                 <div class="form-group">
-                   
+
                     <div class="col-sm-6">
-                    <label for="usuario" reuired class=" control-label">Unidad de medida : </label>
+                        <label for="usuario" reuired class=" control-label">Unidad de medida : </label>
 
                         <?php
 
@@ -163,11 +164,11 @@ if (isset($_GET["id"])) {
 
 
                     </div>
-                
-                    
+
+
 
                     <div class="col-sm-6">
-                    <label for="usuario" reuired class="control-label">Tipo de uso: </label>
+                        <label for="usuario" reuired class="control-label">Tipo de uso: </label>
                         <?php
 
                         // Consulta SQL para obtener los datos
@@ -204,9 +205,9 @@ if (isset($_GET["id"])) {
 
 
                 <div class="form-group">
-                   
+
                     <div class="col-sm-12">
-                    <label for="estado" class=" control-label">Estado: </label>
+                        <label for="estado" class=" control-label">Estado: </label>
                         <select class="form-control" name="estado" id="estado" required>
                             <option value="1">Activo</option>
                             <option value="2">Inactivo</option>

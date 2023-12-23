@@ -67,7 +67,10 @@ $nombre_empresa = $rw['nombre'];
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <!-- Feature detection -->
     <script src="assets/js/modernizr-2.6.2.min.js"></script>
-
+    <!--PDFS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    <!--end-PDFS-->
     <!-- <link rel="stylesheet" href="assets/plugins/selectpicker/bootstrap-select.min.css"> -->
     <!-- <link rel="stylesheet" href="assets/plugins/select2/css/select2.css"> -->
     <style>

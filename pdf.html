@@ -1,194 +1,221 @@
 <html>
+
 <head>
-<style>
-/** Define the margins of your page **/
-@page {
-  margin: 100px 25px;
-}
-body {
-    width: 8.5in;
-    height: 11in;
-    margin: 0 auto;
-}
-header {
-  position: fixed;
-  top: -60px;
-  left: 0px;
-  right: 0px;
-  height: 50px;
-  /** Extra personal styles **/
-  
-  color:black;
-  text-align: center;
-  line-height: 35px;
-}
-footer {
-  position: fixed;
-  bottom: -60px;
-  left: 0px;
-  right: 0px;
-  height: 50px;
-  /** Extra personal styles **/
-  
-  color:black;
-  text-align: center;
-  line-height: 35px;
-}
-th,td{
-  width:20%;
-  text-align: left;
-}
-.Datos{
-width:15%;
-  text-align: left;
-}
-.container {
-display: flex;
-}
+  <style>
+    /** Define the margins of your page **/
+    @page {
+      margin: 100px 25px;
+    }
 
-.column {
-flex: 50%;
-padding: 10px;
-height: 300px; /* Should be removed. Only for demonstration */
-}
-h1,h2,h4,h5,P{
-  text-align: center;
-}
-h5{
-  width: 95%;
-  background-color: black;
-  color:white;
-}
-textarea{
-  width: 100%;
-  height: 10%;
-  text-align:justify;
-}
-.firmas {
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid black;
-        }
-        .firma {
-            border-top: 1px solid #000;
-            text-align: center;
-            width: 40%;
-            border-top: 1px solid black;
-        }
-footer{
+    body {
+      width: 8.5in;
+      height: 11in;
+      margin: 0 auto;
+    }
 
-  border-top: 1px solid black;
-}
-</style>
+    header {
+      position: fixed;
+      top: -60px;
+      left: 0px;
+      right: 0px;
+      height: 50px;
+      /** Extra personal styles **/
+
+      color: black;
+      text-align: center;
+      line-height: 35px;
+    }
+
+    footer {
+      position: fixed;
+      bottom: -60px;
+      left: 0px;
+      right: 0px;
+      height: 50px;
+      /** Extra personal styles **/
+
+      color: black;
+      text-align: center;
+      line-height: 35px;
+    }
+
+    th,
+    td {
+      width: 20%;
+      text-align: left;
+    }
+
+    .Datos {
+      width: 15%;
+      text-align: left;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .column {
+      flex: 50%;
+      padding: 10px;
+      height: 300px;
+      /* Should be removed. Only for demonstration */
+    }
+
+    h1,
+    h2,
+    h4,
+    h5,
+    P {
+      text-align: center;
+    }
+
+    h5 {
+      width: 95%;
+      background-color: black;
+      color: white;
+    }
+
+    textarea {
+      width: 100%;
+      height: 10%;
+      text-align: justify;
+    }
+
+    .firmas {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid black;
+    }
+
+    .firma {
+      border-top: 1px solid #000;
+      text-align: center;
+      width: 40%;
+      border-top: 1px solid black;
+    }
+
+    footer {
+
+      border-top: 1px solid black;
+    }
+  </style>
 </head>
+
 <body>
-<!-- Define header and footer blocks before your content -->
-<header>
-  CEMENTOS  ACERO Y ACABADOS ROMA S.A DE C.V <br>
-SIMBOLOS PATRIOS N° 730 COL.ELISEO JIMENEZ RUIZ C.P 68120
-</header>
-<footer>
-  MANUEL F RODRIGUEZ MARRON GERENTE <?php echo date ("Y");?>
-</footer>
-<!-- Wrap the content of your PDF inside a main tag -->
-<main>
-<table class="table table-dark">
-<tbody>
-  <tr>
-    <th scope="row">ID Orden </th>
-    <td>: 24747</td>
-    <th scope="row">No.Folio  </th>
-    <td>: 2699</td>
-    <th scope="row">Fecha  </th>
-    <td>: 26/08/2023</td>
-  </tr>
+  <!-- Define header and footer blocks before your content -->
+  <header>
+    CEMENTOS ACERO Y ACABADOS ROMA S.A DE C.V <br>
+    SIMBOLOS PATRIOS N° 730 COL.ELISEO JIMENEZ RUIZ C.P 68120
+  </header>
+  <footer>
+    MANUEL F RODRIGUEZ MARRON GERENTE
+    <?php echo date ("Y");?>
+  </footer>
+  <!-- Wrap the content of your PDF inside a main tag -->
+  <main>
+    <table class="table table-dark">
+      <tbody>
+        <tr>
+          <th scope="row">ID Orden </th>
+          <td>: 24747</td>
+          <th scope="row">No.Folio </th>
+          <td>: 2699</td>
+          <th scope="row">Fecha </th>
+          <td>: 26/08/2023</td>
+        </tr>
 
-</tbody>
-</table>
-<h5>Datos generales -Orden</h5>
-<table class="table table-dark">
-<tbody>
-<tr>
-<th scope="row" class="Datos">Operador </th>
-<td class="Datos">MOISES HINOSTROSA REVILLA</td>
+      </tbody>
+    </table>
+    <h5>Datos generales -Orden</h5>
+    <table class="table table-dark">
+      <tbody>
+        <tr>
+          <th scope="row" class="Datos">Operador </th>
+          <td class="Datos">MOISES HINOSTROSA REVILLA</td>
 
-</tr>
-<tr>
-<th scope="row" class="Datos">No. de Carro: </th>
-<td class="Datos">50</td>
-<th scope="row" class="Datos">Kilometraje: </th>
-<td class="Datos">422646</td>
-<th scope="row" class="Datos">No.Placas: </th>
-<td class="Datos">RY-31618</td>
-</tr>
-</tbody>
-</table>
-<h5>Detalles del servicio</h5>
-<textarea name="" id="" cols="100" rows="10">Cambiar  disco de cluth-cambiar valvula de pie de freno</textarea>
-<h5>Observaciones</h5>
-<textarea name="" id="" cols="100" rows="10">Cambiar  disco de cluth-cambiar valvula de pie de freno</textarea>
+        </tr>
+        <tr>
+          <th scope="row" class="Datos">No. de Carro: </th>
+          <td class="Datos">50</td>
+          <th scope="row" class="Datos">Kilometraje: </th>
+          <td class="Datos">422646</td>
+          <th scope="row" class="Datos">No.Placas: </th>
+          <td class="Datos">RY-31618</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5>Detalles del servicio</h5>
+    <textarea name="" id="" cols="100" rows="10">Cambiar  disco de cluth-cambiar valvula de pie de frenos</textarea>
+    <h5>Observaciones</h5>
+    <textarea name="" id="" cols="100" rows="10">Cambiar  disco de cluth-cambiar valvula de pie de freno</textarea>
 
-<h1>ORDEN DE SERVICIO-TALLER</h1>
-<div class="firmas">
-  <div class="firma">
-      Firma 1
-  </div>
-  <div class="firma">
-      Firma 2
-  </div>
-  
-</div>
-</main>
+    <h1>ORDEN DE SERVICIO-TALLER</h1>
+    <div class="firmas">
+      <div class="firma">
+        Firma 1
+      </div>
+      <div class="firma">
+        Firma 2
+      </div>
+
+    </div>
+  </main>
 </body>
+
 </html>
 
 
-//subconsulta de categoria 
+//subconsulta de categoria
 <html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-  $("#categoria").change(function(){
-    var categoriaID = $(this).val();
-    $.ajax({
-      url: 'get_subcategorias.php',
-      type: 'post',
-      data: {categoria:categoriaID},
-      dataType: 'json',
-      success:function(response){
-        var len = response.length;
-        $("#subcategoria").empty();
-        for( var i = 0; i<len; i++){
-          var id = response[i]['id'];
-          var nombre = response[i]['nombre'];
-          $("#subcategoria").append("<option value='"+id+"'>"+nombre+"</option>");
-        }
-      }
-    });
-  });
-});
-</script>
-</head>
-<body>
-<select id="categoria">
-  <!-- Opciones de categoría cargadas desde la base de datos -->
-</select>
 
-<select id="subcategoria">
-  <!-- Opciones de subcategoría cargadas en base a la categoría seleccionada -->
-</select>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#categoria").change(function () {
+        var categoriaID = $(this).val();
+        $.ajax({
+          url: 'get_subcategorias.php',
+          type: 'post',
+          data: { categoria: categoriaID },
+          dataType: 'json',
+          success: function (response) {
+            var len = response.length;
+            $("#subcategoria").empty();
+            for (var i = 0; i < len; i++) {
+              var id = response[i]['id'];
+              var nombre = response[i]['nombre'];
+              $("#subcategoria").append("<option value='" + id + "'>" + nombre + "</option>");
+            }
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <select id="categoria">
+    <!-- Opciones de categoría cargadas desde la base de datos -->
+  </select>
+
+  <select id="subcategoria">
+    <!-- Opciones de subcategoría cargadas en base a la categoría seleccionada -->
+  </select>
 </body>
+
 </html>
 Para enviar un correo electrónico de manera local con PHP, puedes seguir estos pasos:
 
-Configura tu archivo php.ini: Ve a C:\xampp\php y abre el archivo php.ini. Busca [mail function] y configura los siguientes valores12:
+Configura tu archivo php.ini: Ve a C:\xampp\php y abre el archivo php.ini. Busca [mail function] y configura los
+siguientes valores12:
 SMTP=smtp.gmail.com
 smtp_port=587
 sendmail_from = tu-correo@gmail.com
 sendmail_path = "\"C:\\xampp\\sendmail\\sendmail.exe\" -t"
 
-Configura tu archivo sendmail.ini: Ahora abre C:\\xampp\\sendmail\\sendmail.ini. Reemplaza todo el código existente en sendmail.ini con el siguiente1:
+Configura tu archivo sendmail.ini: Ahora abre C:\\xampp\\sendmail\\sendmail.ini. Reemplaza todo el código existente en
+sendmail.ini con el siguiente1:
 [sendmail]
 smtp_server=smtp.gmail.com
 smtp_port=587
@@ -198,10 +225,14 @@ auth_username=tu-correo@gmail.com
 auth_password=tu-contraseña
 force_sender=tu-correo@gmail.com
 
-No olvides reemplazar tu-correo@gmail.com y tu-contraseña con tu dirección de correo electrónico y tu contraseña de Gmail.
-Reinicia el servidor: Recuerda reiniciar el servidor usando el panel de control de XAMPP para que los cambios surtan efecto1.
-Permite el acceso a aplicaciones menos seguras en tu cuenta de Gmail: Asegúrate de permitir el acceso a aplicaciones menos seguras en tu cuenta de Gmail1.
-Envía el correo electrónico: Ahora puedes usar la función mail() de PHP para enviar un correo electrónico12. Aquí tienes un ejemplo de cómo hacerlo:
+No olvides reemplazar tu-correo@gmail.com y tu-contraseña con tu dirección de correo electrónico y tu contraseña de
+Gmail.
+Reinicia el servidor: Recuerda reiniciar el servidor usando el panel de control de XAMPP para que los cambios surtan
+efecto1.
+Permite el acceso a aplicaciones menos seguras en tu cuenta de Gmail: Asegúrate de permitir el acceso a aplicaciones
+menos seguras en tu cuenta de Gmail1.
+Envía el correo electrónico: Ahora puedes usar la función mail() de PHP para enviar un correo electrónico12. Aquí tienes
+un ejemplo de cómo hacerlo:
 PHP
 Código generado por IA. Revisar y usar cuidadosamente. Más información sobre preguntas frecuentes.
 
@@ -209,8 +240,8 @@ $to = 'destinatario@example.com';
 $subject = 'el asunto';
 $message = 'hola';
 $headers = 'From: remitente@example.com' . "\\r\\n" .
-            'Reply-To: remitente@example.com' . "\\r\\n" .
-            'X-Mailer: PHP/' . phpversion();
+'Reply-To: remitente@example.com' . "\\r\\n" .
+'X-Mailer: PHP/' . phpversion();
 
 mail($to, $subject, $message, $headers);
 Espero que esto te ayude a enviar correos electrónicos de manera local con PHP. 😊

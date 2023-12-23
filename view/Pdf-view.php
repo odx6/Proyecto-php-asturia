@@ -12,7 +12,107 @@ $options = new Options();
 $options->set('isHtml5ParserEnabled', true);
 $options->set('isPhpEnabled', true);
 $dompdf = new Dompdf($options);
+$html2 = '<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        header {
+            position: fixed;
+            top: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 2cm;
+            background-color: #b4d10e;
+            color: rgb(0, 0, 0);
+            text-align: left;
+            line-height: 30px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 2cm;
+            background-color: yellow;
+            color: black;
+            text-align: center;
+            line-height: 35px;
+            border-top: 1px solid black;
+
+
+        }
+
+        .main {
+            padding-top: 15px;
+            padding-bottom: 2px;
+            margin-top: 75.8px;
+            height: 800px;
+            background-color: rgb(228, 146, 146);
+        }
+
+        th {
+            background-color:aliceblue ;
+        }
+
+        p {
+            text-align: justify;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+     <p>CEMENTO ACERO Y ACABADOS ROMA, S.A C.V
+                SIMBOLOS PATRIOS N°730 COL.ELISEO JIMENEZ RUIZ C.P 68120</p>
+    
+       
+
+    </header>
+    
+    <footer>
+
+
+        <div class="col-sm-6">lado 1</div>
+        <div class="col-sm-6">lado 2</div>
+
+    </footer>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>';
 // Lee el contenido del archivo HTML
 $html = '<!DOCTYPE html>
 <html>
@@ -164,7 +264,7 @@ $html = '<!DOCTYPE html>
 ';
 
 // Carga el contenido HTML en DOMPDF
-$dompdf->loadHtml($html);
+$dompdf->loadHtml($html2);
 
 // Renderiza el PDF (puedes ajustar la orientación y el tamaño del papel aquí)
 $dompdf->setPaper('A4', 'portrait');
@@ -181,4 +281,3 @@ header('Content-Disposition: inline; filename="plantilla_firmas.pdf"');
 echo $pdfData;
 
 // Abre el PDF en una nueva ventana utilizando JavaScript
-?>

@@ -1104,21 +1104,30 @@ function vselect() {
 
 
 function HistorialEntradassalidas(id) {
+ 
   //alert(id);
-
-  parametros = {
-    'id': id
-  }
+  var page = 1;
+  
+  var per_page = $("#per_page").val();
+  var parametros = {
+    "action": "ajax",
+    "page": page,
+    "per_page": per_page,
+    "id": id,
+    
+  };
+ 
   $.ajax({
-    url: 'view/ajax/control_ajax.php',
+    url: 'view/ajax/control_ajax-copy.php',
     data: parametros,
     beforeSend: function (objeto) {
       $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
     },
     success: function (data) {
-
-      $(".outer_div").html(data).fadeIn('slow');
-      $("#loader").html("");
+      localStorage.setItem('datos', JSON.stringify(data));
+      window.location.href = './?view=control';
+      /*$(".outer_div").html(data).fadeIn('slow');
+      $("#loader").html("");*/
     }
   })
 }
@@ -1197,3 +1206,48 @@ function stockEliminado(array, sk) {
 }
 
 //endEstado de resultados
+
+
+
+
+//imprimir el detalle 
+function pdfInventario() {
+
+  alert("Desea imprimir los datos");
+  var contenido =document.querySelector('#printentrada').innerHTML;
+
+  var contenidoOriginal = document.body.innerHTML;
+
+  document.body.innerHTML = contenido;
+
+  window.print();
+
+  document.body.innerHTML = contenidoOriginal;
+}
+
+//
+
+
+function descargarPDF() {
+
+  /*
+    var doc = new jsPDF();
+  var codigo = document.querySelector("#printentrada").innerText;
+  doc.text(codigo, 10, 10);
+  doc.save('codigo.pdf');*/
+  var doc = new jsPDF();
+
+            // Añades un título al documento
+            doc.setFontSize(22);
+            doc.text("Reporte de Ventas", 105, 30, null, null, "center");
+
+            // Añades una tabla de ventas
+            doc.autoTable({ html: '#printentrada' })
+
+            // Añades un total al final de la tabla
+            doc.setFontSize(18);
+            doc.text("Total: $600", 180, doc.autoTable.previous.finalY + 20);
+
+            // Guardas el documento como un archivo PDF
+            doc.save('reporte.pdf');
+}

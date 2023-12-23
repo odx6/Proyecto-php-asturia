@@ -65,7 +65,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Datos dEL INVENTARIO</h3>
+                            <h3 class="panel-title">Datos del inventario</h3>
                             <div class="actions pull-right">
                                 <i class="fa fa-chevron-down"></i>
                                 <i class="fa fa-times"></i>
@@ -145,6 +145,7 @@
     //nuevo form data
     $("#new_register").submit(function(event) {
             event.preventDefault();
+            
             $('#guardar_datos').attr("disabled", true);
             INTTIPMOV=$('#INTTIPMOV').val();
             inventario=JSON.stringify(inventario);
@@ -171,6 +172,7 @@
                         });
                     }, 5000);
                     $('#formModal').modal('hide');
+                    
                 }
             });
         });

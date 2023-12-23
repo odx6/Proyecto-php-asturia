@@ -31,19 +31,20 @@ if (isset($_GET["id"])) {
 }
 ?>
 
-<div class="col-sm-6">
+<div class="col-sm-6" >
    
-    <div class="col-sm-6"> <STROng><i class="fa fa-calendar-o" aria-hidden="true"></i> &nbsp;Fecha :</STROng></div>
-    <div class="col-sm-6"><?php echo $DTEFEC ?></div>
-    <div class="col-sm-6"><STRong><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp;Folio :</STRong></div>
-    <div class="col-sm-6"><?php echo $INTFOL ?></div>
+    <div class="col-sm-4" style="border: 1px solid black"> <STROng style="color:red;"><i class="fa fa-calendar-o" aria-hidden="true"></i> &nbsp;Inventario : &nbsp;</STROng><?php echo $INTIDINV ?></div>
+    <div class="col-sm-4" style="border: 1px solid black"> <STROng style="color:red;"><i class="fa fa-calendar-o" aria-hidden="true"></i> &nbsp;Fecha : &nbsp;</STROng><?php echo $DTEFEC ?></div>
+    <!--<div class="col-sm-6" style="border: 1px solid black"><?php echo $DTEFEC ?></div>-->
+    <div class="col-sm-4" style="border: 1px solid black"><STRong style="color:red;"><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp;Folio : &nbsp;</STRong><?php echo $INTFOL ?></div>
+   <!-- <div class="col-sm-6" style="border: 1px solid black"><?php echo $INTFOL ?></div>-->
 
 </div>
 <div class="col-sm-6">
-    <div class="col-sm-6"> <STROng><i class="fa fa-comments" aria-hidden="true"></i> &nbsp;Descripcion :</STROng></div>
-    <div class="col-sm-6"><?php echo $STROBS ?></div>
-    <div class="col-sm-6"><STRong><i class="fa fa-map-marker" aria-hidden="true"></i> &nbsp;Almacen :</STRong></div>
-    <div class="col-sm-6"><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></div>
+    <div class="col-sm-4"style="border: 1px solid black"> <STROng style="color:red;"><i class="fa fa-comments" aria-hidden="true"></i> &nbsp;Descripcion : &nbsp;</STROng><?php echo $STROBS ?></div>
+  <!-- <div class="col-sm-6" style="border: 1px solid black"><?php echo $STROBS ?></div>-->
+    <div class="col-sm-4" style="border: 1px solid black" ><STRong style="color:red;"><i class="fa fa-map-marker" aria-hidden="true"></i> &nbsp;Almacen : &nbsp;</STRong> <?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></div>
+   <!-- <div class="col-sm-6" style="border: 1px solid black"><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></div>-->
 </div>
 <div class="col-md-12">
 
@@ -52,15 +53,16 @@ if (isset($_GET["id"])) {
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>#id</th>
-            <th>#id inventario</th>
+           <!-- <th>#id</th>
+            <th>#id inventario</th>-->
             <th>Sku</th>
+            <th>Descripcion</th>
             <th>Referencia</th>
             <th>Cantidad</th>
             <th>Unidad</th>
             <th>Precio</th>
             <th>Total</th>
-            <th>Fecha de creacion</th>
+           <!-- <th>Fecha de creacion</th>-->
 
 
         </tr>
@@ -83,15 +85,16 @@ if (isset($_GET["id"])) {
     ?>
         <tbody>
             <tr>
-                <td><?php echo $INTIDDET ?></td>
-                <td><?php echo $INTIDINV ?></td>
+                <!--<td ><?php echo $INTIDDET ?></td>
+                <td><?php echo $INTIDINV ?></td>-->
                 <td><?php echo $SKU ?></td>
+                <td><?php consultarNombre($SKU, 'tblcatpro', 'STRSKU', 'STRDESPRO'); ?></td>
                 <td><?php echo $STRREF ?></td>
                 <td><?php echo $INTCAN ?></td>
                 <td><?php consultarNombre($INTIDUNI, 'tblcatuni', 'INTIDUNI', 'STRNOMUNI'); ?></td>
-                <td><?php echo $MONPRCOS ?></td>
-                <td><?php echo $MONCTOPRO ?></td>
-                <td><?php echo $DTEHOR ?></td>
+                <td><?php echo $MONPRCOS." $" ?> </td>
+                <td><?php echo $MONCTOPRO." $" ?></td>
+              <!--  <td><?php echo $DTEHOR ?></td>-->
 
 
             </tr>
