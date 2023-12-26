@@ -17,18 +17,31 @@ if (isset($_GET["id"])) {
 }
 if ($num > 0) {
 ?>
-<?php
-$sumaEntradas=0;
-$sumaSalidas=0;
+	<?php
+	$sumaEntradas = 0;
+	$sumaSalidas = 0;
 
 
-?>
-<?php $total = $sumaEntradas - $sumaSalidas;
-	  ?>
-	<div class="col-sm-4"><p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas;?></strong></p></div>
-	<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas;?></strong></div>
-	<div class="col-sm-4"><strong> <i class="fa fa-archive" aria-hidden="true"></i> &nbsp;STOCK DISPONIBLE</strong> &nbsp &nbsp <strong><?php echo $total;?></strong></div>
+	?>
+	<?php $total = $sumaEntradas - $sumaSalidas;
+	?>
+
+	<div class="col-sm-6">
+		<p>SKU</p>
+		<p>SKU</p>
+	</div>
+	<div class="col-sm-6">
+		<P>10005631198</P>
+		<P>10005631198</P>
+	</div>
+	<div class="col-sm-4">
+		<p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas; ?></strong></p>
+	</div>
+	<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas; ?></strong></div>
+	<div class="col-sm-4"><strong> <i class="fa fa-archive" aria-hidden="true"></i> &nbsp;STOCK DISPONIBLE</strong> &nbsp &nbsp <strong><?php echo $total; ?></strong></div>
 	<table class="table table-bordered table-striped">
+
+
 		<thead>
 			<tr>
 				<th>#ID</th>
@@ -76,7 +89,7 @@ $sumaSalidas=0;
 				$lbl_status = "Salida";
 				$lbl_class = 'label label-danger';
 			}
-		
+
 
 			/*$kind=$row['kind'];*/
 
@@ -89,10 +102,10 @@ $sumaSalidas=0;
 					<td><?php echo $SKU ?></td>
 					<td><?php echo $STRREF ?></td>
 					<td><?php echo $INTCAN ?></td>
-					<td><?php echo $MONPRCOS."&nbspmxm" ?></td>
-					<td><?php echo $MONCTOPRO."&nbspmxm" ?></td>
+					<td><?php echo $MONPRCOS . "&nbspmxm" ?></td>
+					<td><?php echo $MONCTOPRO . "&nbspmxm" ?></td>
 					<td></strong> <span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
-					<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM');?></td>
+					<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
 
 				</tr>
 			</tbody>
@@ -100,8 +113,8 @@ $sumaSalidas=0;
 
 	</table>
 
-	
-	
+
+
 <?php
 
 } else {

@@ -160,7 +160,8 @@ if ($_SESSION['productos'] == 1) {
     </script>
     <script>
         $("#new_register").submit(function(event) {
-            event.preventDefault();
+            
+           // event.preventDefault();
             $('#guardar_datos').attr("disabled", true);
 
             var formData = new FormData(this); // Crear un objeto FormData
@@ -191,6 +192,7 @@ if ($_SESSION['productos'] == 1) {
 
     <script>
         $("#update_register").submit(function(event) {
+          
             event.preventDefault();
             $('#actualizar_datos').attr("disabled", true);
 
@@ -221,6 +223,7 @@ if ($_SESSION['productos'] == 1) {
     </script>
     <script>
         function editar(id) {
+            
             var parametros = {
                 "action": "ajax",
                 "id": id

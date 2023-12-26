@@ -3,8 +3,9 @@ session_start();
 require_once("../../../config/config.php");
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-
-    $sql = "select * from tblcatpro where STRSKU='$id'";
+    $start="START TRANSACTION;";
+    $sql = "select * from tblcatpro where STRSKU='$id' FOR UPDATE ";
+    $inicio = mysqli_query($con, $start);
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
     if ($num == 1) {

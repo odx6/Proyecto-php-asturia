@@ -41,6 +41,7 @@ if (empty($_POST['IDEMP'])) {
 ) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
   global $con;
+  mysqli_autocommit($con, FALSE);
     // escaping, additionally removing everything that could be (html/javascript-) code
     $IDEMP = mysqli_real_escape_string($con, (strip_tags($_POST["IDEMP"], ENT_QUOTES)));
     $INTIDTOP = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDTOP"], ENT_QUOTES)));
@@ -122,7 +123,12 @@ if (empty($_POST['IDEMP'])) {
     }
     if (!$query_new) $errors[] = "no se agrego el producto";
 
-
+    if (!mysqli_errno($con)) {
+        mysqli_commit($con);
+    } else { // Si hubo algún error, revertir los cambios
+        mysqli_rollback($con);
+    }
+    
 
 } else {
     $errors[] = "desconocido.";

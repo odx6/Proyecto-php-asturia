@@ -13,7 +13,7 @@ if ($action == 'ajax') {
 
 	$tables = "tbltarinv";
 	$campos = "*";
-	$sWhere = "SKU='$id'  order by DTEFEC";
+	$sWhere = "SKU='$id'  order by DTEFEC ASC";
 	include 'pagination.php'; //include pagination file
 	//pagination variables
 	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
@@ -32,35 +32,47 @@ if ($action == 'ajax') {
 	//main query to fetch the data
 	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
 	//loop through fetched data
-	$Entradas="SELECT COALESCE(SUM(INTCAN), 0) as Entradas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=1;";
-	$Salidas="SELECT COALESCE(SUM(INTCAN), 0) as Salidas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=2;";
+	$Entradas = "SELECT COALESCE(SUM(INTCAN), 0) as Entradas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=1;";
+	$Salidas = "SELECT COALESCE(SUM(INTCAN), 0) as Salidas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=2;";
 	$query_entradas = mysqli_query($con, $Entradas);
 	if ($query_entradas) {
-        $row = mysqli_fetch_array($query_entradas);
+		$row = mysqli_fetch_array($query_entradas);
 
-        $sumaEntradas = $row['Entradas'];
+		$sumaEntradas = $row['Entradas'];
+	} else {
 
-	}else{
-
-		$sumaEntradas=0;
+		$sumaEntradas = 0;
 	}
 
 
 	$query_salidas = mysqli_query($con, $Salidas);
 	if ($query_salidas) {
-        $row = mysqli_fetch_array($query_salidas);
+		$row = mysqli_fetch_array($query_salidas);
 
-        $sumaSalidas = $row['Salidas'];
+		$sumaSalidas = $row['Salidas'];
+	} else {
 
-	}else{
-
-		$sumaSalidas=0;
+		$sumaSalidas = 0;
 	}
-	$total=$sumaEntradas-$sumaSalidas;
+	$total = $sumaEntradas - $sumaSalidas;
 
 	if ($numrows > 0) {
 ?>
-<div class="col-sm-4">
+
+<div class="col-sm-12">
+
+<div class="col-sm-2">
+			<p> <strong>SKU :</strong></p>
+			
+		</div>
+		<div class="col-sm-2">
+			<P><strong><?php echo $id ?></strong></P>
+			
+		</div>
+</div>
+		
+		
+		<div class="col-sm-4">
 			<p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas; ?></strong></p>
 		</div>
 		<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas; ?></strong></div>
@@ -71,12 +83,14 @@ if ($action == 'ajax') {
 				<tr>
 					<th>#ID</th>
 					<th>FECHA</th>
-					<th>SKU</th>
+					
 					<th>REFERENCIA</th>
 					<th>CANTIDAD</th>
 					<th>PRECIO</th>
 					<th>Total</th>
-					<th>Tipo e/s</th>
+					<th>Entrada</th>
+					<th>Salida</th>
+					<th>Saldo</th>
 					<th>Almacen</th>
 
 
@@ -86,7 +100,7 @@ if ($action == 'ajax') {
 			$finales = 0;
 			$sumaEntradas = 0;
 			$sumaSalidas = 0;
-			$total = 0;
+			$tot = 0;
 			while ($row = mysqli_fetch_array($query)) {
 
 				$INTIDTAR = $row['INTIDTAR'];
@@ -101,19 +115,13 @@ if ($action == 'ajax') {
 				$MONPRCOS = $row['MONPRCOS'];
 				$MONCTOPRO = $row['MONCTOPRO'];
 				$INTTIMOV = $row['INTTIPMOV'];
-				
-				
+
+
 
 				$INTALM = $row['INTALM'];
 				$DTEHOR = $row['DTEHOR'];
 
-				if ($INTTIMOV == 1) {
-					$lbl_status = "Entrada";
-					$lbl_class = 'label label-success';
-				} else {
-					$lbl_status = "Salida";
-					$lbl_class = 'label label-danger';
-				}
+				
 
 
 				/*$kind=$row['kind'];*/
@@ -124,12 +132,32 @@ if ($action == 'ajax') {
 					<tr>
 						<td><?php echo $INTIDTAR ?></td>
 						<td><?php echo $DTEFEC ?></td>
-						<td><?php echo $SKU ?></td>
+						
 						<td><?php echo $STRREF ?></td>
 						<td><?php echo $INTCAN ?></td>
 						<td><?php echo $MONPRCOS . "&nbspmxm" ?></td>
 						<td><?php echo $MONCTOPRO . "&nbspmxm" ?></td>
-						<td></strong> <span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
+						
+						<?php 
+						 if($INTTIMOV == 1){
+							$tot +=$INTCAN;
+                         ?>
+                          <td><?php echo $INTCAN; ?> </td>
+						  <td><?php echo "0"; ?></td>
+						 <?php
+
+						 }else{
+							$tot -=$INTCAN;
+							
+							?>
+
+							<td><?php echo  "0"; ?> </td>
+							<td><?php echo $INTCAN; ?></td>
+							<?php
+						 }
+						 ?>
+
+						 <td><?php echo $tot ?></td>
 						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
 
 					</tr>
@@ -150,7 +178,7 @@ if ($action == 'ajax') {
 				</tr>
 			</tfoot>
 		</table>
-		
+
 	<?php
 	} else {
 		echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -161,7 +189,7 @@ if ($action == 'ajax2') {
 	$query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
 	$tables = "tbltarinv";
 	$campos = "*";
-	$sWhere = "SKU='$id' AND DTEFEC LIKE '%" . $query . "%'  order by DTEFEC";
+	$sWhere = "SKU='$id' AND DTEFEC LIKE '%" . $query . "%'  order by DTEFEC ASC";
 
 
 	include 'pagination.php'; //include pagination file
@@ -182,36 +210,34 @@ if ($action == 'ajax2') {
 	//main query to fetch the data
 	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
 	//loop through fetched data
-      
-	$Entradas="SELECT COALESCE(SUM(INTCAN), 0) as Entradas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=1;";
-	$Salidas="SELECT COALESCE(SUM(INTCAN), 0) as Salidas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=2;";
+
+	$Entradas = "SELECT COALESCE(SUM(INTCAN), 0) as Entradas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=1;";
+	$Salidas = "SELECT COALESCE(SUM(INTCAN), 0) as Salidas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=2;";
 	$query_entradas = mysqli_query($con, $Entradas);
 	if ($query_entradas) {
-        $row = mysqli_fetch_array($query_entradas);
+		$row = mysqli_fetch_array($query_entradas);
 
-        $sumaEntradas = $row['Entradas'];
+		$sumaEntradas = $row['Entradas'];
+	} else {
 
-	}else{
-
-		$sumaEntradas=0;
+		$sumaEntradas = 0;
 	}
 
 
 	$query_salidas = mysqli_query($con, $Salidas);
 	if ($query_salidas) {
-        $row = mysqli_fetch_array($query_salidas);
+		$row = mysqli_fetch_array($query_salidas);
 
-        $sumaSalidas = $row['Salidas'];
+		$sumaSalidas = $row['Salidas'];
+	} else {
 
-	}else{
-
-		$sumaSalidas=0;
+		$sumaSalidas = 0;
 	}
-	$total=$sumaEntradas-$sumaSalidas;
+	$total = $sumaEntradas - $sumaSalidas;
 
 	if ($numrows > 0) {
 	?>
-	<div class="col-sm-4">
+		<div class="col-sm-4">
 
 			<p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas; ?></strong></p>
 		</div>
@@ -223,12 +249,14 @@ if ($action == 'ajax2') {
 				<tr>
 					<th>#ID</th>
 					<th>FECHA</th>
-					<th>SKU</th>
+				
 					<th>REFERENCIA</th>
 					<th>CANTIDAD</th>
 					<th>PRECIO</th>
 					<th>Total</th>
-					<th>Tipo e/s</th>
+					<th>Entrada</th>
+					<th>Salida</th>
+					<th>Saldo</th>
 					<th>Almacen</th>
 
 
@@ -253,7 +281,7 @@ if ($action == 'ajax2') {
 				$MONPRCOS = $row['MONPRCOS'];
 				$MONCTOPRO = $row['MONCTOPRO'];
 				$INTTIMOV = $row['INTTIPMOV'];
-				
+
 				$INTALM = $row['INTALM'];
 				$DTEHOR = $row['DTEHOR'];
 
@@ -274,12 +302,27 @@ if ($action == 'ajax2') {
 					<tr>
 						<td><?php echo $INTIDTAR ?></td>
 						<td><?php echo $DTEFEC ?></td>
-						<td><?php echo $SKU ?></td>
+						
 						<td><?php echo $STRREF ?></td>
 						<td><?php echo $INTCAN ?></td>
 						<td><?php echo $MONPRCOS . "&nbspmxm" ?></td>
 						<td><?php echo $MONCTOPRO . "&nbspmxm" ?></td>
 						<td></strong> <span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
+                         <?php 
+						 if($INTTIMOV == 1){
+                         ?>
+                          <td><?php echo $INTCAN; ?> </td>
+						  <td><?php echo "0"; ?></td>
+						 <?php
+
+						 }else{ ?>
+
+							<td><?php echo  "0"; ?> </td>
+							<td><?php echo $INTCAN; ?></td>
+							<?php
+						 }
+						 ?>
+						
 						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
 
 					</tr>
@@ -302,7 +345,7 @@ if ($action == 'ajax2') {
 			</tfoot>
 		</table>
 
-	
+
 <?php
 	} else {
 		echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

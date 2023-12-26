@@ -1251,3 +1251,8 @@ function descargarPDF() {
             // Guardas el documento como un archivo PDF
             doc.save('reporte.pdf');
 }
+
+function resetForm(){
+
+  document.querySelector("#new_register").reset();
+}

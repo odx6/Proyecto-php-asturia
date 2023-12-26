@@ -161,7 +161,7 @@ if ($action == 'ajax') {
 
 						<td class="text-right">
 
-							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $sku; ?>');"><i class="fa fa-edit"></i></button>
+							<button type="button" class="btn btn-warning btn-square btn-xs " data-toggle="modal" data-target="#modal_update" id="<?php echo $sku; ?>" onclick="editar('<?php echo $sku; ?>');"><i class="fa fa-edit"></i></button>
 
 							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $sku; ?>')"><i class="fa fa-trash-o"></i></button>
 
