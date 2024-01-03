@@ -75,7 +75,7 @@ if (empty($_POST['IDEMP'])) {
     $FECHA = date("Y-m-d");
     $created_at = date("Y-m-d H:i:s");
 
-     if(!empty($_POST['INTTIPMOVU'])){$sql = "UPDATE tblinv SET INTIDTOP='" . $INTIDTOP . "',INTTIPMOV='" . $INTTIPMOV ."',INTFOL='".$INTFOL."', IDEMP='" . $IDEMP . "',INTALM='" . $INTIDALM ."',STROBS='" . $STROBS ."' WHERE INTIDINV='" . $id . "' ";}else{$sql = "UPDATE tblinv SET INTIDTOP='" . $INTIDTOP  ."',INTFOL='".$INTFOL."', IDEMP='" . $IDEMP . "',INTALM='" . $INTIDALM ."',STROBS='" . $STROBS ."' WHERE INTIDINV='" . $id . "' ";} 
+     if(!empty($_POST['INTTIPMOVU'])){$sql = "UPDATE tblinv SET loked=1 ,Editor=0 ,INTIDTOP='" . $INTIDTOP . "',INTTIPMOV='" . $INTTIPMOV ."',INTFOL='".$INTFOL."', IDEMP='" . $IDEMP . "',INTALM='" . $INTIDALM ."',STROBS='" . $STROBS ."' WHERE INTIDINV='" . $id . "' ";}else{$sql = "UPDATE tblinv SET loked=1 ,Editor=0, INTIDTOP='" . $INTIDTOP  ."',INTFOL='".$INTFOL."', IDEMP='" . $IDEMP . "',INTALM='" . $INTIDALM ."',STROBS='" . $STROBS ."' WHERE INTIDINV='" . $id . "' ";} 
     $sql2="SELECT * FROM `tblinvdet`  WHERE INTIDINV='$id' ORDER BY  INTIDINV   ASC;";
     $query_new1 = mysqli_query($con, $sql2);
     if (isset($query_new1) && $query_new1 != NULL &&  mysqli_num_rows($query_new1) > 0) {

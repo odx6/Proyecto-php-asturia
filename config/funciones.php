@@ -12,7 +12,8 @@ function  consultarNombre($id,$tabla,$columna,$columnaN){
     //@param columna  es el nombre de la columna que tiene el nombre 
 
 if(isset($id) && isset($tabla) && isset($columna) && isset($columnaN)){
-    $id = intval($id);
+     if(is_numeric($id)) $id = intval($id);
+   
    global $con;
     
     $sql="SELECT $columnaN FROM $tabla WHERE $columna='$id';";

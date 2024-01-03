@@ -146,7 +146,7 @@ if ($action == 'ajax') {
 						<td><?php echo $descripcion ?></td>
 						<td><?php  echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
 						<td><?php echo   (isset($SubcategoriaNombre)) ? $SubcategoriaNombre : $INTIDSBC;?></td>
-						<td>$ <?php echo $MONPCOS ?> mxm</td>
+						<td><?php echo "$ ".number_format( $MONPCOS, 2, '.', ',');?> </td>
 						<td><?php   consultarNombre($INTIDUNI,'tblcatuni','INTIDUNI','STRNOMUNI'); ?></td>
 						<td>
 							<div>

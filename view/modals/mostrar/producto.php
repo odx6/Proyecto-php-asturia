@@ -97,7 +97,7 @@ if (isset($_GET["id"])) {
 
                     <div class="col-sm-6">
                         <label for="precio" class=" control-label">Precio: </label>
-                        <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php echo $MONPCOS; ?>" readonly>
+                        <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php  echo "$".number_format( $MONPCOS, 2, '.', ','); ?>" readonly>
                     </div>
                 </div>
 

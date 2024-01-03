@@ -9,6 +9,7 @@
     <script src="assets/js/application.js"></script>
     <script src="assets/js/Asturias.js"></script>
     <script src="assets/js/Validaciones.js"></script>
+    <script src="assets/js/Editar.js"></script>
    
  
 

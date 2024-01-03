@@ -1,10 +1,10 @@
 <!-- Form Modal -->
 <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-    <form class="form-horizontal" role="form" method="post" id="update_register" name="update_register">
+    <form class="form-horizontal" role="form" method="post" id="update_register" name="update_register" >
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="editloked()">&times;</button>
                 <h4 class="modal-title" id="myModalLabel"> Editar Entrada</h4>
             </div>
             <div class="modal-body">
@@ -12,8 +12,8 @@
                 <div class="outer_div2"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="submit" id="actualizar_datos" class="btn btn-success">Actualizar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="editloked()"  style="margin-top: 15px;">Cerrar</button>
+                <button type="submit" id="actualizar_datos" class="btn btn-success"  style="margin-top: 15px;">Actualizar</button>
             </div>
         </div>
     </form>

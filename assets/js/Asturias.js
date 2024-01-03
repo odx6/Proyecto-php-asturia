@@ -373,7 +373,10 @@ function agregarInventario() {
           CALLSKU.textContent = Elemento.SKU;
           CELLREF.textContent = Elemento.STRREF;
           CELLCAT.textContent = Elemento.INTCANT;
-          CELLPRECIO.textContent = Elemento.MONPRCOS;
+          
+          let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+          let numeroFormateado = formatoPesos.format(Elemento.MONPRCOS);
+          CELLPRECIO.textContent = numeroFormateado;
           CELLTOTAL.textContent = Elemento.MONCTOPRO;
           var boton = document.createElement('button');
           boton.innerHTML = '<i class="fa fa-trash-o"></i>';
@@ -450,8 +453,11 @@ function agregarInventario() {
           CALLSKU.textContent = Elemento.SKU;
           CELLREF.textContent = Elemento.STRREF;
           CELLCAT.textContent = Elemento.INTCANT;
-          CELLPRECIO.textContent = Elemento.MONPRCOS;
-          CELLTOTAL.textContent = Elemento.MONCTOPRO;
+          let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+          
+          CELLPRECIO.textContent = formatoPesos.format(Elemento.MONPRCOS);
+        
+          CELLTOTAL.textContent = formatoPesos.format(Elemento.MONCTOPRO);
           var boton = document.createElement('button');
           boton.innerHTML = '<i class="fa fa-trash-o"></i>';
           boton.type = 'button';
@@ -622,8 +628,11 @@ function EliminarArrayInsert(variable) {
     CALLSKU.textContent = Elemento.SKU;
     CELLREF.textContent = Elemento.STRREF;
     CELLCAT.textContent = Elemento.INTCANT;
-    CELLPRECIO.textContent = Elemento.MONPRCOS;
-    CELLTOTAL.textContent = Elemento.MONCTOPRO;
+    let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+          
+    CELLPRECIO.textContent = formatoPesos.format(Elemento.MONPRCOS);
+  
+    CELLTOTAL.textContent = formatoPesos.format(Elemento.MONCTOPRO);
     var boton = document.createElement('button');
     boton.innerHTML = '<i class="fa fa-trash-o"></i>';
     boton.type = 'button';
@@ -707,8 +716,12 @@ function MostrarProductos(id) {
         CALLSKU.textContent = Elemento.sku;
         CELLREF.textContent = Elemento.referencia;
         CELLCAT.textContent = Elemento.cantidad;
-        CELLPRECIO.textContent = Elemento.precio;
-        CELLTOTAL.textContent = Elemento.total;
+      
+        let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+          
+          CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
+        
+          CELLTOTAL.textContent = formatoPesos.format( Elemento.total);
         TotalUpdate = TotalUpdate + parseInt(Elemento.total);
 
         var boton = document.createElement('button');
@@ -819,8 +832,11 @@ function agregarUpdate() {
               CALLSKU.textContent = Elemento.sku;
               CELLREF.textContent = Elemento.referencia;
               CELLCAT.textContent = Elemento.cantidad;
-              CELLPRECIO.textContent = Elemento.precio;
-              CELLTOTAL.textContent = Elemento.total;
+              let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+          
+              CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
+            
+              CELLTOTAL.textContent = formatoPesos.format( Elemento.total);
 
 
               var boton = document.createElement('button');
@@ -896,8 +912,11 @@ function agregarUpdate() {
                 CALLSKU.textContent = Elemento.sku;
                 CELLREF.textContent = Elemento.referencia;
                 CELLCAT.textContent = Elemento.cantidad;
-                CELLPRECIO.textContent = Elemento.precio;
-                CELLTOTAL.textContent = Elemento.total;
+                let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+          
+                CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
+              
+                CELLTOTAL.textContent = formatoPesos.format( Elemento.total);;
 
 
                 var boton = document.createElement('button');
@@ -984,8 +1003,11 @@ function agregarUpdate() {
         CALLSKU.textContent = Elemento.sku;
         CELLREF.textContent = Elemento.referencia;
         CELLCAT.textContent = Elemento.cantidad;
-        CELLPRECIO.textContent = Elemento.precio;
-        CELLTOTAL.textContent = Elemento.total;
+        let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+          
+          CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
+        
+          CELLTOTAL.textContent = formatoPesos.format( Elemento.total);
 
 
         var boton = document.createElement('button');
@@ -1059,8 +1081,12 @@ function EliminarArray(id) {
     CALLSKU.textContent = Elemento.sku;
     CELLREF.textContent = Elemento.referencia;
     CELLCAT.textContent = Elemento.cantidad;
-    CELLPRECIO.textContent = Elemento.precio;
-    CELLTOTAL.textContent = Elemento.total;
+
+    let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+          
+    CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
+  
+    CELLTOTAL.textContent = formatoPesos.format( Elemento.total);
 
 
     var boton = document.createElement('button');
@@ -1104,19 +1130,19 @@ function vselect() {
 
 
 function HistorialEntradassalidas(id) {
- 
+
   //alert(id);
   var page = 1;
-  
+
   var per_page = $("#per_page").val();
   var parametros = {
     "action": "ajax",
     "page": page,
     "per_page": per_page,
     "id": id,
-    
+
   };
- 
+
   $.ajax({
     url: 'view/ajax/control_ajax-copy.php',
     data: parametros,
@@ -1214,7 +1240,7 @@ function stockEliminado(array, sk) {
 function pdfInventario() {
 
   alert("Desea imprimir los datos");
-  var contenido =document.querySelector('#printentrada').innerHTML;
+  var contenido = document.querySelector('#printentrada').innerHTML;
 
   var contenidoOriginal = document.body.innerHTML;
 
@@ -1237,22 +1263,32 @@ function descargarPDF() {
   doc.save('codigo.pdf');*/
   var doc = new jsPDF();
 
-            // Añades un título al documento
-            doc.setFontSize(22);
-            doc.text("Reporte de Ventas", 105, 30, null, null, "center");
+  // Añades un título al documento
+  doc.setFontSize(22);
+  doc.text("Reporte de Ventas", 105, 30, null, null, "center");
 
-            // Añades una tabla de ventas
-            doc.autoTable({ html: '#printentrada' })
+  // Añades una tabla de ventas
+  doc.autoTable({ html: '#printentrada' })
 
-            // Añades un total al final de la tabla
-            doc.setFontSize(18);
-            doc.text("Total: $600", 180, doc.autoTable.previous.finalY + 20);
+  // Añades un total al final de la tabla
+  doc.setFontSize(18);
+  doc.text("Total: $600", 180, doc.autoTable.previous.finalY + 20);
 
-            // Guardas el documento como un archivo PDF
-            doc.save('reporte.pdf');
+  // Guardas el documento como un archivo PDF
+  doc.save('reporte.pdf');
 }
 
-function resetForm(){
+function resetForm() {
 
   document.querySelector("#new_register").reset();
+}
+
+function reportInputOutput(){
+
+ 
+
+  var id=$('#INTIDINV').val();
+  $('#idinventario').val(id);
+   
+
 }

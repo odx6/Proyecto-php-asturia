@@ -102,12 +102,14 @@ function load(page) {
            
             var per_page = $("#per_page").val();
             var id = $("#ideControl").val();
-            
+            var Saldo = $("#Saldo").val();
+             
             var parametros = {
                 "action": "ajax",
                 "page": page,
                 'per_page': per_page,
                 'id':id,
+                'Saldo':Saldo,
             };
             $("#loader").fadeIn('slow');
             $.ajax({
@@ -129,6 +131,7 @@ function load(page) {
            var query = $("#q").val();
            var per_page = $("#per_page").val();
            var id = $("#ideControl").val();
+           var Saldo = $("#Saldo").val();
            
            var parametros = {
                "action": "ajax2",
@@ -136,6 +139,7 @@ function load(page) {
                "query": query,
                'per_page': per_page,
                'id':id,
+               'Saldo':Saldo,
            };
            $("#loader").fadeIn('slow');
            $.ajax({

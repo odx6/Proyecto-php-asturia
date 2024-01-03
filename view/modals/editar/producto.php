@@ -3,12 +3,17 @@ session_start();
 require_once("../../../config/config.php");
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-    $start="START TRANSACTION;";
-    $sql = "select * from tblcatpro where STRSKU='$id' FOR UPDATE ";
-    $inicio = mysqli_query($con, $start);
+    $user=$_SESSION['user_id'];
+    $sql = "select * from tblcatpro where STRSKU='$id' AND loked=1  OR Editor='$user'";
+
+  
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
     if ($num == 1) {
+
+    $consulta="UPDATE `tblcatpro` SET `loked` = '0',`Editor` = '$user' WHERE `tblcatpro`.`STRSKU` = '$id';";
+    $query1 = mysqli_query($con,$consulta);
+
         $rw = mysqli_fetch_array($query);
         $sku = $rw['STRSKU'];
         $codigo = $rw['STRCOD'];
@@ -36,6 +41,8 @@ if (isset($_GET["id"])) {
 }
 ?>
 
+
+<?php if($num == 1){  ?>
 
 <br>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
@@ -220,3 +227,10 @@ if (isset($_GET["id"])) {
         </div>
     </div>
 </div>
+<?php }else{
+
+echo 
+'Error';
+
+
+}  ?>

@@ -223,7 +223,7 @@ if ($_SESSION['productos'] == 1) {
     </script>
     <script>
         function editar(id) {
-            
+            $('#actualizar_datos').attr("disabled", false);
             var parametros = {
                 "action": "ajax",
                 "id": id
@@ -235,9 +235,20 @@ if ($_SESSION['productos'] == 1) {
                     $("#loader2").html("<img src='./assets/img/ajax-loader.gif'>");
                 },
                 success: function(data) {
+
+                    if(data.trim() == "Error"){
+                        $('#actualizar_datos').attr("disabled", true);
+                         html=''
+                        $(".outer_div2").html(' <div class="alert alert-danger" role="alert"> 		<button type="button" class="close" data-dismiss="alert">&times;</button> 		<strong>Error! Otro usuario esta editando el mismo registro</strong> 		 	</div>').fadeIn('slow');
+                        $("#loader2").html("");
+
+                    }else{
+
                     $(".outer_div2").html(data).fadeIn('slow');
                     $("#loader2").html("");
-                    
+                    }
+                   
+                
                 }
             })
         }

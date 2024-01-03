@@ -13,10 +13,16 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
-                <button type="button" class="btn btn-danger"  onclick="descargarPDF()">Pdf</button>
+                
+                
+                
+
+                
             </div>
         </div>
-   </form>
+
+
+   
     </div>
 </div>
 <!-- End Form Modal -->

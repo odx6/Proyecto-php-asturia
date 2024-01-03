@@ -116,7 +116,7 @@
                             <div>
                                 <label for="STRREF" class=" control-label">Referencia: </label>
 
-                                <input type="text"  class="form-control" id="STRREF" name="STRREF" placeholder="Referencia: ">
+                                <input type="text" class="form-control" id="STRREF" name="STRREF" placeholder="Referencia: ">
                                 <span id="STRREF"></span>
 
                             </div>
@@ -139,7 +139,7 @@
                             </div>
                             <label for="INTCAN" class=" control-label">Cantidad</label>
 
-                            <input type="number"  class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: ">
+                            <input type="number" class="form-control" id="INTCAN" name="INTCAN" placeholder="cantidad: ">
                             <span id="MINTCAN"></span>
 
 
@@ -208,11 +208,11 @@
 
                     </div>
 
-
+                   
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="guardar_datos" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-top: 15px;">Cancelar</button>
+                    <button type="submit" id="guardar_datos" class="btn btn-primary" style="margin-top: 15px;" >Guardar</button>
                 </div>
             </form>
             <!-- /end form  -->

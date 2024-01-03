@@ -95,9 +95,9 @@ if (empty($_POST['sku'])) {
 	//variable de los permisos 
 	// $permisos = $_POST["permisos"];
 
-
+	$Editflag="1";
 	// UPDATE data into database
-	$sql = "UPDATE tblcatpro SET STRSKU='" . $sku . "', STRCOD='" . $codigo . "', STRDESPRO='" . $descripcion . "', INTIDCAT='" . $categoria . "', INTIDSBC='" . $subcategoria . "', MONPCOS='" . $precio . "', INTIDUNI='" . $unidad . "', STRIMG='" . $Imagen . "',INTTIPUSO='" . $PTAller . "', BITSUS='" . $estado . "' WHERE STRSKU='" . $id . "' ";
+	$sql = "UPDATE tblcatpro SET STRSKU='" . $sku . "', STRCOD='" . $codigo . "', STRDESPRO='" . $descripcion . "', INTIDCAT='" . $categoria . "', INTIDSBC='" . $subcategoria . "', MONPCOS='" . $precio . "', INTIDUNI='" . $unidad . "', STRIMG='" . $Imagen . "',INTTIPUSO='" . $PTAller . "', BITSUS='" . $estado ."',loked='" . $Editflag.  "', Editor=0  WHERE STRSKU='" . $id . "' ";
 	$query = mysqli_query($con, $sql);
 	//codigo para eliminar una img
 	if ($query && !empty($pathimg ) && $pathimg != "view/resources/images/Default/productoDefault.png") {

@@ -1,283 +1,371 @@
+;
+
 <?php
+require './vendor/autoload.php';
 
-require './vendor/autoload.php'; // Carga el archivo autoloader de Composer
-
-// Crequire 'vendor/autoload.php'; // Asegúrate de incluir el autoloader de DOMPDF
+date_default_timezone_set('America/Mexico_City');
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-// Crea una instancia de DOMPDF
-$options = new Options();
-$options->set('isHtml5ParserEnabled', true);
-$options->set('isPhpEnabled', true);
-$dompdf = new Dompdf($options);
-$html2 = '<!DOCTYPE html>
+require_once("./config/config.php");
+require_once("./config/funciones.php");
+
+$dompdf = new Dompdf();
+$filas = "";
+
+
+
+
+if(isset($_REQUEST['id']))
+
+$ID = $_REQUEST['id'];
+$sql = "SELECT * FROM tblinv WHERE INTIDINV='$ID';";
+$fecha_actual = date('Y-m-d H:i:s');
+$mov;
+$query = mysqli_query($con, $sql);
+$num = mysqli_num_rows($query);
+if ($num == 1) {
+    while ($row = mysqli_fetch_array($query)) {
+        $INTIDINV = $row['INTIDINV'];
+        $DTEFEC = $row['DTEFEC'];
+        $INTIDTOP = $row['INTIDTOP'];
+        $INTTIPMOV = $row['INTTIPMOV'];
+
+        $INTFOL = $row['INTFOL'];
+        $IDEMP = $row['IDEMP'];
+        $STROBS = $row['STROBS'];
+        $INTALM = $row['INTALM'];
+        $DTEHOR = $row['DTEHOR'];
+
+        ob_start();
+        consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM');
+
+        $alm = ob_get_clean();
+        ob_start();
+        consultarNombre($INTIDTOP, 'tblcattop', 'INTIDTOP', 'STRNOMTPO');
+
+        $dtop = ob_get_clean();
+
+        ob_start();
+        consultarNombre($_SESSION['user_id'], 'tblcatemp', 'IDEMP', 'STRNOM');
+        $emp = ob_get_clean();
+    }
+}
+
+($INTTIPMOV == 1) ?  $mov = "Entrada" : $mov = "Salida";
+
+
+$sql2 = "SELECT * FROM tblinvdet WHERE INTIDINV='$ID';";
+
+$query2 = mysqli_query($con, $sql2);
+
+
+while ($rw = mysqli_fetch_array($query2)) {
+    $INTIDDET = $rw['INTIDDET'];
+    $INTIDINV = $rw['INTIDINV'];
+    $SKU = $rw['SKU'];
+    $STRREF = $rw['STRREF'];
+    $INTCAN = $rw['INTCAN'];
+    $INTIDUNI = $rw['INTIDUNI'];
+    $MONPRCOS = $rw['MONPRCOS'];
+    $MONCTOPRO = $rw['MONCTOPRO'];
+    $DTEHOR = $rw['DTEHOR'];
+
+    ob_start();
+    consultarNombre($INTIDUNI, 'tblcatuni', 'INTIDUNI', 'STRNOMUNI');
+
+    $uni = ob_get_clean();
+
+    ob_start();
+
+    consultarNombre($SKU, 'tblcatpro', 'STRSKU', 'STRDESPRO');
+    
+        $DESCRIPCIONPRO= ob_get_clean();
+        /*
+        ob_start();
+        consultarNombre($_SESSION['user_id'], 'tblcatemp', 'IDEMP', 'STRNOM');
+        $emp= ob_get_clean();*/
+    $MONPRCOS2 = number_format($MONPRCOS, 2, '.', ',');
+    $MONCTOPRO2 = number_format($MONCTOPRO, 2, '.', ',');
+
+    $filas .= "
+    <tr>
+        
+        
+        <td> $SKU</td>
+        <td> $DESCRIPCIONPRO</td>
+        <td> $STRREF</td>
+        <td> $INTCAN</td>
+        <td> $uni</td>
+        <td> $ $MONPRCOS2  </td>
+        <td> $ $MONCTOPRO2  </td>
+        
+   
+    </tr>
+    ";
+}
+
+
+/*for($i=0; $i<70; $i++){
+
+   $dompdf->getDom();
+  
+   
+    $filas .= "
+    <tr>
+    <td>1233344444</td>
+    <td>1233344444</td>
+    <td>1233344444</td>
+    <td>1233344444</td>
+    <td>1233344444</td>
+    <td>1233344444</td>
+    <td>1233344444</td>
+    <td>1233344444</td>
+    <td>1233344444</td>
+    </tr>
+    ";
+}*/
+$html = '<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
-        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-
-    
-    <!--[if lt IE 9]>
-      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-    <![endif]-->
+   
     <style>
+        @page {
+            margin: 100px 25px;
+        }
+
         header {
             position: fixed;
-            top: 0cm;
-            left: 0cm;
-            right: 0cm;
-            height: 2cm;
-            background-color: #b4d10e;
-            color: rgb(0, 0, 0);
-            text-align: left;
-            line-height: 30px;
+            top: -100px;
+            left: 0px;
+            right: 0px;
+            height: 100px;
+            text-align: center;
+            border-bottom: 2px solid black;
+            font-size: x-small;
         }
 
         footer {
             position: fixed;
-            bottom: 0cm;
-            left: 0cm;
-            right: 0cm;
-            height: 2cm;
-            background-color: yellow;
-            color: black;
+            bottom: -60px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+            
             text-align: center;
-            line-height: 35px;
-            border-top: 1px solid black;
+            border-top: 2px solid black;
+            font-size: x-small
+        }
 
+      
+
+        .pl {
+            text-align: left;
+            float: left;
+        }
+
+        .pr {
+            text-align: right;
+            float: right;
+        }
+
+        .pc {
+            text-align: center;
+            float: left;
+            padding-left: 300px;
 
         }
 
-        .main {
-            padding-top: 15px;
-            padding-bottom: 2px;
-            margin-top: 75.8px;
-            height: 800px;
+        .mains {
             background-color: rgb(228, 146, 146);
-        }
+           
+            border:1px solid black;
 
-        th {
-            background-color:aliceblue ;
         }
+        .formato{
+            width: 16%;
+            float: left;
+       
+       background-color: green;
+       
 
-        p {
-            text-align: justify;
         }
+     .tabla{
+        //background-color: Yellow;
+        width: 100%;
+        float: buttom;
+     }
+
+     th{
+        background-color: Orange;
+        padding:8px;
+        margin:15px;
+        text-align: center;
+        
+     }
+     .tabla td{
+
+        border:.5px solid gray;
+        padding:5px;
+        text-align: left;
+        font-size:x-small;
+     }
+     td{
+        
+        padding:5px;
+        text-align: left;
+        font-size:x-small;
+        
+     }
+
+     .borde{
+
+        border: 1px solid black;
+        text-align:center;
+       // background-color: #FCF3CF;
+        border-radius:5%;
+     }
+     h5{
+        text-align:center;
+        background-color:black;
+        color:white;
+
+     }   
+     .saltopagina {page-break-after:always;}
+
+     .datos{
+       
+       // background-color: #AED6F1 ;
+     }
+       
     </style>
+
 
 </head>
 
 <body>
 
     <header>
-
-     <p>CEMENTO ACERO Y ACABADOS ROMA, S.A C.V
-                SIMBOLOS PATRIOS N°730 COL.ELISEO JIMENEZ RUIZ C.P 68120</p>
-    
-       
+        <h3> Fernanada Asturias S.A de C.V </h3>
+        <p>Av.Simbolos Patrios No.520 San Agustin de las Juntas ,Oaxaca</p>
+        <h4>Reporte de existencia General -Bodega-1-al 27/12/2023 Estado: Normal</h4>
 
     </header>
+  
+
+    <main>
+    <h5>Datos del inventario</h5>
+    <table style="width: 100%">
+    <thead>
     
-    <footer>
+    
+    </thead>
+    <tbody>
+    <tr>
+    <td class="borde datos ">ID</td>
+    <td class="borde">' . $INTIDINV . '</td>
+    <td class="borde datos "> FECHA</td>
+    <td  class="borde">' . $DTEFEC . '</td>
+    <td class="borde datos ">MOVIMIENTO</td>
+    <td  class="borde">' . $dtop . '</td>
+   
+    
+    
+    </tr>
+    <tr>
+   
+    <td class="borde datos "> TIPO</td>
+    <td  class="borde">' . $mov . '</td>
+    <td class="borde datos ">FOLIO</td>
+    <td  class="borde">' . $INTFOL . '</td>
+   
+    <td class="borde datos ">EMPLEADO </td>
+    <td  class="borde">' . $emp . '</td>
+    
+    
+    
+    </tr>
+    <tr>
+    
+  
+    <td class="borde datos " >DESCRIPCION</td>
+    <td  class="borde">' . $STROBS . '</td>
+    <td class="borde datos ">ALMACEN </td>
+    <td  class="borde">' . $alm . '</td>
+    <td class="borde datos ">FECHA DE CREACION</td>
+    <td  class="borde">' . $DTEHOR . '</td>
+    
+    
+    </tr>
+    
+    
+    
+    </tbody>
+    </table>
+   
+   <h5>Detalle del inventario</h5>
+    <div class="tabla">
+
+    <table class="tabla" >
+    <thead>
+   
+   
+    <th>SKU</th>
+    <th>DESCRIPCION</th>
+    <th>REFERENCIA</th>
+    <th>CANTIDAD</th>
+    <th>UNIDAD</th>
+    <th>PRECIO</th>
+    <th>TOTAL</th>
+  
+   
+    
+    </thead>
+
+    <tbody>
+   ' . $filas . '
+    
+
+    
+    </tbody>
+    </table>
+   
+    
+    </div>
+     
+     
+     
+    
+   
+    
+    
+        </main>
+    
+        <footer>
 
 
-        <div class="col-sm-6">lado 1</div>
-        <div class="col-sm-6">lado 2</div>
+        <p class="pl">' . $emp . ' <br> Pagina 1</p>
+        <p class="pc">Nombre Del Engargado <br> Gerente</p>
+        <p class="pr">Serverp <br> ' . $fecha_actual . '</p>
+
+
 
     </footer>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+      
+   
 </body>
 
 </html>';
-// Lee el contenido del archivo HTML
-$html = '<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        .invoice {
-            width: 90s%;
-            margin: 0 auto;
-           
-        }
 
-        header {
-            position: fixed;
-            top: 0cm;
-            left: 0cm;
-            right: 0cm;
-            height: 2cm;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            text-align:  center;
-            line-height: 30px;
-        }
+$dompdf->loadHtml($html);
 
-        footer {
-            position: fixed;
-            bottom: 0cm;
-            left: 0cm;
-            right: 0cm;
-            height: 2cm;
-            background-color:yellow;
-            color:black;
-            text-align: center;
-            line-height: 35px;
-            border-top: 1px solid black;
-
-
-        }
-         .con
-        .invoice-details {
-            margin: 20px;
-        }
-
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .invoice-table, th, td {
-            border: 1px solid #000;
-        }
-
-        .signature {
-            width: 50%;
-            float: left;
-        }
-     
-        h5{
-        	background-color:black;
-        	color:white;
-        	text-align:center;
-        }
-        p{
-        	text-align:center;
-        }
-        h1{
-        	text-align:center;
-        }
-    </style>
-</head>
-<body>
-<header>
-    
-    <h4>CEMENTO ACERO Y ACABADOS ROMA, S.A C.V <br>SIMBOLOS PATRIOS N°730 COL.ELISEO JIMENEZ RUIZ C.P 68120</h4>
-    <h3></h3>
-   
-   
-</header>
-<footer>
-
-
-<strong> MANUEL F.RODRIGUEZ MARRON GERENTE <?php echo date ("Y");?></strong>
-
-</footer>
-
-    <div class="invoice">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        
-        <table class="invoice-table">
-            <tr>
-                <th>Id Orden :</th>
-                <th>2747</th>
-                <th>No. de Folio :</th>
-                <th>2699</th>
-                <th>Fecha</th>
-                <th>23/02/23</th>
-            </tr>
-          
-        </table>
-        <h5>Datos Generales-Orden</h5>
-         <table class="invoice-table">
-            <tr>
-                <th>Operador </th>
-                <th>Evarado Alvaro Agustin Cruz</th>
-              
-            </tr>
-          
-        </table>
-         <table class="invoice-table">
-            <tr>
-                <th>No. de Carro :</th>
-                <th>2247</th>
-                <th>Kilometraje :</th>
-                <th>2233</th>
-                <th>No.Placas :</th>
-                <th>Ry-31618</th>
-              
-            </tr>
-          
-        </table>
-         <h5>Detalles de Servicio</h5>
-         <textarea row="30">cambiar disco de cluth valvula de puie freno</textarea>
-          <h5>Observaciones</h5>
-         <textarea row="30">Ninguno </textarea>
-        <div><h1>ORDEN DE SERVICIO-TALLER</h1></div>
-
-        <div class="signature">
-        <br>
-            <p>AUTORIZO</p> 
-            <p>Catarino</p><br>
-            <p>__________________________</p>
-        </div>
-        <div class="signature">
-        <br>
-          <p>AUTORIZO</p> 
-            <p>Chofer</p><br>
-            <p>__________________________</p>
-        </div>
-
-        
-    </div>
-  	 
-</body>
-</html>
-';
-
-// Carga el contenido HTML en DOMPDF
-$dompdf->loadHtml($html2);
-
-// Renderiza el PDF (puedes ajustar la orientación y el tamaño del papel aquí)
-$dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 
-// Guarda el PDF en una variable
-$pdfData = $dompdf->output();
-
-// Envía los encabezados para indicar que se trata de un archivo PDF
-header('Content-Type: application/pdf');
-header('Content-Disposition: inline; filename="plantilla_firmas.pdf"');
-
-// Envía el contenido del PDF al navegador
-echo $pdfData;
-
-// Abre el PDF en una nueva ventana utilizando JavaScript
+$dompdf->stream("nombre_del_archivo.pdf", array("Attachment" => 0));
+?>

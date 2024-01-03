@@ -5,11 +5,71 @@ require_once("../../config/config.php");
 require_once("../../config/funciones.php");
 
 $id = $_REQUEST["id"];
+$Saldo = 0;
+
+
+
+function  CalcularSaldo($id)
+{
+	$Saldos = array();
+	global $con;
+	$consul = mysqli_query($con, "SELECT * FROM tbltarinv WHERE SKU='$id'");
+	$residuo = 0;
+	while ($row = mysqli_fetch_array($consul)) {
+
+
+
+
+		$INTIDTAR = $row['INTIDTAR'];
+
+		$INTTIMOV = $row['INTTIPMOV'];
+
+		$INTCAN = $row['INTCAN'];
+
+		if ($INTTIMOV == 1) {
+
+
+			$residuo = $residuo + intval($INTCAN);
+			$Saldos[$INTIDTAR] = $residuo;
+
+			//$Saldos[] = array('id' => $row['INTIDTAR'],'Saldo' => $residuo);
+		} else {
+
+
+			$residuo -= $INTCAN;
+			$Saldos[$INTIDTAR] = $residuo;
+
+
+			//$Saldos[] = array('id' => $row['INTIDTAR'],'Saldo' => $residuo);
+		}
+
+
+
+
+
+
+		/*$kind=$row['kind'];*/
+	}
+	return $Saldos;
+}
+
+
+//print_r(CalcularSaldo($id));
+
+$Saldos = CalcularSaldo($id);
+
+
+
+if (isset($_REQUEST["Saldo"])) $Saldo = $_REQUEST["Saldo"];
+
+
 
 
 
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
 if ($action == 'ajax') {
+
+
 
 	$tables = "tbltarinv";
 	$campos = "*";
@@ -57,50 +117,55 @@ if ($action == 'ajax') {
 	$total = $sumaEntradas - $sumaSalidas;
 
 	if ($numrows > 0) {
+
 ?>
 
-<div class="col-sm-12">
+		<div class="col-sm-12">
 
-<div class="col-sm-2">
-			<p> <strong>SKU :</strong></p>
-			
+			<div class="col-sm-2">
+				<p> <strong>SKU :</strong></p>
+				<p> <strong>DESCRIPCION :</strong></p>
+
+			</div>
+			<div class="col-sm-2">
+				<P><strong><?php echo $id ?></strong></P>
+				<P><strong><?php consultarNombre($id, 'tblcatpro', 'STRSKU', 'STRDESPRO'); ?></strong></P>
+
+
+			</div>
 		</div>
-		<div class="col-sm-2">
-			<P><strong><?php echo $id ?></strong></P>
-			
+
+		<div class="row">
+			<div class="col-sm-4">
+				<p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas; ?></strong></p>
+			</div>
+			<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas; ?></strong></div>
+			<div class="col-sm-4"><strong> <i class="fa fa-archive" aria-hidden="true"></i> &nbsp;STOCK DISPONIBLE</strong> &nbsp &nbsp <strong><?php echo $total; ?></strong></div>
 		</div>
-</div>
-		
-		
-		<div class="col-sm-4">
-			<p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas; ?></strong></p>
-		</div>
-		<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas; ?></strong></div>
-		<div class="col-sm-4"><strong> <i class="fa fa-archive" aria-hidden="true"></i> &nbsp;STOCK DISPONIBLE</strong> &nbsp &nbsp <strong><?php echo $total; ?></strong></div>
+
 		<input type="hidden" value="<?php echo $id ?>" id="ideControl"></input>
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#ID</th>
 					<th>FECHA</th>
-					
+
 					<th>REFERENCIA</th>
-					<th>CANTIDAD</th>
-					<th>PRECIO</th>
-					<th>Total</th>
+
+
 					<th>Entrada</th>
 					<th>Salida</th>
 					<th>Saldo</th>
 					<th>Almacen</th>
+					<th>PRECIO</th>
+					<th>Total</th>
 
 
 				</tr>
 			</thead>
 			<?php
 			$finales = 0;
-			$sumaEntradas = 0;
-			$sumaSalidas = 0;
-			$tot = 0;
+
 			while ($row = mysqli_fetch_array($query)) {
 
 				$INTIDTAR = $row['INTIDTAR'];
@@ -121,7 +186,7 @@ if ($action == 'ajax') {
 				$INTALM = $row['INTALM'];
 				$DTEHOR = $row['DTEHOR'];
 
-				
+
 
 
 				/*$kind=$row['kind'];*/
@@ -132,38 +197,41 @@ if ($action == 'ajax') {
 					<tr>
 						<td><?php echo $INTIDTAR ?></td>
 						<td><?php echo $DTEFEC ?></td>
-						
-						<td><?php echo $STRREF ?></td>
-						<td><?php echo $INTCAN ?></td>
-						<td><?php echo $MONPRCOS . "&nbspmxm" ?></td>
-						<td><?php echo $MONCTOPRO . "&nbspmxm" ?></td>
-						
-						<?php 
-						 if($INTTIMOV == 1){
-							$tot +=$INTCAN;
-                         ?>
-                          <td><?php echo $INTCAN; ?> </td>
-						  <td><?php echo "0"; ?></td>
-						 <?php
 
-						 }else{
-							$tot -=$INTCAN;
-							
-							?>
+						<td><?php echo $STRREF ?></td>
+
+
+
+						<?php
+						if ($INTTIMOV == 1) {
+
+						?>
+							<td><?php echo $INTCAN; ?> </td>
+							<td><?php echo "0"; ?></td>
+						<?php
+
+						} else {
+
+
+						?>
 
 							<td><?php echo  "0"; ?> </td>
 							<td><?php echo $INTCAN; ?></td>
-							<?php
-						 }
-						 ?>
+						<?php
+						}
+						?>
 
-						 <td><?php echo $tot ?></td>
+
+
+						<td><?php echo $Saldos[$INTIDTAR]; ?></td>
+
 						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
-
+						<td><?php echo  "$ ".number_format( $MONPRCOS, 2, '.', ',');  ?></td>
+						<td><?php echo  "$ ".number_format($MONCTOPRO, 2, '.', ','); ?></td>
 					</tr>
 				</tbody>
 			<?php
-				$total = $sumaEntradas - $sumaSalidas;
+
 			} ?>
 			<tfoot>
 				<tr>
@@ -178,8 +246,9 @@ if ($action == 'ajax') {
 				</tr>
 			</tfoot>
 		</table>
-
+		<input type="hidden" id="Saldo" value="<?php echo $tot ?>" readonly>
 	<?php
+
 	} else {
 		echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
@@ -237,6 +306,20 @@ if ($action == 'ajax2') {
 
 	if ($numrows > 0) {
 	?>
+		<div class="col-sm-12">
+
+			<div class="col-sm-2">
+				<p> <strong>SKU :</strong></p>
+				<p> <strong>DESCRIPCION :</strong></p>
+
+			</div>
+			<div class="col-sm-2">
+				<P><strong><?php echo $id ?></strong></P>
+				<P><strong><?php consultarNombre($id, 'tblcatpro', 'STRSKU', 'STRDESPRO'); ?></strong></P>
+
+
+			</div>
+		</div>
 		<div class="col-sm-4">
 
 			<p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas; ?></strong></p>
@@ -249,24 +332,24 @@ if ($action == 'ajax2') {
 				<tr>
 					<th>#ID</th>
 					<th>FECHA</th>
-				
+
 					<th>REFERENCIA</th>
-					<th>CANTIDAD</th>
-					<th>PRECIO</th>
-					<th>Total</th>
+
+
 					<th>Entrada</th>
 					<th>Salida</th>
 					<th>Saldo</th>
 					<th>Almacen</th>
+					<th>PRECIO</th>
+					<th>Total</th>
+
 
 
 				</tr>
 			</thead>
 			<?php
 			$finales = 0;
-			$sumaEntradas = 0;
-			$sumaSalidas = 0;
-			$total = 0;
+
 			while ($row = mysqli_fetch_array($query)) {
 
 				$INTIDTAR = $row['INTIDTAR'];
@@ -302,34 +385,36 @@ if ($action == 'ajax2') {
 					<tr>
 						<td><?php echo $INTIDTAR ?></td>
 						<td><?php echo $DTEFEC ?></td>
-						
-						<td><?php echo $STRREF ?></td>
-						<td><?php echo $INTCAN ?></td>
-						<td><?php echo $MONPRCOS . "&nbspmxm" ?></td>
-						<td><?php echo $MONCTOPRO . "&nbspmxm" ?></td>
-						<td></strong> <span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
-                         <?php 
-						 if($INTTIMOV == 1){
-                         ?>
-                          <td><?php echo $INTCAN; ?> </td>
-						  <td><?php echo "0"; ?></td>
-						 <?php
 
-						 }else{ ?>
+						<td><?php echo $STRREF ?></td>
+
+
+
+						<?php
+						if ($INTTIMOV == 1) {
+						?>
+							<td><?php echo $INTCAN; ?> </td>
+							<td><?php echo "0"; ?></td>
+						<?php
+
+						} else { ?>
 
 							<td><?php echo  "0"; ?> </td>
 							<td><?php echo $INTCAN; ?></td>
-							<?php
-						 }
-						 ?>
-						
+						<?php
+						}
+						?>
+						<td><?php echo $Saldos[$INTIDTAR]; ?></td>
+
 						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
+						<td><?php echo  "$ ".number_format( $MONPRCOS, 2, '.', ',');  ?></td>
+						<td><?php echo  "$ ".number_format($MONCTOPRO, 2, '.', ','); ?></td>
 
 					</tr>
 				</tbody>
 			<?php
 
-				$total = $sumaEntradas - $sumaSalidas;
+
 			} ?>
 			<tfoot>
 				<tr>
@@ -344,7 +429,7 @@ if ($action == 'ajax2') {
 				</tr>
 			</tfoot>
 		</table>
-
+		<input type="hidden" id="Saldo" value="<?php echo $tot ?>" readonly>
 
 <?php
 	} else {
