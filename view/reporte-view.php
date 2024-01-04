@@ -17,11 +17,11 @@ $filas = "";
 
 
 
-if(isset($_REQUEST['ide']))$ID = $_REQUEST['ide'];
 
 
 
-$sql = "SELECT * FROM tblinv WHERE INTIDINV='$ID';";
+
+$sql = "SELECT * FROM tblcatpro ';";
 $fecha_actual = date('Y-m-d H:i:s');
 $mov;
 $query = mysqli_query($con, $sql);

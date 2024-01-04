@@ -158,12 +158,15 @@ if ($action == 'ajax') {
 						<td><?php echo $fecha ?></td>
 						<td class="text-right">
 
-							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $IDEMP; ?>');"><i class="fa fa-edit"></i></button>
+							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" title="Editar"  data-target="#modal_update" onclick="editar('<?php echo $IDEMP; ?>');"><i class="fa fa-edit"></i></button>
 
-							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $IDEMP; ?>')"><i class="fa fa-trash-o"></i></button>
+							<button type="button" class="btn btn-danger btn-square btn-xs" title="Eliminar" onclick="eliminar('<?php echo $IDEMP; ?>')"><i class="fa fa-trash-o"></i></button>
 
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $IDEMP; ?>')"><i class="fa fa-eye"></i></button>
-
+							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" title="Mostrar" onclick="mostrar('<?php echo $IDEMP; ?>')"><i class="fa fa-eye"></i></button>
+							<form action="?view=Permision" method="post">
+								<input type="hidden" name="id" value="<?php echo $IDEMP; ?>">
+								<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#" title="Editar Permisos"><i class="fa fa-unlock" aria-hidden="true"></i></button>
+							</form>
 						</td>
 					</tr>
 				</tbody>

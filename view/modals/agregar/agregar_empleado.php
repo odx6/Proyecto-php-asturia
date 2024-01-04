@@ -28,6 +28,7 @@
                                     <?php
                                     require_once("config/config.php");
                                     $rspta = mysqli_query($con, "SELECT * FROM permisos");
+                                    
                                     $id = 0;
                                     $marcados = mysqli_query($con, "SELECT * FROM empleado_permisos WHERE idempleado=$id");
                                     $valores = array();
@@ -37,6 +38,8 @@
                                     while ($reg = $rspta->fetch_object()) {
                                         $sw = in_array($reg->id, $valores) ? 'checked' : '';
                                         echo '<li> <input id="permisos" type="checkbox" ' . $sw . '  name="permisos[]" value="' . $reg->id . '">' . $reg->nombre . '</li>';
+                                        
+                                        
                                     }
                                     ?>
                                 </ul>

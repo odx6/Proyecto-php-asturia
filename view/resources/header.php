@@ -279,20 +279,22 @@ $nombre_empresa = $rw['nombre'];
 
                     <div class="btn-group-vertical btn-group-justified">
                     <div class="btn-group ">
+                    <?php if ($_SESSION['Inventario'] == 1) { ?>
                         <button type="button" class="btn btn-default  btnLeft dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-tasks" aria-hidden="true"></i>&nbspInventarios
 
                         </button>
+                        <?php } ?>
                         <ul class="dropdown-menu">
                             
-                            <?php if ($_SESSION['empleados'] == 1) { ?>
+                            <?php if ($_SESSION['Entradas'] == 1) { ?>
                                 <li class="<?php if (isset($active2)) {
                                                 echo $active2;
                                             } ?>">
                                     <a href="./?view=Entradas"><i class="fa fa-level-up" aria-hidden="true"></i><span>&nbspEntradas y Salidas</span></a>
                                 </li>
                             <?php } ?>
-                            <?php if ($_SESSION['empleados'] == 1) { ?>
+                            <?php if ($_SESSION['Control'] == 1) { ?>
                                 <li class="<?php if (isset($active2)) {
                                                 echo $active2;
                                             } ?>">

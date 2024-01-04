@@ -30,6 +30,7 @@
 				}
 
 				in_array(1,$valores)?$_SESSION['dashboard']=1:$_SESSION['dashboard']=0;
+				
 				in_array(2,$valores)?$_SESSION['empleados']=1:$_SESSION['empleados']=0;
 				in_array(3,$valores)?$_SESSION['configuracion']=1:$_SESSION['configuracion']=0;
 				in_array(4,$valores)?$_SESSION['productos']=1:$_SESSION['productos']=0;
@@ -37,6 +38,9 @@
 				in_array(6,$valores)?$_SESSION['solicitud']=1:$_SESSION['solicitud']=0;
 				in_array(7,$valores)?$_SESSION['categorias']=1:$_SESSION['categorias']=0;
 				in_array(8,$valores)?$_SESSION['unidades']=1:$_SESSION['unidades']=0;
+				in_array(9,$valores)?$_SESSION['Inventario']=1:$_SESSION['Inventario']=0;
+				in_array(10,$valores)?$_SESSION['Entradas']=1:$_SESSION['Entradas']=0;
+				in_array(11,$valores)?$_SESSION['Control']=1:$_SESSION['Control']=0;
 
 				$_SESSION['user_id'] = $idempleado;
 				if($_SESSION['dashboard']==1){

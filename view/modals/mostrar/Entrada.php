@@ -33,7 +33,7 @@ if (isset($_GET["id"])) {
 }
 ?>
 
-<?php $ID=$id?>
+
 <input type="hidden" required class="form-control" id="INTIDINV" name="INTIDINV" placeholder="Folio:" value="<?php echo $id ?>">
 
 
@@ -109,9 +109,8 @@ if (isset($_GET["id"])) {
     <?php } ?>
 
 </table>
-
 </form>
-<form action="?view=Pdf" method="post">
-    <input type="hidden" name="id"  value="<?php echo $id?>">
-	<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#" ondblclick="reportInputOutput()"><i class="fa fa-file-text" aria-hidden="true"></i></button>
+ <form action="?view=Pdf" method="post">
+    <input type="hidden" name="ide"  value="<?php echo $id?>">
+	<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#" ><i class="fa fa-file-text" aria-hidden="true"></i></button>
 </form>

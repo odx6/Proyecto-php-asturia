@@ -40,3 +40,11 @@ if(id !=null && id){
 
 
 }
+
+function Ever(variable){
+  var ideHabilidad=$('#'+variable).val();
+  var idTabla=$('#'+variable).data('info');
+  var Bandera=$('#'+variable).checked();
+
+  alert("Hola" + variable +"ide de habilidad "+ideHabilidad+"ideTabla "+idTabla+"Valor de la bandera"+Bandera );
+}

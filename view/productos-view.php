@@ -160,8 +160,8 @@ if ($_SESSION['productos'] == 1) {
     </script>
     <script>
         $("#new_register").submit(function(event) {
-            
-           // event.preventDefault();
+
+            // event.preventDefault();
             $('#guardar_datos').attr("disabled", true);
 
             var formData = new FormData(this); // Crear un objeto FormData
@@ -192,7 +192,7 @@ if ($_SESSION['productos'] == 1) {
 
     <script>
         $("#update_register").submit(function(event) {
-          
+
             event.preventDefault();
             $('#actualizar_datos').attr("disabled", true);
 
@@ -236,19 +236,19 @@ if ($_SESSION['productos'] == 1) {
                 },
                 success: function(data) {
 
-                    if(data.trim() == "Error"){
+                    if (data.trim() == "Error") {
                         $('#actualizar_datos').attr("disabled", true);
-                         html=''
+                        html = ''
                         $(".outer_div2").html(' <div class="alert alert-danger" role="alert"> 		<button type="button" class="close" data-dismiss="alert">&times;</button> 		<strong>Error! Otro usuario esta editando el mismo registro</strong> 		 	</div>').fadeIn('slow');
                         $("#loader2").html("");
 
-                    }else{
+                    } else {
 
-                    $(".outer_div2").html(data).fadeIn('slow');
-                    $("#loader2").html("");
+                        $(".outer_div2").html(data).fadeIn('slow');
+                        $("#loader2").html("");
                     }
-                   
-                
+
+
                 }
             })
         }
@@ -275,9 +275,20 @@ if ($_SESSION['productos'] == 1) {
             })
         }
 
-        function exportpf(historial) {
+        function exportpf2(historial) {
             alert("Deseas Generar un pdf con los Datos");
-            var contenido = document.getElementById(historial).innerHTML;
+            var contenido = document.querySelector("#peticionajax");
+            var contenidoOriginal = document.body.innerHTML;
+
+            document.body.innerHTML = contenido;
+
+            window.print();
+
+            document.body.innerHTML = contenidoOriginal;
+        }
+
+        function exportpf(id) {
+            var contenido = document.querySelector("#peticionajax").innerHTML;
             var contenidoOriginal = document.body.innerHTML;
 
             document.body.innerHTML = contenido;

@@ -4,7 +4,8 @@ require_once("../../../config/config.php");
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $user=$_SESSION['user_id'];
-    $sql = "select * from tblcatpro where STRSKU='$id' AND loked=1  OR Editor='$user'";
+    $sql = "select * from tblcatpro where STRSKU='$id' AND loked=1 and Editor=0 OR STRSKU='$id' and loked=0 AND Editor='$user';";
+    
 
   
     $query = mysqli_query($con, $sql);

@@ -6,6 +6,7 @@ if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $id = intval($id);
     $sql = " select * from tblinv where INTIDINV='$id' and loked=1 and Editor='0' or INTIDINV='$id' and loked=0 and Editor='$idempleado';";
+   
 
     $query = mysqli_query($con, $sql);
     $num = mysqli_num_rows($query);
