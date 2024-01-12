@@ -56,6 +56,11 @@ if ($_SESSION['solicitud'] == 1) {
                             <li onclick='per_page(100);' id='100'><a href="#">100</a></li>
                             <li onclick='per_page(1000000);' id='1000000'><a href="#">Todos</a></li>
                         </ul>
+                        <?php if(in_array(5,$_SESSION['Habilidad']['Control'])){ ?>
+                        <button type="button" class="btn btn-danger"  onclick='exportpf("peticionajax")'>
+                            Exportar <span class="caret"></span>
+                        </button>
+                        <?php } ?>
                     </div>
                     <input type='hidden' id='per_page' value='15'>
                 </div>

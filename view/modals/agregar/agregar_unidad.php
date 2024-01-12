@@ -1,5 +1,9 @@
+<?php if(in_array(1,$_SESSION['Habilidad']['Unidades'])){ ?>
 <button class="btn btn-primary" data-toggle="modal" data-target="#formModal" onclick="resetForm()"><i class='fa fa-plus'></i> Nuevo</button>
+<?php if(in_array(5,$_SESSION['Habilidad']['Unidades'])){ ?>
+
     <button class="btn btn-danger" data-toggle="modal" data-target="#" onclick='exportpf("peticionajax")'><i class='fa fa-plus' ></i>Exportar</button>
+    <?php } ?>
 
 
     <!-- Form Modal -->
@@ -48,3 +52,4 @@
         </div>
     </div>
     <!-- End Form Modal -->
+    <?php } ?>

@@ -40,11 +40,8 @@ if ($_SESSION['productos'] == 1) {
 
                 <div class="col-md-offset-6" style="display: inline-block;">
                     <!-- modals -->
-                    <?php
-                    include "modals/agregar/agregar_producto.php";
-                    include "modals/editar/editar_producto.php";
-                    include "modals/mostrar/mostrar_producto.php";
-                    ?>
+                    
+                 
                     <!-- /end modals -->
 
                     <div class="btn-group">
@@ -58,6 +55,8 @@ if ($_SESSION['productos'] == 1) {
                             <li onclick='per_page(100);' id='100'><a href="#">100</a></li>
                             <li onclick='per_page(1000000);' id='1000000'><a href="#">Todos</a></li>
                         </ul>
+                        
+                      
                     </div>
                     <input type='hidden' id='per_page' value='15'>
                 </div>

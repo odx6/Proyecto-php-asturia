@@ -1,4 +1,5 @@
 <!-- Form Modal -->
+<?php if (in_array(2, $_SESSION['Habilidad']['Categorias'])) { ?>
 <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
     <form class="form-horizontal" role="form" method="post" id="update_register" name="update_register" >
@@ -19,4 +20,5 @@
     </form>
     </div>
 </div>
+<?php } ?>
 <!-- End Form Modal -->

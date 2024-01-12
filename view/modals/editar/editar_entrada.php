@@ -1,3 +1,5 @@
+<?php if(in_array(2,$_SESSION['Habilidad']['Entradas'])){ ?>
+
 <!-- Form Modal -->
 <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -20,3 +22,4 @@
     </div>
 </div>
 <!-- End Form Modal -->
+<?php } ?>

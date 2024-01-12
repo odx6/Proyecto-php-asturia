@@ -121,13 +121,15 @@ if ($action == 'ajax') {
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">
-
+						<?php if(in_array(2,$_SESSION['Habilidad']['Subcategorias'])){ ?>
 							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDSBC; ?>');"><i class="fa fa-edit"></i></button>
-
+							<?php } ?> 
+							<?php if(in_array(3,$_SESSION['Habilidad']['Subcategorias'])){ ?>
 							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDSBC; ?>')"><i class="fa fa-trash-o"></i></button>
-
+                             <?php } ?>
+							 <?php if(in_array(4,$_SESSION['Habilidad']['Subcategorias'])){ ?>
 							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDSBC; ?>')"><i class="fa fa-eye"></i></button>
-
+								<?php } ?>
 						</td>
 					</tr>
 				</tbody>

@@ -1,6 +1,11 @@
-    <button class="btn btn-primary" data-toggle="modal" data-target="#formModal" onclick="resetForm()"><i class='fa fa-plus'></i> Nuevo</button>
+   
+    <?php if(in_array(1,$_SESSION['Habilidad']['Empleados'])){ ?>
+   <button class="btn btn-primary" data-toggle="modal" data-target="#formModal" onclick="resetForm()"><i class='fa fa-plus'></i> Nuevo</button>
+  
+   <?php if(in_array(5,$_SESSION['Habilidad']['Empleados'])){ ?>
     <button class="btn btn-danger" data-toggle="modal" data-target="#" onclick='exportpf("peticionajax")'><i class='fa fa-plus'></i>Exportar</button>
-
+   <?php } ?>
+    
 
     <!-- Form Modal -->
     <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" enctype="multipart/form-data">
@@ -165,3 +170,4 @@
         </div>
     </div>
     <!-- End Form Modal -->
+    <?php } ?>

@@ -150,7 +150,7 @@ $CREATE_AT = $rw->CREATE_AT;
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-primary actualizar_datos">Guardar datos</button>
+                                    <button type="submit" class="btn btn-primary ">Guardar datos</button>
                                 </div>
                             </div>
                         </form>
@@ -194,7 +194,7 @@ $CREATE_AT = $rw->CREATE_AT;
         var data = new FormData();
         data.append('imagefile', file);
         data.append('id', id_user);
-        var parametros = $(this).serialize();
+        alert("Entro")
         $.ajax({
             type: "POST",
             url: "view/ajax/agregar/actualizar_perfil.php",
@@ -203,14 +203,15 @@ $CREATE_AT = $rw->CREATE_AT;
             beforeSend: function(objeto) {
                 $("#resultados_ajax").html("Mensaje: Cargando...");
             },
-            success: function(datos) {
-                $("#resultados_ajax").html(datos);
+            success: function(datos) { 
+                alert("Hola");
+               /* $("#resultados_ajax").html(datos);
                 $('.actualizar_datos').attr("disabled", false);
                 window.setTimeout(function() {
                     $(".alert").fadeTo(500, 0).slideUp(500, function() {
                         $(this).remove();
                     });
-                }, 5000);
+                }, 5000);*/
 
             }
         });

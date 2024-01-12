@@ -1,4 +1,6 @@
 <!-- Form Modal -->
+<?php if(in_array(4,$_SESSION['Habilidad']['Unidades'])){ ?>
+
 <div class="modal fade" id="modal_show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
     <form class="form-horizontal" role="form">
@@ -19,3 +21,4 @@
     </div>
 </div>
 <!-- End Form Modal -->
+<?php }?>

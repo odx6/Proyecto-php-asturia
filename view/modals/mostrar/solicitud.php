@@ -1,5 +1,6 @@
 <?php
 	session_start();
+	 if(in_array(4,$_SESSION['Habilidad']['Solicitud'])){ 
 	require_once ("../../../config/config.php");
 	require_once ("../../../config/funciones.php");
 	if (isset($_GET["id"])){
@@ -45,4 +46,4 @@
     
   </ul>
 </div>
-
+<?php } ?>

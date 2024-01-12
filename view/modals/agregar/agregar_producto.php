@@ -1,8 +1,13 @@
+<?php if (in_array(1, $_SESSION['Habilidad']['Productos'])) { ?>
     <button class="btn btn-primary" data-toggle="modal" data-target="#formModal" onclick="resetForm()"><i class='fa fa-plus' ></i> Nuevo</button>
-    <button class="btn btn-danger" data-toggle="modal" data-target="#" onclick='exportpf("peticionajax")'><i class='fa fa-plus'></i>Exportar</button>
 
+    <?php }?>
+    <?php if (in_array(5, $_SESSION['Habilidad']['Productos'])) { ?>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#" onclick='exportpf("peticionajax")'><i class='fa fa-plus'></i>Exportar</button>
+    <?php }?>
 
     <!-- Form Modal -->
+    <?php if (in_array(1, $_SESSION['Habilidad']['Productos'])) { ?>
     <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -194,11 +199,14 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <?php if (in_array(2, $_SESSION['Habilidad']['Productos'])) { ?>
                         <button type="submit" id="guardar_datos" class="btn btn-primary">Guardar</button>
+                        <?php } ?>
                     </div>
                 </form>
                 <!-- /end form  -->
             </div>
         </div>
     </div>
+    <?php } ?>
     <!-- End Form Modal -->

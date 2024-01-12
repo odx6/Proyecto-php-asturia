@@ -6,8 +6,8 @@ require_once("../../config/funciones.php");
 
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
-	
-	
+
+
 	try {
 		if (($delete = mysqli_query($con, "DELETE FROM tblcatpro WHERE STRSKU='$id'"))) {
 			$aviso = "Bien hecho!";
@@ -28,11 +28,10 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$times = "&times;";
 		} else {
 			$aviso = "Aviso!";
-		$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
-		$classM = "alert alert-danger";
-		$times = "&times;";
-		} 
-		
+			$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
+			$classM = "alert alert-danger";
+			$times = "&times;";
+		}
 	}
 }
 
@@ -84,16 +83,18 @@ if ($action == 'ajax') {
 					<th>Unidad Medida</th>
 					<th>Imagen</th>
 					<th>Taller</th>
-					
+
 
 					<th>Estado</th>
 
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<?php
-			$finales = 0;
 			
+				<tbody>
+				<?php
+			$finales = 0;
+
 			while ($row = mysqli_fetch_array($query)) {
 				$sku = $row['STRSKU'];
 				$codigo = $row['STRCOD'];
@@ -105,8 +106,8 @@ if ($action == 'ajax') {
 				if (isset($INTIDCAT) && $INTIDCAT != NULL) {
 					$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
 					if (isset($Categoria) && $Categoria != NULL) {
-					$tem = mysqli_fetch_array($Categoria);
-					if(isset($tem) && $tem != NULL)$NombreCategoria = $tem['STRNOMCAT'];
+						$tem = mysqli_fetch_array($Categoria);
+						if (isset($tem) && $tem != NULL) $NombreCategoria = $tem['STRNOMCAT'];
 					}
 				}
 				//ENDCONSULTA
@@ -115,16 +116,16 @@ if ($action == 'ajax') {
 				$INTIDSBC = $row['INTIDSBC'];
 				if (isset($INTIDSBC) && $INTIDSBC != NULL) {
 					$Subcategoria = mysqli_query($con, "SELECT * FROM  tblcatsbc WHERE INTIDSBC='$INTIDSBC'");
-					
+
 					if (isset($Subcategoria) && $Subcategoria != NULL) {
 						$tem = mysqli_fetch_array($Subcategoria);
-						if(isset($tem) && $tem != NULL)$SubcategoriaNombre = $tem['STRNOMSBC'];
-						}
+						if (isset($tem) && $tem != NULL) $SubcategoriaNombre = $tem['STRNOMSBC'];
+					}
 				}
 				$MONPCOS = $row['MONPCOS'];
 				$INTIDUNI = $row['INTIDUNI'];
 				$STRIMG = $row['STRIMG'];
-				
+
 				$INTTIPUSO = $row['INTTIPUSO'];
 
 
@@ -135,42 +136,45 @@ if ($action == 'ajax') {
 					$lbl_status = "Inactivo";
 					$lbl_class = 'label label-danger';
 				}
-				
+
 				/*$kind=$row['kind'];*/
 
 				$finales++;
 			?>
-				<tbody>
 					<tr>
 						<td><?php echo $sku ?></td>
 						<td><?php echo $codigo ?></td>
 						<td><?php echo $descripcion ?></td>
-						<td><?php  echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
-						<td><?php echo   (isset($SubcategoriaNombre)) ? $SubcategoriaNombre : $INTIDSBC;?></td>
-						<td><?php echo "$ ".number_format( $MONPCOS, 2, '.', ',');?> </td>
-						<td><?php   consultarNombre($INTIDUNI,'tblcatuni','INTIDUNI','STRNOMUNI'); ?></td>
+						<td><?php echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
+						<td><?php echo (isset($SubcategoriaNombre)) ? $SubcategoriaNombre : $INTIDSBC; ?></td>
+						<td><?php echo "$ " . number_format($MONPCOS, 2, '.', ','); ?> </td>
+						<td><?php consultarNombre($INTIDUNI, 'tblcatuni', 'INTIDUNI', 'STRNOMUNI'); ?></td>
 						<td>
 							<div>
 								<img width="50px" height="50px" src="<?php echo $STRIMG ?>" alt="Imagen Producto">
 							</div>
 						</td>
 
-						
-						<td><?php   consultarNombre($INTTIPUSO,'tblcattus','INTIDPUSO','STRNOMPUSO'); ?></td>
+
+						<td><?php consultarNombre($INTTIPUSO, 'tblcattus', 'INTIDPUSO', 'STRNOMPUSO'); ?></td>
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 
 						<td class="text-right">
-
-							<button type="button" class="btn btn-warning btn-square btn-xs " data-toggle="modal" data-target="#modal_update" id="<?php echo $sku; ?>" onclick="editar('<?php echo $sku; ?>');"><i class="fa fa-edit"></i></button>
-
+							<?php if (in_array(2, $_SESSION['Habilidad']['Productos'])) { ?>
+								<button type="button" class="btn btn-warning btn-square btn-xs " data-toggle="modal" data-target="#modal_update" id="<?php echo $sku; ?>" onclick="editar('<?php echo $sku; ?>');"><i class="fa fa-edit"></i></button>
+							<?php } ?>
+							<?php if(in_array(3,$_SESSION['Habilidad']['Productos'])){ ?>
 							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $sku; ?>')"><i class="fa fa-trash-o"></i></button>
-
+							<?php } ?>
+							<?php if(in_array(4,$_SESSION['Habilidad']['Productos'])){ ?>
 							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $sku; ?>')"><i class="fa fa-eye"></i></button>
+							<?php } ?>
 
 						</td>
 					</tr>
+					<?php } ?>
 				</tbody>
-			<?php } ?>
+			
 			<tfoot>
 				<tr>
 					<td colspan='10'>

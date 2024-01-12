@@ -1,5 +1,7 @@
 <?php
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
+
+ if (in_array(1, $_SESSION['Habilidad']['Productos'])) { 
 if (empty($_POST['STRSKU'])) {
 	$errors[] = "STRSKU está vacío.";
 } elseif (empty($_POST['STRCOD'])) {
@@ -117,4 +119,6 @@ if (isset($messages)) {
 	</div>
 <?php
 }
+
+ }
 ?>

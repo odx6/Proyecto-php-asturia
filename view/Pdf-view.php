@@ -10,6 +10,10 @@ use Dompdf\Options;
 
 require_once("./config/config.php");
 require_once("./config/funciones.php");
+if (!isset($_SESSION['user_id']) | empty($_POST["ide"]) ){
+    header("location: ./?view=index"); //Redirecciona 
+    exit;
+}
 
 $dompdf = new Dompdf();
 $filas = "";

@@ -1,13 +1,14 @@
 <?php
 $active2 = "active";
+
 require_once("./config/config.php");
 //Archivo comprueba si el usuario esta logueado	
 include_once "./vendor/autoload.php";
 
 use Dompdf\Dompdf;
 
-session_start();
-if (!isset($_SESSION['user_id'])) {
+
+if (!isset($_SESSION['user_id']) | empty($_POST["id"]) ){
     header("location: ./?view=index"); //Redirecciona 
     exit;
 }

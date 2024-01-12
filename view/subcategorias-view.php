@@ -23,7 +23,7 @@ if ($_SESSION['subcategorias'] == 1) {
             <div class="row">
                 <div class="col-xs-3">
 
-                    <select id="miSelect">
+                  <!--  <select id="miSelect">
 
                         <option value="pk_solicitud">Id Orden</option>
                         <option value="fk_empleado">Empleado</option>
@@ -34,8 +34,8 @@ if ($_SESSION['subcategorias'] == 1) {
                         <option value="DetallesServicio">Detalles del servico </option>
                         <option value="Observaciones">Observaciones</option>
 
-                        <!-- Agrega más opciones según las columnas que tengas -->
-                    </select>
+                      
+                    </select>-->
 
                     <div class="input-group">
 

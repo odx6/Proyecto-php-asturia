@@ -2,6 +2,7 @@
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 /* Connect To Database*/
 require_once("../../../config/config.php");
+if( $_SESSION['categorias'] == 1){
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
@@ -110,13 +111,16 @@ if ($action == 'ajax') {
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">
-
+						<?php if (in_array(2, $_SESSION['Habilidad']['Categorias'])) { ?>
 							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDCAT; ?>');"><i class="fa fa-edit"></i></button>
-
+							<?php } ?>
+							<?php if (in_array(3, $_SESSION['Habilidad']['Categorias'])) { ?>
 							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDCAT; ?>')"><i class="fa fa-trash-o"></i></button>
-
+							<?php } ?>
+							<?php if (in_array(3, $_SESSION['Habilidad']['Categorias'])) { ?>
 							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDCAT; ?>')"><i class="fa fa-eye"></i></button>
-
+							<?php } ?>
+							
 						</td>
 					</tr>
 				</tbody>
@@ -139,5 +143,6 @@ if ($action == 'ajax') {
 		echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
 	}
+}
 }
 ?>

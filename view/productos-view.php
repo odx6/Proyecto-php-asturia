@@ -65,7 +65,7 @@ if ($_SESSION['productos'] == 1) {
 
 
 
-            <div id="resultados_ajax"></div>
+            <div id="resultados_ajax" class="ever"></div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">

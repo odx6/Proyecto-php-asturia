@@ -1,3 +1,4 @@
+<?php if(in_array(4,$_SESSION['Habilidad']['Subcategorias'])){ ?>
 <!-- Form Modal -->
 <div class="modal fade" id="modal_show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -18,3 +19,4 @@
    </form>
     </div>
 </div>
+<?php } ?>

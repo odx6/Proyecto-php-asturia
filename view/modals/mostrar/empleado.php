@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once("../../../config/config.php");
+if(in_array(4,$_SESSION['Habilidad']['Empleados'])){
+
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $id = intval($id);
@@ -99,3 +101,4 @@ if (isset($_GET["id"])) {
 
     
 </div>
+<?php  }?>

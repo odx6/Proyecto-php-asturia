@@ -97,9 +97,12 @@ if ($action == 'ajax') {
 					<th>NOMBRE</th>
 					<th>TELEFONO</th>
 					<th>CORREO</th>
+					<th>ESTADO</th>
 					<th>CREACION</th>
+					
 					<th>ACCION</th>
-					<th></th>
+					
+					
 
 				</tr>
 			</thead>
@@ -141,7 +144,9 @@ if ($action == 'ajax') {
 				$finales++;
 			?>
 				<tbody>
+				<?php	if($IDEMP != 1){ ?>
 					<tr>
+					
 						<td><?php echo $IDEMP ?></td>
 						<td> <?php echo $STRNSS  ?> </td>
 						<td> <?php echo $STRRFC  ?> </td>
@@ -156,19 +161,27 @@ if ($action == 'ajax') {
 
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 						<td><?php echo $fecha ?></td>
+						
 						<td class="text-right">
-
+                            <?php if(in_array(2,$_SESSION['Habilidad']['Empleados'])){ ?>
 							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" title="Editar"  data-target="#modal_update" onclick="editar('<?php echo $IDEMP; ?>');"><i class="fa fa-edit"></i></button>
-
+							<?php } ?>
+							<?php if(in_array(3,$_SESSION['Habilidad']['Empleados'])){ ?>
 							<button type="button" class="btn btn-danger btn-square btn-xs" title="Eliminar" onclick="eliminar('<?php echo $IDEMP; ?>')"><i class="fa fa-trash-o"></i></button>
-
+							<?php } ?>
+							<?php if(in_array(4,$_SESSION['Habilidad']['Empleados'])){ ?>
 							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" title="Mostrar" onclick="mostrar('<?php echo $IDEMP; ?>')"><i class="fa fa-eye"></i></button>
+							<?php } ?>
+							<?php if(in_array(2,$_SESSION['Habilidad']['Empleados']) && $_SESSION['user_id']==1 ){ ?>
 							<form action="?view=Permision" method="post">
 								<input type="hidden" name="id" value="<?php echo $IDEMP; ?>">
 								<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#" title="Editar Permisos"><i class="fa fa-unlock" aria-hidden="true"></i></button>
 							</form>
+							<?php } ?>
 						</td>
+						
 					</tr>
+					<?php } ?>
 				</tbody>
 			<?php } ?>
 			<tfoot>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+ if (in_array(2, $_SESSION['Habilidad']['Categorias'])) { 
 require_once("../../../config/config.php");
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
@@ -47,4 +48,4 @@ if (isset($_GET["id"])) {
         </select>
     </div>
 </div>
-
+<?php }?>

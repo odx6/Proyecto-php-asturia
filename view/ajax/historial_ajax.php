@@ -159,10 +159,11 @@ if ($action == 'ajax') {
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 
 						<td class="text-right">
+<?php if(in_array(5,$_SESSION['Habilidad']['Control'])){ ?>
 
 							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal"  onclick="HistorialEntradassalidas('<?php echo $sku; ?>')"><i class="fa fa-list-alt" aria-hidden="true"></i></button>
 
-							
+							<?php } ?>
 
 						</td>
 					</tr>

@@ -23,7 +23,7 @@ if ($_SESSION['unidades'] == 1) {
             <div class="row">
                 <div class="col-xs-3">
 
-                    <select id="miSelect">
+                 <!--   <select id="miSelect">
 
                         <option value="pk_solicitud">Id Orden</option>
                         <option value="fk_empleado">Empleado</option>
@@ -34,8 +34,8 @@ if ($_SESSION['unidades'] == 1) {
                         <option value="DetallesServicio">Detalles del servico </option>
                         <option value="Observaciones">Observaciones</option>
 
-                        <!-- Agrega más opciones según las columnas que tengas -->
-                    </select>
+                       
+                    </select>-->
 
                     <div class="input-group">
 
@@ -104,10 +104,40 @@ if ($_SESSION['unidades'] == 1) {
     ?>
     <script>
         $(function() {
-            load(1, 'solicitud', 'view/ajax/Unidades/unidades_ajax.php');
+            load(1);
         });
+        function load(page) {
+            var query = $("#q").val();
+            var per_page = $("#per_page").val();
+            var parametros = {
+                "action": "ajax",
+                "page": page,
+                'query': query,
+                'per_page': per_page
+            };
+            $("#loader").fadeIn('slow');
+            $.ajax({
+                url: 'view/ajax/Unidades/unidades_ajax.php',
+                data: parametros,
+                beforeSend: function(objeto) {
+                    $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
+                },
+                success: function(data) {
+                    $(".outer_div").html(data).fadeIn('slow');
+                    $("#loader").html("");
+                }
+            })
+        }
+
+        function per_page(valor) {
+            $("#per_page").val(valor);
+            load(1);
+            $('.dropdown-menu li').removeClass("active");
+            $("#" + valor).addClass("active");
+        }
     </script>
     <script>
+        
         $("#new_register").submit(function(event) {
             $('#guardar_datos').attr("disabled", true);
             var parametros = $(this).serialize();

@@ -1,7 +1,8 @@
 <?php
 session_start();
 require_once("../../../config/config.php");
-if (isset($_GET["id"])) {
+
+if (isset($_GET["id"]) && in_array(2, $_SESSION['Habilidad']['Productos'])) {
     $id = $_GET["id"];
     $user=$_SESSION['user_id'];
     $sql = "select * from tblcatpro where STRSKU='$id' AND loked=1 and Editor=0 OR STRSKU='$id' and loked=0 AND Editor='$user';";
@@ -43,7 +44,7 @@ if (isset($_GET["id"])) {
 ?>
 
 
-<?php if($num == 1){  ?>
+<?php if($num == 1 && in_array(2, $_SESSION['Habilidad']['Productos'])){  ?>
 
 <br>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
