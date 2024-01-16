@@ -25,6 +25,18 @@ if (empty($_POST['STRNOMCAT'])) {
 	$sql = "INSERT INTO tblcatcat ( STRNOMCAT, STRDESCAT,DTEHOR,BITSUS) 
 			VALUES('" . $STRNOMCAT . "','" . $STRDESCAT . "','" . $DTEHOR . "','" . $BITSUS . "');";
 	$query_new = mysqli_query($con, $sql);
+    
+	if($query_new){
+		$sql2="se creo la categoria con Nombre: ".$STRNOMCAT." Descripcion :".$STRDESCAT." En  la fecha : ".$DTEHOR;
+		$tabla="tblcatcat";
+		$tipo="creacion";
+		$fecha=date("Y-m-d H:i:s");
+		
+     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".mysqli_insert_id($con)."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+	 $query = mysqli_query($con, $sqllog);
+	}
+
+
 } else {
 	$errors[] = "desconocido.";
 }

@@ -1,7 +1,10 @@
 <?php
 $active2 = "active";
 include "resources/header.php";
-if ($_SESSION['categorias'] == 1) {
+if ($_SESSION['productos'] == 1) {
+    //verifica si tiene permiso al modulo 
+    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
 ?>
     <!--main content start-->
     <section class="main-content-wrapper">
@@ -10,36 +13,21 @@ if ($_SESSION['categorias'] == 1) {
                 <div class="col-md-12">
                     <!--breadcrumbs start -->
                     <ul class="breadcrumb  pull-right">
-                        <li><a href="./?view=dashboard">Dashboard</a></li>
-                        <li class="active">Categorias</li>
+                        <li><a href="./?view=dashboard">Dashboard </a></li>
+                        <li class="active">Registros</li>
 
                     </ul>
                     <!--breadcrumbs end -->
                     <br>
-                    <h1 class="h1">Categorias</h1>
+                    <h1 class="h1">Registros en la base de datos </h1>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-xs-3">
-                    <!--
-                    <select id="miSelect">
-
-                        <option value="pk_solicitud">Id Orden</option>
-                        <option value="fk_empleado">Empleado</option>
-                        <option value="fecha">fecha</option>
-                        <option value="operador">operador</option>
-                        <option value="NoCarro">Numero de carro</option>
-                        <option value="Kilometraje">Kilometraje</option>
-                        <option value="DetallesServicio">Detalles del servico </option>
-                        <option value="Observaciones">Observaciones</option>
-                        
-                     
-                    </select>-->
-
                     <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar por Descripción" id='q' onkeyup="load(1);">
 
-                        <input type="text" class="form-control" placeholder="Buscar por numero de folio" id='q' onkeyup="load(1);">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" onclick='load(1);'><i class='fa fa-search'></i></button>
                         </span>
@@ -53,9 +41,8 @@ if ($_SESSION['categorias'] == 1) {
                 <div class="col-md-offset-6" style="display: inline-block;">
                     <!-- modals -->
                     <?php
-                    include "modals/agregar/agregar_categorias.php";
-                    include "modals/editar/editar_categoria.php";
-                    include "modals/mostrar/mostrar_categoria.php";
+                   
+                    include "modals/mostrar/mostrar_producto.php";
                     ?>
                     <!-- /end modals -->
 
@@ -77,12 +64,12 @@ if ($_SESSION['categorias'] == 1) {
 
 
 
-            <div id="resultados_ajax"></div>
+            <div id="resultados_ajax" class="ever"></div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Datos de las Categorias</h3>
+                            <h3 class="panel-title">Datos de los Productos</h3>
                             <div class="actions pull-right">
                                 <i class="fa fa-chevron-down"></i>
                                 <i class="fa fa-times"></i>
@@ -102,28 +89,23 @@ if ($_SESSION['categorias'] == 1) {
     <?php
     include "resources/footer.php";
     ?>
-
-    <!--funcion buscar en la vista -->
     <script>
         $(function() {
             load(1);
         });
-        // carga  todas las  solicitude  de las solicitudes
+        //carga los dato de los productos
         function load(page) {
-            var column = $("#miSelect").val();
-
             var query = $("#q").val();
             var per_page = $("#per_page").val();
             var parametros = {
                 "action": "ajax",
                 "page": page,
                 'query': query,
-                'per_page': per_page,
-                'column': column
+                'per_page': per_page
             };
             $("#loader").fadeIn('slow');
             $.ajax({
-                url: 'view/ajax/Categoria/Categorias_ajax.php',
+                url: 'view/ajax/logs_ajax.php',
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
@@ -143,9 +125,8 @@ if ($_SESSION['categorias'] == 1) {
         }
     </script>
     <script>
-        //Elimina una solicitud desde el modal
         function eliminar(id) {
-            if (confirm('Esta acción  eliminará de forma permanente la solicitud\n\n Desea continuar?')) {
+            if (confirm('Esta acción  eliminará de forma permanente al producto \n\n Desea continuar?')) {
                 var page = 1;
                 var query = $("#q").val();
                 var per_page = $("#per_page").val();
@@ -158,7 +139,7 @@ if ($_SESSION['categorias'] == 1) {
                 };
 
                 $.ajax({
-                    url: 'view/ajax/Categoria/Categorias_ajax.php',
+                    url: 'view/ajax/productos_ajax.php',
                     data: parametros,
                     beforeSend: function(objeto) {
                         $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
@@ -177,14 +158,19 @@ if ($_SESSION['categorias'] == 1) {
         }
     </script>
     <script>
-        //agrega una categoria
         $("#new_register").submit(function(event) {
+
+            // event.preventDefault();
             $('#guardar_datos').attr("disabled", true);
-            var parametros = $(this).serialize();
+
+            var formData = new FormData(this); // Crear un objeto FormData
+
             $.ajax({
                 type: "POST",
-                url: "view/ajax/agregar/agregar_categoria.php",
-                data: parametros,
+                url: "view/ajax/agregar/agregar_producto.php",
+                data: formData, // Usar el objeto FormData como los datos de la petición
+                processData: false, // Indicar a jQuery que no procese los datos
+                contentType: false, // Indicar a jQuery que no establezca el tipo de contenido
                 beforeSend: function(objeto) {
                     $("#resultados_ajax").html("Enviando...");
                 },
@@ -200,19 +186,23 @@ if ($_SESSION['categorias'] == 1) {
                     $('#formModal').modal('hide');
                 }
             });
-            event.preventDefault();
-        })
+        });
     </script>
 
     <script>
-        //Boton Actualizar desde modal editar
         $("#update_register").submit(function(event) {
+
+            event.preventDefault();
             $('#actualizar_datos').attr("disabled", true);
-            var parametros = $(this).serialize();
+
+            var formData = new FormData(this); // Crear un objeto FormData
+
             $.ajax({
                 type: "POST",
-                url: "view/ajax/editar/editar_categoria.php",
-                data: parametros,
+                url: "view/ajax/editar/editar_producto.php",
+                data: formData, // Usar el objeto FormData como los datos de la petición
+                processData: false, // Indicar a jQuery que no procese los datos
+                contentType: false, // Indicar a jQuery que no establezca el tipo de contenido
                 beforeSend: function(objeto) {
                     $("#resultados_ajax").html("Enviando...");
                 },
@@ -228,37 +218,48 @@ if ($_SESSION['categorias'] == 1) {
                     $('#modal_update').modal('hide');
                 }
             });
-            event.preventDefault();
         });
     </script>
     <script>
-        //muestra el modal con los datos para posteriormente actualizar con el scrip de arriba 
         function editar(id) {
-
+            $('#actualizar_datos').attr("disabled", false);
             var parametros = {
                 "action": "ajax",
                 "id": id
             };
             $.ajax({
-                url: 'view/modals/editar/categoria.php',
+                url: 'view/modals/editar/producto.php',
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#loader2").html("<img src='./assets/img/ajax-loader.gif'>");
                 },
                 success: function(data) {
-                    $(".outer_div2").html(data).fadeIn('slow');
-                    $("#loader2").html("");
+
+                    if (data.trim() == "Error") {
+                        $('#actualizar_datos').attr("disabled", true);
+                        html = ''
+                        $(".outer_div2").html(' <div class="alert alert-danger" role="alert"> 		<button type="button" class="close" data-dismiss="alert">&times;</button> 		<strong>Error! Otro usuario esta editando el mismo registro</strong> 		 	</div>').fadeIn('slow');
+                        $("#loader2").html("");
+
+                    } else {
+
+                        $(".outer_div2").html(data).fadeIn('slow');
+                        $("#loader2").html("");
+                    }
+
+
                 }
             })
         }
 
         function mostrar(id) {
+
             var parametros = {
                 "action": "ajax",
                 "id": id
             };
             $.ajax({
-                url: 'view/modals/mostrar/categoria.php',
+                url: 'view/modals/mostrar/producto.php',
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#loader3").html("<img src='./assets/img/ajax-loader.gif'>");
@@ -266,37 +267,27 @@ if ($_SESSION['categorias'] == 1) {
                 success: function(data) {
                     $(".outer_div3").html(data).fadeIn('slow');
                     $("#loader3").html("");
+
+
+
                 }
             })
         }
 
-        function pdf(id) {
-            var parametros = {
-                "action": "ajax",
-                "id": id
-            };
-            $.ajax({
-                url: 'view/modals/pdf/pdf-solicitud.php',
-                data: parametros,
-                beforeSend: function(objeto) {
-                    $("#loader3").html("<img src='./assets/img/ajax-loader.gif'>");
-                },
-                success: function(data) {
-                    // var file = new Blob([data], {type: 'application/pdf'});
-
-                    // Crear una URL para el Blob
-                    //var fileURL = URL.createObjectURL(file);
-
-                    // Abrir la URL en una nueva ventana
-                    //window.open(fileURL);
-                    alert(data);
-                }
-            })
-        }
-
-        function exportpf(historial) {
+        function exportpf2(historial) {
             alert("Deseas Generar un pdf con los Datos");
-            var contenido = document.getElementById(historial).innerHTML;
+            var contenido = document.querySelector("#peticionajax");
+            var contenidoOriginal = document.body.innerHTML;
+
+            document.body.innerHTML = contenido;
+
+            window.print();
+
+            document.body.innerHTML = contenidoOriginal;
+        }
+
+        function exportpf(id) {
+            var contenido = document.querySelector("#peticionajax").innerHTML;
             var contenidoOriginal = document.body.innerHTML;
 
             document.body.innerHTML = contenido;

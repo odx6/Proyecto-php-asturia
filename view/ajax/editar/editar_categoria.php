@@ -25,6 +25,16 @@
            
 			$sql =  "UPDATE tblcatcat SET STRNOMCAT='".$STRNOMCAT."', STRDESCAT='".$STRDESCAT."', BITSUS='".$BITSUS."'  WHERE INTIDCAT='".$id."' ";
 			$query_new = mysqli_query($con,$sql);
+			if($query_new){
+				$sql2="se Actualizo la categoria con Nombre: ".$STRNOMCAT." Descripcion :".$STRDESCAT." En  la fecha : ".$DTEHOR;
+				$tabla="tblcatcat";
+				$tipo="Actualizacion";
+				$fecha=date("Y-m-d H:i:s");
+				
+			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+			 $query = mysqli_query($con, $sqllog);
+			}
+		
             
 		} else {
 			$errors[] = "desconocido.";	

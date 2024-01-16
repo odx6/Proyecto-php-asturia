@@ -53,7 +53,24 @@ $CREATE_AT = $rw->CREATE_AT;
                 </div>
             </div>
             <div class="col-md-9">
-                <div id="resultados_ajax"></div><!-- resultados ajax -->
+                <div id="resultados_ajax">
+
+                    <?php
+                    if (!empty($_SESSION['message'])) {
+
+
+                        echo      '<div class="alert alert-' . $_SESSION['color'] . '" role="alert">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>' . $_SESSION['message'] . '</strong>
+		
+	</div>';
+
+                        // Eliminar el mensaje después de mostrarlo
+                        unset($_SESSION['message']);
+                        unset($_SESSION['color']);
+                    }
+                    ?>
+                </div><!-- resultados ajax -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Datos del Perfil</h3>
@@ -63,8 +80,9 @@ $CREATE_AT = $rw->CREATE_AT;
                         </div>
                     </div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" name="update_register" id="update_register" method="post" enctype="multipart/form-data">
+                        <form class="form-horizontal" role="form" action="view/ajax/agregar/actualizar_perfil.php" name="update_register" id="update_register" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="id" class="form-control" id="id" value="<?php echo $id_user ?>">
+                            <input type="hidden" class="form-control" id="OLDSTRCOR" name="OLDSTRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
                             <div class="form-group">
                                 <label for="dni" class="col-sm-2 control-label">Seguridad social: </label>
                                 <div class="col-sm-4">
@@ -123,7 +141,7 @@ $CREATE_AT = $rw->CREATE_AT;
                                 </div>
                                 <label for="password" class="col-sm-2 control-label">Pais: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="STRPAI" class="form-control" id="STRPAI" placeholder="Pais: " value="<?php echo $STRPAI ?>">
+                                    <input type="text" required name="STRPAI" class="form-control" id="STRPAI" placeholder="Pais: " value="<?php echo $STRPAI ?>">
 
                                 </div>
                             </div>
@@ -134,7 +152,7 @@ $CREATE_AT = $rw->CREATE_AT;
                                 </div>
                                 <label for="password" class="col-sm-2 control-label">Email: </label>
                                 <div class="col-sm-4">
-                                    <input type="email" name="STRCOR" class="form-control" id="STRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
+                                    <input type="email" required name="STRCOR" class="form-control" id="STRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
 
                                 </div>
                             </div>
@@ -145,7 +163,7 @@ $CREATE_AT = $rw->CREATE_AT;
                                 </div>
                                 <label for="password" class="col-sm-2 control-label">Estado: </label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="BITSUS" class="form-control" id="BITSUS" placeholder="Estado: " value="<?php echo $BITSUS ?>">
+                                    <input type="text" required name="BITSUS" class="form-control" id="BITSUS" placeholder="Estado: " value="<?php echo $BITSUS ?>">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -203,15 +221,15 @@ $CREATE_AT = $rw->CREATE_AT;
             beforeSend: function(objeto) {
                 $("#resultados_ajax").html("Mensaje: Cargando...");
             },
-            success: function(datos) { 
+            success: function(datos) {
                 alert("Hola");
-               /* $("#resultados_ajax").html(datos);
-                $('.actualizar_datos').attr("disabled", false);
-                window.setTimeout(function() {
-                    $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                        $(this).remove();
-                    });
-                }, 5000);*/
+                /* $("#resultados_ajax").html(datos);
+                 $('.actualizar_datos').attr("disabled", false);
+                 window.setTimeout(function() {
+                     $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                         $(this).remove();
+                     });
+                 }, 5000);*/
 
             }
         });

@@ -276,38 +276,49 @@ $nombre_empresa = $rw['nombre'];
                         <?php } ?>
 
                     </ul>
+                    <ul class="nano-content">
+
+                        <?php if ($_SESSION['solicitud'] == 1) { ?>
+                            <li class="<?php if (isset($active2)) {
+                                            echo $active2;
+                                        } ?>">
+                                <a href="./?view=log"><i class="fa fa-folder-open" aria-hidden="true"></i><span>Registro</span></a>
+                            </li>
+                        <?php } ?>
+
+                    </ul>
 
                     <div class="btn-group-vertical btn-group-justified">
-                    <div class="btn-group ">
-                    <?php if ($_SESSION['Inventario'] == 1) { ?>
-                        <button type="button" class="btn btn-default  btnLeft dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-tasks" aria-hidden="true"></i>&nbspInventarios
+                        <div class="btn-group ">
+                            <?php if ($_SESSION['Inventario'] == 1) { ?>
+                                <button type="button" class="btn btn-default  btnLeft dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-tasks" aria-hidden="true"></i>&nbspInventarios
 
-                        </button>
-                        <?php } ?>
-                        <ul class="dropdown-menu">
-                            
-                            <?php if ($_SESSION['Entradas'] == 1) { ?>
-                                <li class="<?php if (isset($active2)) {
-                                                echo $active2;
-                                            } ?>">
-                                    <a href="./?view=Entradas"><i class="fa fa-level-up" aria-hidden="true"></i><span>&nbspEntradas y Salidas</span></a>
-                                </li>
+                                </button>
                             <?php } ?>
-                            <?php if ($_SESSION['Control'] == 1) { ?>
-                                <li class="<?php if (isset($active2)) {
-                                                echo $active2;
-                                            } ?>">
-                                    <a href="./?view=historial"><i class="fa fa-sort" aria-hidden="true"></i><span>Control</span></a>
-                                </li>
-                            <?php } ?>
+                            <ul class="dropdown-menu">
 
-                            
+                                <?php if ($_SESSION['Entradas'] == 1) { ?>
+                                    <li class="<?php if (isset($active2)) {
+                                                    echo $active2;
+                                                } ?>">
+                                        <a href="./?view=Entradas"><i class="fa fa-level-up" aria-hidden="true"></i><span>&nbspEntradas y Salidas</span></a>
+                                    </li>
+                                <?php } ?>
+                                <?php if ($_SESSION['Control'] == 1) { ?>
+                                    <li class="<?php if (isset($active2)) {
+                                                    echo $active2;
+                                                } ?>">
+                                        <a href="./?view=historial"><i class="fa fa-sort" aria-hidden="true"></i><span>Control</span></a>
+                                    </li>
+                                <?php } ?>
 
-                        </ul>
+
+
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <!--end-productos-->
+                    <!--end-productos-->
 
 
 

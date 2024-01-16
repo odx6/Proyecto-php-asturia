@@ -1,7 +1,7 @@
 <?php
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
-include("../../../config/funciones.php");	
-include("../../../config/verificarCorreo.php");	
+include("../../../config/funciones.php");
+include("../../../config/verificarCorreo.php");
 if (empty($_POST['STRNSS'])) {
     $errors[] = "NSS está vacío.";
 } elseif (empty($_POST['STRRFC'])) {
@@ -31,7 +31,7 @@ if (empty($_POST['STRNSS'])) {
 } elseif (empty($_POST['BITSUS'])) {
     $errors[] = "Estado está vacío.";
 }
- /* elseif (empty($_POST['kind'])) {
+/* elseif (empty($_POST['kind'])) {
         $errors[] = "Kind está vacío.";
     }*/ elseif (
     !empty($_POST['STRNSS'])
@@ -48,7 +48,7 @@ if (empty($_POST['STRNSS'])) {
     && !empty($_POST['STRTEL'])
     && !empty($_POST['STRCOR'])
     && !empty($_POST['BITSUS'])
-   
+
     /*&& !empty($_POST['kind'])*/
 ) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
@@ -75,108 +75,79 @@ if (empty($_POST['STRNSS'])) {
 
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
     if (empty($_FILES["STRIMG"]['name'])) {
-		$sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
-		$queyimg = mysqli_query($con, $sqlimg);
-		$num = mysqli_num_rows($queyimg);
-		if ($num == 1) {
-			$row = mysqli_fetch_array($queyimg);
-			$Imagen = $row['STRIMG'];
-		}
-	} else {
-		$sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
-		$queyimg = mysqli_query($con, $sqlimg);
-		$num = mysqli_num_rows($queyimg);
-		if ($num == 1) {
-			$row = mysqli_fetch_array($queyimg);
-			$pathimg = $row['STRIMG'];
-		}
+        $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
+        $queyimg = mysqli_query($con, $sqlimg);
+        $num = mysqli_num_rows($queyimg);
+        if ($num == 1) {
+            $row = mysqli_fetch_array($queyimg);
+            $Imagen = $row['STRIMG'];
+        }
+    } else {
+        $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
+        $queyimg = mysqli_query($con, $sqlimg);
+        $num = mysqli_num_rows($queyimg);
+        if ($num == 1) {
+            $row = mysqli_fetch_array($queyimg);
+            $pathimg = $row['STRIMG'];
+        }
 
 
-		//UPDATE IMG 
-		//Agregar imagen
-		$target_dir = "../../resources/images/Empleados/";
-		$image_name = time() . "_" . basename($_FILES["STRIMG"]["name"]);
-		$target_file = $target_dir . $image_name;
-		$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-		$imageFileZise = $_FILES["STRIMG"]["size"];
+        //UPDATE IMG 
+        //Agregar imagen
+        $target_dir = "../../resources/images/Empleados/";
+        $image_name = time() . "_" . basename($_FILES["STRIMG"]["name"]);
+        $target_file = $target_dir . $image_name;
+        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+        $imageFileZise = $_FILES["STRIMG"]["size"];
 
-		if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
-			$errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
-		} else if ($imageFileZise > 1048576) { //1048576 byte=1MB
-			$errors[] = "<p>Lo sentimos, pero el archivo es demasiado grande. Selecciona logo de menos de 1MB</p>";
-		} else {
-			/* Fin Validacion*/
-			if ($imageFileZise > 0) {
-				move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
-				$imagen = basename($_FILES["STRIMG"]["name"]);
-				$Imagen = "view/resources/images/Empleados/$image_name";
-			}
-		}
+        if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
+            $errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
+        } else if ($imageFileZise > 1048576) { //1048576 byte=1MB
+            $errors[] = "<p>Lo sentimos, pero el archivo es demasiado grande. Selecciona logo de menos de 1MB</p>";
+        } else {
+            /* Fin Validacion*/
+            if ($imageFileZise > 0) {
+                move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
+                $imagen = basename($_FILES["STRIMG"]["name"]);
+                $Imagen = "view/resources/images/Empleados/$image_name";
+            }
+        }
     }
 
-    
+
     //variable de los permisos 
-    
-    
 
 
-    if($OLDSTRCOR !=$STRCOR){
+
+
+    if ($OLDSTRCOR != $STRCOR) {
         $token = md5(rand());
-        $sql = "UPDATE tblcatemp SET TOKEN='$token', VERIFICATE_AT=NULL WHERE STRNSS='".$STRNSS."' ";
+        $sql = "UPDATE tblcatemp SET TOKEN='$token', VERIFICATE_AT=NULL WHERE STRNSS='" . $STRNSS . "' ";
         $query1 = mysqli_query($con, $sql);
-        verificacionDeCorreo($STRCOR,$token);
-
+        verificacionDeCorreo($STRCOR, $token);
     }
 
     // UPDATE data into database
     if (!empty($_POST['STRPWS'])) {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC ."', STRIMG='".$Imagen."', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     } else {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC ."', STRIMG='".$Imagen."', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     }
     $query = mysqli_query($con, $sql);
-    if ($query && !empty($pathimg ) && $pathimg != "view/resources/images/Default/perfil.png") {
-		if(file_exists("../../../" . $pathimg))
-		unlink("../../../" . $pathimg);
+    if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/perfil.png") {
+        if (file_exists("../../../" . $pathimg))
+            unlink("../../../" . $pathimg);
+    }
 
-	}
-
-    //Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
-    /*if(!empty(($password))){
-    	$sql_password = "UPDATE empleado SET password='".$password."' WHERE id='".$id."' ";
-    	$query_password = mysqli_query($con,$sql_password);
-    }*/
-
-   
+    $_SESSION['message'] = 'Perfil Actualizado Correctamente';
+    $_SESSION['color'] = 'success';
 } else {
-    $errors[] = "desconocido.";
+    $_SESSION['message'] = 'Algo salio mal , al actualizar perfil';
+    $_SESSION['color'] = 'danger';
+    
 }
-if (isset($errors)) {
 
-?>
-    <div class="alert alert-danger" role="alert">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Error!</strong>
-        <?php
-        foreach ($errors as $error) {
-            echo $error;
-        }
-        ?>
-    </div>
-<?php
-}
-if (isset($messages)) {
 
-?>
-    <div class="alert alert-success" role="alert">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>¡Bien hecho!</strong>
-        <?php
-        foreach ($messages as $message) {
-            echo $message;
-        }
-        ?>
-    </div>
-<?php
-}
+
+header("location: ../../../?view=perfil");
 ?>
