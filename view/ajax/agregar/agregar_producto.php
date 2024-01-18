@@ -36,6 +36,7 @@ if (empty($_POST['STRSKU'])) {
 	/*&& !empty($_POST['kind'])*/
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
+	require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 	// escaping, additionally removing everything that could be (html/javascript-) code
 	$STRSKU = mysqli_real_escape_string($con, (strip_tags($_POST["STRSKU"], ENT_QUOTES)));
@@ -85,6 +86,17 @@ if (empty($_POST['STRSKU'])) {
 	$sql = "INSERT INTO tblcatpro (STRSKU, STRCOD, STRDESPRO, INTIDCAT, INTIDSBC, MONPCOS, INTIDUNI, STRIMG, INTTIPUSO, BITSUS,CREATE_AT) 
 			VALUES('" . $STRSKU . "','" . $STRCOD . "','" . $descripcion . "','" . $categoria . "','" . $subcategoria . "','" . $precio . "','" . $unidad . "','" . $Imagen . "','" . $perteneceTaller . "','" . $estado . "','" . $created_at . "');";
 	$query_new = mysqli_query($con, $sql);
+	 
+	if($query_new){
+		$sql2=recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$STRSKU';");
+		$tabla="tblcatpro";
+		$tipo="creacion";
+		$fecha=date("Y-m-d H:i:s");
+		
+     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$STRSKU."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+	 $query = mysqli_query($con, $sqllog);
+	 
+	}
 
 	if (!$query_new) $errors[] = "no se agrego el producto";
 } else {

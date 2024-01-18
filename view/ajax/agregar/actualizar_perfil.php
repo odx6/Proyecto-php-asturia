@@ -52,6 +52,10 @@ if (empty($_POST['STRNSS'])) {
     /*&& !empty($_POST['kind'])*/
 ) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
+    require_once("../../../config/RecuperarDatos.php");
+    $consulta="SELECT * FROM tblcatemp WHERE IDEMP=$id;";
+    $oldPerfil=recuperarDatos($consulta);
+    //Contiene las variables de configuracion para conectar a la base de datos
 
     // escaping, additionally removing everything that could be (html/javascript-) code
     //$IDEMP = mysqli_real_escape_string($con,(strip_tags($_POST["IDEMP"],ENT_QUOTES)));

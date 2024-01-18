@@ -18,7 +18,7 @@ if (empty($_POST['STRNOMCAT'])) {
 	$STRNOMCAT = strtoupper($STRNOMCAT);
 	$STRDESCAT = mysqli_real_escape_string($con, (strip_tags($_POST["STRDESCAT"], ENT_QUOTES)));
 	$BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
-	$BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
+	
 	$DTEHOR = date("Y-m-d H:i:s");
 
 	//Write register in to database 
@@ -34,6 +34,7 @@ if (empty($_POST['STRNOMCAT'])) {
 		
      $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".mysqli_insert_id($con)."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
 	 $query = mysqli_query($con, $sqllog);
+	 
 	}
 
 

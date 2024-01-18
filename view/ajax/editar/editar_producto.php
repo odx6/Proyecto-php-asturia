@@ -36,6 +36,7 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 		/*&& !empty($_POST['kind'])*/
 	) {
 		require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
+		require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
 		//$id = $_POST["id"];
 		$id = mysqli_real_escape_string($con, (strip_tags($_POST["id"], ENT_QUOTES)));
 		// escaping, additionally removing everything that could be (html/javascript-) code
@@ -95,7 +96,7 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 
 		//variable de los permisos 
 		// $permisos = $_POST["permisos"];
-
+        $oldata=recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
 		$Editflag = "1";
 		// UPDATE data into database
 		$sql = "UPDATE tblcatpro SET STRSKU='" . $sku . "', STRCOD='" . $codigo . "', STRDESPRO='" . $descripcion . "', INTIDCAT='" . $categoria . "', INTIDSBC='" . $subcategoria . "', MONPCOS='" . $precio . "', INTIDUNI='" . $unidad . "', STRIMG='" . $Imagen . "',INTTIPUSO='" . $PTAller . "', BITSUS='" . $estado . "',loked='" . $Editflag .  "', Editor=0  WHERE STRSKU='" . $id . "' ";
@@ -104,6 +105,16 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 		if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/productoDefault.png") {
 			if (file_exists("../../../" . $pathimg))
 				unlink("../../../" . $pathimg);
+		}
+
+		if($query){
+			$sql2=recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
+		$tabla="tblcatpro";
+		$tipo="Actualizacion";
+		$fecha=date("Y-m-d H:i:s");
+		
+        $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$oldata."','".$sql2."');";
+	     $query = mysqli_query($con, $sqllog);
 		}
 		//
 		//Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa

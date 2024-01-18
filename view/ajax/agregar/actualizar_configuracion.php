@@ -1,4 +1,16 @@
 <?php
+
+function  recuperarDatos($consulta){
+global $con;
+$sqldelete=$consulta;
+	$dataDelete=mysqli_query($con,$sqldelete);
+	$data=mysqli_fetch_array($dataDelete);
+	$data=array_unique($data);
+	$dataend=implode(',',$data);
+
+	return $dataend;
+
+}
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 if (empty($_POST['id'])) {
 	$errors[] = "ID de la configuracion está vacío";
@@ -30,9 +42,27 @@ if (empty($_POST['id'])) {
 	$email = mysqli_real_escape_string($con, $_POST["email"]);
 	$telefono = mysqli_real_escape_string($con, (strip_tags($_POST["telefono"], ENT_QUOTES)));
 
+	$sqldelete="SELECT * from  configuracion WHERE id='$id';";
+	$dataDelete=mysqli_query($con,$sqldelete);
+	$data=mysqli_fetch_array($dataDelete);
+	$data=array_unique($data);
+	$dataend=implode(',',$data);
+	
+
 	// update data
 	$sql = "UPDATE configuracion SET nombre='" . $empresa . "', dni='" . $dni . "', actividad_economica='" . $actividad_economica . "', email='" . $email . "', telefono='" . $telefono . "' WHERE id='$id' ";
 	$query = mysqli_query($con, $sql);
+	if($query_new){
+	
+		$sql2="se actualizo de :".$dataend." A ".recuperarDatos("SELECT * from  configuracion WHERE id='$id';");
+		$tabla="configuracion";
+		$tipo="Actualizacion";
+		$fecha=date("Y-m-d H:i:s");
+		
+     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".mysqli_insert_id($con)."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+	 $query = mysqli_query($con, $sqllog);
+	 
+	}
 
 	// if user has been update successfully
 	if ($query) {

@@ -2,11 +2,13 @@
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 /* Connect To Database*/
 require_once("../../../config/config.php");
+require_once("../../../config/RecuperarDatos.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 
 	$id = intval($id);
 	$times = "&times;";
+	$sql2=recuperarDatos("SELECT * from tblcatuni WHERE INTIDUNI='$id';");
 
 	try {
 		if (($delete = mysqli_query($con, "DELETE FROM  tblcatuni WHERE INTIDUNI='$id'"))) {
@@ -14,6 +16,17 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
+			if($delete){
+				
+				$tabla="tblcatuni";
+				$tipo="Eliminacion";
+				$fecha=date("Y-m-d H:i:s");
+				
+			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+			 $query = mysqli_query($con, $sqllog);
+			 
+			}
+
 		} else {
 			$aviso = "Aviso!";
 			$msj = "Error al eliminar los datos " . mysqli_error($con);

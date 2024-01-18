@@ -12,6 +12,10 @@
         	&& !empty($_POST['BITSUS'])
         ){
 		require_once ("../../../config/config.php");//Contiene las variables de configuracion para conectar a la base de datos
+		require_once ("../../../config/RecuperarDatos.php");
+		
+		//Contiene las variables de configuracion para conectar a la base de datos
+		
 			
 			// escaping, additionally removing everything that could be (html/javascript-) code
             $STRNOMCAT = mysqli_real_escape_string($con,(strip_tags($_POST["STRNOMCAT"],ENT_QUOTES)));
@@ -20,19 +24,22 @@
             
             $DTEHOR=date("Y-m-d H:i:s");
             $id=intval($_POST['id']);
+			$olddata=recuperarDatos("SELECT * from tblcatcat WHERE INTIDCAT='$id';");
 			//Write register in to database 
 
            
 			$sql =  "UPDATE tblcatcat SET STRNOMCAT='".$STRNOMCAT."', STRDESCAT='".$STRDESCAT."', BITSUS='".$BITSUS."'  WHERE INTIDCAT='".$id."' ";
 			$query_new = mysqli_query($con,$sql);
 			if($query_new){
-				$sql2="se Actualizo la categoria con Nombre: ".$STRNOMCAT." Descripcion :".$STRDESCAT." En  la fecha : ".$DTEHOR;
+				$sql2=$olddata;
+				$new=recuperarDatos("SELECT * from tblcatcat WHERE INTIDCAT='$id';");
 				$tabla="tblcatcat";
 				$tipo="Actualizacion";
 				$fecha=date("Y-m-d H:i:s");
 				
-			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."','".$new."');";
 			 $query = mysqli_query($con, $sqllog);
+			 
 			}
 		
             

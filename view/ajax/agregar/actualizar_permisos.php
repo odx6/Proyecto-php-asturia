@@ -13,6 +13,7 @@ if (!empty($_POST['Habildades'])) {
         $id = $claves[$i];
         $sql = "UPDATE empleado_permisos SET Habilidades='$data'  WHERE 	idempleado_permiso='$id';";
         $query = mysqli_query($con, $sql);
+        
         $i += 1;
     }
     $_SESSION['message'] = 'Permisos modificados con exito';

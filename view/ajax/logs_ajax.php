@@ -79,7 +79,8 @@ if ($action == 'ajax') {
 					<th>Tabla</th>
 					<th>Tipo</th>
 					<th>Fecha</th>
-					<th>Sql</th>
+					<th>Viejos Valores</th>
+					<th>Nuevos Valores</th>
 					
 				</tr>
 			</thead>
@@ -96,6 +97,7 @@ if ($action == 'ajax') {
 				$Tipo=$row['Tipo'];
 				$fecha=$row['fecha'];
 				$sql=$row['sql'];
+				$new=$row['newvalue'];
 				/*$kind=$row['kind'];*/
 
 				$finales++;
@@ -107,6 +109,7 @@ if ($action == 'ajax') {
 						<td><?php echo $Tipo ?></td>
 						<td><?php echo $fecha ?></td>
 						<td><?php echo $sql ?></td>
+						<td><?php echo $new ?></td>
 						
 
 						<td class="text-right">
