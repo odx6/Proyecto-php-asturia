@@ -2,6 +2,7 @@
 $active2 = "active";
 
 require_once("./config/config.php");
+require_once("./config/funciones.php");
 //Archivo comprueba si el usuario esta logueado	
 include_once "./vendor/autoload.php";
 
@@ -35,7 +36,20 @@ if ($_SESSION['solicitud'] == 1) {
     } else {
         exit;
     }
+    ob_start();
+    consultarNombre($fk_empleado, 'tblcatemp', 'IDEMP', 'STRNOM');
 
+    $nombre = ob_get_clean();
+   
+
+    ob_start();
+    consultarNombre($fk_empleado, 'tblcatemp', 'IDEMP', 'STRAPE');
+
+    $apellido = ob_get_clean();
+   
+   
+
+  
 
     $dompdf = new Dompdf();
     $NoOrden = 4;
@@ -170,7 +184,7 @@ if ($_SESSION['solicitud'] == 1) {
         <div class="signature">
         <br>
             <p>AUTORIZO</p> 
-            <p>' . $fk_empleado . '</p><br>
+            <p>' . $nombre.' '.$apellido. '</p><br>
             <p>__________________________</p>
         </div>
         <div class="signature">

@@ -108,8 +108,7 @@ if ($action == 'ajax') {
 						<td><?php echo $tabla ?></td>
 						<td><?php echo $Tipo ?></td>
 						<td><?php echo $fecha ?></td>
-						<td><?php echo $sql ?></td>
-						<td><?php echo $new ?></td>
+						
 						
 
 						<td class="text-right">

@@ -3,9 +3,16 @@ include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 /* Connect To Database*/
 require_once("../../../config/config.php");
 require_once("../../../config/funciones.php");
+require_once("../../../config/Recuperardatos.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
+	$data = recuperarDatos("SELECT * FROM tblinv WHERE INTIDINV='$id';");
+	$detalle = "SELECT * FROM tblinvdet WHERE  INTIDINV='$id';";
+	$tarjetas = "SELECT * FROM tbltarinv WHERE  INTIDINV='$id';";
+
+
+
 
 	try {
 		if ($delete = mysqli_query($con, "DELETE FROM tblinv WHERE INTIDINV='$id'")) {
@@ -13,6 +20,42 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
+
+			$detalles = mysqli_query($con, $detalle);
+			$tarjetas = mysqli_query($con, $tarjetas);
+
+
+			if ($delete) {
+				while ($row = mysqli_fetch_array($detalles)) {
+
+					$INTIDDET = $row['INTIDDET'];
+					 $sql=recuperarDatos("SELECT * FROM tblinvdet WHERE  INTIDINV='$INTIDDET';");
+					$data = "tblinvdet";
+					$tipo = "Eliminacion";
+					$fecha = date("Y-m-d H:i:s");
+
+					$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $data . "');";
+					$query = mysqli_query($con, $sqllog);
+				}
+				while ($row = mysqli_fetch_array($tarjetas)) {
+
+					$INTIDTAR  = $row['INTIDTAR '];
+					 $data=recuperarDatos("SELECT * FROM tblinvdet WHERE  INTIDINV='$INTIDDET';");
+					$tabla = "tbltarinv";
+					$tipo = "Eliminacion";
+					$fecha = date("Y-m-d H:i:s");
+
+					$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $data . "');";
+					$query = mysqli_query($con, $sqllog);
+				}
+
+				$tabla = "tblinv";
+				$tipo = "Eliminacion";
+				$fecha = date("Y-m-d H:i:s");
+
+				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $data . "');";
+				$query = mysqli_query($con, $sqllog);
+			}
 		} else {
 			$aviso = "Aviso!";
 			$msj = "Error al eliminar los datos " . mysqli_error($con);
@@ -94,12 +137,12 @@ if ($action == 'ajax') {
 				$INTIDTOP = $row['INTIDTOP'];
 				$INTTIMOV = $row['INTTIPMOV'];
 				$INTFOL = $row['INTFOL'];
-				$IDEMPLE= $row['IDEMP'];
-				$STROBS= $row['STROBS'];
+				$IDEMPLE = $row['IDEMP'];
+				$STROBS = $row['STROBS'];
 				$DTEHOR = $row['DTEHOR'];
 				$INTALM = $row['INTALM'];
 				$DTEHOR = $row['DTEHOR'];
-				
+
 
 				/*$kind=$row['kind'];*/
 
@@ -110,21 +153,21 @@ if ($action == 'ajax') {
 						<td><?php echo $INTIDINV ?></td>
 						<td><?php echo $DTEFEC  ?></td>
 						<td><?php echo consultarNombre($INTIDTOP, 'tblcattop', 'INTIDTOP', 'STRNOMTPO');  ?></td>
-						<td><?php echo ($INTTIMOV == 1) ?  "Entrada": "Salida"; ?></td>
+						<td><?php echo ($INTTIMOV == 1) ?  "Entrada" : "Salida"; ?></td>
 						<td><?php echo $INTFOL ?></td>
 						<td><?php consultarNombre($IDEMPLE, 'tblcatemp', 'IDEMP', 'STRNOM'); ?></td>
 						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
 						<td><?php echo $STROBS ?></td>
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">
-						<?php if(in_array(2,$_SESSION['Habilidad']['Entradas'])){ ?>
-							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDINV; ?>');"><i class="fa fa-edit"></i></button>
+							<?php if (in_array(2, $_SESSION['Habilidad']['Entradas'])) { ?>
+								<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDINV; ?>');"><i class="fa fa-edit"></i></button>
 							<?php } ?>
-							<?php if(in_array(3,$_SESSION['Habilidad']['Entradas'])){ ?>
-							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDINV; ?>')"><i class="fa fa-trash-o"></i></button>
-							<?php }?>
-							<?php if(in_array(4,$_SESSION['Habilidad']['Entradas'])){ ?>
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDINV; ?>')"><i class="fa fa-eye"></i></button>
+							<?php if (in_array(3, $_SESSION['Habilidad']['Entradas'])) { ?>
+								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDINV; ?>')"><i class="fa fa-trash-o"></i></button>
+							<?php } ?>
+							<?php if (in_array(4, $_SESSION['Habilidad']['Entradas'])) { ?>
+								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDINV; ?>')"><i class="fa fa-eye"></i></button>
 							<?php } ?>
 						</td>
 					</tr>

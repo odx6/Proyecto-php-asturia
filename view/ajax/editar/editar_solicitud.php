@@ -40,7 +40,8 @@
 			/*&& !empty($_POST['kind'])*/
         ){
 		require_once ("../../../config/config.php");//Contiene las variables de configuracion para conectar a la base de datos
-
+		require_once ("../../../config/RecuperarDatos.php");//Contiene las variables de configuracion para conectar a la base de datos
+   
 	// escaping, additionally removing everything that could be (html/javascript-) code
     $pk_solicitud = mysqli_real_escape_string($con,(strip_tags($_POST["pk_solicitud"],ENT_QUOTES)));
     $fk_empleado = mysqli_real_escape_string($con,(strip_tags($_POST["fk_empleado"],ENT_QUOTES)));
@@ -53,12 +54,24 @@
     $DetallesServicio = mysqli_real_escape_string($con,(strip_tags($_POST["DetallesServicio"],ENT_QUOTES)));
     $Observaciones = mysqli_real_escape_string($con,(strip_tags($_POST["Observaciones"],ENT_QUOTES)));
 	$id=intval($_POST['id']);
+	$oldata=recuperarDatos("SELECT * from solicitud WHERE pk_solicitud='$id';");
     //variable de los permisos 
 
 
 	// UPDATE data into database
     $sql = "UPDATE solicitud SET pk_solicitud='".$pk_solicitud."', fk_empleado='".$fk_empleado."', NumeroFolio='".$NumeroFolio."', fecha='".$fecha."',operador='".$operador."', NoCarro='".$NoCarro."', Kilometraje='".$Kilometraje."',NoPlacas='".$NoPlacas."',DetallesServicio='".$DetallesServicio."', Observaciones='".$Observaciones."' WHERE pk_solicitud='".$id."' ";
     $query = mysqli_query($con,$sql);
+
+	if($query){
+		$sql2=recuperarDatos("SELECT * from solicitud WHERE pk_solicitud='$id';");
+		$tabla="solicitud";
+		$tipo="Actualizacion";
+		$fecha=date("Y-m-d H:i:s");
+		
+        $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$oldata."','".$sql2."');";
+	     $query = mysqli_query($con, $sqllog);
+
+	}
 
     //Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
    

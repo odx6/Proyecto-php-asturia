@@ -9,7 +9,7 @@ $datos = json_decode($json_data, true);
 
 
 
- //Archivo comprueba si el usuario esta logueado
+//Archivo comprueba si el usuario esta logueado
 if (empty($_POST['IDEMP'])) {
     $errors[] = "El empleado esta vacio está vacío.";
 } elseif (empty($_POST['INTIDTOP'])) {
@@ -20,9 +20,9 @@ if (empty($_POST['IDEMP'])) {
     $errors[] = "El folio esta vacio.";
 } elseif (empty($_POST['STROBS'])) {
     $errors[] = "Descripcion del movimiento  está vacío.";
-}   elseif (empty($_POST['inventario'])) {
+} elseif (empty($_POST['inventario'])) {
     $errors[] = "inventario está vacío.";
-} elseif (count($datos) <=0) {
+} elseif (count($datos) <= 0) {
     $errors[] = "Error no se puede ingresar una entrada o salida sin productos.";
 }/* elseif (empty($_POST['kind'])) {
             $errors[] = "Kind está vacío.";
@@ -35,13 +35,14 @@ if (empty($_POST['IDEMP'])) {
     && !empty($_POST['STROBS'])
     && !empty($_POST['inventario'])
     && is_array($datos)
-    && count($datos) >0
+    && count($datos) > 0
 
     /*&& !empty($_POST['kind'])*/
 ) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-  global $con;
-  mysqli_autocommit($con, FALSE);
+    require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
+    global $con;
+    mysqli_autocommit($con, FALSE);
     // escaping, additionally removing everything that could be (html/javascript-) code
     $IDEMP = mysqli_real_escape_string($con, (strip_tags($_POST["IDEMP"], ENT_QUOTES)));
     $INTIDTOP = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDTOP"], ENT_QUOTES)));
@@ -49,7 +50,7 @@ if (empty($_POST['IDEMP'])) {
     $INTIDALM = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDALM"], ENT_QUOTES)));
     $INTFOL = mysqli_real_escape_string($con, (strip_tags($_POST["INTFOL"], ENT_QUOTES)));
     $STROBS = mysqli_real_escape_string($con, (strip_tags($_POST["STROBS"], ENT_QUOTES)));
-   
+
     $FECHA = date("Y-m-d");
     $created_at = date("Y-m-d H:i:s");
 
@@ -66,20 +67,31 @@ if (empty($_POST['IDEMP'])) {
      STROBS,
      INTALM,
      DTEHOR)
-    VALUES('" . $FECHA . "','" . $INTIDTOP . "','".$INTTIPMOV."','".$INTFOL."','".$IDEMP ."','".$STROBS."','".$INTIDALM."','" .$created_at ."');";
-
-    
+    VALUES('" . $FECHA . "','" . $INTIDTOP . "','" . $INTTIPMOV . "','" . $INTFOL . "','" . $IDEMP . "','" . $STROBS . "','" . $INTIDALM . "','" . $created_at . "');";
 
 
-    
+
+
+
     $query_new = mysqli_query($con, $sql);
+    $id_insertado = mysqli_insert_id($con);
+   if ($query_new) {
+        $id = $id_insertado;
+        $sql2 = recuperarDatos("SELECT * from tblinv WHERE INTIDINV='$id';");
+        $tabla = "tblinv";
+        $tipo = "creacion";
+        $fecha = date("Y-m-d H:i:s");
+
+        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+        $query = mysqli_query($con, $sqllog);
+    }
     $id;
 
     if ($query_new) {
 
         // La inserción fue exitosa
-        $id_insertado = mysqli_insert_id($con);
-        if (is_array($datos)  ) {
+      
+        if (is_array($datos)) {
             // Recorrer el array con foreach e imprimir sus valores
             foreach ($datos as $elemento) {
                 /*foreach ($elemento as $clave => $valor) {
@@ -87,10 +99,10 @@ if (empty($_POST['IDEMP'])) {
                 }
                 echo '<br>';*/
 
-               
-                $created_at=date("Y-m-d H:i:s");
-                $created_at2=date("Y-m-d");
-                $SQL=" INSERT INTO tblinvdet( 
+
+                $created_at = date("Y-m-d H:i:s");
+                $created_at2 = date("Y-m-d");
+                $SQL = " INSERT INTO tblinvdet( 
                 INTIDINV,
                  SKU,
                   STRREF,
@@ -99,24 +111,46 @@ if (empty($_POST['IDEMP'])) {
                    MONPRCOS,
                     MONCTOPRO,
                      DTEHOR)
-                   VALUES('" . $id_insertado . "','" . $elemento['SKU'][0] . "','".$elemento['STRREF']."','".$elemento['INTCANT']."','".$elemento['INTIDUNI'] ."','". $elemento['MONPRCOS']."','".$elemento['MONCTOPRO']."','" .$created_at ."');";
-                    $query_new = mysqli_query($con, $SQL);
+                   VALUES('" . $id_insertado . "','" . $elemento['SKU'][0] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $created_at . "');";
+                $query_new = mysqli_query($con, $SQL);
+
+               if ($query_new) {
+                    $id = mysqli_insert_id($con);
+                    $sql3 = recuperarDatos("SELECT * from tblinvdet WHERE INTIDDET='$id';");
+                    $tabla = "tblinvdet";
+                    $tipo = "creacion";
+                    $fecha = date("Y-m-d H:i:s");
+
+                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql3 . "');";
+                    $query = mysqli_query($con, $sqllog);
+                }
 
 
-                $sql2="INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
-                VALUES ('" . $id_insertado ."','" .$created_at2 . "','" . $elemento['SKU'][0] . "','".$elemento['STRREF']."','".$elemento['INTCANT']."','".$elemento['INTIDUNI'] ."','". $elemento['MONPRCOS']."','".$elemento['MONCTOPRO']."','".$INTTIPMOV."','".$INTIDALM."','" .$created_at ."');";
-                 $query_new2 = mysqli_query($con, $sql2);
+
+
+                $sql2 = "INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
+                VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $elemento['SKU'][0] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $INTTIPMOV . "','" . $INTIDALM . "','" . $created_at . "');";
+                $query_new2 = mysqli_query($con, $sql2);
+                 if($query_new2){
+                    $id=mysqli_insert_id($con);
+                    $sql3=recuperarDatos("SELECT * from tbltarinv WHERE INTIDTAR='$id';");
+                    $tabla="tbltarinv";
+                    $tipo="creacion";
+                    $fecha=date("Y-m-d H:i:s");
+                    
+                 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql3."');";
+                 $query = mysqli_query($con, $sqllog);
+
+                }
             }
         } else {
-           
-           echo  '<div class="alert alert-danger" role="alert">
+
+            echo  '<div class="alert alert-danger" role="alert">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Error! No se agrego ningun  producto al inventario  no se puede agregar un inventario vacio </strong>
             
         </div>';
         }
-
-        
     } else {
         // La inserción falló
         echo mysqli_error($con); // Muestra el error específico
@@ -128,8 +162,6 @@ if (empty($_POST['IDEMP'])) {
     } else { // Si hubo algún error, revertir los cambios
         mysqli_rollback($con);
     }
-    
-
 } else {
     $errors[] = "desconocido.";
 }
@@ -153,7 +185,7 @@ if (isset($messages)) {
 ?>
     <div class="alert alert-success" role="alert">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>¡Bien hecho!<?php echo $id?> </strong>
+        <strong>¡Bien hecho!<?php echo $id ?> </strong>
         <?php
         foreach ($messages as $message) {
             echo $message;

@@ -3,10 +3,12 @@
 include("is_logged.php"); //Archivo comprueba si el usuario esta logueado
 /* Connect To Database*/
 require_once("../../config/config.php");
+require_once("../../config/RecuperarDatos.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
 	$sql = mysqli_query($con, "SELECT STRIMG FROM tblcatemp WHERE IDEMP='$id'");
+	$sql2=recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id'");
 	while ($fila = mysqli_fetch_array($sql)) {
 		$URL = $fila['STRIMG'];  // reemplaza 'nombre_de_columna' con el nombre de la columna que deseas imprimir
 	}
@@ -17,6 +19,16 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 				if ($delete && !empty($URL) && $URL != "view/resources/images/Default/perfil.png") {
 					if (file_exists("../../" . $URL))
 						unlink("../../" . $URL);
+				}
+				if($delete){
+				
+					$tabla="tblcatemp";
+					$tipo="Eliminacion";
+					$fecha=date("Y-m-d H:i:s");
+					
+				 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+				 $query = mysqli_query($con, $sqllog);
+				 
 				}
 			}
 			if ($id == 1) {
@@ -99,7 +111,6 @@ if ($action == 'ajax') {
 					<th>CORREO</th>
 					<th>ESTADO</th>
 					<th>CREACION</th>
-					
 					<th>ACCION</th>
 					
 					

@@ -53,6 +53,7 @@ if (empty($_POST['STRNSS'])) {
 	/*&& !empty($_POST['kind'])*/
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
+	require_once("../../../config/RecuperarDatos.php"); 
 
 	// escaping, additionally removing everything that could be (html/javascript-) code
 	//$IDEMP = mysqli_real_escape_string($con,(strip_tags($_POST["IDEMP"],ENT_QUOTES)));
@@ -123,6 +124,18 @@ if (empty($_POST['STRNSS'])) {
 	if (verificacionDeCorreo($STRCOR, $token) == "true") $sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) 
 	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "');";
 	$query_new = mysqli_query($con, $sql);
+
+	if($query_new){
+	$id=mysqli_insert_id($con);
+		$sql2=recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
+		$tabla="tblcatemp";
+		$tipo="creacion";
+		$fecha=date("Y-m-d H:i:s");
+		
+     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+	 $query = mysqli_query($con, $sqllog);
+
+	}
 	// if has been added successfully
 	if ($query_new) {
 		if (!empty($_POST['permisos'])) {
@@ -136,7 +149,16 @@ if (empty($_POST['STRNSS'])) {
 
 			while ($num_element < count($permisos)) {
 				$sql_detalle = "INSERT INTO empleado_permisos(idempleado, idpermiso) VALUES($idusernew, $permisos[$num_element])";
+
 				mysqli_query($con, $sql_detalle) or $sw = false;
+				$id=mysqli_insert_id($con);
+				$sql2=recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$id';");
+				$tabla="empleado_permisos";
+				$tipo="creacion";
+				$fecha=date("Y-m-d H:i:s");
+				
+			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+			 $query = mysqli_query($con, $sqllog);
 				$num_element = $num_element + 1;
 			}
 
