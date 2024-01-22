@@ -42,7 +42,7 @@ if ($_SESSION['productos'] == 1) {
                     <!-- modals -->
                     <?php
                    
-                    include "modals/mostrar/mostrar_producto.php";
+                    include "modals/mostrar/mostrar_log.php";
                     ?>
                     <!-- /end modals -->
 
@@ -69,7 +69,7 @@ if ($_SESSION['productos'] == 1) {
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Datos de los Productos</h3>
+                            <h3 class="panel-title">Movimientos</h3>
                             <div class="actions pull-right">
                                 <i class="fa fa-chevron-down"></i>
                                 <i class="fa fa-times"></i>
@@ -259,7 +259,7 @@ if ($_SESSION['productos'] == 1) {
                 "id": id
             };
             $.ajax({
-                url: 'view/modals/mostrar/producto.php',
+                url: 'view/modals/mostrar/log.php',
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#loader3").html("<img src='./assets/img/ajax-loader.gif'>");

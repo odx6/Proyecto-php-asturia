@@ -12,6 +12,7 @@ if (empty($_POST['STRNOMCAT'])) {
 	&& !empty($_POST['BITSUS'])
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
+	require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 	// escaping, additionally removing everything that could be (html/javascript-) code
 	$STRNOMCAT = mysqli_real_escape_string($con, (strip_tags($_POST["STRNOMCAT"], ENT_QUOTES)));
@@ -27,12 +28,13 @@ if (empty($_POST['STRNOMCAT'])) {
 	$query_new = mysqli_query($con, $sql);
     
 	if($query_new){
-		$sql2="se creo la categoria con Nombre: ".$STRNOMCAT." Descripcion :".$STRDESCAT." En  la fecha : ".$DTEHOR;
+		$ide=mysqli_insert_id($con);
+		$sql2=recuperarDatos("SELECT * FROM tblcatcat WHERE INTIDCAT='$ide';");
 		$tabla="tblcatcat";
 		$tipo="creacion";
 		$fecha=date("Y-m-d H:i:s");
 		
-     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".mysqli_insert_id($con)."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
+     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$ide."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
 	 $query = mysqli_query($con, $sqllog);
 	 
 	}

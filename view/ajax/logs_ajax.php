@@ -79,8 +79,9 @@ if ($action == 'ajax') {
 					<th>Tabla</th>
 					<th>Tipo</th>
 					<th>Fecha</th>
-					<th>Viejos Valores</th>
-					<th>Nuevos Valores</th>
+					<th>Acción</th>
+
+				
 					
 				</tr>
 			</thead>
@@ -118,7 +119,7 @@ if ($action == 'ajax') {
 							
 							
 							
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $fk_registro; ?>')"><i class="fa fa-eye"></i></button>
+							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $pk_registro; ?>')"><i class="fa fa-eye"></i></button>
 							
 
 						</td>

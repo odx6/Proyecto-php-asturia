@@ -21,7 +21,7 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
-			$sql2= "Se elimino el  registro con los datos  : ".$dataend;
+			$sql2= $dataend;
 				$tabla="tblcatcat";
 				$tipo="Eliminacion";
 				$fecha=date("Y-m-d H:i:s");
