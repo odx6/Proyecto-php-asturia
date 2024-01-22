@@ -53,8 +53,9 @@ if (empty($_POST['STRNSS'])) {
 ) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
     require_once("../../../config/RecuperarDatos.php");
+    $id = intval($_POST['id']);
     $consulta="SELECT * FROM tblcatemp WHERE IDEMP=$id;";
-    $oldPerfil=recuperarDatos($consulta);
+    $oldata=recuperarDatos($consulta);
     //Contiene las variables de configuracion para conectar a la base de datos
 
     // escaping, additionally removing everything that could be (html/javascript-) code
@@ -75,7 +76,7 @@ if (empty($_POST['STRNSS'])) {
     $OLDSTRCOR = mysqli_real_escape_string($con, (strip_tags($_POST["OLDSTRCOR"], ENT_QUOTES)));
 
     if (!empty($_POST['STRPWS'])) $STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
-    $id = intval($_POST['id']);
+  
 
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
     if (empty($_FILES["STRIMG"]['name'])) {
@@ -141,6 +142,19 @@ if (empty($_POST['STRNSS'])) {
     if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/perfil.png") {
         if (file_exists("../../../" . $pathimg))
             unlink("../../../" . $pathimg);
+    }
+
+    if($query){
+       
+        $sql2 = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
+        $tabla = "tblcatemp";
+        $tipo = "Actualizacion";
+        $fecha = date("Y-m-d H:i:s");
+
+        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "','" . $oldata . "');";
+        $query = mysqli_query($con, $sqllog);
+
+
     }
 
     $_SESSION['message'] = 'Perfil Actualizado Correctamente';
