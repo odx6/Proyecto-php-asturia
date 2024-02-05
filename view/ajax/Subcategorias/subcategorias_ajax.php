@@ -6,7 +6,7 @@ require_once("../../../config/RecuperarDatos.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
-	$sql2=recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
+	$sql2 = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
 
 	try {
 		if ($delete = mysqli_query($con, "DELETE FROM tblcatsbc WHERE INTIDSBC='$id'")) {
@@ -14,17 +14,15 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
-			if($delete){
-				
-				$tabla="tblcatsbc";
-				$tipo="Eliminacion";
-				$fecha=date("Y-m-d H:i:s");
-				
-			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-			 $query = mysqli_query($con, $sqllog);
-			 
-			}
+			if ($delete) {
 
+				$tabla = "tblcatsbc";
+				$tipo = "Eliminacion";
+				$fecha = date("Y-m-d H:i:s");
+
+				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+				$query = mysqli_query($con, $sqllog);
+			}
 		} else {
 			$aviso = "Aviso!";
 			$msj = "Error al eliminar los datos " . mysqli_error($con);
@@ -82,7 +80,7 @@ if ($action == 'ajax') {
 	}
 	if ($numrows > 0) {
 	?>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#id Subcategoria</th>
@@ -94,37 +92,38 @@ if ($action == 'ajax') {
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<?php
-			$finales = 0;
-			while ($row = mysqli_fetch_array($query)) {
-				$INTIDSBC = $row['INTIDSBC'];
-				$INTIDCAT = $row['INTIDCAT'];
 
-				if (isset($INTIDCAT) && $INTIDCAT != NULL) {
-					$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
-					if (isset($Categoria) && $Categoria != NULL) {
-						$tem = mysqli_fetch_array($Categoria);
-						if (isset($tem) && $tem != NULL) $NombreCategoria = $tem['STRNOMCAT'];
+			<tbody>
+				<?php
+				$finales = 0;
+				while ($row = mysqli_fetch_array($query)) {
+					$INTIDSBC = $row['INTIDSBC'];
+					$INTIDCAT = $row['INTIDCAT'];
+
+					if (isset($INTIDCAT) && $INTIDCAT != NULL) {
+						$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
+						if (isset($Categoria) && $Categoria != NULL) {
+							$tem = mysqli_fetch_array($Categoria);
+							if (isset($tem) && $tem != NULL) $NombreCategoria = $tem['STRNOMCAT'];
+						}
 					}
-				}
-				$STRNOMSBC = $row['STRNOMSBC'];
-				$STRDESSBC = $row['STRDESBC'];
-				$DTEHOR = $row['DTEHOR'];
-				$BITSUS = $row['BITSUS'];
+					$STRNOMSBC = $row['STRNOMSBC'];
+					$STRDESSBC = $row['STRDESBC'];
+					$DTEHOR = $row['DTEHOR'];
+					$BITSUS = $row['BITSUS'];
 
-				if ($BITSUS == 1) {
-					$lbl_status = "Activo";
-					$lbl_class = 'label label-success';
-				} else {
-					$lbl_status = "Inactivo";
-					$lbl_class = 'label label-danger';
-				}
+					if ($BITSUS == 1) {
+						$lbl_status = "Activo";
+						$lbl_class = 'label label-success';
+					} else {
+						$lbl_status = "Inactivo";
+						$lbl_class = 'label label-danger';
+					}
 
-				/*$kind=$row['kind'];*/
+					/*$kind=$row['kind'];*/
 
-				$finales++;
-			?>
-				<tbody>
+					$finales++;
+				?>
 					<tr>
 						<td><?php echo $INTIDSBC ?></td>
 						<td><?php echo $STRNOMSBC ?></td>
@@ -134,31 +133,32 @@ if ($action == 'ajax') {
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">
-						<?php if(in_array(2,$_SESSION['Habilidad']['Subcategorias'])){ ?>
-							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDSBC; ?>');"><i class="fa fa-edit"></i></button>
-							<?php } ?> 
-							<?php if(in_array(3,$_SESSION['Habilidad']['Subcategorias'])){ ?>
-							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDSBC; ?>')"><i class="fa fa-trash-o"></i></button>
-                             <?php } ?>
-							 <?php if(in_array(4,$_SESSION['Habilidad']['Subcategorias'])){ ?>
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDSBC; ?>')"><i class="fa fa-eye"></i></button>
-								<?php } ?>
+							<?php if (in_array(2, $_SESSION['Habilidad']['Subcategorias'])) { ?>
+								<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDSBC; ?>');"><i class="fa fa-edit"></i></button>
+							<?php } ?>
+							<?php if (in_array(3, $_SESSION['Habilidad']['Subcategorias'])) { ?>
+								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDSBC; ?>')"><i class="far fa-trash-alt"></i> </button>
+							<?php } ?>
+							<?php if (in_array(4, $_SESSION['Habilidad']['Subcategorias'])) { ?>
+								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDSBC; ?>')"><i class="fa fa-eye"></i></button>
+							<?php } ?>
 						</td>
 					</tr>
-				</tbody>
-			<?php } ?>
-			<tfoot>
-				<tr>
-					<td colspan='10'>
-						<?php
-						$inicios = $offset + 1;
-						$finales += $inicios - 1;
-						echo "Mostrando $inicios al $finales de $numrows registros";
-						echo paginate($reload, $page, $total_pages, $adjacents);
-						?>
-					</td>
-				</tr>
-			</tfoot>
+					<?php } ?>
+			</tbody>
+		
+		<tfoot>
+			<!--<tr>
+				<td colspan='10'>
+					<?php
+					$inicios = $offset + 1;
+					$finales += $inicios - 1;
+					echo "Mostrando $inicios al $finales de $numrows registros";
+					echo paginate($reload, $page, $total_pages, $adjacents);
+					?>
+				</td>
+			</tr>-->
+		</tfoot>
 		</table>
 <?php
 	} else {

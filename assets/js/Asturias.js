@@ -101,8 +101,8 @@ $(document).ready(function () {
 function load(page, table, path, reload) {
 
   var column = $("#outproduct").val();
-  var query = $("#q").val();
-  var per_page = $("#per_page").val();
+  var query = "";
+  var per_page = 1000;
   var parametros = {
     "action": "ajax",
     "page": page,
@@ -123,6 +123,7 @@ function load(page, table, path, reload) {
     success: function (data) {
       $(".outer_div").html(data).fadeIn('slow');
       $("#loader").html("");
+      renderTable();
     }
   })
 }
@@ -139,8 +140,8 @@ function per_page(valor) {
 function eliminar(id, path, table) {
   if (confirm('Esta acción  eliminará de forma permanente la solicitud\n\n Desea continuar?')) {
     var page = 1;
-    var query = $("#q").val();
-    var per_page = $("#per_page").val();
+    var query = "";
+    var per_page = "";
     var parametros = {
       "action": "ajax",
       "page": page,
@@ -379,7 +380,7 @@ function agregarInventario() {
           CELLPRECIO.textContent = numeroFormateado;
           CELLTOTAL.textContent = Elemento.MONCTOPRO;
           var boton = document.createElement('button');
-          boton.innerHTML = '<i class="fa fa-trash-o"></i>';
+          boton.innerHTML = '<i class="far fa-trash-alt"></i>';
           boton.type = 'button';
 
           boton.setAttribute("data-info", indice);
@@ -459,7 +460,7 @@ function agregarInventario() {
         
           CELLTOTAL.textContent = formatoPesos.format(Elemento.MONCTOPRO);
           var boton = document.createElement('button');
-          boton.innerHTML = '<i class="fa fa-trash-o"></i>';
+          boton.innerHTML = '<i class="far fa-trash-alt"></i>';
           boton.type = 'button';
 
           boton.setAttribute("data-info", indice);
@@ -634,7 +635,7 @@ function EliminarArrayInsert(variable) {
   
     CELLTOTAL.textContent = formatoPesos.format(Elemento.MONCTOPRO);
     var boton = document.createElement('button');
-    boton.innerHTML = '<i class="fa fa-trash-o"></i>';
+    boton.innerHTML = '<i class="far fa-trash-alt"></i>';
     boton.type = 'button';
 
     boton.setAttribute("data-info", indice);
@@ -725,7 +726,7 @@ function MostrarProductos(id) {
         TotalUpdate = TotalUpdate + parseInt(Elemento.total);
 
         var boton = document.createElement('button');
-        boton.innerHTML = '<i class="fa fa-trash-o"></i>';
+        boton.innerHTML = '<i class="far fa-trash-alt"></i>';
         boton.type = 'button';
 
         boton.setAttribute("data-info", indice);
@@ -840,7 +841,7 @@ function agregarUpdate() {
 
 
               var boton = document.createElement('button');
-              boton.innerHTML = '<i class="fa fa-trash-o"></i>';
+              boton.innerHTML = '<i class="far fa-trash-alt"></i>';
               boton.type = 'button';
 
               boton.setAttribute("data-info", indice);
@@ -920,7 +921,7 @@ function agregarUpdate() {
 
 
                 var boton = document.createElement('button');
-                boton.innerHTML = '<i class="fa fa-trash-o"></i>';
+                boton.innerHTML = '<i class="far fa-trash-alt"></i>';
                 boton.type = 'button';
 
                 boton.setAttribute("data-info", indice);
@@ -1011,7 +1012,7 @@ function agregarUpdate() {
 
 
         var boton = document.createElement('button');
-        boton.innerHTML = '<i class="fa fa-trash-o"></i>';
+        boton.innerHTML = '<i class="far fa-trash-alt"></i>';
         boton.type = 'button';
 
         boton.setAttribute("data-info", indice);
@@ -1090,7 +1091,7 @@ function EliminarArray(id) {
 
 
     var boton = document.createElement('button');
-    boton.innerHTML = '<i class="fa fa-trash-o"></i>';
+    boton.innerHTML = '<i class="far fa-trash-alt"></i>';
     boton.type = 'button';
 
     boton.setAttribute("data-info", indice);
@@ -1134,7 +1135,7 @@ function HistorialEntradassalidas(id) {
   //alert(id);
   var page = 1;
 
-  var per_page = $("#per_page").val();
+  var per_page = 1000;
   var parametros = {
     "action": "ajax",
     "page": page,
@@ -1292,3 +1293,4 @@ function reportInputOutput(){
    
 
 }
+

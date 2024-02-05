@@ -44,7 +44,7 @@ if (!empty($_POST['Habildades'])) {
 
 
 
-header("location: ../../../?view=empleados");
+header("location: ../../../?view=empleado");
 
 
 

@@ -71,7 +71,7 @@ if ($action == 'ajax') {
 	}
 	if ($numrows > 0) {
 	?>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>Empleado</th>
@@ -128,16 +128,7 @@ if ($action == 'ajax') {
 				</tbody>
 			
 			<tfoot>
-				<tr>
-					<td colspan='10'>
-						<?php
-						$inicios = $offset + 1;
-						$finales += $inicios - 1;
-						echo "Mostrando $inicios al $finales de $numrows registros";
-						echo paginate($reload, $page, $total_pages, $adjacents);
-						?>
-					</td>
-				</tr>
+				
 			</tfoot>
 		</table>
 <?php

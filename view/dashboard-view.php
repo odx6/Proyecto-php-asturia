@@ -1,11 +1,23 @@
 <?php
 $active1 = "active";
 
-include "resources/header.php";
+include "resources/header copy.php";
 
 if ($_SESSION['dashboard'] == 1) {
 
     $empleados = mysqli_query($con, "select * from tblcatemp");
+    $numempleados= mysqli_num_rows($empleados);
+
+    $productos = mysqli_query($con, "select * from tblcatpro");
+    $numproductos= mysqli_num_rows($productos);
+
+    $solicitud = mysqli_query($con, "select * from solicitud");
+    $numsolicitud= mysqli_num_rows($solicitud);
+
+    $categorias = mysqli_query($con, "select * from tblcatcat");
+    $numcategorias= mysqli_num_rows($categorias);
+
+    
     //  $talleres = mysqli_query($con, "select * from taller");
     // $empresas = mysqli_query($con, "select * from empresa");
     // $vehiculos = mysqli_query($con, "select * from vehiculo");
@@ -31,77 +43,76 @@ if ($_SESSION['dashboard'] == 1) {
 
 ?>
     <!--main content start-->
-    <section class="main-content-wrapper">
-        <section id="main-content">
-            <!--tiles start-->
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="dashboard-tile detail tile-red">
-                        <div class="content">
-                            <h1 class="text-left timer" data-from="0" data-to="<?php echo mysqli_num_rows($empleados) ?>" data-speed="2500"> </h1>
-                            <p>Empleados <?php echo mysqli_num_rows($empleados) ?></p>
-                        </div>
-                        <div class="icon"><i class="fa fa-users"></i>
-                        </div>
-                    </div>
-                </div>
-              <!--  <div class="col-md-3 col-sm-6">
-                    <div class="dashboard-tile detail tile-turquoise">
-                        <div class="content">
-                            <h1 class="text-left timer" data-from="0" data-to="<?php // echo mysqli_num_rows($talleres) ?>" data-speed="2500"> </h1>
-                            <p>Talleres</p>
-                        </div>
-                        <div class="icon"><i class="fa fa-indent"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="dashboard-tile detail tile-blue">
-                        <div class="content">
-                            <h1 class="text-left timer" data-from="0" data-to="<?php //echo mysqli_num_rows($empresas) ?>" data-speed="2500"> </h1>
-                            <p>Empresas</p>
-                        </div>
-                        <div class="icon"><i class="fa fa-building-o"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="dashboard-tile detail tile-purple">
-                        <div class="content">
-                            <h1 class="text-left timer" data-to="<?php //echo mysqli_num_rows($vehiculos) ?>" data-speed="2500"> </h1>
-                            <p>Vehiculos</p>
-                        </div>
-                        <div class="icon"><i class="fa fa-truck"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-            <!--tiles end-->
-            <!--dashboard charts and map start-->
-            <!--<div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Datos Estadisticos</h3>
-                            <div class="actions pull-right">
-                                <i class="fa fa-chevron-down"></i>
-                                <i class="fa fa-times"></i>
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3><?php echo $numempleados; ?></h3>
+
+                                <p>Empleados Registrados</p>
                             </div>
-                        </div>
-                        <div class="panel-body text-center">
-                            <p class="text-center">
-                                <strong><span class="text-muted">Taller</span> & <span class="text-info">Mecánico</span> <b><?php echo date('Y'); ?></b></strong>
-                            </p>
-                            <canvas id="bar" height="300" width="1050px"></canvas>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">Mas informacion <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3><?php echo $numproductos ?><sup style="font-size: 20px"></sup></h3>
+
+                                <p>numero de productos</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">mas informacion <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3><?php echo $numsolicitud ?></h3>
+
+                                <p>numero de solicitudes </p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">mas informacion <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3><?php echo $numcategorias ?></h3>
+
+                                <p>numero de categorias registradas</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">mas informacion <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
                 </div>
-            </div>-->
-            <!--dashboard charts and map end-->
-        </section>
-    </section>
+            </div>
+    </div>
     <!--main content end-->
-   
+
     <?php
     include "resources/footer.php";
     ?>

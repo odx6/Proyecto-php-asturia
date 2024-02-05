@@ -64,7 +64,7 @@ if ($action == 'ajax') {
 	}
 	if ($numrows > 0) {
 	?>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#ID</th>
@@ -109,7 +109,7 @@ if ($action == 'ajax') {
 						<td><?php echo $fecha ?></td>
 						<td class="text-right">
 							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $id; ?>');"><i class="fa fa-edit"></i></button>
-							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $id; ?>')"><i class="fa fa-trash-o"></i></button>
+							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $id; ?>')"><i class="far fa-trash-alt"></i></button>
 						</td>
 					</tr>
 				</tbody>

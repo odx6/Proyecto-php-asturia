@@ -1,12 +1,12 @@
 <?php
- $active2 = "active";
- 
-    include "resources/header.php";
-    include "./config/funciones.php";
-    if(empty( $_REQUEST['id'])){
-        header("location: ./?view=index"); 
-    }
-    if (  $_SESSION['empleados'] == 1 && in_array(2,$_SESSION['Habilidad']['Empleados']) && $_SESSION['user_id']==1 ) {
+$active2 = "active";
+
+include "resources/header copy.php";
+include "./config/funciones.php";
+if (empty($_REQUEST['id'])) {
+    header("location: ./?view=index");
+}
+if ($_SESSION['empleados'] == 1 && in_array(2, $_SESSION['Habilidad']['Empleados']) && $_SESSION['user_id'] == 1) {
     $id_user = $_REQUEST['id'];
     //$id_user = 25;
     $empleado = mysqli_query($con, "select * from tblcatemp where IDEMP=$id_user");
@@ -31,99 +31,102 @@
     $CREATE_AT = $rw->CREATE_AT;
 ?>
     <!--main content start-->
-    <section class="main-content-wrapper">
-        <section id="main-content">
-            <div class="row">
-                <div class="col-md-12">
-                    <!--breadcrumbs start -->
-                    <ul class="breadcrumb  pull-right">
-                        <li><a href="./?view=dashboard">Dashboard</a></li>
-                        <li class="active">Perfil</li>
-                    </ul>
-                    <!--breadcrumbs end -->
-                    <br>
-                    <h1 class="h1">Perfil</h1>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <!-- Profile Image -->
-                    <div class="panel panel-primary">
-                        <div class="panel-body panel-profile">
-                            <div id="load_img">
-                                <img class="img-responsive" src="<?php echo $STRIMG; ?>" alt="Logotipo">
-                            </div>
-                            <h3 class="profile-username text-center"><?php echo $STRNOM . " " . $STRAPE; ?></h3>
-                            <p class="text-muted text-center mail-text"><?php echo $STRCOR; ?></p>
-
-
-
-                        </div>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Permisos del empleado </h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                            <li class="breadcrumb-item active">Permisos</li>
+                        </ol>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div id="resultados_ajax"></div><!-- resultados ajax -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Permisos del Usuario</h3>
-                            <div class="actions pull-right">
-                                <i class="fa fa-chevron-down"></i>
-                                <i class="fa fa-times"></i>
-                            </div>
-                        </div>
-                        <form class="form-horizontal" role="form" name="update_register" id="update_register" method="post" action="view/ajax/agregar/actualizar_permisos.php">
-
-                            <div class="panel-body" style="align-items: center;">
-
-                                <ul style="list-style: none;" id="permisos">
-
-                                    <?php
+            </div><!-- /.container-fluid -->
+        </section>
 
 
-                                    $marcados = mysqli_query($con, "SELECT * FROM empleado_permisos WHERE idempleado=$id_user");
-                                    $valores = array();
+        <section class="content">
+            <!--inicio de los permisos -->
+
+            <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                    <div class="text-center">
+                        <img class="profile-user-img img-fluid img-circle" src="<?php echo $STRIMG ?>" alt="User profile picture">
+                    </div>
+
+                    <h3 class="profile-username text-center"><?php echo $STRNOM . " " . $STRAPE ?></h3>
+
+                    <p class="text-muted text-center"><?php echo $STRCOR ?></p>
+                    <p class="text-muted text-center"><?php echo $IDEMP ?></p>
+
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <form role="form" name="update_register" id="update_register" method="post" action="view/ajax/agregar/actualizar_permisos.php">
+                <div class="row">
 
 
 
 
-                                    while ($reg = $marcados->fetch_object()) {
-                                        $skil = explode(",", $reg->Habilidades);
+                    <?php
 
-                                    ?>
 
-                                        <h3 style=""><i class="fa fa-cog" aria-hidden="true"></i> <?php consultarNombre($reg->idpermiso, 'permisos', 'id', 'nombre'); ?></h3>
-                                    <?php
-                                        echo '<br>';
+                    $marcados = mysqli_query($con, "SELECT * FROM empleado_permisos WHERE idempleado=$id_user");
+                    $valores = array();
+
+
+
+
+                    while ($reg = $marcados->fetch_object()) {
+                        $skil = explode(",", $reg->Habilidades);
+
+                    ?>
+                        <div class="col-6" id="<?php consultarNombre($reg->idpermiso, 'permisos', 'id', 'nombre'); ?>">
+                            <div class="card card-primary card-outline">
+                                <a class="d-block w-100" data-toggle="collapse" href="#<?php consultarNombre($reg->idpermiso, 'permisos', 'id', 'nombre'); ?>">
+                                    <div class="card-header">
+                                        <h4 class="card-title w-100">
+                                            <?php consultarNombre($reg->idpermiso, 'permisos', 'id', 'nombre'); ?>
+                                        </h4>
+                                    </div>
+                                </a>
+                                <div id="<?php consultarNombre($reg->idpermiso, 'permisos', 'id', 'nombre'); ?>" class="collapse show" data-parent="#<?php consultarNombre($reg->idpermiso, 'permisos', 'id', 'nombre'); ?>">
+                                    <div class="card-body">
+                                        <?php
+
                                         $temp = $reg->idempleado_permiso;
 
                                         $Habilidades = mysqli_query($con, "SELECT * FROM Habilidades");
                                         while ($reg = $Habilidades->fetch_object()) {
-                                            $sw =  (in_array($reg->pk_hab, $skil)) ? 'checked' : '';
+                                            $sw =  (in_array($reg->pk_hab, $skil)) ? 'checked' : 'HOLA';
                                             echo '&nbsp;<input id="' . $reg->Nombre . '" ' . $sw . ' type="checkbox" style="font-size:xx-small" data-nombre="' . $reg->Nombre . '" name="Habildades[ ' . $temp . '][' . $reg->Nombre . ']" value="' . $reg->pk_hab . '" >' . $reg->Nombre . ' &nbsp;</input>';
                                         }
-                                        echo '<br>';
-                                    }
-
-                                    ?>
-
-                                </ul>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-primary actualizar_datos">Guardar datos</button>
+                                        ?>
                                     </div>
                                 </div>
-                        </form>
+                            </div>
+                        </div>
+                    <?php } ?>
+                  
+                    <div class="col-12">
+                    <div class="form-group">
+                            <button type="submit" class="btn btn-primary actualizar_datos">Guardar datos</button>
                     </div>
-                    <!--panel-->
-                    <!--end-pa
+                    </div>
                 </div>
-            </div>
-        </div>
+                
+            </form>
 
-    </section>
-</section><!--main content end-->
-                    <?php include "resources/footer.php" ?>
-                <?php } else {
-                     require 'resources/acceso_prohibido.php';
-            } ?>
+            <!--final de los permisos -->
+
+            <?php include "resources/footer.php" ?>
+        <?php } else {
+        require 'resources/acceso_prohibido.php';
+    } ?>

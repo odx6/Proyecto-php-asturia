@@ -41,106 +41,186 @@ if (in_array(4, $_SESSION['Habilidad']['Productos'])) {
 
     <br>
     <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
-    <div class="form-group">
-
-        <div class="col-sm-6">
+    <!-- new modal-->
+    <div class="row">
+        <div class="col-6">
             <label for="dni" class=" control-label">SKU: </label>
-            <input type="text" readonly class="form-control" id="sku" name="sku" value="<?php echo $SKU; ?>" placeholder="SKU: ">
+            <input type="text" required class="form-control" id="sku" name="sku" value="<?php echo $SKU; ?>" placeholder="SKU: " readonly>
         </div>
-
-
-        <div class="col-sm-6">
+        <div class="col-6">
             <label for="nombre" class=" control-label">Codigo: </label>
-            <input type="text" readonly class="form-control" id="codigo" name="codigo" value="<?php echo $STRCODINT; ?>" placeholder="Codigo: ">
+            <input type="text" required class="form-control" id="codigo" name="codigo" value="<?php echo $STRCODINT; ?>" placeholder="Codigo: " readonly>
         </div>
     </div>
-
-    <div class="form-group">
-
-        <div class="col-sm-12">
-            <label for="apellido" class="control-label">Descripcion: </label>
-            <input type="text" readonly class="form-control" id="descripcion" name="descripcion" value="<?php echo $STRDESPRO; ?>" placeholder="Descripcion: ">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="apellido" class="control-label">Descripcion: </label>
+                <input type="text" required class="form-control" id="descripcion" name="descripcion" value="<?php echo $STRDESPRO; ?>" placeholder="Descripcion: " readonly>
+            </div>
         </div>
     </div>
     <div class="card mb-3" style="max-width: 800px;">
         <div class="row g-0">
-            <div class="col-md-6">
-                <img src="<?php echo $STRIMG ?>" class="img-fluid rounded-start EverCambio" alt="...">
+            <div class="col-md-4">
+                <img src="<?php echo $STRIMG ?>" class="img-fluid rounded-start  EverCambio" alt="...">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="card-body">
-                    <!--empieza la card body-->
-                    <div class="form-group">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="imagefile" class="control-label">Imagen: </label>
+                                <input type="file" name="STRIMG" class="form-control validarBtn" id="STRIMG" readonly>
+                            </div>
 
-                        <div class="col-sm-6">
-
-                            <label for="imagefile" class="col-sm-2 control-label">Imagen: </label>
-                            <input type="text" readonly name="STRIMG" class="form-control " id="STRIMG" value="imagen" readonly>
                         </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="usuario" class="control-label">Categoria: </label>
+
+                                <?php
+
+                                // Consulta SQL para obtener los datos
+                                $consulta = "SELECT  INTIDCAT,STRNOMCAT FROM tblcatcat";
+                                $resultado = mysqli_query($con, $consulta);
 
 
-                        <div class="col-sm-6">
-                            <label for="usuario" class="control-label">Categoria: </label>
+                                // Crear el elemento select
+                                echo ' <select class="form-control  categorias" name="categoria" id="categoria" onclick="mensaje();" disabled>';
 
-                            <input type="text" required class="form-control" id="precio" readonly name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php consultarNombre($INTIDCAT, 'tblcatcat', 'INTIDCAT', 'STRNOMCAT'); ?>">
+                                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                                    // Iterar sobre los resultados y crear una opción para cada uno
+
+                                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                                        $valor = "";
+                                        if ($INTIDCAT == $fila["INTIDCAT"]) $valor = "selected";
+                                        echo '<option value="' . $fila['INTIDCAT'] . '"' . $valor . "> " . $fila['STRNOMCAT'] . '</option>';
+                                    }
+                                } else {
+
+                                    echo  '<option value="" disabled  selected >No hay categorias en la  bd agregue datos </option>';
+                                }
+
+                                echo '</select>';
+                                ?>
+
+
+
+
+                            </div>
 
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="subcategoria" class=" control-label">Subcategoria: </label>
+                                <select class="form-control Subcategorias" name="Subcategoria" id="Subcategoria" required disabled>
 
+                                    <option value="<?php echo $INTIDSUBCAT; ?>" selected><?php consultarNombre($INTIDSUBCAT, 'tblcatsbc', 'INTIDSBC', 'STRNOMSBC'); ?></option>
+                                </select>
+                            </div>
 
-                    <div class="form-group">
-
-                        <div class="col-sm-6">
-                            <label for="subcategoria" class=" control-label">Subcategoria: </label>
-                            <input type="text" class="form-control" value="<?php consultarNombre($INTIDSUBCAT, 'tblcatsbc', 'INTIDSBC', 'STRNOMSBC'); ?>" readonly>
                         </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="precio" class=" control-label">Precio: </label>
+                                <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php echo $MONPCOS; ?>" readonly>
+                            </div>
 
-
-                        <div class="col-sm-6">
-                            <label for="precio" class=" control-label">Precio: </label>
-                            <input type="text" required class="form-control" id="precio" name="precio" placeholder="Precio" pattern="\d+" title="Por favor ingresa solo números positivos" required value="<?php echo "$" . number_format($MONPCOS, 2, '.', ','); ?>" readonly>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="usuario" reuired class=" control-label">Unidad de medida : </label>
 
-                    <div class="form-group">
+                                <?php
 
-                        <div class="col-sm-6">
-                            <label for="usuario" reuired class=" control-label"> Medida : </label>
-
-                            <input type="text" class="form-control" value="<?php consultarNombre($INTIDUNI, 'tblcatuni', 'INTIDUNI', 'STRNOMUNI'); ?> " readonly>
-
+                                // Consulta SQL para obtener los datos
+                                $consulta = "SELECT  INTIDUNI,STRNOMUNI FROM tblcatuni ORDER BY STRNOMUNI ASC";
+                                $resultado = mysqli_query($con, $consulta);
 
 
+                                // Crear el elemento select
+                                echo ' <select class="form-control categorias" name="unidad" id="unidad" disabled>';
+
+                                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                                    // Iterar sobre los resultados y crear una opción para cada uno
+
+                                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                                        $valor = "";
+                                        if ($INTIDUNI == $fila["INTIDUNI"]) $valor = "selected";
+                                        echo '<option value="' . $fila['INTIDUNI'] . '"' . $valor . "> " . $fila['STRNOMUNI'] . '</option>';
+                                    }
+                                } else {
+
+                                    echo  '<option value="" disabled  selected >No hay categorias en la  bd agregue datos </option>';
+                                }
+
+                                echo '</select>';
+                                ?>
+
+
+
+
+                            </div>
                         </div>
 
 
-
-                        <div class="col-sm-6">
+                        <div class="col-6">
+                            <div class="form-group">
                             <label for="usuario" reuired class="control-label">Tipo de uso: </label>
+                            <?php
 
-                            <input type="text" class="form-control" value="<?php consultarNombre($INTTIPUSO, 'tblcattus', 'INTIDPUSO', 'STRNOMPUSO'); ?>" readonly>
+                            // Consulta SQL para obtener los datos
+                            $consulta = "SELECT  INTIDPUSO,STRNOMPUSO FROM tblcattus ORDER BY STRNOMPUSO ASC";
+                            $resultado = mysqli_query($con, $consulta);
 
 
+                            // Crear el elemento select
+                            echo ' <select class="form-control " name="INTIDPUSO" id="STRNOMPUSO" disabled>';
 
+                            if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                                // Iterar sobre los resultados y crear una opción para cada uno
+
+                                while ($fila = mysqli_fetch_assoc($resultado)) {
+                                    $valor = "";
+                                    if ($INTTIPUSO == $fila["INTIDPUSO"]) $valor = "selected";
+                                    echo '<option value="' . $fila['INTIDPUSO'] . '"' . $valor . "> " . $fila['STRNOMPUSO'] . '</option>';
+                                }
+                            } else {
+
+                                echo  '<option value="" disabled  selected >No hay tipos de uso en la  bd agregue datos </option>';
+                            }
+
+                            echo '</select>';
+                            ?>
+
+                            </div>
 
                         </div>
                     </div>
-
-
-
-                    <div class="form-group">
-
-                        <div class="col-sm-12">
-                            <label for="estado" class=" control-label">Estado: </label>
-                            <select readonly class="form-control" name="estado" id="estado" required>
-                                <option value="1">Activo</option>
-                                <option value="2">Inactivo</option>
-                            </select>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="estado" class=" control-label">Estado: </label>
+                                <select class="form-control col-sm-10" name="estado" id="estado" required disabled>
+                                    <option value="1" <?php if($BITSUS==1) echo 'selected';?> >Activo</option>
+                                    <option value="2" <?php if($BITSUS==2) echo 'selected';?> >Inactivo</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <!--- end card body-->
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- end new modal-->
+
 <?php } ?>

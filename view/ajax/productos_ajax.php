@@ -8,22 +8,21 @@ require_once("../../config/RecuperarDatos.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 
-	$sql2=recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
+	$sql2 = recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
 	try {
 		if (($delete = mysqli_query($con, "DELETE FROM tblcatpro WHERE STRSKU='$id'"))) {
 			$aviso = "Bien hecho!";
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
-			if($delete){
-				
-				$tabla="tblcatpro";
-				$tipo="Eliminacion";
-				$fecha=date("Y-m-d H:i:s");
-				
-			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-			 $query = mysqli_query($con, $sqllog);
-			 
+			if ($delete) {
+
+				$tabla = "tblcatpro";
+				$tipo = "Eliminacion";
+				$fecha = date("Y-m-d H:i:s");
+
+				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+				$query = mysqli_query($con, $sqllog);
 			}
 		} else {
 			$aviso = "Aviso!";
@@ -82,7 +81,7 @@ if ($action == 'ajax') {
 	}
 	if ($numrows > 0) {
 	?>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#SKU</th>
@@ -101,57 +100,57 @@ if ($action == 'ajax') {
 					<th>Accion</th>
 				</tr>
 			</thead>
-			
-				<tbody>
+
+			<tbody>
 				<?php
-			$finales = 0;
+				$finales = 0;
 
-			while ($row = mysqli_fetch_array($query)) {
-				$sku = $row['STRSKU'];
-				$codigo = $row['STRCOD'];
-				$descripcion = $row['STRDESPRO'];
+				while ($row = mysqli_fetch_array($query)) {
+					$sku = $row['STRSKU'];
+					$codigo = $row['STRCOD'];
+					$descripcion = $row['STRDESPRO'];
 
-				$status = $row['BITSUS'];
-				$INTIDCAT = $row['INTIDCAT'];
-				//cONSULTA PARA SACAR LA CATEGORIA
-				if (isset($INTIDCAT) && $INTIDCAT != NULL) {
-					$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
-					if (isset($Categoria) && $Categoria != NULL) {
-						$tem = mysqli_fetch_array($Categoria);
-						if (isset($tem) && $tem != NULL) $NombreCategoria = $tem['STRNOMCAT'];
+					$status = $row['BITSUS'];
+					$INTIDCAT = $row['INTIDCAT'];
+					//cONSULTA PARA SACAR LA CATEGORIA
+					if (isset($INTIDCAT) && $INTIDCAT != NULL) {
+						$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
+						if (isset($Categoria) && $Categoria != NULL) {
+							$tem = mysqli_fetch_array($Categoria);
+							if (isset($tem) && $tem != NULL) $NombreCategoria = $tem['STRNOMCAT'];
+						}
 					}
-				}
-				//ENDCONSULTA
+					//ENDCONSULTA
 
 
-				$INTIDSBC = $row['INTIDSBC'];
-				if (isset($INTIDSBC) && $INTIDSBC != NULL) {
-					$Subcategoria = mysqli_query($con, "SELECT * FROM  tblcatsbc WHERE INTIDSBC='$INTIDSBC'");
+					$INTIDSBC = $row['INTIDSBC'];
+					if (isset($INTIDSBC) && $INTIDSBC != NULL) {
+						$Subcategoria = mysqli_query($con, "SELECT * FROM  tblcatsbc WHERE INTIDSBC='$INTIDSBC'");
 
-					if (isset($Subcategoria) && $Subcategoria != NULL) {
-						$tem = mysqli_fetch_array($Subcategoria);
-						if (isset($tem) && $tem != NULL) $SubcategoriaNombre = $tem['STRNOMSBC'];
+						if (isset($Subcategoria) && $Subcategoria != NULL) {
+							$tem = mysqli_fetch_array($Subcategoria);
+							if (isset($tem) && $tem != NULL) $SubcategoriaNombre = $tem['STRNOMSBC'];
+						}
 					}
-				}
-				$MONPCOS = $row['MONPCOS'];
-				$INTIDUNI = $row['INTIDUNI'];
-				$STRIMG = $row['STRIMG'];
+					$MONPCOS = $row['MONPCOS'];
+					$INTIDUNI = $row['INTIDUNI'];
+					$STRIMG = $row['STRIMG'];
 
-				$INTTIPUSO = $row['INTTIPUSO'];
+					$INTTIPUSO = $row['INTTIPUSO'];
 
 
-				if ($status == 1) {
-					$lbl_status = "Activo";
-					$lbl_class = 'label label-success';
-				} else {
-					$lbl_status = "Inactivo";
-					$lbl_class = 'label label-danger';
-				}
+					if ($status == 1) {
+						$lbl_status = "Activo";
+						$lbl_class = 'label label-success';
+					} else {
+						$lbl_status = "Inactivo";
+						$lbl_class = 'label label-danger';
+					}
 
-				/*$kind=$row['kind'];*/
+					/*$kind=$row['kind'];*/
 
-				$finales++;
-			?>
+					$finales++;
+				?>
 					<tr>
 						<td><?php echo $sku ?></td>
 						<td><?php echo $codigo ?></td>
@@ -174,20 +173,20 @@ if ($action == 'ajax') {
 							<?php if (in_array(2, $_SESSION['Habilidad']['Productos'])) { ?>
 								<button type="button" class="btn btn-warning btn-square btn-xs " data-toggle="modal" data-target="#modal_update" id="<?php echo $sku; ?>" onclick="editar('<?php echo $sku; ?>');"><i class="fa fa-edit"></i></button>
 							<?php } ?>
-							<?php if(in_array(3,$_SESSION['Habilidad']['Productos'])){ ?>
-							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $sku; ?>')"><i class="fa fa-trash-o"></i></button>
+							<?php if (in_array(3, $_SESSION['Habilidad']['Productos'])) { ?>
+								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $sku; ?>')"><i class="far fa-trash-alt"></i></button>
 							<?php } ?>
-							<?php if(in_array(4,$_SESSION['Habilidad']['Productos'])){ ?>
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $sku; ?>')"><i class="fa fa-eye"></i></button>
+							<?php if (in_array(4, $_SESSION['Habilidad']['Productos'])) { ?>
+								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $sku; ?>')"><i class="fa fa-eye"></i></button>
 							<?php } ?>
 
 						</td>
 					</tr>
-					<?php } ?>
-				</tbody>
-			
+				<?php } ?>
+			</tbody>
+
 			<tfoot>
-				<tr>
+			<!--	<tr>
 					<td colspan='10'>
 						<?php
 						$inicios = $offset + 1;
@@ -196,7 +195,7 @@ if ($action == 'ajax') {
 						echo paginate($reload, $page, $total_pages, $adjacents);
 						?>
 					</td>
-				</tr>
+				</tr>-->
 			</tfoot>
 		</table>
 <?php

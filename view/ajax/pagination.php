@@ -2,12 +2,12 @@
 function paginate($reload, $page, $tpages, $adjacents) {
 	$prevlabel = "&lsaquo; Anterior";
 	$nextlabel = "Siguiente &rsaquo;";
-	$out = '<ul class="pagination pagination-sm no-margin pull-right">';
+	$out = '<ul class="pagination">';
 	
 	// previous label
 
 	if($page==1) {
-		$out.= "<li class='disabled'><span><a>$prevlabel</a></span></li>";
+		$out.= "<li class='paginate_button page-item previous disabled'><span><a>$prevlabel</a></span></li>";
 	} else if($page==2) {
 		$out.= "<li><span><a href='javascript:void(0);' onclick='load(1)'>$prevlabel</a></span></li>";
 	}else {

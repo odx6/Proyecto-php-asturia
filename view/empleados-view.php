@@ -1,6 +1,6 @@
 <?php
 $active2 = "active";
-include "resources/header.php";
+include "resources/header copy.php";
 if ($_SESSION['empleados'] == 1) {
 ?>
     <!--main content start-->

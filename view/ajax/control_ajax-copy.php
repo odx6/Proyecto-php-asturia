@@ -120,32 +120,42 @@ if ($action == 'ajax') {
 
 ?>
 
-		<div class="col-sm-12">
 
-			<div class="col-sm-2">
-				<p> <strong>SKU :</strong></p>
-				<p> <strong>DESCRIPCION :</strong></p>
+		<div class="card card-primary card-outline">
+			<div class="card-body box-profile">
+		
+				
 
+				<h3 class="profile-username text-center">SKU : <?php echo $id ?></h3>
+
+				<p class="text-muted text-center">Descripcion :<?php consultarNombre($id, 'tblcatpro', 'STRSKU', 'STRDESPRO'); ?></p>
+
+				<ul class="list-group list-group-unbordered mb-3">
+					<li class="list-group-item">
+						<b>Entradas Totales</b> <a class="float-right"><?php echo $sumaEntradas; ?></a>
+					</li>
+					<li class="list-group-item">
+						<b>Salidas Totales</b> <a class="float-right"><?php echo $sumaSalidas; ?></a>
+					</li>
+					<li class="list-group-item">
+						<b>stock disponible</b> <a class="float-right"><?php echo $total; ?></a>
+					</li>
+				</ul>
+
+				
 			</div>
-			<div class="col-sm-2">
-				<P><strong><?php echo $id ?></strong></P>
-				<P><strong><?php consultarNombre($id, 'tblcatpro', 'STRSKU', 'STRDESPRO'); ?></strong></P>
-
-
-			</div>
+			<!-- /.card-body -->
 		</div>
+	
 
-		<div class="row">
-			<div class="col-sm-4">
-				<p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas; ?></strong></p>
-			</div>
-			<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas; ?></strong></div>
-			<div class="col-sm-4"><strong> <i class="fa fa-archive" aria-hidden="true"></i> &nbsp;STOCK DISPONIBLE</strong> &nbsp &nbsp <strong><?php echo $total; ?></strong></div>
-		</div>
+
+		
 
 		<input type="hidden" value="<?php echo $id ?>" id="ideControl"></input>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
+
+
 				<tr>
 					<th>#ID</th>
 					<th>FECHA</th>
@@ -163,37 +173,38 @@ if ($action == 'ajax') {
 
 				</tr>
 			</thead>
-			<?php
-			$finales = 0;
 
-			while ($row = mysqli_fetch_array($query)) {
+			<tbody>
+				<?php
+				$finales = 0;
 
-				$INTIDTAR = $row['INTIDTAR'];
-				$INTIDINV = $row['INTIDINV'];
-				$DTEFEC = $row['DTEFEC'];
-				$SKU = $row['SKU'];
-				$STRREF = $row['STRREF'];
-				$INTCAN = $row['INTCAN'];
+				while ($row = mysqli_fetch_array($query)) {
 
-
-				$INTIDUNI = $row['INTIDUNI'];
-				$MONPRCOS = $row['MONPRCOS'];
-				$MONCTOPRO = $row['MONCTOPRO'];
-				$INTTIMOV = $row['INTTIPMOV'];
+					$INTIDTAR = $row['INTIDTAR'];
+					$INTIDINV = $row['INTIDINV'];
+					$DTEFEC = $row['DTEFEC'];
+					$SKU = $row['SKU'];
+					$STRREF = $row['STRREF'];
+					$INTCAN = $row['INTCAN'];
 
 
-
-				$INTALM = $row['INTALM'];
-				$DTEHOR = $row['DTEHOR'];
+					$INTIDUNI = $row['INTIDUNI'];
+					$MONPRCOS = $row['MONPRCOS'];
+					$MONCTOPRO = $row['MONCTOPRO'];
+					$INTTIMOV = $row['INTTIPMOV'];
 
 
 
+					$INTALM = $row['INTALM'];
+					$DTEHOR = $row['DTEHOR'];
 
-				/*$kind=$row['kind'];*/
 
-				$finales++;
-			?>
-				<tbody>
+
+
+					/*$kind=$row['kind'];*/
+
+					$finales++;
+				?>
 					<tr>
 						<td><?php echo $INTIDTAR ?></td>
 						<td><?php echo $DTEFEC ?></td>
@@ -226,24 +237,16 @@ if ($action == 'ajax') {
 						<td><?php echo $Saldos[$INTIDTAR]; ?></td>
 
 						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
-						<td><?php echo  "$ ".number_format( $MONPRCOS, 2, '.', ',');  ?></td>
-						<td><?php echo  "$ ".number_format($MONCTOPRO, 2, '.', ','); ?></td>
+						<td><?php echo  "$ " . number_format($MONPRCOS, 2, '.', ',');  ?></td>
+						<td><?php echo  "$ " . number_format($MONCTOPRO, 2, '.', ','); ?></td>
 					</tr>
-				</tbody>
-			<?php
+				<?php
 
-			} ?>
+				} ?>
+			</tbody>
+
 			<tfoot>
-				<tr>
-					<td colspan='10'>
-						<?php
-						$inicios = $offset + 1;
-						$finales += $inicios - 1;
-						echo "Mostrando $inicios al $finales de $numrows registros";
-						echo paginate($reload, $page, $total_pages, $adjacents);
-						?>
-					</td>
-				</tr>
+
 			</tfoot>
 		</table>
 		<input type="hidden" id="Saldo" value="<?php echo $tot ?>" readonly>
@@ -327,7 +330,7 @@ if ($action == 'ajax2') {
 		<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas; ?></strong></div>
 		<div class="col-sm-4"><strong> <i class="fa fa-archive" aria-hidden="true"></i> &nbsp;STOCK DISPONIBLE</strong> &nbsp &nbsp <strong><?php echo $total; ?></strong></div>
 		<input type="hidden" value="<?php echo $id ?>" id="ideControl"></input>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#ID</th>
@@ -347,41 +350,42 @@ if ($action == 'ajax2') {
 
 				</tr>
 			</thead>
-			<?php
-			$finales = 0;
 
-			while ($row = mysqli_fetch_array($query)) {
+			<tbody>
+				<?php
+				$finales = 0;
 
-				$INTIDTAR = $row['INTIDTAR'];
-				$INTIDINV = $row['INTIDINV'];
-				$DTEFEC = $row['DTEFEC'];
-				$SKU = $row['SKU'];
-				$STRREF = $row['STRREF'];
-				$INTCAN = $row['INTCAN'];
+				while ($row = mysqli_fetch_array($query)) {
 
-
-				$INTIDUNI = $row['INTIDUNI'];
-				$MONPRCOS = $row['MONPRCOS'];
-				$MONCTOPRO = $row['MONCTOPRO'];
-				$INTTIMOV = $row['INTTIPMOV'];
-
-				$INTALM = $row['INTALM'];
-				$DTEHOR = $row['DTEHOR'];
-
-				if ($INTTIMOV == 1) {
-					$lbl_status = "Entrada";
-					$lbl_class = 'label label-success';
-				} else {
-					$lbl_status = "Salida";
-					$lbl_class = 'label label-danger';
-				}
+					$INTIDTAR = $row['INTIDTAR'];
+					$INTIDINV = $row['INTIDINV'];
+					$DTEFEC = $row['DTEFEC'];
+					$SKU = $row['SKU'];
+					$STRREF = $row['STRREF'];
+					$INTCAN = $row['INTCAN'];
 
 
-				/*$kind=$row['kind'];*/
+					$INTIDUNI = $row['INTIDUNI'];
+					$MONPRCOS = $row['MONPRCOS'];
+					$MONCTOPRO = $row['MONCTOPRO'];
+					$INTTIMOV = $row['INTTIPMOV'];
 
-				$finales++;
-			?>
-				<tbody>
+					$INTALM = $row['INTALM'];
+					$DTEHOR = $row['DTEHOR'];
+
+					if ($INTTIMOV == 1) {
+						$lbl_status = "Entrada";
+						$lbl_class = 'label label-success';
+					} else {
+						$lbl_status = "Salida";
+						$lbl_class = 'label label-danger';
+					}
+
+
+					/*$kind=$row['kind'];*/
+
+					$finales++;
+				?>
 					<tr>
 						<td><?php echo $INTIDTAR ?></td>
 						<td><?php echo $DTEFEC ?></td>
@@ -407,26 +411,18 @@ if ($action == 'ajax2') {
 						<td><?php echo $Saldos[$INTIDTAR]; ?></td>
 
 						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
-						<td><?php echo  "$ ".number_format( $MONPRCOS, 2, '.', ',');  ?></td>
-						<td><?php echo  "$ ".number_format($MONCTOPRO, 2, '.', ','); ?></td>
+						<td><?php echo  "$ " . number_format($MONPRCOS, 2, '.', ',');  ?></td>
+						<td><?php echo  "$ " . number_format($MONCTOPRO, 2, '.', ','); ?></td>
 
 					</tr>
-				</tbody>
-			<?php
+				<?php
 
 
-			} ?>
+				} ?>
+			</tbody>
+
 			<tfoot>
-				<tr>
-					<td colspan='10'>
-						<?php
-						$inicios = $offset + 1;
-						$finales += $inicios - 1;
-						echo "Mostrando $inicios al $finales de $numrows registros";
-						echo paginate($reload, $page, $total_pages, $adjacents);
-						?>
-					</td>
-				</tr>
+
 			</tfoot>
 		</table>
 		<input type="hidden" id="Saldo" value="<?php echo $tot ?>" readonly>

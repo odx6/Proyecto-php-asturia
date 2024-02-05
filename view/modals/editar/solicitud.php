@@ -34,68 +34,66 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
         exit;
     }
 ?>
-    <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
-    <div class="form-group">
-        <label for="dni" class="col-sm-2 control-label">Id Orden: </label>
-        <div class="col-sm-10">
-            <input type="text" required class="form-control" id="pk_solicitud" name="pk_solicitud" value="<?php echo $pk_solicitud; ?>" placeholder="Id Orden: ">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="nombre" class="col-sm-2 control-label">Empleado: </label>
-        <div class="col-sm-10">
-            <input type="text" required class="form-control" id="fk_empleado" name="fk_empleado" value="<?php echo $fk_empleado; ?>" placeholder="<?php echo $NombreEmpleado; ?>">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="apellido" class="col-sm-2 control-label">Número de Folio: </label>
-        <div class="col-sm-10">
-            <input type="text" required class="form-control" id="NumeroFolio" name="NumeroFolio" value="<?php echo $NumeroFolio; ?>" placeholder="Número Folio: ">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="usuario" class="col-sm-2 control-label">Fecha: </label>
-        <div class="col-sm-10">
-            <input type="text" required class="form-control" id="fecha" name="fecha" value="<?php echo $fecha; ?>" placeholder="Fecha: ">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="email" class="col-sm-2 control-label">Operador: </label>
-        <div class="col-sm-10">
-            <input type="text" required class="form-control" id="operador" name="operador" value="<?php echo $operador; ?>" placeholder="Operador: ">
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label for="domicilio" class="col-sm-2 control-label">No. de carro: </label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="NoCarro" name="NoCarro" value="<?php echo $NoCarro; ?>" placeholder="No.de Carro: ">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="localidad" class="col-sm-2 control-label">Kilometraje: </label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="Kilometraje" name="Kilometraje" value="<?php echo $Kilometraje; ?>" placeholder="Kilometraje: ">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="telefono" class="col-sm-2 control-label">No.Placas</label>
-        <div class="col-sm-10">
-            <input type="text" required class="form-control" id="NoPlacas" name="NoPlacas" value="<?php echo $NoPlacas; ?>" placeholder="No.Placas">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="celular" class="col-sm-2 control-label">Detalles Del Servicio : </label>
-        <div class="col-sm-10">
-            <input type="text" required class="form-control" id="DetallesServicio" name="DetallesServicio" value="<?php echo $DetallesServicio; ?>" placeholder="Detalles: ">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="registro" class="col-sm-2 control-label">Observaciones: </label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="Observaciones" name="Observaciones" value="<?php echo $Observaciones; ?>" placeholder="Observaciones: ">
-        </div>
-    </div>
+
+    <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
+    <input type="hidden" required class="form-control" id="fk_empleado" name="fk_empleado" placeholder="EMPLEADO: " value="<?php if (isset($fk_empleado)) echo   $fk_empleado ?>">
+    <input type="hidden" required class="form-control" id="fecha" name="fecha" placeholder="fecha: " value="<?php
+echo date('Y-m-d H:i:s');
+?>">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="sku" class="col-sm-2 control-label"> Orden: </label>
+                                <input type="text" required class="form-control" id="pk_solicitud" name="pk_solicitud" placeholder="Id de Orden: " value="<?php echo $pk_solicitud?>">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="sku" class="col-sm-2 control-label">No.Folio: </label>
+                                <input type="text" required class="form-control" id="NumeroFolio" name="NumeroFolio" placeholder="NumeroFolio: " value="<?php echo $NumeroFolio?>">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="codigo" class="col-sm-2 control-label">operador: </label>
+                                <input type="text" required class="form-control" id="operador" name="operador" placeholder="operador: " value="<?php echo $operador?>">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="descripcion" class="col-sm-2 control-label">No.NoCarro: </label>
+                                <input type="text" required class="form-control" id="NoCarro" name="NoCarro" placeholder="No.NoCarro: " value="<?php echo $NoCarro?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="categoria" class="col-sm-2 control-label">Kilometraje: </label>
+                                <input type="text" required class="form-control" id="Kilometraje" name="Kilometraje" placeholder="Kilometraje: " value="<?php echo $Kilometraje?>">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="subcategoria" class="col-sm-2 control-label">No.placas: </label>
+                                <input type="text" required class="form-control" id="NoPlacas" name="NoPlacas" placeholder="NoPlacas: " value="<?php echo $NoPlacas?>">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="precio" class="col-sm-2 control-label">DetallesServicio: </label>
+                                <input type="text" required class="form-control" id="DetallesServicio" name="DetallesServicio" placeholder="DetallesServicio" value="<?php echo $DetallesServicio?>">
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="unidad" class="col-sm-2 control-label">Observaciones: </label>
+                                <input type="text" class="form-control" id="Observaciones" name="Observaciones" placeholder="Observaciones: " value="<?php echo $Observaciones?>">
+                            </div>
+                        </div>
+                    </div>
 
 
 

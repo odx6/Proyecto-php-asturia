@@ -1,7 +1,7 @@
 <?php
-
- if (in_array(4, $_SESSION['Habilidad']['Categorias'])) { 
 session_start();
+ if (in_array(4, $_SESSION['Habilidad']['Categorias'])) { 
+
 require_once("../../../config/config.php");
 require_once("../../../config/funciones.php");
 
@@ -35,19 +35,35 @@ if (isset($_GET["id"])) {
 }
 ?>
 <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
-<div class="card" style="width: 50rem;">
-  <div class="card-header"> 
-    
-  </div>
-  <ul class="list-group list-group-flush">
-    
-    <li class="list-group-item"> <strong>ID Categoria: </strong><?php echo $INTIDCAT;?></li>
-    <li class="list-group-item"> <strong>Nombre : </strong><?php echo $STRNOMCAT;?></li>
-    <li class="list-group-item"> <strong>Descripcion : </strong><?php echo $STRDESCAT;?></li>
-    <li class="list-group-item"> <strong>Estado : </strong><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></li>
-    <p class="card-text"><small class="text-muted"> Fecha de creacion : <?php echo $DTEHOR;?></small></p>
-    
-    
-  </ul>
-</div>
+<div class="card-body">
+                <strong><i class="fas fa-key"></i> ID</strong>
+
+                <p class="text-muted">
+                  <?php echo $INTIDCAT ?>
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-book"></i> Nombre</strong>
+
+                <p class="text-muted"><?php echo $STRNOMCAT;?></p>
+
+                <hr>
+
+                <strong><i class="fas fa-th-list"></i> Descripcion </strong>
+
+                <p class="text-muted">
+                  <span class="tag tag-danger"><?php echo $STRDESCAT;?></span>
+                
+                </p>
+
+                <hr>
+                <?php $icon;($BITSUS == 1) ?  $icon='<i class="fas fa-toggle-on"></i>':$icon='<i class="fas fa-toggle-off"></i>'; ?>
+                <strong><?php echo $icon ?> Estado</strong>
+
+                <p class="text-muted"> <?php $status; ($BITSUS==1) ? $status='Activo':$status='Inactivo'; echo $status ?></p>
+
+                <p class="card-text"><small class="text-muted"> Fecha de creacion : <?php echo $DTEHOR;?></small></p>
+              </div>
+              
 <?php } ?>

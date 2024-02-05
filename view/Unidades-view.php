@@ -1,107 +1,73 @@
 <?php
 $active2 = "active";
-include "resources/header.php";
+include "resources/header copy.php";
 if ($_SESSION['unidades'] == 1) {
 ?>
-    <!--main content start-->
-    <section class="main-content-wrapper">
-        <section id="main-content">
-            <div class="row">
-                <div class="col-md-12">
-                    <!--breadcrumbs start -->
-                    <ul class="breadcrumb  pull-right">
-                        <li><a href="./?view=dashboard">Dashboard</a></li>
-                        <li class="active">Unidades</li>
-
-                    </ul>
-                    <!--breadcrumbs end -->
-                    <br>
-                    <h1 class="h1">Unidades</h1>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-3">
-
-                 <!--   <select id="miSelect">
-
-                        <option value="pk_solicitud">Id Orden</option>
-                        <option value="fk_empleado">Empleado</option>
-                        <option value="fecha">fecha</option>
-                        <option value="operador">operador</option>
-                        <option value="NoCarro">Numero de carro</option>
-                        <option value="Kilometraje">Kilometraje</option>
-                        <option value="DetallesServicio">Detalles del servico </option>
-                        <option value="Observaciones">Observaciones</option>
-
-                       
-                    </select>-->
-
-                    <div class="input-group">
-
-                        <input type="text" class="form-control" placeholder="Buscar por numero de folio" id='q' onkeyup="load(1);">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" onclick='load(1);'><i class='fa fa-search'></i></button>
-                        </span>
-                    </div><!-- /input-group -->
-                </div>
-                <div class="col-xs-3"></div>
-                <div class="col-xs-1">
-                    <div id="loader" class="text-center"></div>
-                </div>
-
-                <div class="col-md-offset-6" style="display: inline-block;">
-                    <!-- modals -->
-                    <?php
-                    include "modals/agregar/agregar_unidad.php";
-                    include "modals/editar/editar_unidad.php";
-                    include "modals/mostrar/mostrar_unidad.php";
-                    ?>
-                    <!-- /end modals -->
-
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            Mostrar <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu pull-right" role="menu">
-                            <li class='active' onclick='per_page(15);' id='15'><a href="#">15</a></li>
-                            <li onclick='per_page(25);' id='25'><a href="#">25</a></li>
-                            <li onclick='per_page(50);' id='50'><a href="#">50</a></li>
-                            <li onclick='per_page(100);' id='100'><a href="#">100</a></li>
-                            <li onclick='per_page(1000000);' id='1000000'><a href="#">Todos</a></li>
-                        </ul>
+ <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Entradas</h1>
                     </div>
-                    <input type='hidden' id='per_page' value='15'>
-                </div>
-            </div>
-
-
-
-            <div id="resultados_ajax"></div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Datos de Unidad de Medida</h3>
-                            <div class="actions pull-right">
-                                <i class="fa fa-chevron-down"></i>
-                                <i class="fa fa-times"></i>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <div class="outer_div" id="peticionajax"></div><!-- Datos ajax Final -->
-                            </div>
-                        </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                            <li class="breadcrumb-item active">Entradas</li>
+                        </ol>
                     </div>
                 </div>
-            </div>
-
+            </div><!-- /.container-fluid -->
         </section>
-    </section><!--main content end-->
-    <?php
-    include "resources/footer.php";
-    ?>
+
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+              
+                <div id="resultados_ajax"></div>
+                    
+                   
+             
+                    <div class="col-12">
+
+
+                        <div class="card">
+                            
+                            
+                            <div class="card-header">
+                            <div class="col-sm-8"><h3 class="card-title">Lista de entradas</h3></div>
+                            <div class="col-sm-4">
+
+                            <?php 
+                            include "modals/agregar/agregar_unidad.php";
+                            include "modals/editar/editar_unidad.php";
+                            include "modals/mostrar/mostrar_unidad.php";
+                        ?>
+                            </div>
+                                <!-- modals -->
+                      
+                    <!-- /end modals -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body outer_div">
+                                
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <?php
+        include "resources/footer.php";
+        ?>
+  
     <script>
         $(function() {
             load(1);
@@ -109,6 +75,8 @@ if ($_SESSION['unidades'] == 1) {
         function load(page) {
             var query = $("#q").val();
             var per_page = $("#per_page").val();
+            var query = "";
+            var per_page = 100;
             var parametros = {
                 "action": "ajax",
                 "page": page,
@@ -125,6 +93,7 @@ if ($_SESSION['unidades'] == 1) {
                 success: function(data) {
                     $(".outer_div").html(data).fadeIn('slow');
                     $("#loader").html("");
+                    renderTable();
                 }
             })
         }

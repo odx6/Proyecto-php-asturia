@@ -8,7 +8,7 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 
 	$id = intval($id);
 	$times = "&times;";
-	$sql2=recuperarDatos("SELECT * from tblcatuni WHERE INTIDUNI='$id';");
+	$sql2 = recuperarDatos("SELECT * from tblcatuni WHERE INTIDUNI='$id';");
 
 	try {
 		if (($delete = mysqli_query($con, "DELETE FROM  tblcatuni WHERE INTIDUNI='$id'"))) {
@@ -16,17 +16,15 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
-			if($delete){
-				
-				$tabla="tblcatuni";
-				$tipo="Eliminacion";
-				$fecha=date("Y-m-d H:i:s");
-				
-			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-			 $query = mysqli_query($con, $sqllog);
-			 
-			}
+			if ($delete) {
 
+				$tabla = "tblcatuni";
+				$tipo = "Eliminacion";
+				$fecha = date("Y-m-d H:i:s");
+
+				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+				$query = mysqli_query($con, $sqllog);
+			}
 		} else {
 			$aviso = "Aviso!";
 			$msj = "Error al eliminar los datos " . mysqli_error($con);
@@ -74,7 +72,7 @@ if ($action == 'ajax') {
 	} else {
 		echo mysqli_error($con);
 	}
-	$total_pages = ceil($numrows / $per_page);
+	//$total_pages = ceil($numrows / $per_page);
 	$reload = $Reload;
 	//main query to fetch the data
 	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
@@ -91,7 +89,7 @@ if ($action == 'ajax') {
 	}
 	if ($numrows > 0) {
 	?>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#Id unidad </th>
@@ -102,26 +100,27 @@ if ($action == 'ajax') {
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<?php
-			$finales = 0;
-			while ($row = mysqli_fetch_array($query)) {
-				$INTIDUNI = $row['INTIDUNI'];
-				$STRNOMUNI = $row['STRNOMUNI'];
-				$STRDESUNI = $row['STRDESUNI'];
-				$DTEHOR = $row['DTEHOR'];
-				$BITSUS = $row['BITSUS'];
 
-				if ($BITSUS == 1) {
-					$lbl_status = "Activo";
-					$lbl_class = 'label label-success';
-				} else {
-					$lbl_status = "Inactivo";
-					$lbl_class = 'label label-danger';
-				}
+			<tbody>
+				<?php
+				$finales = 0;
+				while ($row = mysqli_fetch_array($query)) {
+					$INTIDUNI = $row['INTIDUNI'];
+					$STRNOMUNI = $row['STRNOMUNI'];
+					$STRDESUNI = $row['STRDESUNI'];
+					$DTEHOR = $row['DTEHOR'];
+					$BITSUS = $row['BITSUS'];
 
-				$finales++;
-			?>
-				<tbody>
+					if ($BITSUS == 1) {
+						$lbl_status = "Activo";
+						$lbl_class = 'label label-success';
+					} else {
+						$lbl_status = "Inactivo";
+						$lbl_class = 'label label-danger';
+					}
+
+					$finales++;
+				?>
 					<tr>
 						<td><?php echo $INTIDUNI ?></td>
 						<td><?php echo $STRNOMUNI ?></td>
@@ -131,22 +130,23 @@ if ($action == 'ajax') {
 
 
 						<td class="text-right">
-						<?php if(in_array(2,$_SESSION['Habilidad']['Unidades'])){ ?>
+							<?php if (in_array(2, $_SESSION['Habilidad']['Unidades'])) { ?>
 
-							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDUNI; ?>','view/modals/editar/unidad.php');"><i class="fa fa-edit"></i></button>
+								<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDUNI; ?>','view/modals/editar/unidad.php');"><i class="fa fa-edit"></i></button>
 							<?php } ?>
-							<?php if(in_array(3,$_SESSION['Habilidad']['Unidades'])){ ?>
-							<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDUNI; ?>','view/ajax/Unidades/unidades_ajax.php')"><i class="fa fa-trash-o"></i></button>
+							<?php if (in_array(3, $_SESSION['Habilidad']['Unidades'])) { ?>
+								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDUNI; ?>','view/ajax/Unidades/unidades_ajax.php')"><i class="far fa-trash-alt"></i></button>
 							<?php } ?>
-							<?php if(in_array(4,$_SESSION['Habilidad']['Unidades'])){ ?>
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDUNI; ?>','view/modals/mostrar/unidad.php')"><i class="fa fa-eye"></i></button>
+							<?php if (in_array(4, $_SESSION['Habilidad']['Unidades'])) { ?>
+								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDUNI; ?>','view/modals/mostrar/unidad.php')"><i class="fa fa-eye"></i></button>
 							<?php } ?>
 
 					</tr>
-				</tbody>
-			<?php } ?>
+				<?php } ?>
+			</tbody>
+
 			<tfoot>
-				<tr>
+				<!--	<tr>
 					<td colspan='10'>
 						<?php
 						$inicios = $offset + 1;
@@ -155,7 +155,7 @@ if ($action == 'ajax') {
 						echo paginate($reload, $page, $total_pages, $adjacents);
 						?>
 					</td>
-				</tr>
+				</tr>-->
 			</tfoot>
 		</table>
 <?php

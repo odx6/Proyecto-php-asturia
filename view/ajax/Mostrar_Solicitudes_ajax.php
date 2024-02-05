@@ -7,7 +7,7 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 	$id = $_REQUEST["id"];
 
 	$id = intval($id);
-	$sql2=recuperarDatos("SELECT * from solicitud WHERE pk_solicitud='$id';");
+	$sql2 = recuperarDatos("SELECT * from solicitud WHERE pk_solicitud='$id';");
 
 	try {
 		if (($delete = mysqli_query($con, "DELETE FROM solicitud WHERE pk_solicitud='$id'"))) {
@@ -15,15 +15,14 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
-			if($delete){
-				
-				$tabla="solicitud";
-				$tipo="Eliminacion";
-				$fecha=date("Y-m-d H:i:s");
-				
-			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-			 $query = mysqli_query($con, $sqllog);
-			 
+			if ($delete) {
+
+				$tabla = "solicitud";
+				$tipo = "Eliminacion";
+				$fecha = date("Y-m-d H:i:s");
+
+				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+				$query = mysqli_query($con, $sqllog);
 			}
 		} else {
 			$aviso = "Aviso!";
@@ -89,7 +88,7 @@ if ($action == 'ajax') {
 	}
 	if ($numrows > 0) {
 	?>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#Id Orden </th>
@@ -105,32 +104,33 @@ if ($action == 'ajax') {
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<?php
-			$finales = 0;
-			while ($row = mysqli_fetch_array($query)) {
-				$id = $row['pk_solicitud'];
-				$empleado = $row['fk_empleado'];
-				//Name Empleado 
-				if (isset($empleado) && $empleado != NULL) {
-					$Empleado = mysqli_query($con, "SELECT * FROM tblcatemp WHERE IDEMP='$empleado'");
-					$tem = mysqli_fetch_array($Empleado);
-					$NombreEmpleado = $tem['STRNOM'] . " " . $tem['STRAPE'];
-				}
-				//
-				$Folio = $row['NumeroFolio'];
-				$Fecha = $row['fecha'];
-				$Operador = $row['operador'];
-				$Carro = $row['NoCarro'];
-				$Kilometraje = $row['Kilometraje'];
-				$Placas = $row['NoPlacas'];
-				$Detalles = $row['DetallesServicio'];
-				$Observacione = $row['Observaciones'];
+
+			<tbody>
+				<?php
+				$finales = 0;
+				while ($row = mysqli_fetch_array($query)) {
+					$id = $row['pk_solicitud'];
+					$empleado = $row['fk_empleado'];
+					//Name Empleado 
+					if (isset($empleado) && $empleado != NULL) {
+						$Empleado = mysqli_query($con, "SELECT * FROM tblcatemp WHERE IDEMP='$empleado'");
+						$tem = mysqli_fetch_array($Empleado);
+						$NombreEmpleado = $tem['STRNOM'] . " " . $tem['STRAPE'];
+					}
+					//
+					$Folio = $row['NumeroFolio'];
+					$Fecha = $row['fecha'];
+					$Operador = $row['operador'];
+					$Carro = $row['NoCarro'];
+					$Kilometraje = $row['Kilometraje'];
+					$Placas = $row['NoPlacas'];
+					$Detalles = $row['DetallesServicio'];
+					$Observacione = $row['Observaciones'];
 
 
 
-				$finales++;
-			?>
-				<tbody>
+					$finales++;
+				?>
 					<tr>
 						<td><?php echo $id ?></td>
 						<td><?php echo $NombreEmpleado ?></td>
@@ -149,7 +149,7 @@ if ($action == 'ajax') {
 								<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $id; ?>','view/modals/editar/solicitud.php');"><i class="fa fa-edit"></i></button>
 							<?php } ?>
 							<?php if (in_array(3, $_SESSION['Habilidad']['Solicitud'])) { ?>
-								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $id; ?>','view/ajax/Mostrar_Solicitudes_ajax.php','solicitud')"><i class="fa fa-trash-o"></i></button>
+								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $id; ?>','view/ajax/Mostrar_Solicitudes_ajax.php','solicitud')"><i class="far fa-trash-alt"></i></button>
 							<?php  } ?>
 							<?php if (in_array(4, $_SESSION['Habilidad']['Solicitud'])) { ?>
 								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $id; ?>','view/modals/mostrar/solicitud.php')"><i class="fa fa-eye"></i></button>
@@ -157,25 +157,17 @@ if ($action == 'ajax') {
 							<?php if (in_array(5, $_SESSION['Habilidad']['Solicitud'])) { ?>
 								<form action="?view=Pdfs" method="post">
 									<input type="hidden" name="id" value="<?php echo $id; ?>">
-									<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#"><i class="fa fa-file-text" aria-hidden="true"></i></button>
+									<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#"><i class="fas fa-file-pdf"></i></button>
 								</form>
 							<?php } ?>
 						</td>
 					</tr>
-				</tbody>
-			<?php } ?>
-			<tfoot>
-				<tr>
-					<td colspan='10'>
-						<?php
-						$inicios = $offset + 1;
-						$finales += $inicios - 1;
-						echo "Mostrando $inicios al $finales de $numrows registros";
-						echo paginate($reload, $page, $total_pages, $adjacents);
-						?>
-					</td>
-				</tr>
-			</tfoot>
+					<?php } ?>
+			</tbody>
+		
+		<tfoot>
+			
+		</tfoot>
 		</table>
 <?php
 	} else {

@@ -25,7 +25,32 @@ if ($num > 0) {
 	?>
 	<?php $total = $sumaEntradas - $sumaSalidas;
 	?>
+	<div class="card card-primary card-outline">
+		<div class="card-body box-profile">
+			<div class="text-center">
+				<img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
+			</div>
 
+			<h3 class="profile-username text-center">Nina Mcintire</h3>
+
+			<p class="text-muted text-center">Software Engineer</p>
+
+			<ul class="list-group list-group-unbordered mb-3">
+				<li class="list-group-item">
+					<b>Followers</b> <a class="float-right">1,322</a>
+				</li>
+				<li class="list-group-item">
+					<b>Following</b> <a class="float-right">543</a>
+				</li>
+				<li class="list-group-item">
+					<b>Friends</b> <a class="float-right">13,287</a>
+				</li>
+			</ul>
+
+			<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+		</div>
+		<!-- /.card-body -->
+	</div>
 	<div class="col-sm-6">
 		<p>SKU</p>
 		<p>SKU</p>
@@ -57,45 +82,46 @@ if ($num > 0) {
 
 			</tr>
 		</thead>
-		<?php
-		$finales = 0;
-		$sumaEntradas = 0;
-		$sumaSalidas = 0;
-		$total = 0;
-		while ($row = mysqli_fetch_array($query)) {
 
-			$INTIDTAR = $row['INTIDTAR'];
-			$INTIDINV = $row['INTIDINV'];
-			$DTEFEC = $row['DTEFEC'];
-			$SKU = $row['SKU'];
-			$STRREF = $row['STRREF'];
-			$INTCAN = $row['INTCAN'];
+		<tbody>
+			<?php
+			$finales = 0;
+			$sumaEntradas = 0;
+			$sumaSalidas = 0;
+			$total = 0;
+			while ($row = mysqli_fetch_array($query)) {
 
-
-			$INTIDUNI = $row['INTIDUNI'];
-			$MONPRCOS = $row['MONPRCOS'];
-			$MONCTOPRO = $row['MONCTOPRO'];
-			$INTTIMOV = $row['INTTIPMOV'];
-			if ($INTTIMOV == 1) $sumaEntradas += $INTCAN;
-			if ($INTTIMOV == 2) $sumaSalidas += $INTCAN;
-
-			$INTALM = $row['INTALM'];
-			$DTEHOR = $row['DTEHOR'];
-
-			if ($INTTIMOV == 1) {
-				$lbl_status = "Entrada";
-				$lbl_class = 'label label-success';
-			} else {
-				$lbl_status = "Salida";
-				$lbl_class = 'label label-danger';
-			}
+				$INTIDTAR = $row['INTIDTAR'];
+				$INTIDINV = $row['INTIDINV'];
+				$DTEFEC = $row['DTEFEC'];
+				$SKU = $row['SKU'];
+				$STRREF = $row['STRREF'];
+				$INTCAN = $row['INTCAN'];
 
 
-			/*$kind=$row['kind'];*/
+				$INTIDUNI = $row['INTIDUNI'];
+				$MONPRCOS = $row['MONPRCOS'];
+				$MONCTOPRO = $row['MONCTOPRO'];
+				$INTTIMOV = $row['INTTIPMOV'];
+				if ($INTTIMOV == 1) $sumaEntradas += $INTCAN;
+				if ($INTTIMOV == 2) $sumaSalidas += $INTCAN;
 
-			$finales++;
-		?>
-			<tbody>
+				$INTALM = $row['INTALM'];
+				$DTEHOR = $row['DTEHOR'];
+
+				if ($INTTIMOV == 1) {
+					$lbl_status = "Entrada";
+					$lbl_class = 'label label-success';
+				} else {
+					$lbl_status = "Salida";
+					$lbl_class = 'label label-danger';
+				}
+
+
+				/*$kind=$row['kind'];*/
+
+				$finales++;
+			?>
 				<tr>
 					<td><?php echo $INTIDTAR ?></td>
 					<td><?php echo $DTEFEC ?></td>
@@ -108,8 +134,9 @@ if ($num > 0) {
 					<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
 
 				</tr>
-			</tbody>
-		<?php } ?>
+			<?php } ?>
+		</tbody>
+
 
 	</table>
 

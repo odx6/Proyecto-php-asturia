@@ -8,7 +8,7 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 	$id = $_REQUEST["id"];
 	$id = intval($id);
 	$sql = mysqli_query($con, "SELECT STRIMG FROM tblcatemp WHERE IDEMP='$id'");
-	$sql2=recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id'");
+	$sql2 = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id'");
 	while ($fila = mysqli_fetch_array($sql)) {
 		$URL = $fila['STRIMG'];  // reemplaza 'nombre_de_columna' con el nombre de la columna que deseas imprimir
 	}
@@ -20,15 +20,14 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 					if (file_exists("../../" . $URL))
 						unlink("../../" . $URL);
 				}
-				if($delete){
-				
-					$tabla="tblcatemp";
-					$tipo="Eliminacion";
-					$fecha=date("Y-m-d H:i:s");
-					
-				 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-				 $query = mysqli_query($con, $sqllog);
-				 
+				if ($delete) {
+
+					$tabla = "tblcatemp";
+					$tipo = "Eliminacion";
+					$fecha = date("Y-m-d H:i:s");
+
+					$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+					$query = mysqli_query($con, $sqllog);
 				}
 			}
 			if ($id == 1) {
@@ -99,7 +98,7 @@ if ($action == 'ajax') {
 	}
 	if ($numrows > 0) {
 	?>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#ID</th>
@@ -112,101 +111,103 @@ if ($action == 'ajax') {
 					<th>ESTADO</th>
 					<th>CREACION</th>
 					<th>ACCION</th>
-					
-					
+
+
 
 				</tr>
 			</thead>
-			<?php
-			$finales = 0;
-			while ($row = mysqli_fetch_array($query)) {
-				$IDEMP = $row['IDEMP'];
-				$STRNSS = $row['STRNSS'];
-				$STRRFC = $row['STRRFC'];
-				$STRCUR = $row['STRCUR'];
-				$STRNOM = $row['STRNOM'];
-				$STRAPE = $row['STRAPE'];
-				$STRLOC = $row['STRLOC'];
-				$STRMUN = $row['STRMUN'];
-				$STREST = $row['STREST'];
-				$STRCP = $row['STRCP'];
-				$STRPAI = $row['STRPAI'];
-				$STRTEL = $row['STRTEL'];
-				$STRCOR = $row['STRCOR'];
-				$STRPWS = $row['STRPWS'];
-				$BITSUS = $row['BITSUS'];
-				$STRIMG = $row['STRIMG'];
-				$CREATE_AT = $row['CREATE_AT'];
 
-				list($date, $hora) = explode(" ", $CREATE_AT);
-				list($Y, $m, $d) = explode("-", $date);
-				$fecha = $d . "-" . $m . "-" . $Y;
+			<tbody>
 
+				
+				<?php
+					$finales = 0;
+					while ($row = mysqli_fetch_array($query)) {
+						$IDEMP = $row['IDEMP'];
+						$STRNSS = $row['STRNSS'];
+						$STRRFC = $row['STRRFC'];
+						$STRCUR = $row['STRCUR'];
+						$STRNOM = $row['STRNOM'];
+						$STRAPE = $row['STRAPE'];
+						$STRLOC = $row['STRLOC'];
+						$STRMUN = $row['STRMUN'];
+						$STREST = $row['STREST'];
+						$STRCP = $row['STRCP'];
+						$STRPAI = $row['STRPAI'];
+						$STRTEL = $row['STRTEL'];
+						$STRCOR = $row['STRCOR'];
+						$STRPWS = $row['STRPWS'];
+						$BITSUS = $row['BITSUS'];
+						$STRIMG = $row['STRIMG'];
+						$CREATE_AT = $row['CREATE_AT'];
 
-				if ($BITSUS == 1) {
-					$lbl_status = "Activo";
-					$lbl_class = 'label label-success';
-				} else {
-					$lbl_status = "Inactivo";
-					$lbl_class = 'label label-danger';
-				}
-				/*$kind=$row['kind'];*/
-
-				$finales++;
-			?>
-				<tbody>
-				<?php	if($IDEMP != 1){ ?>
-					<tr>
-					
-						<td><?php echo $IDEMP ?></td>
-						<td> <?php echo $STRNSS  ?> </td>
-						<td> <?php echo $STRRFC  ?> </td>
-						<td> <?php echo $STRCUR  ?> </td>
-						<td> <?php echo $STRNOM . " " . $STRAPE  ?> </td>
-						<td> <?php echo $STRTEL  ?> </td>
-						<td> <?php echo $STRCOR  ?> </td>
+						list($date, $hora) = explode(" ", $CREATE_AT);
+						list($Y, $m, $d) = explode("-", $date);
+						$fecha = $d . "-" . $m . "-" . $Y;
 
 
+						if ($BITSUS == 1) {
+							$lbl_status = "Activo";
+							$lbl_class = 'label label-success';
+						} else {
+							$lbl_status = "Inactivo";
+							$lbl_class = 'label label-danger';
+						}
+						/*$kind=$row['kind'];*/
+
+						$finales++;
+					?>
+						<tr>
+
+							<td><?php echo $IDEMP ?></td>
+							<td> <?php echo $STRNSS  ?> </td>
+							<td> <?php echo $STRRFC  ?> </td>
+							<td> <?php echo $STRCUR  ?> </td>
+							<td> <?php echo $STRNOM . " " . $STRAPE  ?> </td>
+							<td> <?php echo $STRTEL  ?> </td>
+							<td> <?php echo $STRCOR  ?> </td>
 
 
 
-						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
-						<td><?php echo $fecha ?></td>
-						
-						<td class="text-right">
-                            <?php if(in_array(2,$_SESSION['Habilidad']['Empleados'])){ ?>
-							<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" title="Editar"  data-target="#modal_update" onclick="editar('<?php echo $IDEMP; ?>');"><i class="fa fa-edit"></i></button>
-							<?php } ?>
-							<?php if(in_array(3,$_SESSION['Habilidad']['Empleados'])){ ?>
-							<button type="button" class="btn btn-danger btn-square btn-xs" title="Eliminar" onclick="eliminar('<?php echo $IDEMP; ?>')"><i class="fa fa-trash-o"></i></button>
-							<?php } ?>
-							<?php if(in_array(4,$_SESSION['Habilidad']['Empleados'])){ ?>
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" title="Mostrar" onclick="mostrar('<?php echo $IDEMP; ?>')"><i class="fa fa-eye"></i></button>
-							<?php } ?>
-							<?php if(in_array(2,$_SESSION['Habilidad']['Empleados']) && $_SESSION['user_id']==1 ){ ?>
-							<form action="?view=Permision" method="post">
-								<input type="hidden" name="id" value="<?php echo $IDEMP; ?>">
-								<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#" title="Editar Permisos"><i class="fa fa-unlock" aria-hidden="true"></i></button>
-							</form>
-							<?php } ?>
-						</td>
-						
-					</tr>
+
+
+							<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
+							<td><?php echo $fecha ?></td>
+
+							<td class="text-right">
+								<?php if (in_array(2, $_SESSION['Habilidad']['Empleados'])) { ?>
+									<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" title="Editar" data-target="#modal_update" onclick="editar('<?php echo $IDEMP; ?>');"><i class="fa fa-edit"></i></button>
+								<?php } ?>
+								<?php if (in_array(3, $_SESSION['Habilidad']['Empleados'])) { ?>
+									<button type="button" class="btn btn-danger btn-square btn-xs" title="Eliminar" onclick="eliminar('<?php echo $IDEMP; ?>')"><i class="far fa-trash-alt"></i></button>
+								<?php } ?>
+								<?php if (in_array(4, $_SESSION['Habilidad']['Empleados'])) { ?>
+									<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" title="Mostrar" onclick="mostrar('<?php echo $IDEMP; ?>')"><i class="fa fa-eye"></i></button>
+								<?php } ?>
+								<?php if (in_array(2, $_SESSION['Habilidad']['Empleados']) && $_SESSION['user_id'] == 1) { ?>
+									<form action="?view=Permision" method="post">
+										<input type="hidden" name="id" value="<?php echo $IDEMP; ?>">
+										<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#" title="Editar Permisos"><i class="fa fa-unlock" aria-hidden="true"></i></button>
+									</form>
+								<?php } ?>
+							</td>
+
+						</tr>
 					<?php } ?>
-				</tbody>
-			<?php } ?>
-			<tfoot>
-				<tr>
-					<td colspan='10'>
-						<?php
-						$inicios = $offset + 1;
-						$finales += $inicios - 1;
-						echo "Mostrando $inicios al $finales de $numrows registros";
-						echo paginate($reload, $page, $total_pages, $adjacents);
-						?>
-					</td>
-				</tr>
-			</tfoot>
+			</tbody>
+		
+		<tfoot>
+		<!--	<tr>
+				<td colspan='10'>
+					<?php
+					$inicios = $offset + 1;
+					$finales += $inicios - 1;
+					echo "Mostrando $inicios al $finales de $numrows registros";
+					echo paginate($reload, $page, $total_pages, $adjacents);
+					?>
+				</td>
+			</tr>-->
+		</tfoot>
 		</table>
 <?php
 	} else {

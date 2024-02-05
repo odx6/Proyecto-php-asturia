@@ -6,8 +6,8 @@ require_once("../../config/funciones.php");
 
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
-	
-	
+
+
 	try {
 		if (($delete = mysqli_query($con, "DELETE FROM tblcatpro WHERE STRSKU='$id'"))) {
 			$aviso = "Bien hecho!";
@@ -28,11 +28,10 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$times = "&times;";
 		} else {
 			$aviso = "Aviso!";
-		$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
-		$classM = "alert alert-danger";
-		$times = "&times;";
-		} 
-		
+			$msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
+			$classM = "alert alert-danger";
+			$times = "&times;";
+		}
 	}
 }
 
@@ -72,7 +71,7 @@ if ($action == 'ajax') {
 	}
 	if ($numrows > 0) {
 	?>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#SKU</th>
@@ -84,102 +83,95 @@ if ($action == 'ajax') {
 					<th>Unidad Medida</th>
 					<th>Imagen</th>
 					<th>Taller</th>
-					
+
 
 					<th>Estado</th>
 
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<?php
-			$finales = 0;
-			while ($row = mysqli_fetch_array($query)) {
-				$sku = $row['STRSKU'];
-				$codigo = $row['STRCOD'];
-				$descripcion = $row['STRDESPRO'];
 
-				$status = $row['BITSUS'];
-				$INTIDCAT = $row['INTIDCAT'];
-				//cONSULTA PARA SACAR LA CATEGORIA
-				if (isset($INTIDCAT) && $INTIDCAT != NULL) {
-					$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
-					if (isset($Categoria) && $Categoria != NULL) {
-					$tem = mysqli_fetch_array($Categoria);
-					if(isset($tem) && $tem != NULL)$NombreCategoria = $tem['STRNOMCAT'];
-					}
-				}
-				//ENDCONSULTA
+			<tbody>
+				<?php
+				$finales = 0;
+				while ($row = mysqli_fetch_array($query)) {
+					$sku = $row['STRSKU'];
+					$codigo = $row['STRCOD'];
+					$descripcion = $row['STRDESPRO'];
 
-
-				$INTIDSBC = $row['INTIDSBC'];
-				if (isset($INTIDSBC) && $INTIDSBC != NULL) {
-					$Subcategoria = mysqli_query($con, "SELECT * FROM  tblcatsbc WHERE INTIDSBC='$INTIDSBC'");
-					
-					if (isset($Subcategoria) && $Subcategoria != NULL) {
-						$tem = mysqli_fetch_array($Subcategoria);
-						if(isset($tem) && $tem != NULL)$SubcategoriaNombre = $tem['STRNOMSBC'];
+					$status = $row['BITSUS'];
+					$INTIDCAT = $row['INTIDCAT'];
+					//cONSULTA PARA SACAR LA CATEGORIA
+					if (isset($INTIDCAT) && $INTIDCAT != NULL) {
+						$Categoria = mysqli_query($con, "SELECT * FROM tblcatcat WHERE  INTIDCAT='$INTIDCAT'");
+						if (isset($Categoria) && $Categoria != NULL) {
+							$tem = mysqli_fetch_array($Categoria);
+							if (isset($tem) && $tem != NULL) $NombreCategoria = $tem['STRNOMCAT'];
 						}
-				}
-				$MONPCOS = $row['MONPCOS'];
-				$INTIDUNI = $row['INTIDUNI'];
-				$STRIMG = $row['STRIMG'];
-				
-				$INTTIPUSO = $row['INTTIPUSO'];
+					}
+					//ENDCONSULTA
 
 
-				if ($status == 1) {
-					$lbl_status = "Activo";
-					$lbl_class = 'label label-success';
-				} else {
-					$lbl_status = "Inactivo";
-					$lbl_class = 'label label-danger';
-				}
-				
-				/*$kind=$row['kind'];*/
+					$INTIDSBC = $row['INTIDSBC'];
+					if (isset($INTIDSBC) && $INTIDSBC != NULL) {
+						$Subcategoria = mysqli_query($con, "SELECT * FROM  tblcatsbc WHERE INTIDSBC='$INTIDSBC'");
 
-				$finales++;
-			?>
-				<tbody>
+						if (isset($Subcategoria) && $Subcategoria != NULL) {
+							$tem = mysqli_fetch_array($Subcategoria);
+							if (isset($tem) && $tem != NULL) $SubcategoriaNombre = $tem['STRNOMSBC'];
+						}
+					}
+					$MONPCOS = $row['MONPCOS'];
+					$INTIDUNI = $row['INTIDUNI'];
+					$STRIMG = $row['STRIMG'];
+
+					$INTTIPUSO = $row['INTTIPUSO'];
+
+
+					if ($status == 1) {
+						$lbl_status = "Activo";
+						$lbl_class = 'label label-success';
+					} else {
+						$lbl_status = "Inactivo";
+						$lbl_class = 'label label-danger';
+					}
+
+					/*$kind=$row['kind'];*/
+
+					$finales++;
+				?>
 					<tr>
 						<td><?php echo $sku ?></td>
 						<td><?php echo $codigo ?></td>
 						<td><?php echo $descripcion ?></td>
-						<td><?php  echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
-						<td><?php echo   (isset($SubcategoriaNombre)) ? $SubcategoriaNombre : $INTIDSBC;?></td>
-						<td><?php echo "$ ".number_format( $MONPCOS, 2, '.', ',');?> </td>
-						<td><?php   consultarNombre($INTIDUNI,'tblcatuni','INTIDUNI','STRNOMUNI'); ?></td>
+						<td><?php echo (isset($NombreCategoria)) ? $NombreCategoria : $INTIDCAT; ?></td>
+						<td><?php echo (isset($SubcategoriaNombre)) ? $SubcategoriaNombre : $INTIDSBC; ?></td>
+						<td><?php echo "$ " . number_format($MONPCOS, 2, '.', ','); ?> </td>
+						<td><?php consultarNombre($INTIDUNI, 'tblcatuni', 'INTIDUNI', 'STRNOMUNI'); ?></td>
 						<td>
 							<div>
 								<img width="50px" height="50px" src="<?php echo $STRIMG ?>" alt="Imagen Producto">
 							</div>
 						</td>
 
-						
-						<td><?php   consultarNombre($INTTIPUSO,'tblcattus','INTIDPUSO','STRNOMPUSO'); ?></td>
+
+						<td><?php consultarNombre($INTTIPUSO, 'tblcattus', 'INTIDPUSO', 'STRNOMPUSO'); ?></td>
 						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 
 						<td class="text-right">
-<?php if(in_array(5,$_SESSION['Habilidad']['Control'])){ ?>
+							<?php if (in_array(5, $_SESSION['Habilidad']['Control'])) { ?>
 
-							<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal"  onclick="HistorialEntradassalidas('<?php echo $sku; ?>')"><i class="fa fa-list-alt" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" onclick="HistorialEntradassalidas('<?php echo $sku; ?>')"><i class="fa fa-list-alt" aria-hidden="true"></i></button>
 
 							<?php } ?>
 
 						</td>
 					</tr>
-				</tbody>
-			<?php } ?>
+				<?php } ?>
+			</tbody>
+
 			<tfoot>
-				<tr>
-					<td colspan='10'>
-						<?php
-						$inicios = $offset + 1;
-						$finales += $inicios - 1;
-						echo "Mostrando $inicios al $finales de $numrows registros";
-						echo paginate($reload, $page, $total_pages, $adjacents);
-						?>
-					</td>
-				</tr>
+
 			</tfoot>
 		</table>
 <?php

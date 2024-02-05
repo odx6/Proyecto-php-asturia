@@ -302,7 +302,7 @@ $nombre_empresa = $rw['nombre'];
                                     <li class="<?php if (isset($active2)) {
                                                     echo $active2;
                                                 } ?>">
-                                        <a href="./?view=Entradas"><i class="fa fa-level-up" aria-hidden="true"></i><span>&nbspEntradas y Salidas</span></a>
+                                        <a href="./?view=Entrada"><i class="fa fa-level-up" aria-hidden="true"></i><span>&nbspEntradas y Salidas</span></a>
                                     </li>
                                 <?php } ?>
                                 <?php if ($_SESSION['Control'] == 1) { ?>

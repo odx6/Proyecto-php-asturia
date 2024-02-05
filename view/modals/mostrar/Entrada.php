@@ -60,7 +60,7 @@ if (in_array(4, $_SESSION['Habilidad']['Entradas'])) {
 
         <p>&nbsp;</p>
     </div>
-    <table class="table table-bordered table-striped">
+    <table id="example1" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <!-- <th>#id</th>
@@ -77,23 +77,24 @@ if (in_array(4, $_SESSION['Habilidad']['Entradas'])) {
 
             </tr>
         </thead>
-        <?php
-        $finales = 0;
-        while ($row = mysqli_fetch_array($consulta)) {
 
-            $INTIDDET = $row['INTIDDET'];
-            $INTIDINV = $row['INTIDINV'];
-            $SKU = $row['SKU'];
-            $STRREF = $row['STRREF'];
-            $INTCAN = $row['INTCAN'];
-            $INTIDUNI = $row['INTIDUNI'];
-            $MONPRCOS = $row['MONPRCOS'];
-            $MONCTOPRO = $row['MONCTOPRO'];
-            $DTEHOR = $row['DTEHOR'];
+        <tbody>
+            <?php
+            $finales = 0;
+            while ($row = mysqli_fetch_array($consulta)) {
 
-            $finales++;
-        ?>
-            <tbody>
+                $INTIDDET = $row['INTIDDET'];
+                $INTIDINV = $row['INTIDINV'];
+                $SKU = $row['SKU'];
+                $STRREF = $row['STRREF'];
+                $INTCAN = $row['INTCAN'];
+                $INTIDUNI = $row['INTIDUNI'];
+                $MONPRCOS = $row['MONPRCOS'];
+                $MONCTOPRO = $row['MONCTOPRO'];
+                $DTEHOR = $row['DTEHOR'];
+
+                $finales++;
+            ?>
                 <tr>
                     <!--<td ><?php echo $INTIDDET ?></td>
                 <td><?php echo $INTIDINV ?></td>-->
@@ -108,15 +109,16 @@ if (in_array(4, $_SESSION['Habilidad']['Entradas'])) {
 
 
                 </tr>
-            </tbody>
-        <?php } ?>
+            <?php } ?>
+        </tbody>
+
 
     </table>
-    </form>
+
     <?php if (in_array(1, $_SESSION['Habilidad']['Entradas'])) { ?>
         <form action="?view=Pdf" method="post">
             <input type="hidden" name="ide" value="<?php echo $id ?>">
-            <button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#"><i class="fa fa-file-text" aria-hidden="true"></i></button>
+            <button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#"><i class="fas fa-file-alt"></i></button>
         </form>
     <?php } ?>
 <?php } ?>

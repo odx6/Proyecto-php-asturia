@@ -29,7 +29,7 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 				while ($row = mysqli_fetch_array($detalles)) {
 
 					$INTIDDET = $row['INTIDDET'];
-					 $sql=recuperarDatos("SELECT * FROM tblinvdet WHERE  INTIDINV='$INTIDDET';");
+					$sql = recuperarDatos("SELECT * FROM tblinvdet WHERE  INTIDINV='$INTIDDET';");
 					$data = "tblinvdet";
 					$tipo = "Eliminacion";
 					$fecha = date("Y-m-d H:i:s");
@@ -40,7 +40,7 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 				while ($row = mysqli_fetch_array($tarjetas)) {
 
 					$INTIDTAR  = $row['INTIDTAR '];
-					 $data=recuperarDatos("SELECT * FROM tblinvdet WHERE  INTIDINV='$INTIDDET';");
+					$data = recuperarDatos("SELECT * FROM tblinvdet WHERE  INTIDINV='$INTIDDET';");
 					$tabla = "tbltarinv";
 					$tipo = "Eliminacion";
 					$fecha = date("Y-m-d H:i:s");
@@ -99,7 +99,7 @@ if ($action == 'ajax') {
 	$total_pages = ceil($numrows / $per_page);
 	$reload = './Entradas-view.php';
 	//main query to fetch the data
-	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
+	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere ");
 	//loop through fetched data
 
 	if (isset($_REQUEST["id"])) {
@@ -113,7 +113,8 @@ if ($action == 'ajax') {
 	}
 	if ($numrows > 0) {
 	?>
-		<table class="table table-bordered table-striped">
+		<table id="example1" class="table table-bordered table-striped">
+
 			<thead>
 				<tr>
 					<th>#id inventario</th>
@@ -129,26 +130,27 @@ if ($action == 'ajax') {
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<?php
-			$finales = 0;
-			while ($row = mysqli_fetch_array($query)) {
-				$INTIDINV = $row['INTIDINV'];
-				$DTEFEC = $row['DTEFEC'];
-				$INTIDTOP = $row['INTIDTOP'];
-				$INTTIMOV = $row['INTTIPMOV'];
-				$INTFOL = $row['INTFOL'];
-				$IDEMPLE = $row['IDEMP'];
-				$STROBS = $row['STROBS'];
-				$DTEHOR = $row['DTEHOR'];
-				$INTALM = $row['INTALM'];
-				$DTEHOR = $row['DTEHOR'];
+
+			<tbody>
+				<?php
+				$finales = 0;
+				while ($row = mysqli_fetch_array($query)) {
+					$INTIDINV = $row['INTIDINV'];
+					$DTEFEC = $row['DTEFEC'];
+					$INTIDTOP = $row['INTIDTOP'];
+					$INTTIMOV = $row['INTTIPMOV'];
+					$INTFOL = $row['INTFOL'];
+					$IDEMPLE = $row['IDEMP'];
+					$STROBS = $row['STROBS'];
+					$DTEHOR = $row['DTEHOR'];
+					$INTALM = $row['INTALM'];
+					$DTEHOR = $row['DTEHOR'];
 
 
-				/*$kind=$row['kind'];*/
+					/*$kind=$row['kind'];*/
 
-				$finales++;
-			?>
-				<tbody>
+					$finales++;
+				?>
 					<tr>
 						<td><?php echo $INTIDINV ?></td>
 						<td><?php echo $DTEFEC  ?></td>
@@ -161,20 +163,21 @@ if ($action == 'ajax') {
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">
 							<?php if (in_array(2, $_SESSION['Habilidad']['Entradas'])) { ?>
-								<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDINV; ?>');"><i class="fa fa-edit"></i></button>
+								<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDINV; ?>');"><i class="far fa-edit"></i></button>
 							<?php } ?>
 							<?php if (in_array(3, $_SESSION['Habilidad']['Entradas'])) { ?>
-								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDINV; ?>')"><i class="fa fa-trash-o"></i></button>
+								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDINV; ?>')"><i class="far fa-trash-alt"></i></button>
 							<?php } ?>
 							<?php if (in_array(4, $_SESSION['Habilidad']['Entradas'])) { ?>
-								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDINV; ?>')"><i class="fa fa-eye"></i></button>
+								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDINV; ?>')"><i class="far fa-eye"></i></button>
 							<?php } ?>
 						</td>
 					</tr>
-				</tbody>
-			<?php } ?>
-			<tfoot>
-				<tr>
+					<?php } ?>
+			</tbody>
+		
+		<tfoot>
+			<!--<tr>
 					<td colspan='10'>
 						<?php
 						$inicios = $offset + 1;
@@ -183,8 +186,27 @@ if ($action == 'ajax') {
 						echo paginate($reload, $page, $total_pages, $adjacents);
 						?>
 					</td>
-				</tr>
-			</tfoot>
+				</tr>-->
+			<!--	<div class="row">
+				<div class="col-sm-12 col-md-5">
+					<div class="dataTables_info" id="example2_info" role="status" aria-live="polite"><?php echo "Mostrando $inicios al $finales de $numrows registros"; ?></div>
+				</div>
+				<div class="col-sm-12 col-md-7">
+					<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+						<ul class="pagination">
+							<li class="paginate_button page-item previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+							<li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+							<li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+							<li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
+							<li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
+							<li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
+							<li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
+							<li class="paginate_button page-item next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>-->
+		</tfoot>
 		</table>
 <?php
 	} else {
