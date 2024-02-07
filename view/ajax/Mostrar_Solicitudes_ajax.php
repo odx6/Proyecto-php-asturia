@@ -47,7 +47,8 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
 if ($action == 'ajax') {
-	$query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
+	//$query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
+	$query ='';
 	$column = (isset($_REQUEST['column']) && $_REQUEST['column'] != NULL) ? $_REQUEST['column'] : '';
 	$Table = (isset($_REQUEST['table']) && $_REQUEST['table'] != NULL) ? $_REQUEST['table'] : '';
 	$Reload = (isset($_REQUEST['reload']) && $_REQUEST['reload'] != NULL) ? $_REQUEST['reload'] : '';
@@ -60,10 +61,10 @@ if ($action == 'ajax') {
 
 	include 'pagination.php'; //include pagination file
 	//pagination variables
-	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-	$per_page = intval($_REQUEST['per_page']); //how much records you want to show
-	$adjacents  = 4; //gap between pages after number of adjacents
-	$offset = ($page - 1) * $per_page;
+	//$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
+	//$per_page = intval($_REQUEST['per_page']); //how much records you want to show
+	//$adjacents  = 4; //gap between pages after number of adjacents
+	//$offset = ($page - 1) * $per_page;
 	//Count the total number of row in your table*/
 	$count_query   = mysqli_query($con, "SELECT count(*) AS numrows FROM $tables where $sWhere ");
 	if ($row = mysqli_fetch_array($count_query)) {
@@ -71,10 +72,11 @@ if ($action == 'ajax') {
 	} else {
 		echo mysqli_error($con);
 	}
-	$total_pages = ceil($numrows / $per_page);
+	//$total_pages = ceil($numrows / $per_page);
 	$reload = $Reload;
 	//main query to fetch the data
-	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
+	//$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
+	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere");
 	//loop through fetched data
 
 	if (isset($_REQUEST["id"])) {

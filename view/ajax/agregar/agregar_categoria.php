@@ -19,57 +19,53 @@ if (empty($_POST['STRNOMCAT'])) {
 	$STRNOMCAT = strtoupper($STRNOMCAT);
 	$STRDESCAT = mysqli_real_escape_string($con, (strip_tags($_POST["STRDESCAT"], ENT_QUOTES)));
 	$BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
-	
+
 	$DTEHOR = date("Y-m-d H:i:s");
 
 	//Write register in to database 
 	$sql = "INSERT INTO tblcatcat ( STRNOMCAT, STRDESCAT,DTEHOR,BITSUS) 
 			VALUES('" . $STRNOMCAT . "','" . $STRDESCAT . "','" . $DTEHOR . "','" . $BITSUS . "');";
 	$query_new = mysqli_query($con, $sql);
-    
-	if($query_new){
-		$ide=mysqli_insert_id($con);
-		$sql2=recuperarDatos("SELECT * FROM tblcatcat WHERE INTIDCAT='$ide';");
-		$tabla="tblcatcat";
-		$tipo="creacion";
-		$fecha=date("Y-m-d H:i:s");
-		
-     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$ide."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-	 $query = mysqli_query($con, $sqllog);
-	 
+
+	if ($query_new) {
+		$ide = mysqli_insert_id($con);
+		$sql2 = recuperarDatos("SELECT * FROM tblcatcat WHERE INTIDCAT='$ide';");
+		$tabla = "tblcatcat";
+		$tipo = "creacion";
+		$fecha = date("Y-m-d H:i:s");
+
+		$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $ide . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+		$query = mysqli_query($con, $sqllog);
 	}
 
 
-} else {
-	$errors[] = "desconocido.";
-}
+	if (isset($messages)) {
 
-if (isset($errors)) {
 
-?>
-	<div class="alert alert-danger" role="alert">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<strong>Error!</strong>
-		<?php
-		foreach ($errors as $error) {
-			echo $error;
-		}
-		?>
-	</div>
-<?php
-}
-if (isset($messages)) {
+		echo '<div class="alert alert-success" role="alert">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>¡Bien hecho!</strong>';
 
-?>
-	<div class="alert alert-success" role="alert">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<strong>¡Bien hecho!</strong>
-		<?php
 		foreach ($messages as $message) {
 			echo $message;
 		}
-		?>
-	</div>
-<?php
-}
-?>
+
+		echo '</div>';
+	}
+} else {
+	$errors[] = "desconocido.";
+	if (isset($errors)) {
+
+
+		echo '<div class="alert alert-danger" role="alert">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>Error!</strong>';
+
+		foreach ($errors as $error) {
+			echo $error;
+		}
+
+		echo '</div>';
+	}
+} ?>
+

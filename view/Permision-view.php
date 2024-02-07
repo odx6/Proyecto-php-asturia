@@ -31,6 +31,13 @@ if ($_SESSION['empleados'] == 1 && in_array(2, $_SESSION['Habilidad']['Empleados
     $CREATE_AT = $rw->CREATE_AT;
 ?>
     <!--main content start-->
+<?php 
+
+ $Titulo="Permisos Empleados";
+ $Arbol='Permisos';
+
+
+?>
 
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->

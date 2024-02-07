@@ -55,27 +55,20 @@ if ($action == 'ajax') {
 
 	$tables = "tblcatuni";
 	$campos = "*";
-	//dependiendo de por que se quiera filtrar
-	//$sWhere=$column." LIKE '%".$query."%'";
+	
 	$sWhere = " STRNOMUNI LIKE '%" . $query . "%'";
 
 	include '../pagination.php'; //include pagination file
-	//pagination variables
-	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-	$per_page = intval($_REQUEST['per_page']); //how much records you want to show
-	$adjacents  = 4; //gap between pages after number of adjacents
-	$offset = ($page - 1) * $per_page;
-	//Count the total number of row in your table*/
+	
 	$count_query   = mysqli_query($con, "SELECT count(*) AS numrows FROM $tables where $sWhere ");
 	if ($row = mysqli_fetch_array($count_query)) {
 		$numrows = $row['numrows'];
 	} else {
 		echo mysqli_error($con);
 	}
-	//$total_pages = ceil($numrows / $per_page);
 	$reload = $Reload;
-	//main query to fetch the data
-	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
+	$query = mysqli_query($con, "SELECT $campos FROM  $tables");
+
 	//loop through fetched data
 
 	if (isset($_REQUEST["id"])) {

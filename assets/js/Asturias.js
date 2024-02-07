@@ -160,11 +160,15 @@ function eliminar(id, path, table) {
       success: function (data) {
         $(".outer_div").html(data).fadeIn('slow');
         $("#loader").html("");
+        renderTable();
+       
+
         window.setTimeout(function () {
           $(".alert").fadeTo(500, 0).slideUp(500, function () {
             $(this).remove();
           });
         }, 5000);
+      
       }
     })
   }

@@ -3,6 +3,7 @@ $active2 = "active";
 include "resources/header copy.php";
 if ($_SESSION['unidades'] == 1) {
 ?>
+
  <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -69,6 +70,8 @@ if ($_SESSION['unidades'] == 1) {
         ?>
   
     <script>
+       
+
         $(function() {
             load(1);
         });

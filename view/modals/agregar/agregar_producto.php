@@ -117,14 +117,14 @@
 
 
                                                     // Crear el elemento select
-                                                    echo ' <select class="form-control categorias" name="unidad" id="unidad">';
+                                                    echo ' <select class="form-control unidad" name="unidad" id="unidad">';
 
                                                     if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
                                                         // Iterar sobre los resultados y crear una opción para cada uno
 
                                                         while ($fila = mysqli_fetch_assoc($resultado)) {
-                                                            echo '<option value="' . $fila['INTIDUNI'] . '"  <?php if($categoria= $fila["INTIDUNI"]) selected ?>   ' . $fila['STRNOMUNI'] . '</option>';
+                                                            echo '<option value="' . $fila['INTIDUNI'] . '"  <?php if($unidad= $fila["INTIDUNI"]) selected ?>   ' . $fila['STRNOMUNI'] . '</option>';
                                                         }
                                                     } else {
 

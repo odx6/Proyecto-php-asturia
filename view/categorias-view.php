@@ -115,7 +115,7 @@ if ($_SESSION['categorias'] == 1) {
         function eliminar(id) {
             if (confirm('Esta acción  eliminará de forma permanente la solicitud\n\n Desea continuar?')) {
                 var page = 1;
-                var query = $("#q").val();
+                var query = "";
                 var per_page = $("#per_page").val();
                 var parametros = {
                     "action": "ajax",
@@ -134,6 +134,7 @@ if ($_SESSION['categorias'] == 1) {
                     success: function(data) {
                         $(".outer_div").html(data).fadeIn('slow');
                         $("#loader").html("");
+                        renderTable();
                         window.setTimeout(function() {
                             $(".alert").fadeTo(500, 0).slideUp(500, function() {
                                 $(this).remove();

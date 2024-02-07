@@ -78,6 +78,10 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 }
 
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
+
+
+
+
 if ($action == 'ajax') {
 	$query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
 	$tables = "tblinv";

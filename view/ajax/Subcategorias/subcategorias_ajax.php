@@ -46,16 +46,17 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
 if ($action == 'ajax') {
-	$query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
+	
+	$query =  '' ;
 	$tables = "tblcatsbc";
 	$campos = "*";
 	$sWhere = " STRNOMSBC LIKE '%" . $query . "%'";
 	include '../pagination.php'; //include pagination file
 	//pagination variables
-	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-	$per_page = intval($_REQUEST['per_page']); //how much records you want to show
-	$adjacents  = 4; //gap between pages after number of adjacents
-	$offset = ($page - 1) * $per_page;
+	//$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
+	//$per_page = intval($_REQUEST['per_page']); //how much records you want to show
+	//$adjacents  = 4; //gap between pages after number of adjacents
+	//$offset = ($page - 1) * $per_page;
 	//Count the total number of row in your table*/
 	$count_query   = mysqli_query($con, "SELECT count(*) AS numrows FROM $tables where $sWhere ");
 	if ($row = mysqli_fetch_array($count_query)) {
@@ -63,10 +64,11 @@ if ($action == 'ajax') {
 	} else {
 		echo mysqli_error($con);
 	}
-	$total_pages = ceil($numrows / $per_page);
+	//$total_pages = ceil($numrows / $per_page);
 	$reload = './subcategorias-view.php';
 	//main query to fetch the data
-	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
+	//$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
+	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere ");
 	//loop through fetched data
 
 	if (isset($_REQUEST["id"])) {
