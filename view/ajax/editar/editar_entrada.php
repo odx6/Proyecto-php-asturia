@@ -71,7 +71,7 @@ if (empty($_POST['IDEMP'])) {
     $INTFOL = mysqli_real_escape_string($con, (strip_tags($_POST["INTFOL"], ENT_QUOTES)));
     $STROBS = mysqli_real_escape_string($con, (strip_tags($_POST["STROBS"], ENT_QUOTES)));
 
-    $estado = mysqli_real_escape_string($con, (strip_tags($_POST["MONCTOPRO"], ENT_QUOTES)));
+    //$estado = mysqli_real_escape_string($con, (strip_tags($_POST["MONCTOPRO"], ENT_QUOTES)));
     $FECHA = date("Y-m-d");
     $created_at = date("Y-m-d H:i:s");
 
@@ -123,7 +123,7 @@ if (empty($_POST['IDEMP'])) {
         $tipo = "Actualizacion";
         $fecha = date("Y-m-d H:i:s");
 
-        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata ."','".$sql2."');";
+        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sql2 . "');";
         $query = mysqli_query($con, $sqllog);
     }
     $id;
@@ -139,6 +139,50 @@ if (empty($_POST['IDEMP'])) {
             $Pronuevos = array_filter($datos, function ($item) {
                 return !array_key_exists('id', $item);
             });
+
+
+            $UpdateProductos = array_filter($datos, function ($item) {
+                return array_key_exists('id', $item);
+            });
+
+            //actualiza los  productos  ya ingresados
+            foreach ($UpdateProductos as $producto) {
+                $created_at = date("Y-m-d H:i:s");
+                $created_at2 = date("Y-m-d");
+                $oldproduct = recuperarDatos("SELECT * from tblinvdet  WHERE  INTIDDET='" . $producto['id'] . "';");
+                $update = "UPDATE `tblinvdet` SET `STRREF`='" . $producto['referencia'] . "',`INTCAN`='" . $producto['cantidad'] . "',`MONCTOPRO`='" . $producto['total'] . "' WHERE INTIDDET='" . $producto['id'] . "';";
+
+                $sqlupdate = mysqli_query($con, $update);
+
+                if ($sqlupdate) {
+                    $id = $producto['id'];
+                    $sqlnew = recuperarDatos("SELECT * from tblinvdet  WHERE INTIDDET='" . $producto['id'] . "';");
+                    $tabla = "tblinvdet";
+                    $tipo = "Actualizacion";
+                    $fecha = date("Y-m-d H:i:s");
+
+                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldproduct . "','" . $sqlnew . "');";
+                    $query = mysqli_query($con, $sqllog);
+                }
+
+                //se va actuañizar la tabla tbltarinventario con los datos
+                $oldata = recuperarDatos("SELECT * from tbltarinv  WHERE INTIDINV='" . $producto['fk_inventario'] . "' AND SKU='" . $producto['sku'] . "';");
+                $sqltar = "UPDATE `tbltarinv` SET `STRREF`='" . $producto['referencia'] . "',`INTCAN`='" . $producto['cantidad'] . "',`MONCTOPRO`='" . $producto['total'] . "'  WHERE  INTIDINV='" . $producto['fk_inventario'] . "'";
+                $querytar = mysqli_query($con, $sqltar);
+                if ($querytar) {
+                    $id = $producto['id'];
+                    $sqlnew = recuperarDatos("SELECT * from tbltarinv  WHERE INTIDINV='" . $producto['fk_inventario'] . "'  AND SKU='" . $producto['sku'] . "';");
+                    $tabla = "tbltarinv";
+                    $tipo = "Actualizacion";
+                    $fecha = date("Y-m-d H:i:s");
+
+                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sqlnew . "');";
+                    $query = mysqli_query($con, $sqllog);
+                }
+            }
+            
+
+
             foreach ($Pronuevos as $pro) {
 
 
@@ -154,36 +198,34 @@ if (empty($_POST['IDEMP'])) {
                        MONPRCOS,
                         MONCTOPRO,
                          DTEHOR)
-                       VALUES('" . $id_insertado . "','" . $pro['sku'][0] . "','" . $pro['referencia'] . "','" . $pro['cantidad'] . "','" . $pro['unidad'] . "','" . $pro['precio'] . "','" . $pro['total'] . "','" . $created_at . "');";
+                       VALUES('" . $id_insertado . "','" . $pro['sku'] . "','" . $pro['referencia'] . "','" . $pro['cantidad'] . "','" . $pro['unidad'] . "','" . $pro['precio'] . "','" . $pro['total'] . "','" . $created_at . "');";
                 $query_new = mysqli_query($con, $SQL);
 
-               if($query_new){
-                    $ide=mysqli_insert_id($con);
-                    $sql4=recuperarDatos("SELECT * from tblinvdet WHERE INTIDDET='$ide';");
+                if ($query_new) {
+                    $ide = mysqli_insert_id($con);
+                    $sql4 = recuperarDatos("SELECT * from tblinvdet WHERE INTIDDET='" . $ide . "';");
                     $tabla = "tblinvdet";
                     $tipo = "creacion";
                     $fecha = date("Y-m-d H:i:s");
-            
-                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql4."');";
-                    $query = mysqli_query($con, $sqllog);
 
+                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql4 . "');";
+                    $query = mysqli_query($con, $sqllog);
                 }
 
 
                 $sql2 = "INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
-                    VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $pro['sku'][0] . "','" . $pro['referencia'] . "','" . $pro['cantidad'] . "','" . $pro['unidad'] . "','" . $pro['precio'] . "','" . $pro['total'] . "','" . $INTTIPMOV . "','" . $INTIDALM . "','" . $created_at . "');";
+                    VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $pro['sku'] . "','" . $pro['referencia'] . "','" . $pro['cantidad'] . "','" . $pro['unidad'] . "','" . $pro['precio'] . "','" . $pro['total'] . "','" . $INTTIPMOV . "','" . $INTIDALM . "','" . $created_at . "');";
                 $query_new2 = mysqli_query($con, $sql2);
 
-                if($query_new2){
-                    $ide=mysqli_insert_id($con);
-                    $sql4=recuperarDatos("SELECT * from tbltarinv WHERE INTIDTAR='$ide';");
+                if ($query_new2) {
+                    $ide = mysqli_insert_id($con);
+                    $sql4 = recuperarDatos("SELECT * from tbltarinv WHERE INTIDTAR='" . $ide . "';");
                     $tabla = "tbltarinv";
                     $tipo = "creacion";
                     $fecha = date("Y-m-d H:i:s");
-            
-                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql4."');";
-                    $query = mysqli_query($con, $sqllog);
 
+                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql4 . "');";
+                    $query = mysqli_query($con, $sqllog);
                 }
             }
         } else {

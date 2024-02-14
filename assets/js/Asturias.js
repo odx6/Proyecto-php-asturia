@@ -97,6 +97,7 @@ $(document).ready(function () {
 
 });
 
+
 //'view/ajax/Mostrar_Solicitudes_ajax.php'
 function load(page, table, path, reload) {
 
@@ -161,14 +162,14 @@ function eliminar(id, path, table) {
         $(".outer_div").html(data).fadeIn('slow');
         $("#loader").html("");
         renderTable();
-       
+
 
         window.setTimeout(function () {
           $(".alert").fadeTo(500, 0).slideUp(500, function () {
             $(this).remove();
           });
         }, 5000);
-      
+
       }
     })
   }
@@ -378,7 +379,7 @@ function agregarInventario() {
           CALLSKU.textContent = Elemento.SKU;
           CELLREF.textContent = Elemento.STRREF;
           CELLCAT.textContent = Elemento.INTCANT;
-          
+
           let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
           let numeroFormateado = formatoPesos.format(Elemento.MONPRCOS);
           CELLPRECIO.textContent = numeroFormateado;
@@ -459,9 +460,9 @@ function agregarInventario() {
           CELLREF.textContent = Elemento.STRREF;
           CELLCAT.textContent = Elemento.INTCANT;
           let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
-          
+
           CELLPRECIO.textContent = formatoPesos.format(Elemento.MONPRCOS);
-        
+
           CELLTOTAL.textContent = formatoPesos.format(Elemento.MONCTOPRO);
           var boton = document.createElement('button');
           boton.innerHTML = '<i class="far fa-trash-alt"></i>';
@@ -634,9 +635,9 @@ function EliminarArrayInsert(variable) {
     CELLREF.textContent = Elemento.STRREF;
     CELLCAT.textContent = Elemento.INTCANT;
     let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
-          
+
     CELLPRECIO.textContent = formatoPesos.format(Elemento.MONPRCOS);
-  
+
     CELLTOTAL.textContent = formatoPesos.format(Elemento.MONCTOPRO);
     var boton = document.createElement('button');
     boton.innerHTML = '<i class="far fa-trash-alt"></i>';
@@ -721,12 +722,12 @@ function MostrarProductos(id) {
         CALLSKU.textContent = Elemento.sku;
         CELLREF.textContent = Elemento.referencia;
         CELLCAT.textContent = Elemento.cantidad;
-      
+
         let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
-          
-          CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
-        
-          CELLTOTAL.textContent = formatoPesos.format( Elemento.total);
+
+        CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
+
+        CELLTOTAL.textContent = formatoPesos.format(Elemento.total);
         TotalUpdate = TotalUpdate + parseInt(Elemento.total);
 
         var boton = document.createElement('button');
@@ -838,10 +839,10 @@ function agregarUpdate() {
               CELLREF.textContent = Elemento.referencia;
               CELLCAT.textContent = Elemento.cantidad;
               let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
-          
+
               CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
-            
-              CELLTOTAL.textContent = formatoPesos.format( Elemento.total);
+
+              CELLTOTAL.textContent = formatoPesos.format(Elemento.total);
 
 
               var boton = document.createElement('button');
@@ -918,10 +919,10 @@ function agregarUpdate() {
                 CELLREF.textContent = Elemento.referencia;
                 CELLCAT.textContent = Elemento.cantidad;
                 let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
-          
+
                 CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
-              
-                CELLTOTAL.textContent = formatoPesos.format( Elemento.total);;
+
+                CELLTOTAL.textContent = formatoPesos.format(Elemento.total);;
 
 
                 var boton = document.createElement('button');
@@ -1009,10 +1010,10 @@ function agregarUpdate() {
         CELLREF.textContent = Elemento.referencia;
         CELLCAT.textContent = Elemento.cantidad;
         let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
-          
-          CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
-        
-          CELLTOTAL.textContent = formatoPesos.format( Elemento.total);
+
+        CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
+
+        CELLTOTAL.textContent = formatoPesos.format(Elemento.total);
 
 
         var boton = document.createElement('button');
@@ -1088,10 +1089,10 @@ function EliminarArray(id) {
     CELLCAT.textContent = Elemento.cantidad;
 
     let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
-          
+
     CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
-  
-    CELLTOTAL.textContent = formatoPesos.format( Elemento.total);
+
+    CELLTOTAL.textContent = formatoPesos.format(Elemento.total);
 
 
     var boton = document.createElement('button');
@@ -1288,13 +1289,34 @@ function resetForm() {
   document.querySelector("#new_register").reset();
 }
 
-function reportInputOutput(){
+function reportInputOutput() {
 
- 
 
-  var id=$('#INTIDINV').val();
+
+  var id = $('#INTIDINV').val();
   $('#idinventario').val(id);
-   
+
+
+}
+
+function ValidarEntradaSalida(array) {
+
+  (array.length > 0) ? document.getElementById('INTTIPMOV').disabled = true : document.getElementById('INTTIPMOV').disabled = false;
+
+
+}
+function calcularTotal(array) {
+  var Total = 0;
+  array.forEach(function (elemento) {
+
+    Total += elemento.MONCTOPRO;
+
+  });
+  $("#Total").text(Total);
+
+
+
+
 
 }
 

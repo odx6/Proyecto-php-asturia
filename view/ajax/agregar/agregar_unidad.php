@@ -25,18 +25,19 @@ if (empty($_POST['STRNOMUNI'])) {
 	$sql = "INSERT INTO tblcatuni (STRNOMUNI,STRDESUNI,DTEHOR,BITSUS) 
 			VALUES('" . $STRNOMUNI . "','" . $STRDESUNI . "','" . $DTEHOR . "','" . $BITSUS . "');";
 	$query_new = mysqli_query($con, $sql);
-	if($query_new){
-		$id=mysqli_insert_id($con);
-		$sql2=recuperarDatos("SELECT * from tblcatuni WHERE INTIDUNI='$id';");
-		$tabla="tblcatuni";
-		$tipo="creacion";
-		$fecha=date("Y-m-d H:i:s");
-		
-     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-	 $query = mysqli_query($con, $sqllog);
-	 
+	if ($query_new) {
+		$id = mysqli_insert_id($con);
+		$sql2 = recuperarDatos("SELECT * from tblcatuni WHERE INTIDUNI='$id';");
+		$tabla = "tblcatuni";
+		$tipo = "creacion";
+		$fecha = date("Y-m-d H:i:s");
+
+		$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+		$query = mysqli_query($con, $sqllog);
 	}
 
+
+	$messages[] = "Unidad de medida agregada correctamente";
 } else {
 	$errors[] = "desconocido.";
 }
@@ -58,16 +59,24 @@ if (isset($errors)) {
 if (isset($messages)) {
 
 ?>
+
 	<div class="alert alert-success" role="alert">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<strong>¡Bien hecho!</strong>
-	
+
 		<?php
 		foreach ($messages as $message) {
 			echo $message;
 		}
 		?>
+
+
 	</div>
+	<div class="alert alert-success" role="alert">
+		A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+	</div>
+
+
 <?php
 }
 ?>

@@ -167,7 +167,17 @@ if ($action == 'ajax') {
 						<td><?php echo $DTEHOR ?></td>
 						<td class="text-right">
 							<?php if (in_array(2, $_SESSION['Habilidad']['Entradas'])) { ?>
-								<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDINV; ?>');"><i class="far fa-edit"></i></button>
+						      <form action="./?view=EditarEntrada" method="POST" role="form">
+                              <input type="hidden" required class="form-control" id="identrada" name="identrada"  value="<?php echo $INTIDINV ?>">
+							  <button type="submit" class="btn btn-warning btn-square btn-xs" ><i class="far fa-edit"></i></button>
+
+
+							  </form>
+
+
+
+                                 
+								<!--<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $INTIDINV; ?>');"><i class="far fa-edit"></i></button>-->
 							<?php } ?>
 							<?php if (in_array(3, $_SESSION['Habilidad']['Entradas'])) { ?>
 								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDINV; ?>')"><i class="far fa-trash-alt"></i></button>

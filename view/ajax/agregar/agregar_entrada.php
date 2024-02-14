@@ -111,7 +111,7 @@ if (empty($_POST['IDEMP'])) {
                    MONPRCOS,
                     MONCTOPRO,
                      DTEHOR)
-                   VALUES('" . $id_insertado . "','" . $elemento['SKU'][0] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $created_at . "');";
+                   VALUES('" . $id_insertado . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $created_at . "');";
                 $query_new = mysqli_query($con, $SQL);
 
                if ($query_new) {
@@ -129,7 +129,7 @@ if (empty($_POST['IDEMP'])) {
 
 
                 $sql2 = "INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
-                VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $elemento['SKU'][0] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $INTTIPMOV . "','" . $INTIDALM . "','" . $created_at . "');";
+                VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $INTTIPMOV . "','" . $INTIDALM . "','" . $created_at . "');";
                 $query_new2 = mysqli_query($con, $sql2);
                  if($query_new2){
                     $id=mysqli_insert_id($con);

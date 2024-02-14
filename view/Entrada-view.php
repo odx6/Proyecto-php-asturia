@@ -41,6 +41,7 @@ if ($_SESSION['Entradas'] == 1) {
                             <div class="col-sm-4">
 
                             <?php 
+                            include "modals/Productos_modal.php";
                             include "modals/agregar/agregar_entrada.php";
                             include "modals/editar/editar_generico.php";
                             include "modals/mostrar/mostrar_entrada.php";
@@ -93,7 +94,7 @@ if ($_SESSION['Entradas'] == 1) {
                     success: function(data) {
                         $(".outer_div").html(data).fadeIn('slow');
                         $("#loader").html("");
-                        renderTable();
+                        renderTable3();
 
 
 

@@ -48,3 +48,5 @@ function Ever(variable){
 
   alert("Hola" + variable +"ide de habilidad "+ideHabilidad+"ideTabla "+idTabla+"Valor de la bandera"+Bandera );
 }
+
+

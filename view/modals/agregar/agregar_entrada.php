@@ -165,6 +165,8 @@
                         <div class="cpl-sm-12 modal-footer">
 
                             <button type="button" class="btn btn-warning" onclick="agregarInventario()">Agregar <i class="fa fa-plus"></i></button>
+                           
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" >Agregar Producto <i class="fa fa-plus"></i></button>
                         </div>
 
                     </div>

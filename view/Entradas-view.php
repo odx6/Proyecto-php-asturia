@@ -37,6 +37,7 @@
                     <!-- modals -->
                         <?php 
                             include "modals/agregar/agregar_entrada.php";
+                            include "modals/Productos_modal.php";
                             include "modals/editar/editar_entrada.php";
                             include "modals/mostrar/mostrar_entrada.php";
                         ?>
