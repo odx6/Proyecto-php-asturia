@@ -9,7 +9,7 @@ if ($_SESSION['solicitud'] == 1) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Solicitud</h1>
+                        <h1><i class="fab fa-wpforms"></i>Solicitud</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -37,11 +37,12 @@ if ($_SESSION['solicitud'] == 1) {
 
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Lista de solicitudes</h3>
+                                <h3 class="card-title"><i class="fab fa-wpforms"></i> Lista de solicitudes</h3>
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body outer_div">
-                                
+                            <div class="card-body ">
+                                <div class="resultados_ajax"></div>
+                                <div class="outer_div"></div>
 
                                 
                             </div>
@@ -80,9 +81,9 @@ if ($_SESSION['solicitud'] == 1) {
                     $("#resultados_ajax").html("Enviando...");
                 },
                 success: function(datos) {
-                    $("#resultados_ajax").html(datos);
+                    $(".resultados_ajax").html(datos);
                     $('#guardar_datos').attr("disabled", false);
-                    load(1);
+                    load(1,'solicitud','view/ajax/Mostrar_Solicitudes_ajax.php');
                     window.setTimeout(function() {
                         $(".alert").fadeTo(500, 0).slideUp(500, function() {
                             $(this).remove();
@@ -109,9 +110,9 @@ if ($_SESSION['solicitud'] == 1) {
                     $("#resultados_ajax").html("Enviando...");
                 },
                 success: function(datos) {
-                    $("#resultados_ajax").html(datos);
+                    $(".resultados_ajax").html(datos);
                     $('#actualizar_datos').attr("disabled", false);
-                    load(1);
+                    load(1,'solicitud','view/ajax/Mostrar_Solicitudes_ajax.php');
                     window.setTimeout(function() {
                         $(".alert").fadeTo(500, 0).slideUp(500, function() {
                             $(this).remove();

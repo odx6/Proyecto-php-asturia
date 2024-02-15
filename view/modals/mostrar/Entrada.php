@@ -38,24 +38,18 @@ if (in_array(4, $_SESSION['Habilidad']['Entradas'])) {
 
 
     <input type="hidden" required class="form-control" id="INTIDINV" name="INTIDINV" placeholder="Folio:" value="<?php echo $id ?>">
-
-
-
-    <div class="col-sm-6">
-
-        <div class="col-sm-4" style="border: 1px solid black"> <STROng "><i class=" fa fa-calendar-o" aria-hidden="true"></i> &nbsp;Inventario : &nbsp;</STROng><?php echo $INTIDINV ?></div>
-        <div class="col-sm-4" style="border: 1px solid black"> <STROng "><i class=" fa fa-calendar-o" aria-hidden="true"></i> &nbsp;Fecha : &nbsp;</STROng><?php echo $DTEFEC ?></div>
-        <!--<div class="col-sm-6" style="border: 1px solid black"><?php echo $DTEFEC ?></div>-->
-        <div class="col-sm-4" style="border: 1px solid black"><STRong "><i class=" fa fa-file-text-o" aria-hidden="true"></i> &nbsp;Folio : &nbsp;</STRong><?php echo $INTFOL ?></div>
-        <!-- <div class="col-sm-6" style="border: 1px solid black"><?php echo $INTFOL ?></div>-->
-
+    <div class="row">
+        <div class="col-4"><STROng "><i class=" fas fa-warehouse"></i> &nbsp;Inventario : &nbsp;</STROng><?php echo $INTIDINV ?></div>
+        <div class="col-4"><STROng "><i class=" fas fa-calendar-minus"></i> &nbsp;Fecha : &nbsp;</STROng><?php echo $DTEFEC ?></div>
+        <div class="col-4"><STRong "><i class=" fas fa-newspaper"></i> &nbsp;Folio : &nbsp;</STRong><?php echo $INTFOL ?></div>
     </div>
-    <div class="col-sm-6">
-        <div class="col-sm-4" style="border: 1px solid black"> <STROng "><i class=" fa fa-comments" aria-hidden="true"></i> &nbsp;Desc. : &nbsp;</STROng><?php echo $STROBS ?></div>
-        <!-- <div class="col-sm-6" style="border: 1px solid black"><?php echo $STROBS ?></div>-->
-        <!--  <div class="col-sm-4" style="border: 1px solid black"><STRong "><i class="fa fa-map-marker" aria-hidden="true"></i> &nbsp;Alm. : &nbsp;</STRong> <?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></div>-->
-        <!-- <div class="col-sm-6" style="border: 1px solid black"><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></div>-->
+    <div class="row">
+        <div class="col-12"> <STROng "><i class=" fa fa-comments" aria-hidden="true"></i> &nbsp;Descripcion: &nbsp;</STROng><?php echo $STROBS ?></div>
+       
     </div>
+
+
+   
     <div class="col-md-12">
 
         <p>&nbsp;</p>

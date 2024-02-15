@@ -84,6 +84,7 @@ if (empty($_POST['IDEMP'])) {
 
         $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
         $query = mysqli_query($con, $sqllog);
+        $messages[]="Inventario Agregado correctamente";
     }
     $id;
 
@@ -123,6 +124,7 @@ if (empty($_POST['IDEMP'])) {
 
                     $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql3 . "');";
                     $query = mysqli_query($con, $sqllog);
+                    $messages[]="Detalle de inventario agregado correctamente";
                 }
 
 
@@ -140,6 +142,7 @@ if (empty($_POST['IDEMP'])) {
                     
                  $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql3."');";
                  $query = mysqli_query($con, $sqllog);
+                 $messages[]="Tarjeta de inventario  Agregada correctamente";
 
                 }
             }

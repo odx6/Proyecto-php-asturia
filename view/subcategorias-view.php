@@ -9,7 +9,7 @@ if ($_SESSION['subcategorias'] == 1) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Subcategorias</h1>
+                        <h1> <i class="fas fa-bookmark"></i> Subcategorias</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -33,16 +33,20 @@ if ($_SESSION['subcategorias'] == 1) {
 
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Lista de subcategorias</h3>
+                                <h3 class="card-title"> <i class="fas fa-bookmark"></i> Lista de subcategorias</h3>
                             </div>
-                            <?php 
+                            <?php
                             include "modals/agregar/agregar_subcategoria.php";
                             include "modals/editar/editar_subcategoria.php";
                             include "modals/mostrar/mostrar_subcategoria.php";
-                        ?>
+                            ?>
                             <!-- /.card-header -->
-                            <div class="card-body outer_div">
-                                </table>
+                            <div class="card-body ">
+                                <div id="resultados_ajax"></div>
+                                <div class="outer_div">
+
+                                </div>
+
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -72,7 +76,7 @@ if ($_SESSION['subcategorias'] == 1) {
                 var per_page = $("#per_page").val();
                 var column = $("#miSelect").val();
 
-                var query ="";
+                var query = "";
                 var per_page = 15;
 
 

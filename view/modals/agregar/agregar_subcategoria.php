@@ -1,4 +1,5 @@
-<div class="modal fade" id="formModal">
+<?php if (in_array(1, $_SESSION['Habilidad']['Subcategorias'])) { ?>
+    <div class="modal fade" id="formModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -78,3 +79,4 @@
         <!-- /.modal-dialog -->
     </div>
 </div>
+<?php } ?>

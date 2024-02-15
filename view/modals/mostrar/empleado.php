@@ -15,6 +15,7 @@ if (isset($_GET["id"])) {
             $STRNSS = $row['STRNSS'];
             $STRRFC = $row['STRRFC'];
             $STRCUR = $row['STRCUR'];
+            $STRNDL = $row['STRNDL'];
             $STRNOM = $row['STRNOM'];
             $STRAPE = $row['STRAPE'];
             $STRDOM = $row['STRDOM'];
@@ -181,6 +182,14 @@ if (isset($_GET["id"])) {
                                 echo '<span> <i class="far fa-circle"></i> Inactivo </span>';
                             }
                             ?>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                        <label for="STRNDL" class=" col-form-label">Numero de licencia: </label>
+                           <?php echo $STRNDL?>
+                          
+
                         </div>
                     </div>
 

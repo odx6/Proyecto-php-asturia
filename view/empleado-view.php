@@ -9,7 +9,7 @@ if ($_SESSION['empleados'] == 1) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Empleados</h1>
+                        <h1><i class="fas fa-user-astronaut"></i>Empleados</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -29,21 +29,23 @@ if ($_SESSION['empleados'] == 1) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                    <?php 
-                            include "modals/agregar/agregar_empleado.php";
-                            include "modals/editar/editar_empleado.php";
-                            include "modals/mostrar/mostrar_empleado.php";
+                        <?php
+                        include "modals/agregar/agregar_empleado.php";
+                        include "modals/editar/editar_empleado.php";
+                        include "modals/mostrar/mostrar_empleado.php";
                         ?>
 
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Lista de empleados</h3>
+                                <h3 class="card-title"> <i class="fas fa-user-astronaut"></i>Lista de empleados</h3>
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body outer_div">
-                                
+                            <div class="card-body ">
+                                <div id="resultados_ajax"></div>
+                                <div class="outer_div"></div>
 
-                                
+
+
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -59,7 +61,7 @@ if ($_SESSION['empleados'] == 1) {
         <?php
         include "resources/footer.php";
         ?>
-       
+
         <script>
             $(function() {
                 load(1);
@@ -135,7 +137,7 @@ if ($_SESSION['empleados'] == 1) {
         <script>
             //nuevo form data
             $("#new_register").submit(function(event) {
-                
+
                 event.preventDefault();
                 $('#guardar_datos').attr("disabled", true);
 

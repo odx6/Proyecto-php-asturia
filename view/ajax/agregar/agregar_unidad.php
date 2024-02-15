@@ -60,7 +60,7 @@ if (isset($messages)) {
 
 ?>
 
-	<div class="alert alert-success" role="alert">
+	<div class="alert alert-success" >
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<strong>¡Bien hecho!</strong>
 
@@ -72,9 +72,7 @@ if (isset($messages)) {
 
 
 	</div>
-	<div class="alert alert-success" role="alert">
-		A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-	</div>
+	
 
 
 <?php

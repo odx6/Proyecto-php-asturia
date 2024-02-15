@@ -68,14 +68,8 @@ if (in_array(4, $_SESSION['Habilidad']['Productos'])) {
             <div class="col-md-8">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="imagefile" class="control-label">Imagen: </label>
-                                <input type="file" name="STRIMG" class="form-control validarBtn" id="STRIMG" readonly>
-                            </div>
-
-                        </div>
-                        <div class="col-6">
+                        
+                        <div class="col-12">
                             <div class="form-group">
                                 <label for="usuario" class="control-label">Categoria: </label>
 

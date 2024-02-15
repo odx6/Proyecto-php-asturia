@@ -49,7 +49,7 @@ if (empty($_POST['STRSKU'])) {
 	$perteneceTaller = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDPUSO"], ENT_QUOTES)));
 	$estado = mysqli_real_escape_string($con, (strip_tags($_POST["estado"], ENT_QUOTES)));
 	$created_at = date("Y-m-d H:i:s");
-	if (empty($_FILES["STRIMG"]['name'])) {
+	if (empty($_FILES["STRIMGP"]['name'])) {
 		$Imagen = "view/resources/images/Default/productoDefault.png";
 	} else {
 
@@ -57,10 +57,10 @@ if (empty($_POST['STRSKU'])) {
 		//UPDATE IMG 
 		//Agregar imagen
 		$target_dir = "../../resources/images/Productos/";
-		$image_name = time() . "_" . basename($_FILES["STRIMG"]["name"]);
+		$image_name = time() . "_" . basename($_FILES["STRIMGP"]["name"]);
 		$target_file = $target_dir . $image_name;
 		$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-		$imageFileZise = $_FILES["STRIMG"]["size"];
+		$imageFileZise = $_FILES["STRIMGP"]["size"];
 
 		if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
 			$errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
@@ -69,8 +69,8 @@ if (empty($_POST['STRSKU'])) {
 		} else {
 			/* Fin Validacion*/
 			if ($imageFileZise > 0) {
-				move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
-				$imagen = basename($_FILES["STRIMG"]["name"]);
+				move_uploaded_file($_FILES["STRIMGP"]["tmp_name"], $target_file);
+				$imagen = basename($_FILES["STRIMGP"]["name"]);
 				$Imagen = "view/resources/images/Productos/$image_name";
 			}
 		}
@@ -97,6 +97,7 @@ if (empty($_POST['STRSKU'])) {
 	 $query = mysqli_query($con, $sqllog);
 	 
 	}
+	$messages[]="Producto agregado correctamente";
 
 	if (!$query_new) $errors[] = "no se agrego el producto";
 } else {

@@ -29,21 +29,20 @@ if (empty($_POST['STRNOMSBC'])) {
 	$sql = "INSERT INTO tblcatsbc ( INTIDCAT,STRNOMSBC, STRDESBC,DTEHOR,BITSUS) 
 			VALUES('" . $INTIDCAT . "','" . $STRNOMSBC . "','" . $STRDESSBC . "','" . $DTEHOR . "','" . $BITSUS . "');";
 	$query_new = mysqli_query($con, $sql);
-	if($query_new){
-		$id=mysqli_insert_id($con);
-		$sql2=recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
-		$tabla="tblcatsbc";
-		$tipo="creacion";
-		$fecha=date("Y-m-d H:i:s");
-		
-     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-	 $query = mysqli_query($con, $sqllog);
-	 
+	if ($query_new) {
+		$id = mysqli_insert_id($con);
+		$sql2 = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
+		$tabla = "tblcatsbc";
+		$tipo = "creacion";
+		$fecha = date("Y-m-d H:i:s");
+
+		$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+		$query = mysqli_query($con, $sqllog);
 	}
+	$messages[]="Subcategoria agregada correctamente";
 } else {
 	$errors[] = "desconocido.";
 }
-
 if (isset($errors)) {
 
 ?>
@@ -61,15 +60,22 @@ if (isset($errors)) {
 if (isset($messages)) {
 
 ?>
-	<div class="alert alert-success" role="alert">
+
+	<div class="alert alert-success">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<strong>¡Bien hecho!</strong>
+
 		<?php
 		foreach ($messages as $message) {
 			echo $message;
 		}
 		?>
+
+
 	</div>
+
+
+
 <?php
 }
 ?>

@@ -8,6 +8,9 @@ if (empty($_POST['STRNSS'])) {
     $errors[] = "RFC está vacío.";
 } elseif (empty($_POST['STRCUR'])) {
     $errors[] = "CURP está vacío.";
+}
+elseif (empty($_POST['STRNDL'])) {
+    $errors[] = "Licencia está vacío.";
 } elseif (empty($_POST['STRNOM'])) {
     $errors[] = "Nombre está vacío.";
 } elseif (empty($_POST['STRAPE'])) {
@@ -37,6 +40,7 @@ if (empty($_POST['STRNSS'])) {
     !empty($_POST['STRNSS'])
     && !empty($_POST['STRRFC'])
     && !empty($_POST['STRCUR'])
+    && !empty($_POST['STRNDL'])
     && !empty($_POST['STRNOM'])
     && !empty($_POST['STRAPE'])
     && !empty($_POST['STRDOM'])
@@ -59,6 +63,7 @@ if (empty($_POST['STRNSS'])) {
     $STRNSS = mysqli_real_escape_string($con, (strip_tags($_POST["STRNSS"], ENT_QUOTES)));
     $STRRFC = mysqli_real_escape_string($con, (strip_tags($_POST["STRRFC"], ENT_QUOTES)));
     $STRCUR = mysqli_real_escape_string($con, (strip_tags($_POST["STRCUR"], ENT_QUOTES)));
+    $STRNDL = mysqli_real_escape_string($con, (strip_tags($_POST["STRNDL"], ENT_QUOTES)));
     $STRNOM = mysqli_real_escape_string($con, (strip_tags($_POST["STRNOM"], ENT_QUOTES)));
     $STRAPE = mysqli_real_escape_string($con, (strip_tags($_POST["STRAPE"], ENT_QUOTES)));
     $STRDOM = mysqli_real_escape_string($con, (strip_tags($_POST["STRDOM"], ENT_QUOTES)));
@@ -75,7 +80,7 @@ if (empty($_POST['STRNSS'])) {
     $id = intval($_POST['id']);
 
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
-    if (empty($_FILES["STRIMG"]['name'])) {
+    if (empty($_FILES["STRIMGEU"]['name'])) {
         $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
         $queyimg = mysqli_query($con, $sqlimg);
         $num = mysqli_num_rows($queyimg);
@@ -96,10 +101,10 @@ if (empty($_POST['STRNSS'])) {
         //UPDATE IMG 
         //Agregar imagen
         $target_dir = "../../resources/images/Empleados/";
-        $image_name = time() . "_" . basename($_FILES["STRIMG"]["name"]);
+        $image_name = time() . "_" . basename($_FILES["STRIMGEU"]["name"]);
         $target_file = $target_dir . $image_name;
         $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-        $imageFileZise = $_FILES["STRIMG"]["size"];
+        $imageFileZise = $_FILES["STRIMGEU"]["size"];
 
         if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
             $errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
@@ -108,8 +113,8 @@ if (empty($_POST['STRNSS'])) {
         } else {
             /* Fin Validacion*/
             if ($imageFileZise > 0) {
-                move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
-                $imagen = basename($_FILES["STRIMG"]["name"]);
+                move_uploaded_file($_FILES["STRIMGEU"]["tmp_name"], $target_file);
+                $imagen = basename($_FILES["STRIMGEU"]["name"]);
                 $Imagen = "view/resources/images/Empleados/$image_name";
             }
         }
@@ -135,9 +140,9 @@ if (empty($_POST['STRNSS'])) {
     $oldata = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
     // UPDATE data into database
     if (!empty($_POST['STRPWS'])) {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     } else {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     }
     $query = mysqli_query($con, $sql);
     if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/perfil.png") {
@@ -168,7 +173,8 @@ if (empty($_POST['STRNSS'])) {
         if (mysqli_query($con, $sqldel)) {
             while ($row = mysqli_fetch_array($PermisosEliminados)) {
                 $idx=$row['idempleado_permiso'];
-                $sql2 = recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$idx';");
+               //$sql2 = recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$idx';");
+               $sql2 = "".$row['idempleado_permiso'].",".$row['idempleado'].",".$row['idpermiso'].",".$row['Habilidades']."";
                 $tabla = "empleado_permisos";
                 $tipo = "Eliminacion";
                 $fecha = date("Y-m-d H:i:s");

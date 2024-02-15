@@ -39,6 +39,7 @@
 			 $query = mysqli_query($con, $sqllog);
 			 
 			}
+			$messages[]="Unidad Actualizada Correctamente";
 
 
             

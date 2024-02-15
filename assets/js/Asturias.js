@@ -1319,4 +1319,9 @@ function calcularTotal(array) {
 
 
 }
+ function img(id){
+  //alert("Hola"+id)
+  $("#"+id).click();
+ 
+ }
 

@@ -63,6 +63,7 @@ if (empty($_POST['IDEMPLEADO'])) {
 			
 		 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$dni."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
 		 $query = mysqli_query($con, $sqllog);
+		 $messages[]="Solicitud agregada correctamente";
 		 
 		}
 	

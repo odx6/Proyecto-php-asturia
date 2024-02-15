@@ -8,6 +8,8 @@ if (empty($_POST['STRNSS'])) {
     $errors[] = "RFC está vacío.";
 } elseif (empty($_POST['STRCUR'])) {
     $errors[] = "CURP está vacío.";
+}elseif (empty($_POST['STRNDL'])) {
+    $errors[] = "Licencia está vacío.";
 } elseif (empty($_POST['STRNOM'])) {
     $errors[] = "Nombre está vacío.";
 } elseif (empty($_POST['STRAPE'])) {
@@ -37,6 +39,7 @@ if (empty($_POST['STRNSS'])) {
     !empty($_POST['STRNSS'])
     && !empty($_POST['STRRFC'])
     && !empty($_POST['STRCUR'])
+    && !empty($_POST['STRNDL'])
     && !empty($_POST['STRNOM'])
     && !empty($_POST['STRAPE'])
     && !empty($_POST['STRDOM'])
@@ -57,12 +60,13 @@ if (empty($_POST['STRNSS'])) {
     $consulta="SELECT * FROM tblcatemp WHERE IDEMP=$id;";
     $oldata=recuperarDatos($consulta);
     //Contiene las variables de configuracion para conectar a la base de datos
-
+ 
     // escaping, additionally removing everything that could be (html/javascript-) code
     //$IDEMP = mysqli_real_escape_string($con,(strip_tags($_POST["IDEMP"],ENT_QUOTES)));
     $STRNSS = mysqli_real_escape_string($con, (strip_tags($_POST["STRNSS"], ENT_QUOTES)));
     $STRRFC = mysqli_real_escape_string($con, (strip_tags($_POST["STRRFC"], ENT_QUOTES)));
     $STRCUR = mysqli_real_escape_string($con, (strip_tags($_POST["STRCUR"], ENT_QUOTES)));
+    $STRNDL = mysqli_real_escape_string($con, (strip_tags($_POST["STRNDL"], ENT_QUOTES)));
     $STRNOM = mysqli_real_escape_string($con, (strip_tags($_POST["STRNOM"], ENT_QUOTES)));
     $STRAPE = mysqli_real_escape_string($con, (strip_tags($_POST["STRAPE"], ENT_QUOTES)));
     $STRDOM = mysqli_real_escape_string($con, (strip_tags($_POST["STRDOM"], ENT_QUOTES)));
@@ -79,7 +83,7 @@ if (empty($_POST['STRNSS'])) {
   
 
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
-    if (empty($_FILES["STRIMG"]['name'])) {
+    if (empty($_FILES["STRIMGPE"]['name'])) {
         $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
         $queyimg = mysqli_query($con, $sqlimg);
         $num = mysqli_num_rows($queyimg);
@@ -100,10 +104,10 @@ if (empty($_POST['STRNSS'])) {
         //UPDATE IMG 
         //Agregar imagen
         $target_dir = "../../resources/images/Empleados/";
-        $image_name = time() . "_" . basename($_FILES["STRIMG"]["name"]);
+        $image_name = time() . "_" . basename($_FILES["STRIMGPE"]["name"]);
         $target_file = $target_dir . $image_name;
         $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-        $imageFileZise = $_FILES["STRIMG"]["size"];
+        $imageFileZise = $_FILES["STRIMGPE"]["size"];
 
         if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
             $errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
@@ -112,8 +116,8 @@ if (empty($_POST['STRNSS'])) {
         } else {
             /* Fin Validacion*/
             if ($imageFileZise > 0) {
-                move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
-                $imagen = basename($_FILES["STRIMG"]["name"]);
+                move_uploaded_file($_FILES["STRIMGPE"]["tmp_name"], $target_file);
+                $imagen = basename($_FILES["STRIMGPE"]["name"]);
                 $Imagen = "view/resources/images/Empleados/$image_name";
             }
         }
@@ -134,9 +138,9 @@ if (empty($_POST['STRNSS'])) {
 
     // UPDATE data into database
     if (!empty($_POST['STRPWS'])) {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     } else {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     }
     $query = mysqli_query($con, $sql);
     if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/perfil.png") {

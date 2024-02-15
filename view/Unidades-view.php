@@ -10,12 +10,12 @@ if ($_SESSION['unidades'] == 1) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Entradas</h1>
+                        <h1><i class="fas fa-ruler-combined"></i> UNIDADES DE MEDIDA</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                            <li class="breadcrumb-item active">Entradas</li>
+                            <li class="breadcrumb-item active">Unidades</li>
                         </ol>
                     </div>
                 </div>
@@ -27,7 +27,7 @@ if ($_SESSION['unidades'] == 1) {
             <div class="container-fluid">
                 <div class="row">
               
-                <div id="resultados_ajax"></div>
+                
                     
                    
              
@@ -38,7 +38,7 @@ if ($_SESSION['unidades'] == 1) {
                             
                             
                             <div class="card-header">
-                            <div class="col-sm-8"><h3 class="card-title">Lista de entradas</h3></div>
+                            <div class="col-sm-8"><h3 class="card-title"><i class="fas fa-ruler-combined"></i> Lista de Unidades</h3></div>
                             <div class="col-sm-4">
 
                             <?php 
@@ -52,7 +52,11 @@ if ($_SESSION['unidades'] == 1) {
                     <!-- /end modals -->
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body outer_div">
+                            <div class="card-body ">
+                            <div id="resultados_ajax"></div>
+                                <div class="outer_div">
+
+                                </div>
                                 
                             </div>
                             <!-- /.card-body -->

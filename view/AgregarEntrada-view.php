@@ -9,12 +9,12 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Agregar Entradas</h1>
+                        <h1><i class="fas fa-dolly"></i> Agregar Entradas y Salidas</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                            <li class="breadcrumb-item active">Entradas</li>
+                            <li class="breadcrumb-item active">Agregar Entradas y Salidas</li>
                         </ol>
                     </div>
                 </div>
@@ -24,11 +24,22 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
 
         <section class="content">
             <div class="container-fluid">
+                <div class="resultados_ajax"></div>
                 <?php include "modals/Productos_modal.php"; ?>
+                <div class="resultados_ajax"></div>
+                <div class="row">
+
+                    <button class="btn btn-primary btn-block btn-sm" data-toggle="modal" data-target="#myModal">Agregar Producto <i class="fa fa-plus"></i></button>
+
+                </div>
+                <br>
+
                 <form class="form-horizontal" role="form" method="post" id="new_register" name="new_register" enctype="multipart/form-data">
                     <div class="row">
-                        <input type="hidden" required class="form-control is-invalid" id="IDEMP" name="IDEMP" placeholder="Folio: " value="<?php echo $_SESSION['user_id'] ?>">
-                        <div class="col-4">
+                        <input type="hidden" required class="form-control " id="IDEMP" name="IDEMP" placeholder="Folio: " value="<?php echo $_SESSION['user_id'] ?>">
+
+                        <div class="col-2">
+
                             <div class="form-group">
                                 <label for="INTIDTOP" required class="col-form-label">INTIDTOP: </label>
                                 <?php
@@ -39,7 +50,7 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
 
 
                                 // Crear el elemento select
-                                echo ' <select class="form-control select2 " name="INTIDTOP" id="INTIDTOP">';
+                                echo ' <select class="form-control" name="INTIDTOP" id="INTIDTOP">';
 
                                 if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
@@ -56,9 +67,9 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                                 echo '</select>';
                                 ?>
 
+
                             </div>
-                        </div>
-                        <div class="col-4">
+
                             <div class="form-group">
                                 <label for="INTTIPMOV" class=" col-form-label">Movimiento: </label>
                                 <select class="form-control select2" onchange="ValidarEntradaSalida(inventario)" name="INTTIPMOV" id="INTTIPMOV" required>
@@ -66,8 +77,7 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                                     <option value="2">Salida</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-4">
+
                             <div class="form-group">
                                 <label for="INTIDALM" reuired class="col-form-label">ALMACEN: </label>
                                 <?php
@@ -78,7 +88,7 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
 
 
                                 // Crear el elemento select
-                                echo ' <select class="form-control select2" name="INTIDALM" id="INTIDALM">';
+                                echo ' <select class="form-control" name="INTIDALM" id="INTIDALM">';
 
                                 if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
@@ -96,84 +106,78 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                                 ?>
 
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
+
                             <div class="form-group">
                                 <label for="INTFOL" class=" col-form-label">Folio: </label>
-                                <input type="text" required class="form-control is-invalid" id="INTFOL" name="INTFOL" placeholder="Folio: ">
+                                <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: ">
                                 <span id="MINTFOL"></span>
                             </div>
-                        </div>
-                        <div class="col-6">
+
                             <div class="form-group">
                                 <label for="STROBS" class=" col-form-label">Descripcion: </label>
-                                <input type="text" required class="form-control is-invalid" id="STROBS" name="STROBS" placeholder="Descripcion: ">
+                                <input type="text" required class="form-control" id="STROBS" name="STROBS" placeholder="Descripcion: ">
                                 <span id="STROBS"></span>
                             </div>
+
                         </div>
-                    </div>
-                    <div class="row">
+                        <div class="col-10">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Lista de productos</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example3" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Indice</th>
+                                                <th>SKU</th>
+                                                <th>Descripcion</th>
+                                                <th>Referencia</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Subtotal</th>
+                                                <th>Accion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                        <button class="btn btn-primary btn-block btn-sm" data-toggle="modal" data-target="#myModal">Agregar Producto <i class="fa fa-plus"></i></button>
-
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Lista de productos</h3>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Indice</th>
+                                                <th>SKU</th>
+                                                <th>Descripcion</th>
+                                                <th>Referencia</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Total</th>
+                                                <th>Accion</th>
+                                            </tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th id="Total"></th>
+                                            <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="example3" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Indice</th>
-                                            <th>SKU</th>
-                                            <th>Descripcion</th>
-                                            <th>Referencia</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio</th>
-                                            <th>Subtotal</th>
-                                            <th>Accion</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Indice</th>
-                                            <th>SKU</th>
-                                            <th>Descripcion</th>
-                                            <th>Referencia</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio</th>
-                                            <th>Total</th>
-                                            <th>Accion</th>
-                                        </tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th id="Total"></th>
-                                        <th></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <!-- /.card-body -->
+                            <button type="submit" id="guardar_datos" class="btn btn-info">Guardar</button>
+                            </form>
                         </div>
 
 
-                    </div>
 
 
-                    <button type="submit" id="guardar_datos" class="btn btn-info">Guardar</button>
+
+                        
+                
 
 
             </div>
@@ -529,7 +533,7 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
 
             function ActualizarReferencia(sku) {
                 var Dato = $("#R" + sku).val();
-                alert(Dato);
+              //  alert(Dato);
 
                 console.log(sku);
                 var temp = inventario[getIndice(inventario, sku)];
@@ -589,7 +593,7 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                             $("#C" + sku).addClass('is-valid');
                             var Dato = $("#C" + sku).val();
                             if (Dato > 0) {
-                                alert(Dato);
+                                //alert(Dato);
                                 var temp = inventario[getIndice(inventario, sku)];
 
                                 temp.INTCANT = Dato;
@@ -651,10 +655,10 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                     processData: false, // Indicar a jQuery que no procese los datos
                     contentType: false, // Indicar a jQuery que no establezca el tipo de contenido
                     beforeSend: function(objeto) {
-                        $("#resultados_ajax").html("Enviando...");
+                        $(".resultados_ajax").html("Enviando...");
                     },
                     success: function(datos) {
-                        $("#resultados_ajax").html(datos);
+                        $(".resultados_ajax").html(datos);
                         $('#guardar_datos').attr("disabled", false);
                         load(1);
                         window.setTimeout(function() {

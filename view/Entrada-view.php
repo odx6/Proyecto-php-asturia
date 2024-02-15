@@ -9,7 +9,7 @@ if ($_SESSION['Entradas'] == 1) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Entradas</h1>
+                        <h1> <i class="fas fa-dolly"></i> Entradas y Salidas</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -26,7 +26,7 @@ if ($_SESSION['Entradas'] == 1) {
             <div class="container-fluid">
                 <div class="row">
               
-                <div id="resultados_ajax"></div>
+                
                     
                    
              
@@ -37,12 +37,12 @@ if ($_SESSION['Entradas'] == 1) {
                             
                             
                             <div class="card-header">
-                            <div class="col-sm-8"><h3 class="card-title">Lista de entradas</h3></div>
+                            <div class="col-sm-8"><h3 class="card-title"> <i class="fas fa-dolly"></i> Lista de entradas y salidas</h3></div>
                             <div class="col-sm-4">
 
                             <?php 
                             include "modals/Productos_modal.php";
-                            include "modals/agregar/agregar_entrada.php";
+                           
                             include "modals/editar/editar_generico.php";
                             include "modals/mostrar/mostrar_entrada.php";
                         ?>
@@ -52,7 +52,9 @@ if ($_SESSION['Entradas'] == 1) {
                     <!-- /end modals -->
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body outer_div">
+                            <div class="card-body">
+                            <div class="resultados_ajax"></div>
+                                <div class="outer_div"></div>
                                 
                             </div>
                             <!-- /.card-body -->
@@ -77,7 +79,7 @@ if ($_SESSION['Entradas'] == 1) {
                 var query = $("#q").val();
                 var per_page = $("#per_page").val();
                 var query = "";
-                var per_page = 200;
+                var per_page = 1000000;
                 var parametros = {
                     "action": "ajax",
                     "page": page,

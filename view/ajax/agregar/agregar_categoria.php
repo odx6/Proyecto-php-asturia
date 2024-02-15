@@ -36,36 +36,47 @@ if (empty($_POST['STRNOMCAT'])) {
 
 		$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $ide . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
 		$query = mysqli_query($con, $sqllog);
+	}else{
+		$errors[] = "error".mysqli_error($con);
 	}
 
-
-	if (isset($messages)) {
-
-
-		echo '<div class="alert alert-success" role="alert">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<strong>¡Bien hecho!</strong>';
-
-		foreach ($messages as $message) {
-			echo $message;
-		}
-
-		echo '</div>';
-	}
+	$messages[] = "Categoria agregada con exito";
 } else {
 	$errors[] = "desconocido.";
-	if (isset($errors)) {
+}
+if (isset($errors)) {
 
-
-		echo '<div class="alert alert-danger" role="alert">
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-				<strong>Error!</strong>';
-
-		foreach ($errors as $error) {
-			echo $error;
-		}
-
-		echo '</div>';
+	?>
+		<div class="alert alert-danger" role="alert">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>Error!</strong>
+			<?php
+			foreach ($errors as $error) {
+				echo $error;
+			}
+			?>
+		</div>
+	<?php
 	}
-} ?>
-
+	if (isset($messages)) {
+	
+	?>
+	
+		<div class="alert alert-success" >
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>¡Bien hecho!</strong>
+	
+			<?php
+			foreach ($messages as $message) {
+				echo $message;
+			}
+			?>
+	
+	
+		</div>
+		
+	
+	
+	<?php
+	}
+	?>

@@ -233,6 +233,9 @@
 </div>
 <!-- /.modal-dialog -->
 </div>
+<?php } ?>
+
+<?php if (in_array(1, $_SESSION['Habilidad']['Entradas'])) { ?>
 <!--end modal nuevo -->
 <div class="modal fade" id="formModale" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

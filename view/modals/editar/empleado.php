@@ -14,6 +14,7 @@ if (in_array(2, $_SESSION['Habilidad']['Empleados'])) {
                 $STRNSS = $row['STRNSS'];
                 $STRRFC = $row['STRRFC'];
                 $STRCUR = $row['STRCUR'];
+                $STRNDL = $row['STRNDL'];
                 $STRNOM = $row['STRNOM'];
                 $STRAPE = $row['STRAPE'];
                 $STRDOM = $row['STRDOM'];
@@ -56,7 +57,21 @@ if (in_array(2, $_SESSION['Habilidad']['Empleados'])) {
                     <img class="profile-user-img img-fluid img-circle EverCambio" src="<?php echo $STRIMG ?>" alt="User profile picture">
                     <div class="form-group">
                         <label for="registro" class=" col-form-label">Imagen: </label>
-                        <input type="file" class="form-control validarBtn" id="STRIMG" name="STRIMG" placeholder="imagen: " width="20%">
+                        <input type="file" class="form-control validarBtn" id="STRIMGEU" name="STRIMGEU" placeholder="imagen: " width="20%" style="display:none;">
+                        <div class="btn-group w-100" onclick="img('STRIMGEU')">
+                            <span class="btn btn-success col fileinput-button">
+                                <i class="fas fa-plus"></i>
+                                <span>Agregar imagen</span>
+
+                            </span>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="STRNDL" class=" col-form-label">Numero de licencia: </label>
+                            <input type="text" required class="form-control" id="STRNDL" name="STRNDL" placeholder="Numero de licencia: " required value="<?php echo $STRNDL?>">
+                            <span id="MSTRNDL"></span>
+                        </div>
+
                     </div>
 
                 </div>
@@ -169,15 +184,15 @@ if (in_array(2, $_SESSION['Habilidad']['Empleados'])) {
                     <div class="col-4">
                         <div class="form-group">
                             <label for="pasword" class=" col-form-label">Contraseña: </label>
-                            <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: " >
+                            <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: ">
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="bitsus" class=" col-form-label">Estado: </label>
                             <select class="form-control" name="BITSUS" id="BITSUS">
-                                <option value="1" <?php if($BITSUS==1) echo 'selected'?>>Activo</option>
-                                <option value="2"  <?php if($BITSUS==2) echo 'selected'?>>Inactivo</option>
+                                <option value="1" <?php if ($BITSUS == 1) echo 'selected' ?>>Activo</option>
+                                <option value="2" <?php if ($BITSUS == 2) echo 'selected' ?>>Inactivo</option>
                             </select>
                         </div>
                     </div>
@@ -221,7 +236,7 @@ if (in_array(2, $_SESSION['Habilidad']['Empleados'])) {
             <!-- /.card-body -->
     </div>
 
-   
+
 
 
 

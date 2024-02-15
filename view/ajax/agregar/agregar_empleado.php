@@ -8,6 +8,9 @@ if (empty($_POST['STRNSS'])) {
 	$errors[] = "RFC está vacío.";
 } elseif (empty($_POST['STRCUR'])) {
 	$errors[] = "CURP está vacío.";
+} 
+elseif (empty($_POST['STRNDL'])) {
+	$errors[] = "Licencia está vacío.";
 } elseif (empty($_POST['STRNOM'])) {
 	$errors[] = "Nombre está vacío.";
 } elseif (empty($_POST['STRAPE'])) {
@@ -36,6 +39,7 @@ if (empty($_POST['STRNSS'])) {
 	!empty($_POST['STRNSS'])
 	&& !empty($_POST['STRRFC'])
 	&& !empty($_POST['STRCUR'])
+	&& !empty($_POST['STRNDL'])
 	&& !empty($_POST['STRNOM'])
 	&& !empty($_POST['STRAPE'])
 	&& !empty($_POST['STRDOM'])
@@ -60,6 +64,7 @@ if (empty($_POST['STRNSS'])) {
 	$STRNSS = mysqli_real_escape_string($con, (strip_tags($_POST["STRNSS"], ENT_QUOTES)));
 	$STRRFC = mysqli_real_escape_string($con, (strip_tags($_POST["STRRFC"], ENT_QUOTES)));
 	$STRCUR = mysqli_real_escape_string($con, (strip_tags($_POST["STRCUR"], ENT_QUOTES)));
+	$STRNDL = mysqli_real_escape_string($con, (strip_tags($_POST["STRNDL"], ENT_QUOTES)));
 	$STRNOM = mysqli_real_escape_string($con, (strip_tags($_POST["STRNOM"], ENT_QUOTES)));
 	$STRAPE = mysqli_real_escape_string($con, (strip_tags($_POST["STRAPE"], ENT_QUOTES)));
 	$STRDOM = mysqli_real_escape_string($con, (strip_tags($_POST["STRDOM"], ENT_QUOTES)));
@@ -73,7 +78,7 @@ if (empty($_POST['STRNSS'])) {
 	$STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
 	$BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
 	$CREATED_AT = date("Y-m-d H:i:s");
-	if (empty($_FILES["STRIMG"]['name'])) {
+	if (empty($_FILES["STRIMGE"]['name'])) {
 		$STRIMG = "view/resources/images/Default/perfil.png";
 	} else {
 
@@ -81,10 +86,10 @@ if (empty($_POST['STRNSS'])) {
 		//UPDATE IMG 
 		//Agregar imagen
 		$target_dir = "../../resources/images/Empleados/";
-		$image_name = time() . "_" . basename($_FILES["STRIMG"]["name"]);
+		$image_name = time() . "_" . basename($_FILES["STRIMGE"]["name"]);
 		$target_file = $target_dir . $image_name;
 		$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-		$imageFileZise = $_FILES["STRIMG"]["size"];
+		$imageFileZise = $_FILES["STRIMGE"]["size"];
 
 		if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
 			$errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
@@ -93,8 +98,8 @@ if (empty($_POST['STRNSS'])) {
 		} else {
 			/* Fin Validacion*/
 			if ($imageFileZise > 0) {
-				move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
-				$imagen = basename($_FILES["STRIMG"]["name"]);
+				move_uploaded_file($_FILES["STRIMGE"]["tmp_name"], $target_file);
+				$imagen = basename($_FILES["STRIMGE"]["name"]);
 				$STRIMG = "view/resources/images/Empleados/$image_name";
 			}
 		}
@@ -121,8 +126,8 @@ if (empty($_POST['STRNSS'])) {
 
 
 	//Write register in to database 
-	if (verificacionDeCorreo($STRCOR, $token) == "true") $sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) 
-	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "');";
+	if (verificacionDeCorreo($STRCOR, $token) == "true") $sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR,STRNDL, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) 
+	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNDL . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "');";
 	$query_new = mysqli_query($con, $sql);
 
 	if($query_new){
@@ -173,34 +178,39 @@ if (empty($_POST['STRNSS'])) {
 } else {
 	$errors[] = "desconocido.";
 }
-
 if (isset($errors)) {
 
-?>
-	<div class="alert alert-danger" role="alert">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<strong>Error!</strong>
-		<?php
-		foreach ($errors as $error) {
-			echo $error;
-			
-		}
-		?>
-	</div>
-<?php
-}
-if (isset($messages)) {
-
-?>
-	<div class="alert alert-success" role="alert">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<strong>¡Bien hecho!</strong>
-		<?php
-		foreach ($messages as $message) {
-			echo $message;
-		}
-		?>
-	</div>
-<?php
-}
-?>
+	?>
+		<div class="alert alert-danger" role="alert">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>Error!</strong>
+			<?php
+			foreach ($errors as $error) {
+				echo $error;
+			}
+			?>
+		</div>
+	<?php
+	}
+	if (isset($messages)) {
+	
+	?>
+	
+		<div class="alert alert-success" >
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>¡Bien hecho!</strong>
+	
+			<?php
+			foreach ($messages as $message) {
+				echo $message;
+			}
+			?>
+	
+	
+		</div>
+		
+	
+	
+	<?php
+	}
+	?>

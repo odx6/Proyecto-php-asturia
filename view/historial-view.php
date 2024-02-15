@@ -14,12 +14,12 @@ if ($_SESSION['productos'] == 1) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Historia</h1> <!-- titulo de la pagina -->
+                        <h1><i class="far fa-file-alt"></i> Historial</h1> <!-- titulo de la pagina -->
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                            <li class="breadcrumb-item active">Historia</li>  <!-- url -->
+                            <li class="breadcrumb-item active">Historial</li>  <!-- url -->
                         </ol>
                     </div>
                 </div>
@@ -38,10 +38,12 @@ if ($_SESSION['productos'] == 1) {
 
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Lista de productos</h3>  <!-- lista de la card -->
+                                <h3 class="card-title"> <i class="fas fa-shopping-basket"></i> Lista de productos </h3>  <!-- lista de la card -->
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body outer_div">
+                                <div class="resultados_ajax"></div>
+                                <div class="outer_div"></div>
 
 
 

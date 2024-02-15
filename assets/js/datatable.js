@@ -1,5 +1,8 @@
 function renderTable() {
 
+     button=["excel","print"];
+    var button1=[];
+
     $("#example1").DataTable({
         "language":
         {
@@ -250,7 +253,7 @@ function renderTable() {
 
         "lengthChange": true,
         "autoWidth": false,
-        "buttons": ["excel", "print", "create"]
+        "buttons":button
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     var btn = document.createElement('button');
 
@@ -529,7 +532,7 @@ function renderTable2() {
 
 function renderTable3(){
 
-     
+      
     $("#example1").DataTable({
         "language":
         {
@@ -781,7 +784,7 @@ function renderTable3(){
 
         "lengthChange": true,
         "autoWidth": false,
-        "buttons": ["excel", "print", "create"]
+        "buttons": ['excel','print']
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     var btn = document.createElement('button');
 

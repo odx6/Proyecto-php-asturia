@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Agregar Categoria</h4>
+                    <h4 class="modal-title">Agregar Producto</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -49,7 +49,15 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="imagefile" class="control-label">Imagen: </label>
-                                                    <input type="file" name="STRIMG" class="form-control validarBtn" id="STRIMG">
+                                                    <input type="file" name="STRIMGP" class="form-control validarBtn" id="STRIMGP" style="display: none;">
+                                                    <div class="btn-group w-100" onclick="img('STRIMGP')">
+                                                            <span class="btn btn-success col fileinput-button">
+                                                                <i class="fas fa-plus"></i>
+                                                                <span>Agregar imagen</span>
+
+                                                            </span>
+
+                                                        </div>
                                                 </div>
 
                                             </div>

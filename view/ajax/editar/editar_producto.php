@@ -49,7 +49,7 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 		$unidad = mysqli_real_escape_string($con, (strip_tags($_POST["unidad"], ENT_QUOTES)));
 		$Imagen = "";
 		$pathimg = "";
-		if (empty($_FILES["STRIMG"]['name'])) {
+		if (empty($_FILES["STRIMGPU"]['name'])) {
 			$sqlimg = "SELECT STRIMG FROM tblcatpro WHERE STRSKU='$id';";
 			$queyimg = mysqli_query($con, $sqlimg);
 			$num = mysqli_num_rows($queyimg);
@@ -70,10 +70,10 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 			//UPDATE IMG 
 			//Agregar imagen
 			$target_dir = "../../resources/images/Productos/";
-			$image_name = time() . "_" . basename($_FILES["STRIMG"]["name"]);
+			$image_name = time() . "_" . basename($_FILES["STRIMGPU"]["name"]);
 			$target_file = $target_dir . $image_name;
 			$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-			$imageFileZise = $_FILES["STRIMG"]["size"];
+			$imageFileZise = $_FILES["STRIMGPU"]["size"];
 
 			if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
 				$errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
@@ -82,8 +82,8 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 			} else {
 				/* Fin Validacion*/
 				if ($imageFileZise > 0) {
-					move_uploaded_file($_FILES["STRIMG"]["tmp_name"], $target_file);
-					$imagen = basename($_FILES["STRIMG"]["name"]);
+					move_uploaded_file($_FILES["STRIMGPU"]["tmp_name"], $target_file);
+					$imagen = basename($_FILES["STRIMGPU"]["name"]);
 					$Imagen = "view/resources/images/Productos/$image_name";
 				}
 			}
@@ -96,7 +96,7 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 
 		//variable de los permisos 
 		// $permisos = $_POST["permisos"];
-        $oldata=recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
+		$oldata = recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
 		$Editflag = "1";
 		// UPDATE data into database
 		$sql = "UPDATE tblcatpro SET STRSKU='" . $sku . "', STRCOD='" . $codigo . "', STRDESPRO='" . $descripcion . "', INTIDCAT='" . $categoria . "', INTIDSBC='" . $subcategoria . "', MONPCOS='" . $precio . "', INTIDUNI='" . $unidad . "', STRIMG='" . $Imagen . "',INTTIPUSO='" . $PTAller . "', BITSUS='" . $estado . "',loked='" . $Editflag .  "', Editor=0  WHERE STRSKU='" . $id . "' ";
@@ -107,14 +107,18 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 				unlink("../../../" . $pathimg);
 		}
 
-		if($query){
-			$sql2=recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
-		$tabla="tblcatpro";
-		$tipo="Actualizacion";
-		$fecha=date("Y-m-d H:i:s");
-		
-        $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$oldata."','".$sql2."');";
-	     $query = mysqli_query($con, $sqllog);
+		if ($query) {
+			
+			$sql2 = recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
+			//$sql2 = recuperarDatos("SELECT * FROM  tblcatpro ORDER BY updated_at DESC LIMIT 1;");
+			
+			$tabla = "tblcatpro";
+			$tipo = "Actualizacion";
+			$fecha = date("Y-m-d H:i:s");
+
+			$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sql2 . "');";
+			$query = mysqli_query($con, $sqllog);
+			$messages[]="Producto actualizado correctamente";
 		}
 		//
 		//Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa

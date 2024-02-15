@@ -49,11 +49,12 @@
 <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-<script src="plugins/toastr/toastr.min.js"></script>
+<!--<script src="plugins/toastr/toastr.min.js"></script>-->
 <script src="assets/js/Asturias.js"></script>
 <script src="assets/js/Validaciones.js"></script>
 <script src="assets/js/datatable.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/Editar.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>-->
 <script>
 
 $(function() {

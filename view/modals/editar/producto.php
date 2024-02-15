@@ -79,7 +79,15 @@ if (isset($_GET["id"]) && in_array(2, $_SESSION['Habilidad']['Productos'])) {
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="imagefile" class="control-label">Imagen: </label>
-                                <input type="file" name="STRIMG" class="form-control validarBtn" id="STRIMG">
+                                <input type="file" name="STRIMGPU" class="form-control validarBtn" id="STRIMGPU" style="display: none;">
+                                <div class="btn-group w-100" onclick="img('STRIMGPU')">
+                                    <span class="btn btn-success col fileinput-button">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Agregar imagen</span>
+
+                                    </span>
+
+                                </div>
                             </div>
 
                         </div>
@@ -181,33 +189,33 @@ if (isset($_GET["id"]) && in_array(2, $_SESSION['Habilidad']['Productos'])) {
 
                         <div class="col-6">
                             <div class="form-group">
-                            <label for="usuario" reuired class="control-label">Tipo de uso: </label>
-                            <?php
+                                <label for="usuario" reuired class="control-label">Tipo de uso: </label>
+                                <?php
 
-                            // Consulta SQL para obtener los datos
-                            $consulta = "SELECT  INTIDPUSO,STRNOMPUSO FROM tblcattus ORDER BY STRNOMPUSO ASC";
-                            $resultado = mysqli_query($con, $consulta);
+                                // Consulta SQL para obtener los datos
+                                $consulta = "SELECT  INTIDPUSO,STRNOMPUSO FROM tblcattus ORDER BY STRNOMPUSO ASC";
+                                $resultado = mysqli_query($con, $consulta);
 
 
-                            // Crear el elemento select
-                            echo ' <select class="form-control " name="INTIDPUSO" id="STRNOMPUSO">';
+                                // Crear el elemento select
+                                echo ' <select class="form-control " name="INTIDPUSO" id="STRNOMPUSO">';
 
-                            if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+                                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
-                                // Iterar sobre los resultados y crear una opción para cada uno
+                                    // Iterar sobre los resultados y crear una opción para cada uno
 
-                                while ($fila = mysqli_fetch_assoc($resultado)) {
-                                    $valor = "";
-                                    if ($perteneceTaller == $fila["INTIDPUSO"]) $valor = "selected";
-                                    echo '<option value="' . $fila['INTIDPUSO'] . '"' . $valor . "> " . $fila['STRNOMPUSO'] . '</option>';
+                                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                                        $valor = "";
+                                        if ($perteneceTaller == $fila["INTIDPUSO"]) $valor = "selected";
+                                        echo '<option value="' . $fila['INTIDPUSO'] . '"' . $valor . "> " . $fila['STRNOMPUSO'] . '</option>';
+                                    }
+                                } else {
+
+                                    echo  '<option value="" disabled  selected >No hay tipos de uso en la  bd agregue datos </option>';
                                 }
-                            } else {
 
-                                echo  '<option value="" disabled  selected >No hay tipos de uso en la  bd agregue datos </option>';
-                            }
-
-                            echo '</select>';
-                            ?>
+                                echo '</select>';
+                                ?>
 
                             </div>
 
@@ -218,8 +226,8 @@ if (isset($_GET["id"]) && in_array(2, $_SESSION['Habilidad']['Productos'])) {
                             <div class="form-group">
                                 <label for="estado" class=" control-label">Estado: </label>
                                 <select class="form-control col-sm-10" name="estado" id="estado" required>
-                                    <option value="1" <?php if($status==1) echo 'selected';?> >Activo</option>
-                                    <option value="2" <?php if($status==2) echo 'selected';?> >Inactivo</option>
+                                    <option value="1" <?php if ($status == 1) echo 'selected'; ?>>Activo</option>
+                                    <option value="2" <?php if ($status == 2) echo 'selected'; ?>>Inactivo</option>
                                 </select>
                             </div>
                         </div>

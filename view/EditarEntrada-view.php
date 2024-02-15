@@ -33,7 +33,10 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
     } else {
         exit;
     }
+   
 ?>
+
+
 
 
     <div class="content-wrapper">
@@ -42,12 +45,12 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Agregar Entradas <?php echo $id; ?></h1>
+                        <h1> <i class="fas fa-dolly"></i> Editar  <?php if($INTTIPMOV==1){ echo "Entrada";}else{echo "Salida ";}  echo "  ".$id; ?></h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                            <li class="breadcrumb-item active">Entradas</li>
+                            <li class="breadcrumb-item active">Editar <?php if($INTTIPMOV==1){ echo "Entrada";}else{echo "Salida ";} ?> </li>
                         </ol>
                     </div>
                 </div>
@@ -58,11 +61,18 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
         <section class="content">
             <div class="container-fluid">
                 <?php include "modals/Productos_modal.php"; ?>
+                <div class="resultados_ajax"></div>
+                <div class="row">
+                    <button class="btn btn-primary btn-block btn-sm" data-toggle="modal" data-target="#myModal">Agregar Producto <i class="fa fa-plus"></i></button>
+                </div>
+                <br>
+
+
                 <form class="form-horizontal" role="form" method="post" id="update_register" name="update_register" enctype="multipart/form-data">
                     <div class="row">
                         <input type="hidden" required class="form-control is-invalid" id="IDEMP" name="IDEMP" placeholder="Folio: " value="<?php echo $_SESSION['user_id'] ?>">
                         <input type="hidden" required class="form-control" id="INTIDINV" name="INTIDINV" placeholder="Folio:" value="<?php echo $INTIDINV ?>">
-                        <div class="col-4">
+                        <div class="col-2">
                             <div class="form-group">
                                 <label for="INTIDTOP" required class="col-form-label">INTIDTOP: </label>
                                 <?php
@@ -91,8 +101,6 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
                                 ?>
 
                             </div>
-                        </div>
-                        <div class="col-4">
                             <div class="form-group">
                                 <label for="INTTIPMOV" class=" col-form-label">Movimiento: </label>
                                 <select class="form-control select2" name="INTTIPMOVU" id="INTTIPMOVU" required disabled>
@@ -100,8 +108,6 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
                                     <option value="2" <?php if ($INTTIPMOV == 2) echo 'selected' ?>> Salida</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-4">
                             <div class="form-group">
                                 <label for="INTIDALM" reuired class="col-form-label">ALMACEN: </label>
                                 <?php
@@ -130,28 +136,18 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
                                 ?>
 
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
                             <div class="form-group">
                                 <label for="INTFOL" class=" col-form-label">Folio: </label>
-                                <input type="text" required class="form-control is-invalid" id="INTFOL" name="INTFOL" placeholder="Folio: " value="<?php echo $INTFOL ?>">
+                                <input type="text" required class="form-control " id="INTFOL" name="INTFOL" placeholder="Folio: " value="<?php echo $INTFOL ?>">
                                 <span id="MINTFOL"></span>
                             </div>
-                        </div>
-                        <div class="col-6">
                             <div class="form-group">
                                 <label for="STROBS" class=" col-form-label">Descripcion: </label>
-                                <input type="text" required class="form-control is-invalid" id="STROBS" name="STROBS" placeholder="Descripcion: " value="<?php echo $STROBS ?>">
+                                <input type="text" required class="form-control " id="STROBS" name="STROBS" placeholder="Descripcion: " value="<?php echo $STROBS ?>">
                                 <span id="STROBS"></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Agregar Producto <i class="fa fa-plus"></i></button>
-                    </div>
-                    <div class="row">
+                        <div class="col-10">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Lista de productos</h3>
@@ -203,19 +199,34 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
                         <div class="modal-footer">
 
                             <button type="submit" id="guardar_datos" class="btn btn-primary" style="margin-top: 15px;">Guardar</button>
+                            </form>
+                            <a href="./?view=Entrada"><button type="button" id="cancelar_datos" class="btn btn-danger" style="margin-top: 15px;" onclick="editloked()">Cancelar</button></a>
+
                         </div>
+                           
+
+
 
                     </div>
+                    </div>
+                   
+
+
+                  
 
             </div>
             <!-- /.container-fluid -->
         </section>
 
 
-
         <?php
         include "resources/footer.php";
+
+
+                           
         ?>
+
+
         <Script>
             $(document).ready(function() {
                 var ide = $('#INTIDINV').val();
@@ -563,7 +574,7 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
 
             function ActualizarReferencia(sku) {
                 var Dato = $("#R" + sku).val();
-                alert(Dato);
+              //  alert(Dato);
 
                 console.log(sku);
                 var temp = inventarioUpdate[getIndice(inventarioUpdate, sku)];
@@ -596,7 +607,7 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
                     if (Dato >= oldcantidad) {
 
                         Diferencia = Dato - oldcantidad;
-                        alert("la diferencia" + Diferencia)
+                       alert("la diferencia" + Diferencia)
                         validarStock(sku, Diferencia);
 
                     } else {
@@ -691,7 +702,7 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
                     },
                     success: function(datos) {
 
-                        $("#resultados_ajax").html(datos);
+                        $(".resultados_ajax").html(datos);
                         $('#actualizar_datos').attr("disabled", false);
                         load(1);
                         window.setTimeout(function() {
@@ -700,7 +711,7 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas'])) {
                             });
                         }, 5000);
                         $('#modal_update').modal('hide');
-                      
+
 
                     }
                 });

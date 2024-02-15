@@ -125,6 +125,8 @@ if (empty($_POST['IDEMP'])) {
 
         $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sql2 . "');";
         $query = mysqli_query($con, $sqllog);
+
+        $messages[] = "Se Actualizo correctamente el inventario";
     }
     $id;
 
@@ -163,6 +165,7 @@ if (empty($_POST['IDEMP'])) {
 
                     $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldproduct . "','" . $sqlnew . "');";
                     $query = mysqli_query($con, $sqllog);
+                    $messages[] = "Se Actualizo correctamente el detalle de inventario";
                 }
 
                 //se va actuañizar la tabla tbltarinventario con los datos
@@ -178,9 +181,10 @@ if (empty($_POST['IDEMP'])) {
 
                     $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sqlnew . "');";
                     $query = mysqli_query($con, $sqllog);
+                    $messages[] = "Se Actualizo actualizo correctamente la tarjeta de inventario";
                 }
             }
-            
+
 
 
             foreach ($Pronuevos as $pro) {
@@ -210,6 +214,7 @@ if (empty($_POST['IDEMP'])) {
 
                     $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql4 . "');";
                     $query = mysqli_query($con, $sqllog);
+                    $messages[] = "Se Agregaron productos nuevos";
                 }
 
 
@@ -226,6 +231,7 @@ if (empty($_POST['IDEMP'])) {
 
                     $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql4 . "');";
                     $query = mysqli_query($con, $sqllog);
+                    $messages[] = "Se Agrego la tarjeta de los productos nuevos";
                 }
             }
         } else {
