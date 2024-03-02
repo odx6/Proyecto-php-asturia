@@ -84,7 +84,7 @@ if ($_SESSION['categorias'] == 1) {
 			</div>
 		<?php
 		}
-		if ($numrows > 0) {
+		//if ($numrows > 0) {
 		?>
 			<table id="example1" class="table table-bordered table-striped">
 				<thead>
@@ -162,5 +162,5 @@ if ($_SESSION['categorias'] == 1) {
             <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
 		}
 	}
-}
+//}
 ?>

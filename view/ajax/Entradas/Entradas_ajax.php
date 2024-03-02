@@ -3,7 +3,7 @@ include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 /* Connect To Database*/
 require_once("../../../config/config.php");
 require_once("../../../config/funciones.php");
-require_once("../../../config/Recuperardatos.php");
+require_once("../../../config/RecuperarDatos.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 	$id = intval($id);
@@ -115,7 +115,7 @@ if ($action == 'ajax') {
 		</div>
 	<?php
 	}
-	if ($numrows > 0) {
+	//if ($numrows > 0) {
 	?>
 		<table id="example1" class="table table-bordered table-striped">
 
@@ -227,5 +227,5 @@ if ($action == 'ajax') {
 		echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
 	}
-}
+//}
 ?>

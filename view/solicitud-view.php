@@ -30,7 +30,7 @@ if ($_SESSION['solicitud'] == 1) {
                 <div class="row">
                     <div class="col-12">
                     <?php 
-                            include "modals/agregar/solicitud/agregar_solicitud.php";
+                            include "modals/agregar/Solicitud/agregar_solicitud.php";
                             include "modals/editar/editar_solicitud.php";
                             include "modals/mostrar/mostrar_solicitud.php";
                         ?>

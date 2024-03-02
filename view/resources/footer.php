@@ -57,15 +57,6 @@
 <!--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>-->
 <script>
 
-$(function() {
-    var Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
-  });
-	
 
 </script>
 
@@ -88,7 +79,8 @@ $(function() {
 	</script>  -->
 
   <script src="dist/js/adminlte.min.js"></script>
+  <?php if(isset($scripts))echo $scripts ?>
  
 </body>
-</body>
+
 </html>

@@ -2,35 +2,35 @@
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 include("../../../config/funciones.php");
 include("../../../config/verificarCorreo.php");
-if (empty($_POST['STRNSS'])) {
+if (empty(trim($_POST['STRNSS']))) {
     $errors[] = "NSS está vacío.";
-} elseif (empty($_POST['STRRFC'])) {
+} elseif (empty(trim($_POST['STRRFC']))) {
     $errors[] = "RFC está vacío.";
-} elseif (empty($_POST['STRCUR'])) {
+} elseif (empty(trim($_POST['STRCUR']))) {
     $errors[] = "CURP está vacío.";
-}elseif (empty($_POST['STRNDL'])) {
+}elseif (empty(trim($_POST['STRNDL']))) {
     $errors[] = "Licencia está vacío.";
-} elseif (empty($_POST['STRNOM'])) {
+} elseif (empty(trim($_POST['STRNOM']))) {
     $errors[] = "Nombre está vacío.";
-} elseif (empty($_POST['STRAPE'])) {
+} elseif (empty(trim($_POST['STRAPE']))) {
     $errors[] = "Apellidos está vacío.";
-} elseif (empty($_POST['STRDOM'])) {
+} elseif (empty(trim($_POST['STRDOM']))) {
     $errors[] = "Domicilio está vacío.";
-} elseif (empty($_POST['STRLOC'])) {
+} elseif (empty(trim($_POST['STRLOC']))) {
     $errors[] = "Localidad está vacío.";
-} elseif (empty($_POST['STRMUN'])) {
+} elseif (empty(trim($_POST['STRMUN']))) {
     $errors[] = "Municipio está vacío.";
-} elseif (empty($_POST['STREST'])) {
+} elseif (empty(trim($_POST['STREST']))) {
     $errors[] = "Estado está vacío.";
-} elseif (empty($_POST['STRCP'])) {
+} elseif (empty(trim($_POST['STRCP']))) {
     $errors[] = "Codigo Postal esta vacio.";
-} elseif (empty($_POST['STRPAI'])) {
+} elseif (empty(trim($_POST['STRPAI']))) {
     $errors[] = "Pais está vacío.";
-} elseif (empty($_POST['STRTEL'])) {
+} elseif (empty(trim($_POST['STRTEL']))) {
     $errors[] = "Telefono está vacío.";
-} elseif (empty($_POST['STRCOR'])) {
+} elseif (empty(trim($_POST['STRCOR']))) {
     $errors[] = "Correo Electronico está vacío.";
-} elseif (empty($_POST['BITSUS'])) {
+} elseif (empty(trim($_POST['BITSUS']))) {
     $errors[] = "Estado está vacío.";
 }
 /* elseif (empty($_POST['kind'])) {

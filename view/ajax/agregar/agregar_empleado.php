@@ -2,14 +2,14 @@
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 include("../../../config/funciones.php");
 include("../../../config/verificarCorreo.php");
-if (empty($_POST['STRNSS'])) {
+if (empty(trim($_POST['STRNSS']))) {
 	$errors[] = "NSS está vacío.";
-} elseif (empty($_POST['STRRFC'])) {
+} elseif (empty(trim($_POST['STRRFC']))) {
 	$errors[] = "RFC está vacío.";
-} elseif (empty($_POST['STRCUR'])) {
+} elseif (empty(trim($_POST['STRCUR']))) {
 	$errors[] = "CURP está vacío.";
 } 
-elseif (empty($_POST['STRNDL'])) {
+elseif (empty(trim($_POST['STRNDL']))) {
 	$errors[] = "Licencia está vacío.";
 } elseif (empty($_POST['STRNOM'])) {
 	$errors[] = "Nombre está vacío.";

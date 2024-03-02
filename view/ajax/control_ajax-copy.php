@@ -26,7 +26,8 @@ function  CalcularSaldo($id)
 
 		$INTCAN = $row['INTCAN'];
 
-		if ($INTTIMOV == 1) {
+		if ($INTTIMOV == 1 || 
+		$INTTIMOV==3) {
 
 
 			$residuo = $residuo + intval($INTCAN);
@@ -93,6 +94,7 @@ if ($action == 'ajax') {
 	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
 	//loop through fetched data
 	$Entradas = "SELECT COALESCE(SUM(INTCAN), 0) as Entradas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=1;";
+	$Compras = "SELECT COALESCE(SUM(INTCAN), 0) as Compras FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=3;";
 	$Salidas = "SELECT COALESCE(SUM(INTCAN), 0) as Salidas FROM tbltarinv WHERE SKU='$id' AND INTTIPMOV=2;";
 	$query_entradas = mysqli_query($con, $Entradas);
 	if ($query_entradas) {
@@ -114,9 +116,19 @@ if ($action == 'ajax') {
 
 		$sumaSalidas = 0;
 	}
-	$total = $sumaEntradas - $sumaSalidas;
 
-	if ($numrows > 0) {
+	$query_compras = mysqli_query($con, $Compras);
+	if ($query_salidas) {
+		$row = mysqli_fetch_array($query_compras);
+
+		$sumaCompras = $row['Compras'];
+	} else {
+
+		$sumaCompras = 0;
+	}
+	$total = $sumaEntradas+$sumaCompras - $sumaSalidas;
+
+	//if ($numrows > 0) {
 
 ?>
 
@@ -133,6 +145,9 @@ if ($action == 'ajax') {
 				<ul class="list-group list-group-unbordered mb-3">
 					<li class="list-group-item">
 						<b>Entradas Totales</b> <a class="float-right"><?php echo $sumaEntradas; ?></a>
+					</li>
+					<li class="list-group-item">
+						<b>Compras Totales</b> <a class="float-right"><?php echo $sumaCompras; ?></a>
 					</li>
 					<li class="list-group-item">
 						<b>Salidas Totales</b> <a class="float-right"><?php echo $sumaSalidas; ?></a>
@@ -214,7 +229,7 @@ if ($action == 'ajax') {
 
 
 						<?php
-						if ($INTTIMOV == 1) {
+						if ($INTTIMOV == 1 || $INTTIMOV=3) {
 
 						?>
 							<td><?php echo $INTCAN; ?> </td>
@@ -256,7 +271,7 @@ if ($action == 'ajax') {
 		echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
 	}
-}
+//}
 if ($action == 'ajax2') {
 	$query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
 	$tables = "tbltarinv";
@@ -307,7 +322,7 @@ if ($action == 'ajax2') {
 	}
 	$total = $sumaEntradas - $sumaSalidas;
 
-	if ($numrows > 0) {
+	//if ($numrows > 0) {
 	?>
 		<div class="col-sm-12">
 
@@ -432,5 +447,5 @@ if ($action == 'ajax2') {
 		echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
 	}
-}
+//}
 ?>

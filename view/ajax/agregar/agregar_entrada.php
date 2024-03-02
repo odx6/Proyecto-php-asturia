@@ -75,7 +75,7 @@ if (empty($_POST['IDEMP'])) {
 
     $query_new = mysqli_query($con, $sql);
     $id_insertado = mysqli_insert_id($con);
-   if ($query_new) {
+    if ($query_new) {
         $id = $id_insertado;
         $sql2 = recuperarDatos("SELECT * from tblinv WHERE INTIDINV='$id';");
         $tabla = "tblinv";
@@ -84,14 +84,14 @@ if (empty($_POST['IDEMP'])) {
 
         $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
         $query = mysqli_query($con, $sqllog);
-        $messages[]="Inventario Agregado correctamente";
+        $messages[] = "Inventario Agregado correctamente";
     }
     $id;
 
     if ($query_new) {
 
         // La inserción fue exitosa
-      
+
         if (is_array($datos)) {
             // Recorrer el array con foreach e imprimir sus valores
             foreach ($datos as $elemento) {
@@ -113,9 +113,11 @@ if (empty($_POST['IDEMP'])) {
                     MONCTOPRO,
                      DTEHOR)
                    VALUES('" . $id_insertado . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $created_at . "');";
+
+              
                 $query_new = mysqli_query($con, $SQL);
 
-               if ($query_new) {
+                if ($query_new) {
                     $id = mysqli_insert_id($con);
                     $sql3 = recuperarDatos("SELECT * from tblinvdet WHERE INTIDDET='$id';");
                     $tabla = "tblinvdet";
@@ -124,7 +126,7 @@ if (empty($_POST['IDEMP'])) {
 
                     $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql3 . "');";
                     $query = mysqli_query($con, $sqllog);
-                    $messages[]="Detalle de inventario agregado correctamente";
+                    $messages[] = "Detalle de inventario agregado correctamente";
                 }
 
 
@@ -133,17 +135,16 @@ if (empty($_POST['IDEMP'])) {
                 $sql2 = "INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
                 VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $INTTIPMOV . "','" . $INTIDALM . "','" . $created_at . "');";
                 $query_new2 = mysqli_query($con, $sql2);
-                 if($query_new2){
-                    $id=mysqli_insert_id($con);
-                    $sql3=recuperarDatos("SELECT * from tbltarinv WHERE INTIDTAR='$id';");
-                    $tabla="tbltarinv";
-                    $tipo="creacion";
-                    $fecha=date("Y-m-d H:i:s");
-                    
-                 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql3."');";
-                 $query = mysqli_query($con, $sqllog);
-                 $messages[]="Tarjeta de inventario  Agregada correctamente";
+                if ($query_new2) {
+                    $id = mysqli_insert_id($con);
+                    $sql3 = recuperarDatos("SELECT * from tbltarinv WHERE INTIDTAR='$id';");
+                    $tabla = "tbltarinv";
+                    $tipo = "creacion";
+                    $fecha = date("Y-m-d H:i:s");
 
+                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql3 . "');";
+                    $query = mysqli_query($con, $sqllog);
+                    $messages[] = "Tarjeta de inventario  Agregada correctamente";
                 }
             }
         } else {

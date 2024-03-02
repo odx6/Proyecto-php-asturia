@@ -35,6 +35,8 @@ if (empty($_POST['IDEMP'])) {
     $errors[] = "Descripcion del movimiento  está vacío.";
 } elseif (empty($_POST['inventario'])) {
     $errors[] = "Los productos está vacío.";
+}elseif (empty($_POST['OLDMOV'])) {
+    $errors[] = "Tipo de movimiento anterior requerido";
 } elseif (empty($_POST['INTIDINV'])) {
     $errors[] = "Error al enviar datos.";
 } elseif (count($datos) <= 0) {
@@ -64,6 +66,7 @@ if (empty($_POST['IDEMP'])) {
 
     mysqli_autocommit($con, FALSE);
     $id = intval($_POST["INTIDINV"]);
+    $MOVIMIENTO = intval($_POST["OLDMOV"]);
     $IDEMP = mysqli_real_escape_string($con, (strip_tags($_POST["IDEMP"], ENT_QUOTES)));
     $INTIDTOP = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDTOP"], ENT_QUOTES)));
     if (!empty($_POST['INTTIPMOVU'])) $INTTIPMOV = mysqli_real_escape_string($con, (strip_tags($_POST["INTTIPMOVU"], ENT_QUOTES)));
@@ -76,6 +79,8 @@ if (empty($_POST['IDEMP'])) {
     $created_at = date("Y-m-d H:i:s");
 
     //recupera los valores antes de la actualizacion
+    //se debe filtrar por  inde inventario y movimiento
+
     $oldata = recuperarDatos("SELECT * from tblinv WHERE INTIDINV='$id';");
 
     if (!empty($_POST['INTTIPMOVU'])) {
@@ -93,12 +98,37 @@ if (empty($_POST['IDEMP'])) {
 
             //tiene que buscar uno por uno para no eliminarlo
 
-            if (SeEncuentra($fila['INTIDDET'], $datos) == 1) {
+            $primary=$fila['INTIDDET'];
+            $inventario=$fila['INTIDINV'];
+            $producto=$fila['SKU'];
+
+            if (SeEncuentra($primary, $datos) == 1 ) {
             } else {
-                $identificador = $fila['INTIDDET'];
+                $identificador = $primary;
                 $deletevalue = recuperarDatos("SELECT * from tblinvdet WHERE INTIDDET='$identificador';");
                 $sql3 = "DELETE FROM `tblinvdet` WHERE INTIDDET='$identificador';";
                 $query_new2 = mysqli_query($con, $sql3);
+                //eliminar tarjeta 
+                 $deletetar=recuperarDatos("SELECT * from tbltarinv where INTIDINV=".$inventario." and SKU='".$producto."' and INTTIPMOV=".$MOVIMIENTO." ;");
+               
+
+                 $sqldeletetar="DELETE FROM tbltarinv where INTIDINV=".$inventario." and SKU='".$producto."' and INTTIPMOV=".$MOVIMIENTO." ;";
+                 $querydelete=mysqli_query($con,$sqldeletetar);
+                 if($querydelete){
+                    $tabla = "tbltarinv";
+                    $tipo = "Eliminacion";
+                    $fecha = date("Y-m-d H:i:s");
+
+                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $identificador . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $deletetar . "');";
+                    $query = mysqli_query($con, $sqllog);
+                    ($query) ? $messages[] = "Se creo el log de tarjeta detalle-compra compra " : $errors[] = "no se pudo generar el registro de detalle compra";
+
+
+                 }
+
+
+
+                //termina eliminar tarjeta 
 
                 if ($query_new2) {
 
@@ -118,7 +148,7 @@ if (empty($_POST['IDEMP'])) {
 
     $query_new = mysqli_query($con, $sql);
     if ($query_new) {
-        $sql2 = recuperarDatos("SELECT * from tblinv WHERE INTIDINV='$id';");
+        $sql2 = recuperarDatos("SELECT * from tblinv WHERE INTIDINV='$id' ;");
         $tabla = "tblinv";
         $tipo = "Actualizacion";
         $fecha = date("Y-m-d H:i:s");
@@ -169,12 +199,12 @@ if (empty($_POST['IDEMP'])) {
                 }
 
                 //se va actuañizar la tabla tbltarinventario con los datos
-                $oldata = recuperarDatos("SELECT * from tbltarinv  WHERE INTIDINV='" . $producto['fk_inventario'] . "' AND SKU='" . $producto['sku'] . "';");
-                $sqltar = "UPDATE `tbltarinv` SET `STRREF`='" . $producto['referencia'] . "',`INTCAN`='" . $producto['cantidad'] . "',`MONCTOPRO`='" . $producto['total'] . "'  WHERE  INTIDINV='" . $producto['fk_inventario'] . "'";
+                $oldata = recuperarDatos("SELECT * from tbltarinv  WHERE INTIDINV='" . $producto['fk_inventario'] . "' AND SKU='" . $producto['sku'] . "' AND INTTIPMOV='$MOVIMIENTO';");
+                $sqltar = "UPDATE `tbltarinv` SET `STRREF`='" . $producto['referencia'] . "',`INTCAN`='" . $producto['cantidad'] . "',`MONCTOPRO`='" . $producto['total'] . "'  WHERE  INTIDINV='" . $producto['fk_inventario'] . "' AND SKU='".$producto['sku']."' AND INTTIPMOV='".$MOVIMIENTO."';";
                 $querytar = mysqli_query($con, $sqltar);
                 if ($querytar) {
                     $id = $producto['id'];
-                    $sqlnew = recuperarDatos("SELECT * from tbltarinv  WHERE INTIDINV='" . $producto['fk_inventario'] . "'  AND SKU='" . $producto['sku'] . "';");
+                    $sqlnew = recuperarDatos("SELECT * from tbltarinv  WHERE INTIDINV='" . $producto['fk_inventario'] . "'  AND SKU='" . $producto['sku'] . "'AND INTTIPMOV='$MOVIMIENTO' ;");
                     $tabla = "tbltarinv";
                     $tipo = "Actualizacion";
                     $fecha = date("Y-m-d H:i:s");
@@ -224,7 +254,7 @@ if (empty($_POST['IDEMP'])) {
 
                 if ($query_new2) {
                     $ide = mysqli_insert_id($con);
-                    $sql4 = recuperarDatos("SELECT * from tbltarinv WHERE INTIDTAR='" . $ide . "';");
+                    $sql4 = recuperarDatos("SELECT * from tbltarinv WHERE INTIDTAR='" . $ide . "' AND INTTIPMOV='$MOVIMIENTO';");
                     $tabla = "tbltarinv";
                     $tipo = "creacion";
                     $fecha = date("Y-m-d H:i:s");

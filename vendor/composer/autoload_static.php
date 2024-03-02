@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit1ba944b1b2880695113851e981334169
 {
+    public static $files = array (
+        'da253f61703e9c22a5a34f228526f05a' => __DIR__ . '/..' . '/wixel/gump/gump.class.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'V' => 
         array (
@@ -23,6 +27,10 @@ class ComposerStaticInit1ba944b1b2880695113851e981334169
         'M' => 
         array (
             'Masterminds\\' => 12,
+        ),
+        'G' => 
+        array (
+            'GUMP\\' => 5,
         ),
         'F' => 
         array (
@@ -54,6 +62,10 @@ class ComposerStaticInit1ba944b1b2880695113851e981334169
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'GUMP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wixel/gump/src',
         ),
         'FontLib\\' => 
         array (

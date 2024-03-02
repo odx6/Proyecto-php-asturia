@@ -12,17 +12,17 @@ $sqldelete=$consulta;
 
 }
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
-if (empty($_POST['id'])) {
+if (empty(trim($_POST['id'])) ) {
 	$errors[] = "ID de la configuracion está vacío";
-} else if (empty($_POST['empresa'])) {
+} else if (empty(trim($_POST['empresa']))) {
 	$errors[] = "Empresa está vacío";
-} else if (empty($_POST['actividad_economica'])) {
+} else if (empty(trim($_POST['actividad_economica']))) {
 	$errors[] = "Actividad Economica está vacío";
-} else if (empty($_POST['dni'])) {
+} else if (empty(trim($_POST['dni']))) {
 	$errors[] = "DNI está vacío";
-} else if (empty($_POST['email'])) {
+} else if (empty(trim($_POST['email']))) {
 	$errors[] = "Correo Electronico está vacío";
-} else if (empty($_POST['telefono'])) {
+} else if (empty(trim($_POST['telefono']))) {
 	$errors[] = "Telefono está vacío";
 } elseif (
 	!empty($_POST['empresa'])
@@ -31,6 +31,9 @@ if (empty($_POST['id'])) {
 	&& !empty($_POST['email'])
 	&& !empty($_POST['telefono'])
 ) {
+
+
+
 
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
 

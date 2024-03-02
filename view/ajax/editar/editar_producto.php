@@ -2,13 +2,13 @@
 
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
 if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
-	if (empty($_POST['sku'])) {
+	if (empty(trim($_POST['sku']))) {
 		$errors[] = "SKU está vacío.";
-	} elseif (empty($_POST['codigo'])) {
+	} elseif (empty(trim($_POST['codigo']))) {
 		$errors[] = "Codigo  está vacío.";
-	} elseif (empty($_POST['descripcion'])) {
+	} elseif (empty(trim($_POST['descripcion']))) {
 		$errors[] = "Descripcion está vacío.";
-	} elseif (empty($_POST['categoria'])) {
+	} elseif (empty(trim($_POST['categoria']))) {
 		$errors[] = "categoria  está vacío.";
 	} elseif (empty($_POST['Subcategoria'])) {
 		$errors[] = "Subcategoria está vacío.";
@@ -109,7 +109,7 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 
 		if ($query) {
 			
-			$sql2 = recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
+			$sql2 = recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$sku';");
 			//$sql2 = recuperarDatos("SELECT * FROM  tblcatpro ORDER BY updated_at DESC LIMIT 1;");
 			
 			$tabla = "tblcatpro";

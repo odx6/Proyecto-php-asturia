@@ -42,8 +42,7 @@ if ($_SESSION['Entradas'] == 1) {
 
                             <?php 
                             include "modals/Productos_modal.php";
-                           
-                            include "modals/editar/editar_generico.php";
+                            include "modals/editar/Editar_generico.php";
                             include "modals/mostrar/mostrar_entrada.php";
                         ?>
                             </div>

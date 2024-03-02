@@ -1,8 +1,8 @@
 <?php
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado
-if (empty($_POST['STRNOMSBC'])) {
+if (empty(trim($_POST['STRNOMSBC']))) {
 	$errors[] = "Nombre está vacío.";
-} elseif (empty($_POST['STRDESSBC'])) {
+} elseif (empty(trim($_POST['STRDESSBC']))) {
 	$errors[] = "Descripcion  está vacío.";
 } elseif (empty($_POST['BITSUS'])) {
 	$errors[] = "Estado está vacío.";

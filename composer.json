@@ -3,6 +3,7 @@
         "tecnickcom/tcpdf": "^6.6",
         "dompdf/dompdf": "^2.0",
         "phpmailer/phpmailer": "^6.8",
-        "vlucas/valitron": "^1.4"
+        "vlucas/valitron": "^1.4",
+        "wixel/gump": "^1.11"
     }
 }

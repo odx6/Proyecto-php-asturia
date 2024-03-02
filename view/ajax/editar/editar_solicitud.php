@@ -1,14 +1,14 @@
 <?php
 include("../is_logged.php"); //Archivo comprueba si el usuario esta logueado	
-if (empty($_POST['pk_solicitud'])) {
+if (empty(trim($_POST['pk_solicitud']))) {
 	$errors[] = "Id  de Orden  está vacío.";
-} elseif (empty($_POST['fk_empleado'])) {
+} elseif (empty(trim($_POST['fk_empleado']))) {
 	$errors[] = "Empleado está vacío.";
-} elseif (empty($_POST['NumeroFolio'])) {
+} elseif (empty(trim($_POST['NumeroFolio']))) {
 	$errors[] = "No.Folio está vacío.";
-} elseif (empty($_POST['fecha'])) {
+} elseif (empty(trim($_POST['fecha']))) {
 	$errors[] = "fecha está vacío.";
-} elseif (empty($_POST['operador'])) {
+} elseif (empty(trim($_POST['operador']))) {
 	$errors[] = "operador está vacío.";
 }/*  elseif (empty($_POST['password'])) {
             $errors[] = "Contraseña está vacío.";

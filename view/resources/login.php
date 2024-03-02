@@ -47,6 +47,10 @@ if ($row = mysqli_fetch_array($query)) {
 	in_array(9, $valores) ? $_SESSION['Inventario'] = 1 : $_SESSION['Inventario'] = 0;
 	in_array(10, $valores) ? $_SESSION['Entradas'] = 1 : $_SESSION['Entradas'] = 0;
 	in_array(11, $valores) ? $_SESSION['Control'] = 1 : $_SESSION['Control'] = 0;
+	in_array(12, $valores) ? $_SESSION['vehiculos'] = 1 : $_SESSION['vehiculos'] = 0;
+	in_array(13, $valores) ? $_SESSION['proveedores'] = 1 : $_SESSION['proveedores'] = 0;
+	in_array(14, $valores) ? $_SESSION['compras'] = 1 : $_SESSION['compras'] = 0;
+	in_array(15, $valores) ? $_SESSION['registros'] = 1 : $_SESSION['registros'] = 0;
 
 	$_SESSION['Habilidad']=$Habilidades;
 
