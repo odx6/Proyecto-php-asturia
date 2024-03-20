@@ -554,7 +554,7 @@ if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])
 
                     temp.INTCANT = Dato;
                     temp.TOTAL = Dato * temp.PCRCOST;
-                    document.getElementById("S" + sku).innerText = temp.TOTAL;
+                    document.getElementById("S" + sku).innerText = formatToPesos(temp.TOTAL);
                     calcularTotal(inventarioUpdate);
                 } else {
                     alert("ingresa una cantidad mayor a 0")
@@ -614,7 +614,7 @@ if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])
                     des,
                     '<input type="number" required class="form-control" id="R' + sku + '" name="Referencia[' + sku + ']"  onchange="ActualizarReferencia(\'' + sku + '\')" placeholder="rd4385: "  >',
                     '<input type="number" required class="form-control" id="C' + sku + '" name="C' + sku + '" placeholder="stock: " onchange="ActualizarCantidad(\'' + sku + '\')" onchange="Subtotal(' + sku + ',' + precio + ')"  min="1">',
-                    precio,
+                    formatToPesos(precio),
                     '  <span id="S' + sku + '">' + TotalP + '</span>',
                     '<button class="btn btn-danger btn-square btn-xs"   onclick="DeleteTable(' + indice + ',\'' + sku + '\')"><i class="far fa-trash-alt"></i></button> ',
                 ]).draw(false);
@@ -705,14 +705,16 @@ if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])
                             Elemento.STRDES,
                             '<input type="text" required class="form-control" id="R' + Elemento.FK_SKU + '" name="Referencia[' + Elemento.FK_SKU + ']"  onchange="ActualizarReferencia(\'' + Elemento.FK_SKU + '\')" placeholder="rd4385: " value="' + Elemento.PCRCOST + '" >',
                             '<input type="number" required class="form-control" id="C' + Elemento.FK_SKU + '" name="C' + Elemento.FK_SKU + '" placeholder="21: " onchange="ActualizarCantidad(\'' + Elemento.FK_SKU + '\')" onchange="Subtotal(' + Elemento.FK_SKU + ',' + Elemento.PCRCOST + ')"  min="1" value="' + Elemento.INTCANT + '">',
-                            Elemento.PCRCOSTANTE,
-                            '  <span id="S' + Elemento.FK_SKU + '">' + Elemento.PCRCOST * Elemento.INTCANT + '</span>',
+                            formatToPesos(Elemento.PCRCOSTANTE),
+                            '  <span id="S' + Elemento.FK_SKU + '">' + formatToPesos(Elemento.PCRCOST * Elemento.INTCANT) + '</span>',
                             '<button type="button" class="btn btn-danger btn-square btn-xs"   onclick="DeleteTable(' + indice + ',\'' + Elemento.FK_SKU + '\')"><i class="far fa-trash-alt"></i></button> ',
                         ]).draw();
+                       
 
                     });
 
-                    $("#Total").val(suma);
+
+                    $("#Total").val(formatToPesos(suma));
 
 
                 }
@@ -725,10 +727,10 @@ if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])
             var Total = 0;
             array.forEach(function(elemento) {
 
-                Total += elemento.TOTAL;
+                Total += parseFloat(elemento.TOTAL);
 
             });
-            $("#Total").text(Total);
+            $("#Total").text(formatToPesos(Total));
         }
 
         function DeleteTable(fila, sku) {
@@ -757,8 +759,8 @@ if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])
                     Elemento.STRDES,
                     '<input type="text" required class="form-control" id="R' + Elemento.FK_SKU + '" name="Referencia[' + Elemento.FK_SKU + ']"  onchange="ActualizarReferencia(\'' + Elemento.FK_SKU + '\')" placeholder="rd4385: " value="' + Elemento.PCRCOST + '" >',
                     '<input type="number" required class="form-control" id="C' + Elemento.FK_SKU + '" name="C' + Elemento.FK_SKU + '" placeholder="21: " onchange="ActualizarCantidad(\'' + Elemento.FK_SKU + '\')" onchange="Subtotal(' + Elemento.FK_SKU + ',' + Elemento.PCRCOST + ')"  min="1" value="' + Elemento.INTCANT + '">',
-                    Elemento.PCRCOSTANTE,
-                    '  <span id="S' + Elemento.FK_SKU + '">' + Elemento.PCRCOST * Elemento.INTCANT + '</span>',
+                    formatToPesos(Elemento.PCRCOSTANTE),
+                    '  <span id="S' + Elemento.FK_SKU + '">' + formatToPesos(Elemento.PCRCOST * Elemento.INTCANT)+ '</span>',
                     '<button type="button" class="btn btn-danger btn-square btn-xs"   onclick="DeleteTable(' + indice + ',\'' + Elemento.FK_SKU + '\')"><i class="far fa-trash-alt"></i></button> ',
                 ]).draw();
 

@@ -31,13 +31,13 @@ if ($_SESSION['empleados'] == 1 && in_array(2, $_SESSION['Habilidad']['Empleados
     $CREATE_AT = $rw->CREATE_AT;
 ?>
     <!--main content start-->
-<?php 
+    <?php
 
- $Titulo="Permisos Empleados";
- $Arbol='Permisos';
+    $Titulo = "Permisos Empleados";
+    $Arbol = 'Permisos';
 
 
-?>
+    ?>
 
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -76,6 +76,31 @@ if ($_SESSION['empleados'] == 1 && in_array(2, $_SESSION['Habilidad']['Empleados
                 </div>
                 <!-- /.card-body -->
             </div>
+
+
+            <div class="col-12" id="all">
+                <div class="card card-primary card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#alle">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                               Selector global
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="alle" class="collapse show" data-parent="#alle">
+                        <div class="card-body">
+                           
+                               
+                            <input id="crearglobal"  type="checkbox" style="font-size:xx-small" data-nombre="crearglobal" name="crearglobal" onchange="chekCrear('crearglobal','CREAR')"  >&nbsp;CREAR EN TODAS LAS VISTAS &nbsp;</input>
+                            <input id="modificar"  type="checkbox" style="font-size:xx-small" data-nombre="modificar" name="modificar" onchange="chekCrear('modificar','MODIFICAR')">&nbsp;MODIFICAR  EN TODAS LAS VISTAS&nbsp;</input>
+                            <input id="eliminarglobal"  type="checkbox" style="font-size:xx-small" data-nombre="eliminarglobal" name="eliminarglobal" onchange="chekCrear('eliminarglobal','ELIMINAR')">&nbsp;ELIMINAR EN TODAS LAS VISTAS&nbsp;</input>
+                            <input id="mostrarglobal"  type="checkbox" style="font-size:xx-small" data-nombre="mostrarglobal" name="mostrarglobal" onchange="chekCrear('mostrarglobal','MOSTRAR')">&nbsp;MOSTRAR EN TODAS LAS VISTAS&nbsp;</input>
+                            <input id="exportarglobal"  type="checkbox" style="font-size:xx-small" data-nombre="exportarglobal" name="exportarglobal" onchange="chekCrear('exportarglobal','EXPORTAR')">&nbsp;EXPORTAR EN TODAS LAS VISTAS&nbsp;</input>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form role="form" name="update_register" id="update_register" method="post" action="view/ajax/agregar/actualizar_permisos.php">
                 <div class="row">
 
@@ -110,10 +135,10 @@ if ($_SESSION['empleados'] == 1 && in_array(2, $_SESSION['Habilidad']['Empleados
 
                                         $temp = $reg->idempleado_permiso;
 
-                                        $Habilidades = mysqli_query($con, "SELECT * FROM Habilidades");
+                                        $Habilidades = mysqli_query($con, "SELECT * FROM habilidades");
                                         while ($reg = $Habilidades->fetch_object()) {
                                             $sw =  (in_array($reg->pk_hab, $skil)) ? 'checked' : 'HOLA';
-                                            echo '&nbsp;<input id="' . $reg->Nombre . '" ' . $sw . ' type="checkbox" style="font-size:xx-small" data-nombre="' . $reg->Nombre . '" name="Habildades[ ' . $temp . '][' . $reg->Nombre . ']" value="' . $reg->pk_hab . '" >' . $reg->Nombre . ' &nbsp;</input>';
+                                            echo '&nbsp;<input class="'.$reg->Nombre.' "id="' . $reg->Nombre . '" ' . $sw . ' type="checkbox" style="font-size:xx-small" data-nombre="' . $reg->Nombre . '" name="Habildades[ ' . $temp . '][' . $reg->Nombre . ']" value="' . $reg->pk_hab . '" >' . $reg->Nombre . ' &nbsp;</input>';
                                         }
                                         ?>
                                     </div>
@@ -121,14 +146,14 @@ if ($_SESSION['empleados'] == 1 && in_array(2, $_SESSION['Habilidad']['Empleados
                             </div>
                         </div>
                     <?php } ?>
-                  
+
                     <div class="col-12">
-                    <div class="form-group">
+                        <div class="form-group">
                             <button type="submit" class="btn btn-primary actualizar_datos">Guardar datos</button>
-                    </div>
+                        </div>
                     </div>
                 </div>
-                
+
             </form>
 
             <!--final de los permisos -->

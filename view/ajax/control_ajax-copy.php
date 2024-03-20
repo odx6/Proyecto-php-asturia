@@ -26,8 +26,10 @@ function  CalcularSaldo($id)
 
 		$INTCAN = $row['INTCAN'];
 
-		if ($INTTIMOV == 1 || 
-		$INTTIMOV==3) {
+		if (
+			$INTTIMOV == 1 ||
+			$INTTIMOV == 3
+		) {
 
 
 			$residuo = $residuo + intval($INTCAN);
@@ -126,151 +128,151 @@ if ($action == 'ajax') {
 
 		$sumaCompras = 0;
 	}
-	$total = $sumaEntradas+$sumaCompras - $sumaSalidas;
+	$total = $sumaEntradas + $sumaCompras - $sumaSalidas;
 
 	//if ($numrows > 0) {
 
 ?>
 
 
-		<div class="card card-primary card-outline">
-			<div class="card-body box-profile">
-		
-				
+	<div class="card card-primary card-outline">
+		<div class="card-body box-profile">
 
-				<h3 class="profile-username text-center">SKU : <?php echo $id ?></h3>
 
-				<p class="text-muted text-center">Descripcion :<?php consultarNombre($id, 'tblcatpro', 'STRSKU', 'STRDESPRO'); ?></p>
 
-				<ul class="list-group list-group-unbordered mb-3">
-					<li class="list-group-item">
-						<b>Entradas Totales</b> <a class="float-right"><?php echo $sumaEntradas; ?></a>
-					</li>
-					<li class="list-group-item">
-						<b>Compras Totales</b> <a class="float-right"><?php echo $sumaCompras; ?></a>
-					</li>
-					<li class="list-group-item">
-						<b>Salidas Totales</b> <a class="float-right"><?php echo $sumaSalidas; ?></a>
-					</li>
-					<li class="list-group-item">
-						<b>stock disponible</b> <a class="float-right"><?php echo $total; ?></a>
-					</li>
-				</ul>
+			<h3 class="profile-username text-center">SKU : <?php echo $id ?></h3>
 
-				
-			</div>
-			<!-- /.card-body -->
+			<p class="text-muted text-center">Descripcion :<?php consultarNombre($id, 'tblcatpro', 'STRSKU', 'STRDESPRO'); ?></p>
+
+			<ul class="list-group list-group-unbordered mb-3">
+				<li class="list-group-item">
+					<b>Entradas Totales</b> <a class="float-right"><?php echo $sumaEntradas + $sumaCompras; ?></a>
+				</li>
+
+				<li class="list-group-item">
+					<b>Salidas Totales</b> <a class="float-right"><?php echo $sumaSalidas; ?></a>
+				</li>
+				<li class="list-group-item">
+					<b>stock disponible</b> <a class="float-right"><?php echo $total; ?></a>
+				</li>
+			</ul>
+
+
 		</div>
-	
+		<!-- /.card-body -->
+	</div>
 
 
-		
-
-		<input type="hidden" value="<?php echo $id ?>" id="ideControl"></input>
-		<table id="example1" class="table table-bordered table-striped">
-			<thead>
 
 
+
+	<input type="hidden" value="<?php echo $id ?>" id="ideControl"></input>
+	<table id="example1" class="table table-bordered table-striped">
+		<thead>
+
+
+			<tr>
+				<th>#ID</th>
+				<th>FECHA</th>
+
+				<th>REFERENCIA</th>
+
+
+				<th>Entrada</th>
+				<th>Salida</th>
+				<th>Saldo</th>
+				<th>Almacen</th>
+				<th>PRECIO</th>
+				<th>Total</th>
+
+
+			</tr>
+		</thead>
+
+		<tbody>
+			<?php
+			$finales = 0;
+
+			while ($row = mysqli_fetch_array($query)) {
+
+				$INTIDTAR = $row['INTIDTAR'];
+				$INTIDINV = $row['INTIDINV'];
+				$DTEFEC = $row['DTEFEC'];
+				$SKU = $row['SKU'];
+				$STRREF = $row['STRREF'];
+				$INTCAN = $row['INTCAN'];
+
+
+				$INTIDUNI = $row['INTIDUNI'];
+				$MONPRCOS = $row['MONPRCOS'];
+				$MONCTOPRO = $row['MONCTOPRO'];
+				$INTTIMOV = $row['INTTIPMOV'];
+
+
+
+				$INTALM = $row['INTALM'];
+				$DTEHOR = $row['DTEHOR'];
+
+
+
+
+				/*$kind=$row['kind'];*/
+
+				$finales++;
+			?>
 				<tr>
-					<th>#ID</th>
-					<th>FECHA</th>
+					<td><?php echo $INTIDTAR ?></td>
+					<td><?php echo $DTEFEC ?></td>
 
-					<th>REFERENCIA</th>
-
-
-					<th>Entrada</th>
-					<th>Salida</th>
-					<th>Saldo</th>
-					<th>Almacen</th>
-					<th>PRECIO</th>
-					<th>Total</th>
+					<td><?php echo $STRREF ?></td>
 
 
+
+					<?php
+					if ($INTTIMOV == 1 ||$INTTIMOV == 3 ) {
+
+					?>
+						<td><?php echo $INTCAN; ?> </td>
+						<td><?php echo "0"; ?></td>
+					<?php
+
+					} else  {
+
+
+					?>
+
+						<td><?php echo  "0"; ?> </td>
+						<td><?php echo $INTCAN; ?></td>
+					<?php
+					} 
+					?>
+						
+
+
+
+
+					<td><?php echo $Saldos[$INTIDTAR]; ?></td>
+
+					<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
+					<td><?php echo  "$ " . number_format($MONPRCOS, 2, '.', ',');  ?></td>
+					<td><?php echo  "$ " . number_format($MONCTOPRO, 2, '.', ','); ?></td>
 				</tr>
-			</thead>
+			<?php
 
-			<tbody>
-				<?php
-				$finales = 0;
+			} ?>
+		</tbody>
 
-				while ($row = mysqli_fetch_array($query)) {
+		<tfoot>
 
-					$INTIDTAR = $row['INTIDTAR'];
-					$INTIDINV = $row['INTIDINV'];
-					$DTEFEC = $row['DTEFEC'];
-					$SKU = $row['SKU'];
-					$STRREF = $row['STRREF'];
-					$INTCAN = $row['INTCAN'];
+		</tfoot>
+	</table>
+	<input type="hidden" id="Saldo" value="<?php echo $tot ?>" readonly>
+<?php
 
-
-					$INTIDUNI = $row['INTIDUNI'];
-					$MONPRCOS = $row['MONPRCOS'];
-					$MONCTOPRO = $row['MONCTOPRO'];
-					$INTTIMOV = $row['INTTIPMOV'];
-
-
-
-					$INTALM = $row['INTALM'];
-					$DTEHOR = $row['DTEHOR'];
-
-
-
-
-					/*$kind=$row['kind'];*/
-
-					$finales++;
-				?>
-					<tr>
-						<td><?php echo $INTIDTAR ?></td>
-						<td><?php echo $DTEFEC ?></td>
-
-						<td><?php echo $STRREF ?></td>
-
-
-
-						<?php
-						if ($INTTIMOV == 1 || $INTTIMOV=3) {
-
-						?>
-							<td><?php echo $INTCAN; ?> </td>
-							<td><?php echo "0"; ?></td>
-						<?php
-
-						} else {
-
-
-						?>
-
-							<td><?php echo  "0"; ?> </td>
-							<td><?php echo $INTCAN; ?></td>
-						<?php
-						}
-						?>
-
-
-
-						<td><?php echo $Saldos[$INTIDTAR]; ?></td>
-
-						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
-						<td><?php echo  "$ " . number_format($MONPRCOS, 2, '.', ',');  ?></td>
-						<td><?php echo  "$ " . number_format($MONCTOPRO, 2, '.', ','); ?></td>
-					</tr>
-				<?php
-
-				} ?>
-			</tbody>
-
-			<tfoot>
-
-			</tfoot>
-		</table>
-		<input type="hidden" id="Saldo" value="<?php echo $tot ?>" readonly>
-	<?php
-
-	} else {
-		echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+} else {
+	echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
-	}
+}
 //}
 if ($action == 'ajax2') {
 	$query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
@@ -323,129 +325,129 @@ if ($action == 'ajax2') {
 	$total = $sumaEntradas - $sumaSalidas;
 
 	//if ($numrows > 0) {
-	?>
-		<div class="col-sm-12">
+?>
+	<div class="col-sm-12">
 
-			<div class="col-sm-2">
-				<p> <strong>SKU :</strong></p>
-				<p> <strong>DESCRIPCION :</strong></p>
+		<div class="col-sm-2">
+			<p> <strong>SKU :</strong></p>
+			<p> <strong>DESCRIPCION :</strong></p>
 
-			</div>
-			<div class="col-sm-2">
-				<P><strong><?php echo $id ?></strong></P>
-				<P><strong><?php consultarNombre($id, 'tblcatpro', 'STRSKU', 'STRDESPRO'); ?></strong></P>
-
-
-			</div>
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-2">
+			<P><strong><?php echo $id ?></strong></P>
+			<P><strong><?php consultarNombre($id, 'tblcatpro', 'STRSKU', 'STRDESPRO'); ?></strong></P>
 
-			<p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas; ?></strong></p>
+
 		</div>
-		<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas; ?></strong></div>
-		<div class="col-sm-4"><strong> <i class="fa fa-archive" aria-hidden="true"></i> &nbsp;STOCK DISPONIBLE</strong> &nbsp &nbsp <strong><?php echo $total; ?></strong></div>
-		<input type="hidden" value="<?php echo $id ?>" id="ideControl"></input>
-		<table id="example1" class="table table-bordered table-striped">
-			<thead>
+	</div>
+	<div class="col-sm-4">
+
+		<p><strong> <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> &nbsp;NUMERO DE ENTRADAS TOTALES</strong> &nbsp &nbsp <strong><?php echo $sumaEntradas; ?></strong></p>
+	</div>
+	<div class="col-sm-4"><strong><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;NUMERO DE SALIDAS TOTALES </strong> &nbsp &nbsp <strong><?php echo $sumaSalidas; ?></strong></div>
+	<div class="col-sm-4"><strong> <i class="fa fa-archive" aria-hidden="true"></i> &nbsp;STOCK DISPONIBLE</strong> &nbsp &nbsp <strong><?php echo $total; ?></strong></div>
+	<input type="hidden" value="<?php echo $id ?>" id="ideControl"></input>
+	<table id="example1" class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>#ID</th>
+				<th>FECHA</th>
+
+				<th>REFERENCIA</th>
+
+
+				<th>Entrada</th>
+				<th>Salida</th>
+				<th>Saldo</th>
+				<th>Almacen</th>
+				<th>PRECIO</th>
+				<th>Total</th>
+
+
+
+			</tr>
+		</thead>
+
+		<tbody>
+			<?php
+			$finales = 0;
+
+			while ($row = mysqli_fetch_array($query)) {
+
+				$INTIDTAR = $row['INTIDTAR'];
+				$INTIDINV = $row['INTIDINV'];
+				$DTEFEC = $row['DTEFEC'];
+				$SKU = $row['SKU'];
+				$STRREF = $row['STRREF'];
+				$INTCAN = $row['INTCAN'];
+
+
+				$INTIDUNI = $row['INTIDUNI'];
+				$MONPRCOS = $row['MONPRCOS'];
+				$MONCTOPRO = $row['MONCTOPRO'];
+				$INTTIMOV = $row['INTTIPMOV'];
+
+				$INTALM = $row['INTALM'];
+				$DTEHOR = $row['DTEHOR'];
+
+				if ($INTTIMOV == 1) {
+					$lbl_status = "Entrada";
+					$lbl_class = 'label label-success';
+				} else {
+					$lbl_status = "Salida";
+					$lbl_class = 'label label-danger';
+				}
+
+
+				/*$kind=$row['kind'];*/
+
+				$finales++;
+			?>
 				<tr>
-					<th>#ID</th>
-					<th>FECHA</th>
+					<td><?php echo $INTIDTAR ?></td>
+					<td><?php echo $DTEFEC ?></td>
 
-					<th>REFERENCIA</th>
-
-
-					<th>Entrada</th>
-					<th>Salida</th>
-					<th>Saldo</th>
-					<th>Almacen</th>
-					<th>PRECIO</th>
-					<th>Total</th>
+					<td><?php echo $STRREF ?></td>
 
 
+
+					<?php
+					if ($INTTIMOV == 1 || $INTTIMOV == 3  ) {
+					?>
+						<td><?php echo $INTCAN; ?> </td>
+						<td><?php echo "0"; ?></td>
+					<?php
+
+					} else { ?>
+
+						<td><?php echo  "0"; ?> </td>
+						<td><?php echo $INTCAN; ?></td>
+					<?php
+					}
+					?>
+					<td><?php echo $Saldos[$INTIDTAR]; ?></td>
+
+					<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
+					<td><?php echo  "$ " . number_format($MONPRCOS, 2, '.', ',');  ?></td>
+					<td><?php echo  "$ " . number_format($MONCTOPRO, 2, '.', ','); ?></td>
 
 				</tr>
-			</thead>
-
-			<tbody>
-				<?php
-				$finales = 0;
-
-				while ($row = mysqli_fetch_array($query)) {
-
-					$INTIDTAR = $row['INTIDTAR'];
-					$INTIDINV = $row['INTIDINV'];
-					$DTEFEC = $row['DTEFEC'];
-					$SKU = $row['SKU'];
-					$STRREF = $row['STRREF'];
-					$INTCAN = $row['INTCAN'];
+			<?php
 
 
-					$INTIDUNI = $row['INTIDUNI'];
-					$MONPRCOS = $row['MONPRCOS'];
-					$MONCTOPRO = $row['MONCTOPRO'];
-					$INTTIMOV = $row['INTTIPMOV'];
+			} ?>
+		</tbody>
 
-					$INTALM = $row['INTALM'];
-					$DTEHOR = $row['DTEHOR'];
+		<tfoot>
 
-					if ($INTTIMOV == 1) {
-						$lbl_status = "Entrada";
-						$lbl_class = 'label label-success';
-					} else {
-						$lbl_status = "Salida";
-						$lbl_class = 'label label-danger';
-					}
-
-
-					/*$kind=$row['kind'];*/
-
-					$finales++;
-				?>
-					<tr>
-						<td><?php echo $INTIDTAR ?></td>
-						<td><?php echo $DTEFEC ?></td>
-
-						<td><?php echo $STRREF ?></td>
-
-
-
-						<?php
-						if ($INTTIMOV == 1) {
-						?>
-							<td><?php echo $INTCAN; ?> </td>
-							<td><?php echo "0"; ?></td>
-						<?php
-
-						} else { ?>
-
-							<td><?php echo  "0"; ?> </td>
-							<td><?php echo $INTCAN; ?></td>
-						<?php
-						}
-						?>
-						<td><?php echo $Saldos[$INTIDTAR]; ?></td>
-
-						<td><?php consultarNombre($INTALM, 'tblcatalm', 'INTIDALM', 'STRNOMALM'); ?></td>
-						<td><?php echo  "$ " . number_format($MONPRCOS, 2, '.', ',');  ?></td>
-						<td><?php echo  "$ " . number_format($MONCTOPRO, 2, '.', ','); ?></td>
-
-					</tr>
-				<?php
-
-
-				} ?>
-			</tbody>
-
-			<tfoot>
-
-			</tfoot>
-		</table>
-		<input type="hidden" id="Saldo" value="<?php echo $tot ?>" readonly>
+		</tfoot>
+	</table>
+	<input type="hidden" id="Saldo" value="<?php echo $tot ?>" readonly>
 
 <?php
-	} else {
-		echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+} else {
+	echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
-	}
+}
 //}
 ?>

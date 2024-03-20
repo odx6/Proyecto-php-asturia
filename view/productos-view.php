@@ -29,7 +29,7 @@ if ($_SESSION['productos'] == 1) {
             <div class="container-fluid">
                 <div class="row">
 
-                   
+
 
 
 
@@ -57,8 +57,8 @@ if ($_SESSION['productos'] == 1) {
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body ">
-                            <div id="resultados_ajax"></div>
-                            <div class="outer_div"></div>
+                                <div id="resultados_ajax"></div>
+                                <div class="outer_div"></div>
 
 
                             </div>
@@ -167,7 +167,7 @@ if ($_SESSION['productos'] == 1) {
                     success: function(datos) {
                         $("#resultados_ajax").html(datos);
                         $('#guardar_datos').attr("disabled", false);
-                        
+
                         window.setTimeout(function() {
                             $(".alert").fadeTo(500, 0).slideUp(500, function() {
                                 $(this).remove();
@@ -199,7 +199,7 @@ if ($_SESSION['productos'] == 1) {
                     success: function(datos) {
                         $("#resultados_ajax").html(datos);
                         $('#actualizar_datos').attr("disabled", false);
-                        
+
                         window.setTimeout(function() {
                             $(".alert").fadeTo(500, 0).slideUp(500, function() {
                                 $(this).remove();
@@ -264,27 +264,26 @@ if ($_SESSION['productos'] == 1) {
                 })
             }
 
-            function exportpf2(historial) {
-                alert("Deseas Generar un pdf con los Datos");
-                var contenido = document.querySelector("#peticionajax");
-                var contenidoOriginal = document.body.innerHTML;
+            function Editarloked() {
+                alert("Hola");
+                var id = $('#sku').val();
+                if (id != null && id)
+                    $.ajax({
+                        url: './view/ajax/Funciones/loked.php',
+                        type: 'post',
+                        data: {
+                            id: id
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            console.log(response);
 
-                document.body.innerHTML = contenido;
 
-                window.print();
+                        }
+                    });
 
-                document.body.innerHTML = contenidoOriginal;
-            }
 
-            function exportpf(id) {
-                var contenido = document.querySelector("#peticionajax").innerHTML;
-                var contenidoOriginal = document.body.innerHTML;
 
-                document.body.innerHTML = contenido;
-
-                window.print();
-
-                document.body.innerHTML = contenidoOriginal;
             }
         </script>
     <?php

@@ -51,6 +51,7 @@
     padding-left: 0;
     margin-left: 2.142857142857143em;
     list-style-type: none
+
 }
 
 .fa-ul>li {
@@ -89,6 +90,7 @@
 
 .fa.pull-right {
     margin-left: .3em
+   
 }
 
 .fa-spin {

@@ -102,6 +102,7 @@ if ($action == 'ajax') {
                     $STRCONT = $row["STRCONT"];
                     $BITSUS = $row["BITSUS"];
                     $DTHOR = $row["DTHOR"];
+                    ($BITSUS==1)? $BITSUS="Activo":$BITSUS="Inactivo";
 
 
                     $finales++;

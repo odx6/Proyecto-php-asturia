@@ -166,14 +166,14 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas']) && isset($_POST["identrada"]
                                 <span id="STROBS"></span>
                             </div>
                         </div>
-                     
+
                     </div>
-    
+
                     <div class="row">
                         <input type="hidden" required class="form-control is-invalid" id="IDEMP" name="IDEMP" placeholder="Folio: " value="<?php echo $_SESSION['user_id'] ?>">
                         <input type="hidden" required class="form-control" id="INTIDINV" name="INTIDINV" placeholder="Folio:" value="<?php echo $INTIDINV ?>">
                         <input type="hidden" required class="form-control" id="OLDMOV" name="OLDMOV" placeholder="movimiento:" value="<?php echo $INTTIPMOV ?>">
-                      
+
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
@@ -560,8 +560,8 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas']) && isset($_POST["identrada"]
                     des,
                     '<input type="text" required class="form-control" id="R' + sku + '" name="Referencia[' + sku + ']"  onchange="ActualizarReferencia(\'' + sku + '\')" placeholder="rd4385: "  >',
                     '<input type="number" required class="form-control" id="C' + sku + '" name="C' + sku + '" placeholder="21: " onchange="ActualizarCantidad(\'' + sku + '\')" onchange="Subtotal(' + sku + ',' + precio + ')"  min="1">',
-                    precio,
-                    '  <span class="Subtotal" id="S' + sku + '">0</span>',
+                    formatToPesos(precio),
+                    '  <span class="Subtotal" id="S' + sku + '">' + formatToPesos(0) + '</span>',
                     '<button type="button" class="btn btn-danger btn-square btn-xs"  onclick="DeleteTable(' + indice + ',\'' + sku + '\')"><i class="far fa-trash-alt"></i></button> ',
                 ]).draw(false);
 
@@ -579,40 +579,43 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas']) && isset($_POST["identrada"]
 
 
             var subtotal = document.getElementById("C" + sku).value * precio;
-            document.getElementById("S" + sku).innerText = subtotal;
+            document.getElementById("S" + sku).innerText = formatToPesos(subtotal);
 
         }
 
         function DeleteTable(fila, sku) {
-           // alert("Hola desde eliminar" + fila+"sku"+sku);
+            // alert("Hola desde eliminar" + fila+"sku"+sku);
             var table = $('#TableUpdate').DataTable();
             table.row(fila).remove().draw();
-            var suma=0;
+
+            var suma = 0;
             contador--;
             var IndiceDelete = getIndice(inventarioUpdate, sku);
 
             var temp = inventarioUpdate[IndiceDelete];
             //TotalP -= temp.MONCTOPRO;
+            $('#TableUpdate').DataTable();
+            table.clear().draw();
 
             inventarioUpdate.splice(IndiceDelete, 1);
             ValidarEntradaSalida(inventarioUpdate);
-            
-            inventarioUpdate.forEach(function(Elemento, indice) {
-                        count = indice - 1;
-                        suma += Elemento.precio * Elemento.cantidad;
-                        var table = $('#TableUpdate').DataTable();
-                        table.row.add([
-                            indice + 1,
-                            Elemento.sku,
-                            'Descripcion',
-                            '<input type="text" required class="form-control" id="R' + Elemento.sku + '" name="Referencia[' + Elemento.sku + ']"  onchange="ActualizarReferencia(\'' + Elemento.sku + '\')" placeholder="rd4385: " value="' + Elemento.referencia + '" >',
-                            '<input type="number" required class="form-control" id="C' + Elemento.sku + '" name="C' + Elemento.sku + '" placeholder="21: " onchange="ActualizarCantidad(\'' + Elemento.sku + '\')" onchange="Subtotal(' + Elemento.sku + ',' + Elemento.precio + ')"  min="1" value="' + Elemento.cantidad + '">',
-                            Elemento.precio,
-                            '  <span id="S' + Elemento.sku + '">' + Elemento.precio * Elemento.cantidad + '</span>',
-                            '<button type="button" class="btn btn-danger btn-square btn-xs"  onclick="DeleteTable(' + indice + ',\'' + Elemento.sku + '\')"><i class="far fa-trash-alt"></i></button>',
-                        ]).draw(false);
 
-                    });
+            inventarioUpdate.forEach(function(Elemento, indice) {
+                count = indice - 1;
+                suma += Elemento.precio * Elemento.cantidad;
+                var table = $('#TableUpdate').DataTable();
+                table.row.add([
+                    indice + 1,
+                    Elemento.sku,
+                    'Descripcion',
+                    '<input type="text" required class="form-control" id="R' + Elemento.sku + '" name="Referencia[' + Elemento.sku + ']"  onchange="ActualizarReferencia(\'' + Elemento.sku + '\')" placeholder="rd4385: " value="' + Elemento.referencia + '" >',
+                    '<input type="number" required class="form-control" id="C' + Elemento.sku + '" name="C' + Elemento.sku + '" placeholder="21: " onchange="ActualizarCantidad(\'' + Elemento.sku + '\')" onchange="Subtotal(' + Elemento.sku + ',' + Elemento.precio + ')"  min="1" value="' + Elemento.cantidad + '">',
+                    formatToPesos(Elemento.precio),
+                    '  <span id="S' + Elemento.sku + '">' + formatToPesos(Elemento.precio * Elemento.cantidad) + '</span>',
+                    '<button type="button" class="btn btn-danger btn-square btn-xs"  onclick="DeleteTable(' + indice + ',\'' + Elemento.sku + '\')"><i class="far fa-trash-alt"></i></button>',
+                ]).draw();
+
+            });
 
         }
 
@@ -637,32 +640,41 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas']) && isset($_POST["identrada"]
 
 
             var Dato = $("#C" + sku).val();
-            var TipoMov = $("#INTTIPMOVU").val();
+            if (Dato > 0) {
 
-            if (TipoMov == 1) {
+                var TipoMov = $("#INTTIPMOVU").val();
 
-                temp.cantidad = Dato;
-                temp.total = Dato * temp.precio;
-                $("#C" + sku).addClass('is-valid');
+                if (TipoMov == 1) {
 
-
-
-            } else {
-
-                if (Dato >= oldcantidad) {
-
-                    Diferencia = Dato - oldcantidad;
-                    alert("la diferencia" + Diferencia)
-                    validarStock(sku, Diferencia);
-
-                } else {
                     temp.cantidad = Dato;
                     temp.total = Dato * temp.precio;
+                    $("#C" + sku).addClass('is-valid');
+                    $("#S" + sku).text(formatToPesos(temp.total));
+
+
+
+                } else {
+
+                    if (Dato >= oldcantidad) {
+
+                        Diferencia = Dato - oldcantidad;
+                        alert("la diferencia" + Diferencia)
+                        validarStock(sku, Diferencia);
+
+                    } else {
+                        temp.cantidad = Dato;
+                        temp.total = Dato * temp.precio;
+                        $("#S" + sku).text(formatToPesos(temp.total));
+
+                    }
+
 
                 }
-
-
+            } else {
+                alert("No se permiten numeros negativos")
+                $("#C" + sku).val("");
             }
+
 
 
 
@@ -730,43 +742,43 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas']) && isset($_POST["identrada"]
     <script>
         $("#update_register").submit(function(event) {
             $('#actualizar_datos').attr("disabled", true);
-            if(inventarioUpdate.length>0){
+            if (inventarioUpdate.length > 0) {
                 inventario = JSON.stringify(inventarioUpdate);
-            var formData = new FormData(this);
+                var formData = new FormData(this);
 
-            INTTIPMOVU = $('#INTTIPMOVU').val();
-            formData.append('inventario', inventario);
-            formData.append('INTTIPMOVU', INTTIPMOVU);
-            $.ajax({
-                type: "POST",
-                url: "view/ajax/editar/editar_entrada.php",
-                data: formData,
-                processData: false, // Indicar a jQuery que no procese los datos
-                contentType: false,
-                beforeSend: function(objeto) {
-                    $("#resultados_ajax").html("Enviando...");
-                },
-                success: function(datos) {
+                INTTIPMOVU = $('#INTTIPMOVU').val();
+                formData.append('inventario', inventario);
+                formData.append('INTTIPMOVU', INTTIPMOVU);
+                $.ajax({
+                    type: "POST",
+                    url: "view/ajax/editar/editar_entrada.php",
+                    data: formData,
+                    processData: false, // Indicar a jQuery que no procese los datos
+                    contentType: false,
+                    beforeSend: function(objeto) {
+                        $("#resultados_ajax").html("Enviando...");
+                    },
+                    success: function(datos) {
 
-                    $(".resultados_ajax").html(datos);
-                    $('#actualizar_datos').attr("disabled", false);
-                    load(1);
-                    window.setTimeout(function() {
-                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                            $(this).remove();
-                        });
-                    }, 5000);
-                    $('#modal_update').modal('hide');
+                        $(".resultados_ajax").html(datos);
+                        $('#actualizar_datos').attr("disabled", false);
+                        load(1);
+                        window.setTimeout(function() {
+                            $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                                $(this).remove();
+                            });
+                        }, 5000);
+                        $('#modal_update').modal('hide');
 
 
-                }
-            });
+                    }
+                });
 
-            }else{
-                var datos='<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button> <strong>Error! No se puede esitar una entrada o salida   sin productos </strong></div>';
+            } else {
+                var datos = '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button> <strong>Error! No se puede esitar una entrada o salida   sin productos </strong></div>';
                 $(".resultados_ajax").html(datos);
             }
-           
+
             event.preventDefault();
         });
     </script>
@@ -803,8 +815,8 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas']) && isset($_POST["identrada"]
                             'Descripcion',
                             '<input type="text" required class="form-control" id="R' + Elemento.sku + '" name="Referencia[' + Elemento.sku + ']"  onchange="ActualizarReferencia(\'' + Elemento.sku + '\')" placeholder="rd4385: " value="' + Elemento.referencia + '" >',
                             '<input type="number" required class="form-control" id="C' + Elemento.sku + '" name="C' + Elemento.sku + '" placeholder="21: " onchange="ActualizarCantidad(\'' + Elemento.sku + '\')" onchange="Subtotal(' + Elemento.sku + ',' + Elemento.precio + ')"  min="1" value="' + Elemento.cantidad + '">',
-                            Elemento.precio,
-                            '  <span id="S' + Elemento.sku + '">' + Elemento.precio * Elemento.cantidad + '</span>',
+                            formatToPesos(Elemento.precio),
+                            '  <span id="S' + Elemento.sku + '">' + formatToPesos(Elemento.precio * Elemento.cantidad) + '</span>',
                             '<button type="button" class="btn btn-danger btn-square btn-xs"  onclick="DeleteTable(' + indice + ',\'' + Elemento.sku + '\')"><i class="far fa-trash-alt"></i></button>',
                         ]).draw(false);
 
@@ -833,7 +845,7 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas']) && isset($_POST["identrada"]
                 Total += elemento.MONCTOPRO;
 
             });
-            $("#Total").text(Total);
+            $("#Total").text(formatToPesos(Total));
 
         }
     </script>

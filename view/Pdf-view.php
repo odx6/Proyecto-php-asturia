@@ -213,10 +213,11 @@ $html = '<!DOCTYPE html>
 
      .borde{
 
-        border: 1px solid black;
+       // border: 1px solid black;
         text-align:center;
-       // background-color: #FCF3CF;
-        border-radius:5%;
+        background-color: #FCF3CF;
+        border-radius:5% ;
+      // border: 2px solid black;
      }
      h5{
         text-align:center;
@@ -229,6 +230,9 @@ $html = '<!DOCTYPE html>
      .datos{
        
        // background-color: #AED6F1 ;
+       text-align:center;
+     //  border-bottom: 2px solid black;
+    
      }
        
     </style>
@@ -255,12 +259,12 @@ $html = '<!DOCTYPE html>
     </thead>
     <tbody>
     <tr>
-    <td class="borde datos ">ID</td>
-    <td class="borde">' . $INTIDINV . '</td>
-    <td class="borde datos "> FECHA</td>
-    <td  class="borde">' . $DTEFEC . '</td>
+    <td class="borde  ">ID</td>
+    <td class="datos">' . $INTIDINV . '</td>
+    <td class="borde"> FECHA</td>
+    <td  class="datos">' . $DTEFEC . '</td>
     <td class="borde datos ">MOVIMIENTO</td>
-    <td  class="borde">' . $dtop . '</td>
+    <td  class="datos">' . $dtop . '</td>
    
     
     
@@ -268,12 +272,12 @@ $html = '<!DOCTYPE html>
     <tr>
    
     <td class="borde datos "> TIPO</td>
-    <td  class="borde">' . $mov . '</td>
+    <td  class="datos">' . $mov . '</td>
     <td class="borde datos ">FOLIO</td>
-    <td  class="borde">' . $INTFOL . '</td>
+    <td  class="datos">' . $INTFOL . '</td>
    
     <td class="borde datos ">EMPLEADO </td>
-    <td  class="borde">' . $emp . '</td>
+    <td  class="datos">' . $emp . '</td>
     
     
     
@@ -282,11 +286,11 @@ $html = '<!DOCTYPE html>
     
   
     <td class="borde datos " >DESCRIPCION</td>
-    <td  class="borde">' . $STROBS . '</td>
+    <td  class="datos">' . $STROBS . '</td>
     <td class="borde datos ">ALMACEN </td>
-    <td  class="borde">' . $alm . '</td>
+    <td  class="datos">' . $alm . '</td>
     <td class="borde datos ">FECHA DE CREACION</td>
-    <td  class="borde">' . $DTEHOR . '</td>
+    <td  class="datos">' . $DTEHOR . '</td>
     
     
     </tr>

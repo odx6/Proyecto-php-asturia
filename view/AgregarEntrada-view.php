@@ -26,7 +26,7 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
             <div class="container-fluid">
                 <div class="resultados_ajax"></div>
                 <?php include "modals/Productos_modal.php"; ?>
-              
+
                 <div class="row">
 
                     <button class="btn btn-primary btn-block btn-sm" data-toggle="modal" data-target="#myModal">Agregar Producto <i class="fa fa-plus"></i></button>
@@ -81,6 +81,7 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                                 <label for="INTFOL" class=" col-form-label">Folio: </label>
                                 <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: ">
                                 <span id="MINTFOL"></span>
+                               
                             </div>
                         </div>
                     </div>
@@ -494,8 +495,8 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                     des,
                     '<input type="text" required class="form-control" id="R' + sku + '" name="Referencia[' + sku + ']"  onchange="ActualizarReferencia(\'' + sku + '\')" placeholder="rd4385: "  >',
                     '<input type="number" required class="form-control" id="C' + sku + '" name="C' + sku + '" placeholder="stock: " onchange="ActualizarCantidad(\'' + sku + '\')" onchange="Subtotal(' + sku + ',' + precio + ')"  min="1">',
-                    precio,
-                    '  <span id="S' + sku + '">' + TotalP + '</span>',
+                    formatToPesos(precio),
+                    '  <span id="S' + sku + '">' + formatToPesos(TotalP) + '</span>',
                     '<button type="button" class="btn btn-danger btn-square btn-xs"   onclick="DeleteTable(' + indice + ',\'' + sku + '\')"><i class="far fa-trash-alt"></i></button> ',
                 ]).draw(false);
 
@@ -513,17 +514,17 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
 
 
             var subtotal = document.getElementById("C" + sku).value * precio;
-            document.getElementById("S" + sku).innerText = subtotal;
+            document.getElementById("S" + sku).innerText = formatToPesos(subtotal);
 
         }
 
         function DeleteTable(fila, sku) {
-           // alert("Hola desde eliminar" + fila);
+            // alert("Hola desde eliminar" + fila);
             var table = $('#example3').DataTable();
             table.row(fila).remove().draw();
 
             contador--;
-            suma=0;
+            suma = 0;
             var IndiceDelete = getIndice(inventario, sku);
 
             var temp = inventario[IndiceDelete];
@@ -534,22 +535,22 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
             $('#example3').DataTable();
             table.clear().draw();
             inventario.forEach(function(Elemento, indice) {
-                        count = indice - 1;
-                        suma += Elemento.MONPRCOS * Elemento.INTCANT;
-                        var table = $('#example3').DataTable();
-                        table.row.add([
-                            indice + 1,
-                            Elemento.SKU,
-                             Elemento.STRDES,
-                            '<input type="text" required class="form-control" id="R' + Elemento.SKU + '" name="Referencia[' + Elemento.SKU + ']"  onchange="ActualizarReferencia(\'' + Elemento.SKU + '\')" placeholder="rd4385: " value="' + Elemento.STRREF + '" >',
-                            '<input type="number" required class="form-control" id="C' + Elemento.SKU + '" name="C' + Elemento.SKU + '" placeholder="21: " onchange="ActualizarCantidad(\'' + Elemento.SKU + '\')" onchange="Subtotal(' + Elemento.SKU + ',' + Elemento.MONPRCOS + ')"  min="1" value="' + Elemento.INTCANT + '">',
-                            Elemento.MONPRCOS,
-                            '  <span id="S' + Elemento.SKU + '">' + Elemento.MONPRCOS * Elemento.INTCANT + '</span>',
-                            '<button type="button" class="btn btn-danger btn-square btn-xs"  onclick="DeleteTable(' + indice + ',\'' + Elemento.SKU + '\')"><i class="far fa-trash-alt"></i></button>',
-                        ]).draw();
+                count = indice - 1;
+                suma += Elemento.MONPRCOS * Elemento.INTCANT;
+                var table = $('#example3').DataTable();
+                table.row.add([
+                    indice + 1,
+                    Elemento.SKU,
+                    Elemento.STRDES,
+                    '<input type="text" required class="form-control" id="R' + Elemento.SKU + '" name="Referencia[' + Elemento.SKU + ']"  onchange="ActualizarReferencia(\'' + Elemento.SKU + '\')" placeholder="rd4385: " value="' + Elemento.STRREF + '" >',
+                    '<input type="number" required class="form-control" id="C' + Elemento.SKU + '" name="C' + Elemento.SKU + '" placeholder="21: " onchange="ActualizarCantidad(\'' + Elemento.SKU + '\')" onchange="Subtotal(' + Elemento.SKU + ',' + Elemento.MONPRCOS + ')"  min="1" value="' + Elemento.INTCANT + '">',
+                    formatToPesos(Elemento.MONPRCOS),
+                    '  <span id="S' + Elemento.SKU + '">' + formatToPesos(Elemento.MONPRCOS * Elemento.INTCANT) + '</span>',
+                    '<button type="button" class="btn btn-danger btn-square btn-xs"  onclick="DeleteTable(' + indice + ',\'' + Elemento.SKU + '\')"><i class="far fa-trash-alt"></i></button>',
+                ]).draw();
 
-                    });
-            
+            });
+
 
 
 
@@ -572,13 +573,15 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
 
         function ActualizarCantidad(sku) {
             var Dato = $("#C" + sku).val();
-            var TipoMov = $("#INTTIPMOV").val();
+
+            if(Dato>0){
+                var TipoMov = $("#INTTIPMOV").val();
             if (TipoMov == 1) {
                 var temp = inventario[getIndice(inventario, sku)];
 
                 temp.INTCANT = Dato;
                 temp.MONCTOPRO = Dato * temp.MONPRCOS;
-                document.getElementById("S" + sku).innerText = temp.MONCTOPRO;
+                document.getElementById("S" + sku).innerText = formatToPesos(temp.MONCTOPRO);
                 calcularTotal(inventario);
 
             } else {
@@ -586,6 +589,10 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                 validarStock(sku, Dato);
             }
 
+            }else{alert("no se permiten numeros negativos");
+                $("#C" + sku).val("");
+            }
+           
 
 
 
@@ -661,7 +668,7 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                 Total += elemento.MONCTOPRO;
 
             });
-            $("#Total").text(Total);
+            $("#Total").text(formatToPesos(Total));
         }
     </script>
     <script>
@@ -669,43 +676,48 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
             event.preventDefault();
 
             $('#guardar_datos').attr("disabled", true);
-            if(inventario.length>0){
+            if (inventario.length > 0) {
                 INTTIPMOV = $('#INTTIPMOV').val();
-            inventario = JSON.stringify(inventario);
-            var formData = new FormData(this);
+                inventario = JSON.stringify(inventario);
 
-            formData.append('inventario', inventario); // Crear un objeto FormData
-            formData.append('INTTIPMOV', INTTIPMOV);
-            $.ajax({
-                type: "POST",
-                url: "view/ajax/agregar/agregar_entrada.php",
-                data: formData, // Usar el objeto FormData como los datos de la petición
-                processData: false, // Indicar a jQuery que no procese los datos
-                contentType: false, // Indicar a jQuery que no establezca el tipo de contenido
-                beforeSend: function(objeto) {
-                    $(".resultados_ajax").html("Enviando...");
-                },
-                success: function(datos) {
 
-                    $(".resultados_ajax").html(datos);
-                    $('#guardar_datos').attr("disabled", false);
-                    load(1);
-                    window.setTimeout(function() {
-                        $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                            $(this).remove();
-                        });
-                    }, 5000);
-                    //$('#formModal').modal('hide');
+                var formData = new FormData(this);
 
-                }
-            });
-            }else{
-               var datos='<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button> <strong>Error! No se puede crear una entrada o salida sin datos </strong></div>';
+                formData.append('inventario', inventario); // Crear un objeto FormData
+                formData.append('INTTIPMOV', INTTIPMOV);
+                $.ajax({
+                    type: "POST",
+                    url: "view/ajax/agregar/agregar_entrada.php",
+                    data: formData, // Usar el objeto FormData como los datos de la petición
+                    processData: false, // Indicar a jQuery que no procese los datos
+                    contentType: false, // Indicar a jQuery que no establezca el tipo de contenido
+                    beforeSend: function(objeto) {
+                        $(".resultados_ajax").html("Enviando...");
+                    },
+                    success: function(datos) {
+
+                        $(".resultados_ajax").html(datos);
+                        $('#guardar_datos').attr("disabled", false);
+                        load(1);
+                        window.setTimeout(function() {
+                            $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                                $(this).remove();
+                            });
+                        }, 5000);
+                        inventario = [];
+                        table = $('#example3').DataTable();
+                        table.clear().draw();
+                        //$('#formModal').modal('hide');
+
+                    }
+                });
+            } else {
+                var datos = '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert">&times;</button> <strong>Error! No se puede crear una entrada o salida sin datos </strong></div>';
                 $(".resultados_ajax").html(datos);
 
             }
-          
-          
+
+
         });
     </script>
 <?php

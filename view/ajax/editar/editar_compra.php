@@ -161,7 +161,7 @@ if ($gump->errors()) {
                                 if ($query_new2) {
 
                                     //eliminar la tarjeta 
-                                    $deletetar = recuperarDatos("SELECT * from tbltarinv where INTIDINV=" . $inventario . " and SKU='" . $producto . "' and INTTIPMOV='3' ;");
+                                    $deletetar = recuperarDatos("SELECT * from tbltarinv where INTIDINV='" . $inventario . "' and SKU='" . $producto . "' and INTTIPMOV='3' ;");
 
 
                                     $sqldeletetar = "DELETE FROM tbltarinv  where INTIDINV=" . $inventario . " and SKU='" . $producto . "' and INTTIPMOV='3' ;";

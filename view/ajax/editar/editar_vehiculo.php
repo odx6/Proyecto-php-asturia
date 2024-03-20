@@ -8,7 +8,7 @@ $gump->validation_rules([
      'id' => 'required',
     'STRMAR'    => 'required|alpha_numeric|max_len,100|min_len,3',
     'STRMOD'    => 'required|max_len,100|min_len,3',
-    'STRPLACAS'       => 'required|alpha_numeric',
+    'STRPLACAS'       => 'required',
     'STRTIPO'      => 'required',
     'BITSUS' => 'required'
 ]);
@@ -67,7 +67,7 @@ if ($gump->errors()) {
     $oldata=recuperarDatos("SELECT * from tblcatmov WHERE pk_mov='$id';");
 
     try {
-        $update = "UPDATE `tblcatmov` SET `STRMAR`='".$STRMAR."',`STRMOD`='".$STRMOD."',`STRPLACAS`='".$STRMOD."',`STRTIPO`='".$STRTIPO."',`BITSUS`='".$BITSUS."' WHERE pk_mov='$id';";
+        $update = "UPDATE `tblcatmov` SET `STRMAR`='".$STRMAR."',`STRMOD`='".$STRMOD."',`STRPLACAS`='".$STRPLACAS."',`STRTIPO`='".$STRTIPO."',`BITSUS`='".$BITSUS."' WHERE pk_mov='$id';";
         $query_update = mysqli_query($con, $update);
         if ($query_update) {
             $messages[] = "Se actualizo el vehiculo";

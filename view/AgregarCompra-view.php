@@ -507,8 +507,8 @@ if (in_array(1, $_SESSION['Habilidad']['compras'])) {
                     des,
                     '<input type="number" required class="form-control" id="R' + sku + '" name="Referencia[' + sku + ']"  onchange="ActualizarReferencia(\'' + sku + '\')" placeholder="rd4385: "  >',
                     '<input type="number" required class="form-control" id="C' + sku + '" name="C' + sku + '" placeholder="stock: " onchange="ActualizarCantidad(\'' + sku + '\')" onchange="Subtotal(' + sku + ',' + precio + ')"  min="1">',
-                    precio,
-                    '  <span id="S' + sku + '">' + TotalP + '</span>',
+                    formatToPesos(precio),
+                    '  <span id="S' + sku + '">' + formatToPesos(TotalP) + '</span>',
                     '<button class="btn btn-danger btn-square btn-xs"   onclick="DeleteTable(' + indice + ',\'' + sku + '\')"><i class="far fa-trash-alt"></i></button> ',
                 ]).draw(false);
 
@@ -557,8 +557,8 @@ if (in_array(1, $_SESSION['Habilidad']['compras'])) {
                     Elemento.STRDES,
                     '<input type="text" required class="form-control" id="R' + Elemento.FK_SKU + '" name="Referencia[' + Elemento.FK_SKU + ']"  onchange="ActualizarReferencia(\'' + Elemento.FK_SKU + '\')" placeholder="rd4385: " value="' + Elemento.PCRCOST + '" >',
                     '<input type="number" required class="form-control" id="C' + Elemento.FK_SKU + '" name="C' + Elemento.FK_SKU + '" placeholder="21: " onchange="ActualizarCantidad(\'' + Elemento.FK_SKU + '\')" onchange="Subtotal(' + Elemento.FK_SKU + ',' + Elemento.PCRCOST + ')"  min="1" value="' + Elemento.INTCANT + '">',
-                    Elemento.MONPRCOS,
-                    '  <span id="S' + Elemento.FK_SKU + '">' + Elemento.PCRCOST * Elemento.INTCANT + '</span>',
+                    formatToPesos(Elemento.MONPRCOS),
+                    '  <span id="S' + Elemento.FK_SKU + '">' + formatToPesos(Elemento.PCRCOST * Elemento.INTCANT) + '</span>',
                     '<button type="button" class="btn btn-danger btn-square btn-xs"   onclick="DeleteTable(' + indice + ',\'' + Elemento.FK_SKU + '\')"><i class="far fa-trash-alt"></i></button> ',
                 ]).draw();
 
@@ -601,7 +601,7 @@ if (in_array(1, $_SESSION['Habilidad']['compras'])) {
 
                     temp.INTCANT = Dato;
                     temp.MONCTOPRO = Dato * temp.PCRCOST;
-                    document.getElementById("S" + sku).innerText = temp.MONCTOPRO;
+                    document.getElementById("S" + sku).innerText = formatToPesos(temp.MONCTOPRO);
                     calcularTotal(inventario);
                 } else {
                     alert("ingresa una cantidad mayor a 0")
@@ -633,7 +633,7 @@ if (in_array(1, $_SESSION['Habilidad']['compras'])) {
         function getIndice(array, sku) {
             return inventario.indexOf(buscarPorSKU(array, sku));
         }
-        /*
+        
 
         function validarStock(sku, cantidad) {
             parametros = {
@@ -684,7 +684,7 @@ if (in_array(1, $_SESSION['Habilidad']['compras'])) {
             (array.length > 0) ? document.getElementById('INTTIPMOV').disabled = true: document.getElementById('INTTIPMOV').disabled = false;
 
 
-        }*/
+        }
 
         function calcularTotal(array) {
             var Total = 0;
@@ -693,7 +693,7 @@ if (in_array(1, $_SESSION['Habilidad']['compras'])) {
                 Total += elemento.MONCTOPRO;
 
             });
-            $("#Total").text(Total);
+            $("#Total").text(formatToPesos(Total));
         }
     </script>
     <script>
@@ -726,7 +726,11 @@ if (in_array(1, $_SESSION['Habilidad']['compras'])) {
                             $(this).remove();
                         });
                     }, 5000);
+                    inventario = [];
+                        table = $('#compras').DataTable();
+                        table.clear().draw();
                     $('#formModal').modal('hide');
+
 
                 }
             });

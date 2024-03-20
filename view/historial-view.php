@@ -238,17 +238,7 @@ if ($_SESSION['productos'] == 1) {
                 })
             }
 
-            function exportpf(historial) {
-                alert("Deseas Generar un pdf con los Datos");
-                var contenido = document.getElementById(historial).innerHTML;
-                var contenidoOriginal = document.body.innerHTML;
-
-                document.body.innerHTML = contenido;
-
-                window.print();
-
-                document.body.innerHTML = contenidoOriginal;
-            }
+          
         </script>
     <?php
 } else {

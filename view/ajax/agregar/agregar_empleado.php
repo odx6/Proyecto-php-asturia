@@ -126,7 +126,7 @@ elseif (empty(trim($_POST['STRNDL']))) {
 
 
 	//Write register in to database 
-	if (verificacionDeCorreo($STRCOR, $token) == "true") $sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR,STRNDL, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) 
+	if (verificacionDeCorreo($STRCOR, $token) == "true"){ $sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR,STRNDL, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) 
 	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNDL . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "');";
 	$query_new = mysqli_query($con, $sql);
 
@@ -141,7 +141,6 @@ elseif (empty(trim($_POST['STRNDL']))) {
 	 $query = mysqli_query($con, $sqllog);
 
 	}
-	// if has been added successfully
 	if ($query_new) {
 		if (!empty($_POST['permisos'])) {
 			$numeroMaximo = "select max(IDEMP) as nuevo_empleado from tblcatemp";
@@ -175,6 +174,12 @@ elseif (empty(trim($_POST['STRNDL']))) {
 	} else {
 		$errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
 	}
+}else{
+
+	$errors[]="error al verificar el correo verifique su correo";
+}
+	// if has been added successfully
+
 } else {
 	$errors[] = "desconocido.";
 }

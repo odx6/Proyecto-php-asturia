@@ -22,7 +22,7 @@ if (empty($_POST['IDEMP'])) {
     $errors[] = "Descripcion del movimiento  está vacío.";
 } elseif (empty($_POST['inventario'])) {
     $errors[] = "inventario está vacío.";
-} elseif (count($datos) <= 0) {
+} elseif (is_array($datos) && count($datos) <= 0) {
     $errors[] = "Error no se puede ingresar una entrada o salida sin productos.";
 }/* elseif (empty($_POST['kind'])) {
             $errors[] = "Kind está vacío.";
@@ -133,7 +133,7 @@ if (empty($_POST['IDEMP'])) {
 
 
                 $sql2 = "INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
-                VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $INTTIPMOV . "','" . $INTIDALM . "','" . $created_at . "');";
+                VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" .$_POST['INTTIPMOV']. "','" . $INTIDALM . "','" . $created_at . "');";
                 $query_new2 = mysqli_query($con, $sql2);
                 if ($query_new2) {
                     $id = mysqli_insert_id($con);

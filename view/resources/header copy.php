@@ -8,6 +8,8 @@ if (!isset($_SESSION['user_id']) && $_SESSION['user_id'] == null) {
 }
 
 $id = $_SESSION['user_id'];
+
+
 $query = mysqli_query($con, "SELECT * from tblcatemp where IDEMP=$id");
 while ($row = mysqli_fetch_array($query)) {
   $IDEMP = $row['IDEMP'];
@@ -29,9 +31,12 @@ while ($row = mysqli_fetch_array($query)) {
   $CREATE_AT = $row['CREATE_AT'];
 }
 
+$_SESSION['NOMBREUSER'] = $STRNOM . " " . $STRAPE;
 $configuracion = mysqli_query($con, "select * from configuracion");
 $rw = mysqli_fetch_array($configuracion);
 $nombre_empresa = $rw['nombre'];
+
+$_SESSION['NOMBREMPRESA'] = $nombre_empresa;
 ?>
 <!--Header go -->
 <!DOCTYPE html>
@@ -53,7 +58,7 @@ $nombre_empresa = $rw['nombre'];
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-  
+
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 
@@ -100,7 +105,7 @@ $nombre_empresa = $rw['nombre'];
 
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
-        
+
         <li class="nav-item">
           <a class="nav-link" data-widget="fullscreen" href="#" role="button">
             <i class="fas fa-expand-arrows-alt"></i>
@@ -115,7 +120,7 @@ $nombre_empresa = $rw['nombre'];
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="fas fa-cogs"></i>
-            
+
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
@@ -126,13 +131,13 @@ $nombre_empresa = $rw['nombre'];
             </a>
             <div class="dropdown-divider"></div>
             <a href="./?view=logout" class="dropdown-item">
-            <i class="fas fa-sign-out-alt"></i> Salir
+              <i class="fas fa-sign-out-alt"></i> Salir
 
             </a>
-           
+
           </div>
         </li>
-      
+
         <!-- end Menu -->
       </ul>
     </nav>
@@ -185,7 +190,7 @@ $nombre_empresa = $rw['nombre'];
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
-              <ul class="nav nav-treeview" >
+              <ul class="nav nav-treeview">
                 <?php if ($_SESSION['unidades'] == 1) { ?>
                   <li class="nav-item">
                     <a href="./?view=Unidades" class="nav-link ">
@@ -232,7 +237,7 @@ $nombre_empresa = $rw['nombre'];
                 <?php if ($_SESSION['vehiculos'] == 1) { ?>
                   <li class="nav-item">
                     <a href="./?view=vehiculos" class="nav-link">
-                    <i class="fas fa-car"></i>
+                      <i class="fas fa-car"></i>
                       <p>&nbsp;Vehiculos</p>
                     </a>
                   </li>
@@ -240,7 +245,7 @@ $nombre_empresa = $rw['nombre'];
                 <?php if ($_SESSION['proveedores'] == 1) { ?>
                   <li class="nav-item">
                     <a href="./?view=proveedores" class="nav-link">
-                    <i class="fas fa-parachute-box"></i>
+                      <i class="fas fa-parachute-box"></i>
                       <p>&nbsp;Proveedores</p>
                     </a>
                   </li>
@@ -249,42 +254,45 @@ $nombre_empresa = $rw['nombre'];
 
               </ul>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link ">
-                <i class="fas fa-clipboard-list"></i>
-                <p>
-                  &nbsp; Inventario
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview" >
-                <?php if ($_SESSION['Entradas'] == 1) { ?>
-                  <li class="nav-item">
-                    <a href="./?view=Entrada" class="nav-link ">
-                      <i class="fas fa-dolly"></i>
-                      <p>&nbsp;Entradas y Salidas</p>
-                    </a>
-                  </li>
-                <?php } ?>
-                <?php if ($_SESSION['compras'] == 1) { ?>
-                  <li class="nav-item">
-                    <a href="./?view=Compras" class="nav-link ">
-                    <i class="fas fa-money-bill-alt"></i> 
-                    <p>&nbsp;Compras</p>
-                    </a>
-                  </li>
-                <?php } ?>
-                <?php if ($_SESSION['Control'] == 1) { ?>
+            <?php if ($_SESSION['Inventario'] == 1) { ?>
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="fas fa-clipboard-list"></i>
+                  <p>
+                    &nbsp; Inventario
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <?php if ($_SESSION['Entradas'] == 1) { ?>
+                    <li class="nav-item">
+                      <a href="./?view=Entrada" class="nav-link ">
+                        <i class="fas fa-dolly"></i>
+                        <p>&nbsp;Entradas y Salidas</p>
+                      </a>
+                    </li>
+                  <?php } ?>
+                  <?php if ($_SESSION['compras'] == 1) { ?>
+                    <li class="nav-item">
+                      <a href="./?view=Compras" class="nav-link ">
+                        <i class="fas fa-money-bill-alt"></i>
+                        <p>&nbsp;Compras</p>
+                      </a>
+                    </li>
+                  <?php } ?>
+                  <?php if ($_SESSION['Control'] == 1) { ?>
 
-                  <li class="nav-item">
-                    <a href="./?view=historial" class="nav-link ">
-                      <i class="fas fa-dolly-flatbed"></i>
-                      <p> &nbsp;Control</p>
-                    </a>
-                  </li>
-                <?php } ?>
-              </ul>
-            </li>
+                    <li class="nav-item">
+                      <a href="./?view=historial" class="nav-link ">
+                        <i class="fas fa-dolly-flatbed"></i>
+                        <p> &nbsp;Control</p>
+                      </a>
+                    </li>
+                  <?php } ?>
+                </ul>
+              </li>
+            <?php } ?>
+
             <?php if ($_SESSION['solicitud'] == 1) { ?>
               <li class="nav-item">
                 <a href="./?view=solicitud" class="nav-link">

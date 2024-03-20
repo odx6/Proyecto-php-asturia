@@ -95,7 +95,12 @@ if ($action == 'ajax') {
                     $STRTIPO = $row["STRTIPO"];
                     $BITSUS = $row["BITSUS"];
                     $DTHOR = $row["DTHOR"];
+                     if($STRTIPO==1) $STRTIPO="moto";
+                     if($STRTIPO==2) $STRTIPO="Carro";
+                     if($STRTIPO==3) $STRTIPO="motoCarro";
 
+
+                     ($BITSUS==1)? $BITSUS="Activo":$BITSUS="Inactivo";
 
                     $finales++;
                 ?>

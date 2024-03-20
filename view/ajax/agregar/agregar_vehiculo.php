@@ -7,7 +7,7 @@ $gump = new GUMP();
 $gump->validation_rules([
     'STRMAR'    => 'required|alpha_numeric|max_len,100|min_len,3',
     'STRMOD'    => 'required|max_len,100|min_len,3',
-    'STRPLACAS'       => 'required|alpha_numeric',
+    'STRPLACAS'       => 'required',
     'STRTIPO'      => 'required',
     'BITSUS' => 'required'
 ]);

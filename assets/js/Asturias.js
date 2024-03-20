@@ -216,19 +216,7 @@ function mostrar(id, path) {
 
 //end mostrar 
 
-//pdf-export div
-function exportpf(historial) {
-  alert("Deseas Generar un pdf con los Datos");
-  var contenido = document.getElementById(historial).innerHTML;
-  var contenidoOriginal = document.body.innerHTML;
 
-  document.body.innerHTML = contenido;
-
-  window.print();
-
-  document.body.innerHTML = contenidoOriginal;
-}
-//
 
 function mensaje() {
 
@@ -340,76 +328,7 @@ function CalcularTotal(precio, cantidad) {
 
 
 
-function EliminarArray(id) {
-  //funcion Eliminar update
-  //alert(id);
 
-  elemento = inventarioUpdate[id];
-  DropElements.push(elemento);
-  total = parseInt(elemento.total);
-  inventarioUpdate.splice(id, 1);
-  var numeroElementos = inventarioUpdate.length;
-  $('#CountU').val(numeroElementos);
-  TotalUpdate = TotalUpdate - total;
-  var tabla = document.getElementById("miTablaUpdate");
-  var cuerpoTabla = tabla.getElementsByTagName("tbody")[0];
-  cuerpoTabla.innerHTML = '';
-
-  inventarioUpdate.forEach(function (Elemento, indice) {
-
-    // Crear una nueva fila
-    var fila = cuerpoTabla.insertRow();
-
-    // Insertar celdas en la fila
-    var numero = fila.insertCell(0);
-    var CALLSKU = fila.insertCell(1);
-    var CELLREF = fila.insertCell(2);
-    var CELLCAT = fila.insertCell(3);
-    var CELLPRECIO = fila.insertCell(4);
-    var CELLTOTAL = fila.insertCell(5);
-    var Accion = fila.insertCell(6);
-
-    // Llenar las celdas con datos del Elemento
-    numero.textContent = indice + 1;
-    CALLSKU.textContent = Elemento.sku;
-    CELLREF.textContent = Elemento.referencia;
-    CELLCAT.textContent = Elemento.cantidad;
-
-    let formatoPesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
-
-    CELLPRECIO.textContent = formatoPesos.format(Elemento.precio);
-
-    CELLTOTAL.textContent = formatoPesos.format(Elemento.total);
-
-
-    var boton = document.createElement('button');
-    boton.innerHTML = '<i class="far fa-trash-alt"></i>';
-    boton.type = 'button';
-
-    boton.setAttribute("data-info", indice);
-
-
-    boton.className = 'btn btn-danger btn-square btn-xs';
-
-    // Establecer el atributo data-toggle del botón
-
-    // Establecer el atributo data-target del botón
-
-
-    // Agregar un escuchador de eventos al botón para llamar a la función validarImg() cuando se haga clic en el botón
-    boton.onclick = function () {
-      EliminarArray(indice);
-    }
-    Accion.appendChild(boton);
-
-
-  });
-  $('#MONCTOPROU').val(TotalUpdate);
-  (inventarioUpdate.length > 0) ? document.getElementById('INTTIPMOVU').disabled = true : document.getElementById('INTTIPMOVU').disabled = false;
-
-
-
-}
 function vselect() {
   //alert("Hola");
   if ($("#outproductU option:selected").length > 1) {
@@ -530,46 +449,10 @@ function stockEliminado(array, sk) {
 
 
 //imprimir el detalle 
-function pdfInventario() {
-
-  alert("Desea imprimir los datos");
-  var contenido = document.querySelector('#printentrada').innerHTML;
-
-  var contenidoOriginal = document.body.innerHTML;
-
-  document.body.innerHTML = contenido;
-
-  window.print();
-
-  document.body.innerHTML = contenidoOriginal;
-}
 
 //
 
 
-function descargarPDF() {
-
-  /*
-    var doc = new jsPDF();
-  var codigo = document.querySelector("#printentrada").innerText;
-  doc.text(codigo, 10, 10);
-  doc.save('codigo.pdf');*/
-  var doc = new jsPDF();
-
-  // Añades un título al documento
-  doc.setFontSize(22);
-  doc.text("Reporte de Ventas", 105, 30, null, null, "center");
-
-  // Añades una tabla de ventas
-  doc.autoTable({ html: '#printentrada' })
-
-  // Añades un total al final de la tabla
-  doc.setFontSize(18);
-  doc.text("Total: $600", 180, doc.autoTable.previous.finalY + 20);
-
-  // Guardas el documento como un archivo PDF
-  doc.save('reporte.pdf');
-}
 
 function resetForm() {
 
@@ -606,9 +489,31 @@ function calcularTotal(array) {
 
 
 }
- function img(id){
+function img(id) {
   //alert("Hola"+id)
-  $("#"+id).click();
- 
- }
+  $("#" + id).click();
 
+}
+function formatToPesos(amount) {
+  // Redondear el monto a dos decimales
+  amount = parseFloat(amount).toFixed(2);
+
+  // Agregar separadores de miles
+  amount = amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  // Agregar el símbolo de pesos
+  return "$" + amount;
+}
+
+function chekCrear(nombreBoton ,afectado) {
+  var isChecked = document.getElementById(nombreBoton).checked;
+  if (isChecked) {
+    $('.'+afectado).prop('checked', true)
+  }else{
+    $('.'+afectado).prop('checked', false)
+
+  }
+
+
+ 
+}

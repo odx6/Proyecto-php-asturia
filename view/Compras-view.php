@@ -4,10 +4,10 @@ $active8 = "active";
 
 if ($_SESSION['compras'] == 1) {
 
-     (in_array(2,$_SESSION['Habilidad']['compras']))? $editar="modals/editar/editar_template.php":$editar='';
-     (in_array(4,$_SESSION['Habilidad']['compras']))? $mostrar="modals/mostrar/mostrar_template.php":$mostrar='';
-    $TitleModal="Editar proveedor";
-    $TitleModalShow="<i class='fas fa-car'></i> Datos del proveedor";
+    (in_array(2, $_SESSION['Habilidad']['compras'])) ? $editar = "modals/editar/editar_template.php" : $editar = '';
+    (in_array(4, $_SESSION['Habilidad']['compras'])) ? $mostrar = "modals/mostrar/mostrar_template.php" : $mostrar = '';
+    $TitleModal = "Editar proveedor";
+    $TitleModalShow = "<i class='fas fa-car'></i> Datos del proveedor";
     $Titulo = "Compras";
     $url = "Compras";
     $icon = '<i class="fas fa-parachute-box"></i>';
@@ -96,14 +96,15 @@ $('#new_register').submit(function(event) {
             });
             event.preventDefault();
         });
+
+       
     </script>
 
 ";
-   
 
-   include "Template.php";
+
+    include "Template.php";
 } else {
     require 'resources/acceso_prohibido.php';
 }
 ob_end_flush();
-?>

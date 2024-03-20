@@ -8,7 +8,7 @@ $gump->validation_rules([
     'id'    => 'required',
     'STRRFC'    => 'required|alpha_numeric|max_len,13|min_len,12',
     'STRNOM'    => 'required|max_len,100|min_len,3',
-    'STRDOM'       => 'required|alpha_numeric',
+    'STRDOM'       => 'required',
     'STRTEL'       => 'required|alpha_numeric',
     'STRNUMCUN'       => 'required|alpha_numeric',
     'STRNOMBAN'       => 'required|alpha_numeric',
@@ -32,8 +32,7 @@ $gump->set_fields_error_messages([
 
     'STRDOM'=>[
         'required'=>'El campo domicilio es requerido',
-        'alpha_numeric'=>'El campo solo puede contener letras y numeros',
-
+        
     ]
 ]);
 $gump->filter_rules([

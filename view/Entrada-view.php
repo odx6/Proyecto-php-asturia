@@ -46,6 +46,7 @@ if ($_SESSION['Entradas'] == 1) {
                             include "modals/mostrar/mostrar_entrada.php";
                         ?>
                             </div>
+                           
                                 <!-- modals -->
                       
                     <!-- /end modals -->
@@ -152,7 +153,7 @@ if ($_SESSION['Entradas'] == 1) {
                 INTTIPMOV = $('#INTTIPMOV').val();
                 inventario = JSON.stringify(inventario);
                 var formData = new FormData(this);
-
+                
                 formData.append('inventario', inventario); // Crear un objeto FormData
                 formData.append('INTTIPMOV', INTTIPMOV);
                 $.ajax({
@@ -174,6 +175,7 @@ if ($_SESSION['Entradas'] == 1) {
                             });
                         }, 5000);
                         $('#formModal').modal('hide');
+                        inventario=[];
 
                     }
                 });

@@ -23,7 +23,7 @@
         Anything you want
       </div>
       <!-- Default to the left -->
-      <strong>Copyright &copy; 2023-2024 <a href="https://adminlte.io">Sarusa by Everardo</a>.</strong> All rights reserved.
+      <strong>Copyright &copy; 2023-2024 <a href="#">Sarusa by Everardo</a>.</strong> All rights reserved.
     </footer>
   </div>
   <!-- ./wrapper -->
