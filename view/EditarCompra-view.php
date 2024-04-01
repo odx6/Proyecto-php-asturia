@@ -104,14 +104,14 @@ if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="STREMI" class=" col-form-label">Numero de Remision: </label>
+                                <label for="STREMI" class=" col-form-label">N/Remision: </label>
                                 <input type="text" required class="form-control" id="STREMI" name="STREMI" placeholder="remision: " value="<?php echo $STREMI; ?>">
                                 <span id="STREMI"></span>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="STRFACTURA" class=" col-form-label">Numero de Factura: </label>
+                                <label for="STRFACTURA" class=" col-form-label">N/Factura: </label>
                                 <input type="number" class="form-control" id="STRFACTURA" name="STRFACTURA" placeholder="Factura: " value="<?php echo $STRFACT ?>">
                                 <span id="STREMI"></span>
                             </div>
@@ -120,7 +120,7 @@ if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="DTHORFAC" class=" col-form-label">Fecha de la factura : </label>
+                                <label for="DTHORFAC" class=" col-form-label">F/ factura : </label>
                                 <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
                                     <input type="date" class="form-control datetimepicker-input" id="DTHORFAC" name="DTHORFAG" value="<?php echo $DTHORFAC ?>" />
                                     <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
@@ -131,7 +131,7 @@ if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="DTHORFAC" class=" col-form-label">Fecha de pago: </label>
+                                <label for="DTHORFAC" class=" col-form-label">F/ pago: </label>
                                 <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
                                     <input type="date" class="form-control datetimepicker-input" data-target="#datetimepicker3" id="DTHORPAG" name="DTHORPAG" value="<?php echo $DTHORPAG; ?>" />
                                     <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
@@ -228,7 +228,7 @@ if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])
 
                     <button type="submit" id="guardar_datos" class="btn btn-primary" style="margin-top: 15px;">Guardar</button>
                     </form>
-                    <a href="./?view=AgregarCompra"><button type="button" id="cancelar_datos" class="btn btn-danger" style="margin-top: 15px;">Cancelar</button></a>
+                    <a href="./?view=Compras"><button type="button" id="cancelar_datos" class="btn btn-danger" style="margin-top: 15px;">Cancelar</button></a>
 
                 </div>
 

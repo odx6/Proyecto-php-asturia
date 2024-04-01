@@ -3,9 +3,9 @@ $active8 = "active";
 
 
 if ($_SESSION['proveedores'] == 1) {
-    (in_array(1,$_SESSION['Habilidad']['proveedores']))? $agregar='modals/agregar/agregar_proveedor.php':$agregar='';
-     (in_array(2,$_SESSION['Habilidad']['proveedores']))? $editar="modals/editar/editar_template.php":$editar='';
-     (in_array(4,$_SESSION['Habilidad']['proveedores']))? $mostrar="modals/mostrar/mostrar_template.php":$mostrar='';
+    (in_array(1,$_SESSION['Habilidad']['proveedores']))? $agregar='modals/agregar/agregar_proveedor.php':'';
+     (in_array(2,$_SESSION['Habilidad']['proveedores']))? $editar="modals/editar/editar_template.php":'';
+     (in_array(4,$_SESSION['Habilidad']['proveedores']))? $mostrar="modals/mostrar/mostrar_template.php":'';
     $TitleModal="Editar proveedor";
     $TitleModalShow="<i class='fas fa-car'></i> Datos del proveedor";
     $Titulo = "Proveedores";

@@ -134,7 +134,7 @@ if ($_SESSION['categorias'] == 1) {
 								<?php if (in_array(3, $_SESSION['Habilidad']['Categorias'])) { ?>
 									<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $INTIDCAT; ?>')"><i class="far fa-trash-alt"></i></button>
 								<?php } ?>
-								<?php if (in_array(3, $_SESSION['Habilidad']['Categorias'])) { ?>
+								<?php if (in_array(4, $_SESSION['Habilidad']['Categorias'])) { ?>
 									<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $INTIDCAT; ?>')"><i class="fa fa-eye"></i></button>
 								<?php } ?>
 

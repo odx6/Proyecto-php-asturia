@@ -3,9 +3,9 @@ $active8 = "active";
 
 
 if ($_SESSION['productos'] == 1) {
-     (in_array(1,$_SESSION['Habilidad']['vehiculos']))? $agregar='modals/agregar/agregar_vehiculo.php':$agregar='';
-     (in_array(2,$_SESSION['Habilidad']['vehiculos']))? $editar="modals/editar/editar_template.php":$editar='';
-     (in_array(4,$_SESSION['Habilidad']['vehiculos']))? $mostrar="modals/mostrar/mostrar_template.php":$mostrar='';
+     (in_array(1,$_SESSION['Habilidad']['vehiculos']))? $agregar='modals/agregar/agregar_vehiculo.php':'';
+     (in_array(2,$_SESSION['Habilidad']['vehiculos']))? $editar="modals/editar/editar_template.php":'';
+     (in_array(4,$_SESSION['Habilidad']['vehiculos']))? $mostrar="modals/mostrar/mostrar_template.php":'';
     
     $TitleModal="Editar vehiculo";
 

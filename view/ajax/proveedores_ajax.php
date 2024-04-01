@@ -120,17 +120,17 @@ if ($action == 'ajax') {
                         <td><?php echo $BITSUS ?></td>
                       
                         <td class="text-right">
-                            <?php if (in_array(1, $_SESSION['Habilidad']['proveedores'])) { ?>
+                            <?php if (in_array(2, $_SESSION['Habilidad']['proveedores'])) { ?>
 
                                 <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal"  data-target="#modal_update" onclick="editar('<?php echo $pk_prov; ?>','view/modals/editar/proveedor.php')"><i class="fa fa-edit"></i></button>
 
                             <?php } ?>
-                            <?php if (in_array(2, $_SESSION['Habilidad']['proveedores'])) { ?>
+                            <?php if (in_array(3, $_SESSION['Habilidad']['proveedores'])) { ?>
 
                                 <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $pk_prov; ?>','view/ajax/proveedores_ajax.php','tblcatprov')"><i class="far fa-trash-alt"></i></button>
 
                             <?php } ?>
-                            <?php if (in_array(3, $_SESSION['Habilidad']['proveedores'])) { ?>
+                            <?php if (in_array(4, $_SESSION['Habilidad']['proveedores'])) { ?>
 
                                 <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $pk_prov; ?>','view/modals/mostrar/proveedor.php')"><i class="fa fa-eye"></i></button>
 

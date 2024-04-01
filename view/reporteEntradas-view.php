@@ -5,7 +5,7 @@ session_start();
 
 date_default_timezone_set('America/Mexico_City');
 
-
+if (in_array(5, $_SESSION['Habilidad']['Entradas'])) { 
 
 class MYPDF extends TCPDF
 {
@@ -150,11 +150,12 @@ Reporte de existencia $aux  del $fechainicial al $fechaFinal
 EOD;
 $pdf->Write(0, $txt, '', 0, 'C', true, 0, false, false, 0);
 
-
+$totalEntrada=0;
 if ($Tipo == 1) {
 
     $query = mysqli_query($con, "SELECT tblcatemp.STRNOM ,tblcatemp.STRAPE , tblcattop.STRNOMTPO , tblcatalm.STRNOMALM ,tblinv.* FROM `tblinv` INNER JOIN tblcatemp ON tblinv.IDEMP=tblcatemp.IDEMP INNER JOIN tblcattop ON tblcattop.INTIDTOP= tblinv.INTIDTOP INNER JOIN tblcatalm ON tblcatalm.INTIDALM=tblinv.INTALM WHERE DTEFEC >= '$fechainicial' AND DTEFEC <= '$fechaFinal'AND INTTIPMOV='$movi';");
-
+    $numberentradas = mysqli_num_rows($query);
+  
 
 
 
@@ -175,6 +176,40 @@ if ($Tipo == 1) {
         $INTALM = $row['INTALM'];
         $STRNOMALM = $row['STRNOMALM'];
         $DTEHOR = $row['DTEHOR'];
+
+        $consulta2="SELECT tblinvdet.*, tblcatpro.STRDESPRO, tblcatuni.STRNOMUNI FROM `tblinvdet` INNER JOIN tblcatpro ON tblcatpro.STRSKU= tblinvdet.SKU INNER JOIN tblcatuni ON tblcatuni.INTIDUNI=tblinvdet.INTIDUNI WHERE tblinvdet.INTIDINV='$INTIDINV';";
+            $query2 = mysqli_query($con, $consulta2);
+            $total = 0;
+
+        
+
+
+        
+        
+            while ($row2 = mysqli_fetch_array($query2)) {
+                $INTIDINV = $row2['INTIDINV'];
+                $DTEFEC = $row2['DTEHOR'];
+               
+                $SKU = $row2['SKU'];
+                $STRDESPRO = $row2['STRDESPRO'];
+                $STRREF = $row2['STRREF'];
+                $INTCAN = $row2['INTCAN'];
+                $STRNOMUNI = $row2['STRNOMUNI'];
+                $MONPRCOS = $row2['MONPRCOS'];
+                $MONCTOPRO = $row2['MONCTOPRO'];
+                $totalEntrada +=$MONCTOPRO;
+              
+                $MONPRCOS="$". number_format($MONPRCOS, 2, '.', ',');
+                $MONCTOPRO="$". number_format($MONCTOPRO, 2, '.', ',');
+        
+                   
+            }
+           // $totalEntrada = "$" . number_format($total, 2, '.', ',');
+
+          
+            
+        
+
 
         ($INTTIMOV == 1) ? $aux = "Entrada" : $aux = "Salida";
         $NOMBRE = $STRNOM . " " . $STRAPE;
@@ -206,7 +241,8 @@ if ($Tipo == 1) {
 
     $query = mysqli_query($con, "SELECT tblcatemp.STRNOM ,tblcatemp.STRAPE , tblcattop.STRNOMTPO , tblcatalm.STRNOMALM ,tblinv.* FROM `tblinv` INNER JOIN tblcatemp ON tblinv.IDEMP=tblcatemp.IDEMP INNER JOIN tblcattop ON tblcattop.INTIDTOP= tblinv.INTIDTOP INNER JOIN tblcatalm ON tblcatalm.INTIDALM=tblinv.INTALM WHERE DTEFEC >= '$fechainicial' AND DTEFEC <= '$fechaFinal'AND INTTIPMOV='$movi';");
 
-
+    $numberentradas = mysqli_num_rows($query);
+ 
 
 
 
@@ -234,7 +270,7 @@ if ($Tipo == 1) {
             <tr>
                 
                 
-                <td colspan="11"  ><div>IDINVENTARIO : '.$INTIDINV.' FECHA : '.$DTEFEC.' FOLIO :  '.$INTFOL.' DESC :'.$STROBS.' ALMACEN : '.$STRNOMALM.' EMPLEADO : '.$NOMBRE.' </div>   <hr> </td>
+                <td colspan="11"  ><div>  <b>IDINVENTARIO</b>  : '.$INTIDINV.' <b>FECHA</b> : '.$DTEFEC.' <b> FOLIO</b> :  '.$INTFOL.' <b>DESC</b>  :'.$STROBS.' <b>ALMACEN</b> : '.$STRNOMALM.' <b>EMPLEADO</b>  : '.$NOMBRE.' </div>   <hr> </td>
                
                
                 
@@ -245,6 +281,10 @@ if ($Tipo == 1) {
             $consulta2="SELECT tblinvdet.*, tblcatpro.STRDESPRO, tblcatuni.STRNOMUNI FROM `tblinvdet` INNER JOIN tblcatpro ON tblcatpro.STRSKU= tblinvdet.SKU INNER JOIN tblcatuni ON tblcatuni.INTIDUNI=tblinvdet.INTIDUNI WHERE tblinvdet.INTIDINV='$INTIDINV';";
             $query2 = mysqli_query($con, $consulta2);
             $total = 0;
+
+        
+
+
         
         
             while ($row2 = mysqli_fetch_array($query2)) {
@@ -259,6 +299,7 @@ if ($Tipo == 1) {
                 $MONPRCOS = $row2['MONPRCOS'];
                 $MONCTOPRO = $row2['MONCTOPRO'];
                 $total +=$MONCTOPRO;
+                $totalEntrada +=floatval($row2['MONCTOPRO']);
               
                 $MONPRCOS="$". number_format($MONPRCOS, 2, '.', ',');
                 $MONCTOPRO="$". number_format($MONCTOPRO, 2, '.', ',');
@@ -269,7 +310,7 @@ if ($Tipo == 1) {
                         
                         <td style="text-align: center">'. $INTCAN.'</td>
                         <td style="text-align: left">'.$STRNOMUNI.'</td>
-                        <td style="text-align: left">'.$SKU.'</td>
+                        <td style="text-align: left" colspan="2">'.$SKU.'</td>
                         <td colspan="5" style="text-align: left">'.$STRDESPRO.'</td>
                         <td style="text-align: right">'.$MONPRCOS.'</td>
                         <td style="text-align: right">'.$MONCTOPRO.'</td>
@@ -283,8 +324,9 @@ if ($Tipo == 1) {
                    
             }
             $total = "$" . number_format($total, 2, '.', ',');
+        
 
-            $filas.='<tr> <hr><td colspan="10" style="text-align:right; margin-bottom:15px; " > <div > <u> Total ' .$aux.'   :  '.  $total . ' </u></div></td> </tr>
+            $filas.='<tr> <hr><td colspan="11" style="text-align:right; font-size: 14px; font-weight: bold; "  >   Total '.$aux.' :  '.$total.'  </td> </tr>
             
             ';
 
@@ -321,18 +363,18 @@ if ($Tipo == 1 ) {
 </tbody>
 </table>');
 } else {
-    $pdf->writeHTML('<table >
+    $pdf->writeHTML('<table  >
 <thead>
-    <tr border="1">
+    <tr >
        
 
         
         <th style="background-color:orange; text-align: center;" >Cantidad</th>
         <th style="background-color:orange; text-align: center" >Medida</th>
-        <th style="background-color:orange; text-align: center" >SKU</th>
+        <th style="background-color:orange; text-align: center" colspan="2" >SKU</th>
         <th colspan="5" style="background-color:orange; text-align: center" >Descripcion del producto</th>
-        <th style="background-color:orange; text-align: center">P/U</th>
-        <th style="background-color:orange; text-align: center">P/T</th>
+        <th style="background-color:orange; text-align: center">P/Unitario</th>
+        <th style="background-color:orange; text-align: center">P/Total</th>
        
 
        
@@ -346,8 +388,25 @@ if ($Tipo == 1 ) {
 </table>');
 }
 
+$totalEntrada = "$" . number_format($totalEntrada, 2, '.', ',');
+$pdf->SetFont('helvetica', 'BI', 12);
 
+    $txt = <<<EOD
+NUMERO TOTAL DE $aux :  $numberentradas                                                                                                     MONTO TOTAL : $totalEntrada
 
+EOD;
+
+    $x = $pdf->GetX();
+    $y = $pdf->GetY();
+
+    // Dibuja una línea bajo el título
+    $pdf->SetLineWidth(0.5); // Establece el grosor de la línea
+    $pdf->Line($x, $y + 2, $x + 265, $y + 2);
+    $pdf->Line($x, $y+4, $x + 265, $y + 4);
+
+    // print a block of text using Write()
+    $pdf->Write(0, '  ', '', 0, 'L', true, 0, false, false, 0);
+    $pdf->Write(0, $txt, '', 0, 'L', true, 0, false, false, 0);
 
 
 
@@ -360,3 +419,11 @@ $pdfBase64 = base64_encode($pdfData);
 
 // Devolver el PDF codificado en base64
 echo $pdfBase64;
+
+}else{
+   /* $compras="Sinpermisos";
+    return $compras;*/
+
+    echo  "Sinpermisos";
+
+}

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (in_array(2, $_SESSION['Habilidad']['proveedores'])) {
+if (in_array(4, $_SESSION['Habilidad']['proveedores'])) {
 
     require_once("../../../config/config.php");
     if (isset($_GET["id"])) {
@@ -109,6 +109,7 @@ if (in_array(2, $_SESSION['Habilidad']['proveedores'])) {
 
                     <p class="text-muted">
                         <span class="tag tag-danger"><?php echo $STRCONT; ?></span>
+                       
 
                     </p>
                     <hr>

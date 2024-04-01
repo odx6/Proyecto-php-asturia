@@ -115,7 +115,7 @@ if ($action == 'ajax') {
 
                   
                     <td class="text-right">
-                        <?php if (in_array(1, $_SESSION['Habilidad']['compras'])) { ?>
+                        <?php if (in_array(2, $_SESSION['Habilidad']['compras'])) { ?>
 
                             <form action="./?view=EditarCompra" method="POST" role="form">
                               <input type="hidden" required class="form-control" id="idecompra" name="idecompra"  value="<?php echo $PK_COMPRA ?>">
@@ -126,12 +126,12 @@ if ($action == 'ajax') {
 
                         <?php } ?>
                         
-                        <?php if (in_array(2, $_SESSION['Habilidad']['compras'])) { ?>
+                        <?php if (in_array(3, $_SESSION['Habilidad']['compras'])) { ?>
 
                             <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $PK_COMPRA; ?>','view/ajax/compras_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
 
                         <?php } ?>
-                        <?php if (in_array(3, $_SESSION['Habilidad']['compras'])) { ?>
+                        <?php if (in_array(4, $_SESSION['Habilidad']['compras'])) { ?>
 
                             <form action="./?view=mostrarCompra" method="POST" role="form">
                               <input type="hidden" required class="form-control" id="idecompra" name="idecompra"  value="<?php echo $PK_COMPRA ?>">

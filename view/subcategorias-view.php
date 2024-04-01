@@ -110,7 +110,7 @@ if ($_SESSION['subcategorias'] == 1) {
             }
         </script>
         <script>
-            //Elimina una solicitud desde el modal
+            //Elimina una solicitud con el boton  
             function eliminar(id) {
                 if (confirm('Esta acción  eliminará de forma permanente la solicitud\n\n Desea continuar?')) {
                     var page = 1;

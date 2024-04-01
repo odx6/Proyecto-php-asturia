@@ -34,6 +34,9 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas']) && isset($_POST["identrada"]
         exit;
     }
 
+
+    if ($num == 1) {
+
 ?>
 
 
@@ -854,4 +857,9 @@ if (in_array(2, $_SESSION['Habilidad']['Entradas']) && isset($_POST["identrada"]
     require 'resources/acceso_prohibido.php';
 }
 ob_end_flush();
+}else{
+    require 'resources/acceso_prohibido.php';
+
+
+}
 ?>

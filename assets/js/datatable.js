@@ -1039,22 +1039,19 @@ function renderTable3() {
                     $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
                 },
                 success: function (data) {
+
+
+                    if(data=="Sinpermisos"){
+
+
+                        $(".resultados_ajax").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>Mensaje!</strong> No tiene permisos para generar el pdf</div>');
+                    }else{
                     var pdfWindow = window.open("reporte", "_blank");
+
                     pdfWindow.document.write('<embed src="data:application/pdf;base64,' + data + '" type="application/pdf" width="100%" height="100%" />');
 
-                    //$(".outer_div").html('<embed src="' + data + '" type="application/pdf" width="100%" height="600px" />');
-                    // window.open('generated_pdf.pdf', '_blank');
-                    /*               $(".outer_div").html('<iframe src="data:application/pdf;base64,' + data + '"></iframe>');
-          
-                       
-                         $(".outer_div").html(data).fadeIn('slow');
-                          $("#loader").html("");
-                          renderTable3();
-                          window.setTimeout(function () {
-                              $(".alert").fadeTo(500, 0).slideUp(500, function () {
-                                  $(this).remove();
-                              });
-                          }, 5000); */
+                    }
+                   
                 },
             })
         } else {
@@ -1357,6 +1354,8 @@ function renderTableCompras() {
     var btn = document.createElement('button');
 
     // Asignar el texto del botón
+
+    
     btn.textContent = 'Nuevo registro';
     btn.className = 'btn btn-secondary buttons-excel buttons-html5';
     btn.setAttribute('data-toggle', 'modal');
@@ -1492,6 +1491,7 @@ function renderTableCompras() {
     //exportar
     var btnExpo = document.createElement('button');
     btnExpo.className = ' form-control-xs btn btn-secondary buttons-excel buttons-html5';
+    btnExpo.setAttribute("id","botonExpo");
     // Asignar el texto del botón
     btnExpo.textContent = 'PDF';
 
@@ -1546,23 +1546,16 @@ function renderTableCompras() {
                     $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
                 },
                 success: function (data) {
+                  
+                    if(data=="Sinpermisos"){
+
+
+                        $(".resultados_ajax").html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>Mensaje!</strong> No tiene permisos para generar el pdf</div>');
+                    }else{
                     var pdfWindow = window.open("reporte", "_blank");
                     pdfWindow.document.write('<embed src="data:application/pdf;base64,' + data + '" type="application/pdf" width="100%" height="100%" />');
+                    }
 
-                    //$(".outer_div").html('<embed src="' + data + '" type="application/pdf" width="100%" height="600px" />');
-                    // window.open('generated_pdf.pdf', '_blank');
-                    /*               $(".outer_div").html('<iframe src="data:application/pdf;base64,' + data + '"></iframe>');
-          
-                       
-                         $(".outer_div").html(data).fadeIn('slow');
-                          $("#loader").html("");
-                          renderTable3();
-                          window.setTimeout(function () {
-                              $(".alert").fadeTo(500, 0).slideUp(500, function () {
-                                  $(this).remove();
-                              });
-                          }, 5000);
-                          */
                 },
             })
         } else {
@@ -1646,6 +1639,8 @@ function Imprimir() {
             // $('#loader').html('<img src='./assets/img/ajax-loader.gif'>');
         },
         success: function (data) {
+
+            
             var pdfWindow = window.open("reporte", "_blank");
             pdfWindow.document.write('<embed src="data:application/pdf;base64,' + data + '" type="application/pdf" width="100%" height="100%" />');
 

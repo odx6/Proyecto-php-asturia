@@ -113,17 +113,17 @@ if ($action == 'ajax') {
                         <td><?php echo $BITSUS ?></td>
                         <td><?php echo $DTHOR ?></td>
                         <td class="text-right">
-                            <?php if (in_array(1, $_SESSION['Habilidad']['vehiculos'])) { ?>
+                            <?php if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) { ?>
 
                                 <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal"  data-target="#modal_update" onclick="editar('<?php echo $pk_mov; ?>','view/modals/editar/vehiculo.php')"><i class="fa fa-edit"></i></button>
 
                             <?php } ?>
-                            <?php if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) { ?>
+                            <?php if (in_array(3, $_SESSION['Habilidad']['vehiculos'])) { ?>
 
                                 <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $pk_mov; ?>','view/ajax/vehiculos_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
 
                             <?php } ?>
-                            <?php if (in_array(3, $_SESSION['Habilidad']['vehiculos'])) { ?>
+                            <?php if (in_array(4, $_SESSION['Habilidad']['vehiculos'])) { ?>
 
                                 <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $pk_mov; ?>','view/modals/mostrar/vehiculo.php')"><i class="fa fa-eye"></i></button>
 
