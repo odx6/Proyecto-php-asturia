@@ -54,7 +54,7 @@ if (empty($_POST['IDEMP'])) {
     $FECHA = date("Y-m-d");
     $created_at = date("Y-m-d H:i:s");
 
-
+     $folioFormat=str_pad($INTFOL,6,'0',STR_PAD_LEFT);
 
 
     //
@@ -67,7 +67,7 @@ if (empty($_POST['IDEMP'])) {
      STROBS,
      INTALM,
      DTEHOR)
-    VALUES('" . $FECHA . "','" . $INTIDTOP . "','" . $INTTIPMOV . "','" . $INTFOL . "','" . $IDEMP . "','" . $STROBS . "','" . $INTIDALM . "','" . $created_at . "');";
+    VALUES('" . $FECHA . "','" . $INTIDTOP . "','" . $INTTIPMOV . "','" . $folioFormat . "','" . $IDEMP . "','" . $STROBS . "','" . $INTIDALM . "','" . $created_at . "');";
 
 
 
@@ -75,7 +75,13 @@ if (empty($_POST['IDEMP'])) {
 
     $query_new = mysqli_query($con, $sql);
     $id_insertado = mysqli_insert_id($con);
-    if ($query_new) {
+    $format=str_pad($INTFOL,6,'0',STR_PAD_LEFT);
+
+    $sqlinsertFolio="INSERT INTO `folios`(`fk_movimiento`, `fecha`, `idem`, `valor`) 
+    VALUES ('".$id_insertado."','".date("Y-m-d H:i:s")."','".$IDEMP."','".$format."');";
+     $query_folio = mysqli_query($con, $sqlinsertFolio);
+
+    if ($query_new && $query_folio) {
         $id = $id_insertado;
         $sql2 = recuperarDatos("SELECT * from tblinv WHERE INTIDINV='$id';");
         $tabla = "tblinv";

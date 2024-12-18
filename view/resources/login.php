@@ -1,30 +1,60 @@
 <?php
-session_start();
 
+ini_set('session.gc_maxlifetime', 60);
+$nuevo_id = session_create_id();
+
+// Asignar el nuevo ID a la sesión actual
+session_id($nuevo_id);
+
+session_start();
+/*if (isset($_POST['token']) && $_POST['token']!=='') {*/
+	
+//Contiene las variables de configuracion para conectar a la base de datos
+include "../../config/config.php";
+include "../../config/funciones.php";
+$_SESSION['correo']=$_POST["email"];
 if (!empty($_SESSION['username'])) {
 	$user_ip = $_SERVER['REMOTE_ADDR'];
 	// Guarda $user_ip en la base de datos o utilízalo como necesites
 }
-
-/*if (isset($_POST['token']) && $_POST['token']!=='') {*/
-
-//Contiene las variables de configuracion para conectar a la base de datos
-include "../../config/config.php";
-include "../../config/funciones.php";
-
 $email = mysqli_real_escape_string($con, (strip_tags($_POST["email"], ENT_QUOTES)));
+
 $password = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["password"], ENT_QUOTES)))));
 
 $query = mysqli_query($con, "SELECT * FROM tblcatemp WHERE   STRCOR =\"$email\" AND STRPWS = \"$password\" AND VERIFICATE_AT	 IS NOT NULL  AND BITSUS !=2;");
 // $query = mysqli_query($con,"SELECT * FROM tblcatemp WHERE   IDEMP=1");
 
 if ($row = mysqli_fetch_array($query)) {
+     
+	
+    
 
 	//$marcados = $user->list_mark($fetch->iduser);
 	$idempleado = intval($row['IDEMP']);
-	$marcados = mysqli_query($con, "SELECT * FROM empleado_permisos WHERE idempleado=$idempleado ");
+	$numse=intval($row['numsesion']);
+	$marcados = mysqli_query($con, "SELECT * FROM empleado_permisos WHERE idempleado=$idempleado  ");
 	$valores = array();
 	$Habilidades = array();
+
+
+	//Sesiones 
+	 $sesiones=mysqli_query($con, "SELECT * FROM sesion  WHERE fk_user=$idempleado and delete_at IS NULL ;");
+	 $numSeciones=mysqli_num_rows($sesiones);
+
+	 if($numSeciones >$numse && $idempleado !==1){
+		header("location: ../../index.php?invalid");
+		session_destroy();
+
+
+	 }else{
+	   
+       $insert="INSERT INTO `sesion`(`pk_sesion`, `fk_user`, `correo`, `ip`, `navegador`, `fechaHora`) VALUES 
+	   ('".session_id()."','".$idempleado."','".$email."','".$_SERVER['REMOTE_ADDR']."','".$_SERVER['HTTP_USER_AGENT']."','".date('Y-m-d H:i:s')."');";
+	   $query_insert = mysqli_query($con, $insert);
+
+	 }
+
+	//end Sesiones
 
 
 	while ($per = mysqli_fetch_object($marcados)) {
@@ -52,7 +82,7 @@ if ($row = mysqli_fetch_array($query)) {
 	in_array(14, $valores) ? $_SESSION['compras'] = 1 : $_SESSION['compras'] = 0;
 	in_array(15, $valores) ? $_SESSION['registros'] = 1 : $_SESSION['registros'] = 0;
 
-	$_SESSION['Habilidad']=$Habilidades;
+	$_SESSION['Habilidad'] = $Habilidades;
 
 	$_SESSION['user_id'] = $idempleado;
 	if ($_SESSION['dashboard'] == 1) {

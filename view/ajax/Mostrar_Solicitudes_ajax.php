@@ -7,17 +7,17 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 	$id = $_REQUEST["id"];
 
 	$id = intval($id);
-	$sql2 = recuperarDatos("SELECT * from solicitud WHERE pk_solicitud='$id';");
+	$sql2 = recuperarDatos("SELECT * from tblcatslc WHERE LNGIDNSLC='$id';");
 
 	try {
-		if (($delete = mysqli_query($con, "DELETE FROM solicitud WHERE pk_solicitud='$id'"))) {
+		if (($delete = mysqli_query($con, "DELETE FROM tblcatslc WHERE LNGIDNSLC='$id'"))) {
 			$aviso = "Bien hecho!";
 			$msj = "Datos eliminados satisfactoriamente.";
 			$classM = "alert alert-success";
 			$times = "&times;";
 			if ($delete) {
 
-				$tabla = "solicitud";
+				$tabla = "tblcatslc";
 				$tipo = "Eliminacion";
 				$fecha = date("Y-m-d H:i:s");
 
@@ -53,11 +53,11 @@ if ($action == 'ajax') {
 	$Table = (isset($_REQUEST['table']) && $_REQUEST['table'] != NULL) ? $_REQUEST['table'] : '';
 	$Reload = (isset($_REQUEST['reload']) && $_REQUEST['reload'] != NULL) ? $_REQUEST['reload'] : '';
 
-	$tables = "solicitud";
+	$tables = "tblcatslc";
 	$campos = "*";
 	//dependiendo de por que se quiera filtrar
 	//$sWhere=$column." LIKE '%".$query."%'";
-	$sWhere = "pk_solicitud LIKE '%" . $query . "%'";
+	$sWhere = "LNGIDNSLC LIKE '%" . $query . "%'";
 
 	include 'pagination.php'; //include pagination file
 	//pagination variables

@@ -21,6 +21,7 @@ if (!empty($_POST['Habildades'])) {
             $sql2=recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$id';");
             $tabla="empleado_permisos";
             $tipo="Actualizacion";
+
             $fecha=date("Y-m-d H:i:s");
             
          $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$oldata."','".$sql2."');";

@@ -13,14 +13,6 @@ require_once("./config/funciones.php");
 
 $dompdf = new Dompdf();
 $filas = "";
-
-
-
-
-
-
-
-
 $sql = "SELECT * FROM tblcatpro ';";
 $fecha_actual = date('Y-m-d H:i:s');
 $mov;

@@ -28,11 +28,23 @@
                                            </span>
 
                                        </div>
-                                       <div class="form-group">
-                                           <label for="STRNDL" class=" col-form-label">Numero de licencia: </label>
-                                           <input type="text" required class="form-control" id="STRNDL" name="STRNDL" placeholder="Numero de licencia: " required>
-                                           <span id="MSTRNDL"></span>
+                                       <div class="row">
+                                           <div class="col-6">
+                                               <div class="form-group">
+                                                   <label for="STRNDL" class=" col-form-label">Numero de licencia: </label>
+                                                   <input type="text" required class="form-control" id="STRNDL" name="STRNDL" placeholder="Numero de licencia: " required>
+                                                   <span id="MSTRNDL"></span>
+                                               </div>
+                                           </div>
+                                           <div class="col-6">
+                                               <div class="form-group">
+                                                   <label for="secion" class=" col-form-label">Numero de sesiones </label>
+                                                   <input type="number" required class="form-control" id="sesion" name="sesion" placeholder="Max sesion" required  min="0" oninput="validity.valid||(value='');" >
+                                                   <span id="sesion"></span>
+                                               </div>
+                                           </div>
                                        </div>
+
 
                                    </div>
 
@@ -143,7 +155,8 @@
                                        <div class="col-4">
                                            <div class="form-group">
                                                <label for="pasword" class=" col-form-label">Contraseña: </label>
-                                               <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: " required>
+                                               <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: " required onchange="Csegura()">
+                                               <span id="addPasword"> </span>
                                            </div>
                                        </div>
                                        <div class="col-4">

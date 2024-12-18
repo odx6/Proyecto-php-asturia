@@ -1,4 +1,6 @@
-<?php include "resources/header copy.php" ?>
+<?php include "resources/header copy.php" ;
+?>
+
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">

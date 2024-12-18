@@ -93,6 +93,7 @@ if ($_SESSION['solicitud'] == 1) {
                 }
             });
             event.preventDefault();
+
         })
        
     </script>

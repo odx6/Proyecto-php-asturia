@@ -18,6 +18,7 @@ session_destroy();
             margin: auto;
             text-align: center;
             padding: 50px;
+       
         }
         h1 {
             color: #4CAF50;

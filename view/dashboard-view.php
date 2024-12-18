@@ -1,4 +1,8 @@
 <?php
+
+$hora_actual = date("H:i");
+$dia = date('N');
+date_default_timezone_set('America/Mexico_City');
 $active1 = "active";
 
 include "resources/header copy.php";
@@ -11,7 +15,7 @@ if ($_SESSION['dashboard'] == 1) {
     $productos = mysqli_query($con, "select * from tblcatpro");
     $numproductos= mysqli_num_rows($productos);
 
-    $solicitud = mysqli_query($con, "select * from solicitud");
+    $solicitud = mysqli_query($con, "select * from tblcatslc");
     $numsolicitud= mysqli_num_rows($solicitud);
 
     $categorias = mysqli_query($con, "select * from tblcatcat");
@@ -54,7 +58,7 @@ if ($_SESSION['dashboard'] == 1) {
                             <div class="inner">
                                 <h3><?php echo $numempleados; ?></h3>
 
-                                <p>Empleados Registrados</p>
+                                <p>Empleados Registrados </p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>

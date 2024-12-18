@@ -1,6 +1,7 @@
 <?php
 $active2 = "active";
 include "resources/header copy.php";
+
 if ($_SESSION['Entradas'] == 1) {
 ?>
     <div class="content-wrapper">

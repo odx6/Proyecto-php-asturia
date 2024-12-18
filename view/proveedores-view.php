@@ -1,7 +1,5 @@
 <?php
 $active8 = "active";
-
-
 if ($_SESSION['proveedores'] == 1) {
     (in_array(1,$_SESSION['Habilidad']['proveedores']))? $agregar='modals/agregar/agregar_proveedor.php':'';
      (in_array(2,$_SESSION['Habilidad']['proveedores']))? $editar="modals/editar/editar_template.php":'';

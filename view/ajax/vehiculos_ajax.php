@@ -8,22 +8,22 @@ require_once("../../config/RecuperarDatos.php");
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
     $id = $_REQUEST["id"];
 
-	$sql2 = recuperarDatos("SELECT * from tblcatmov WHERE pk_mov='$id'");
+    $sql2 = recuperarDatos("SELECT * from tblcatveh WHERE STRNMRSR='$id'");
     try {
-        if (($delete = mysqli_query($con, "DELETE FROM tblcatmov WHERE pk_mov='$id'"))) {
+        if (($delete = mysqli_query($con, "DELETE FROM tblcatveh WHERE STRNMRSR='$id'"))) {
             $aviso = "Bien hecho!";
             $msj = "Datos eliminados satisfactoriamente.";
             $classM = "alert alert-success";
             $times = "&times;";
             if ($delete) {
 
-				$tabla = "tblcatmov";
-				$tipo = "Eliminacion";
-				$fecha = date("Y-m-d H:i:s");
+                $tabla = "tblcatveh";
+                $tipo = "Eliminacion";
+                $fecha = date("Y-m-d H:i:s");
 
-				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-				$query = mysqli_query($con, $sqllog);
-			}
+                $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+                $query = mysqli_query($con, $sqllog);
+            }
         } else {
             $aviso = "Aviso!";
             $msj = "Error al eliminar los datos " . mysqli_error($con);
@@ -48,14 +48,15 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
 if ($action == 'ajax') {
     $query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
-    $tables = "tblcatmov";
+    $tables = "tblcatveh";
     $campos = "*";
-    $sWhere = " STRMAR LIKE '%" . $query . "%'";
-   
+    $sWhere = " STRMRC LIKE '%" . $query . "%'";
+
 
     $reload = './productos-view.php';
     //main query to fetch the data
-    $query = mysqli_query($con, "SELECT $campos FROM  $tables;");
+   // $query = mysqli_query($con, "SELECT $campos FROM  $tables;");
+     $query = mysqli_query($con, "SELECT tblcatveh.*, tbltpveh.STRNOM AS tipo,tblcatorg.STRDSCORG AS origen FROM tblcatveh INNER JOIN tbltpveh ON tblcatveh.STRTPVH = tbltpveh.STRTPVH INNER JOIN tblcatorg ON tblcatveh.LNGIDNORG=tblcatorg.LNGIDNORG;");
     //loop through fetched data
 
     if (isset($_REQUEST["id"])) {
@@ -67,82 +68,87 @@ if ($action == 'ajax') {
         </div>
     <?php
     }
-  //  if ($numrows > 0) {
+    //  if ($numrows > 0) {
     ?>
-        <table id="example1" class="table table-bordered table-striped">
+    <table id="example1" class="table table-bordered table-striped">
 
-            <thead>
+        <thead>
+            <tr>
+                <th>#Identificador</th>
+                <th>Número</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Placas</th>
+                <th>Tipo</th>
+                <th>Origen</th>
+                <th>Estado</th>
+                <th>fecha</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php
+            $finales = 0;
+            while ($row = mysqli_fetch_array($query)) {
+              
+                $STRNMRSR = $row["STRNMRSR"];
+                $STRNMR = $row["STRNMR"];
+                $STRMRC = $row["STRMRC"];
+                $STRMDL = $row["STRMDL"];
+                $STRPLC = $row["STRPLC"];
+                $STRTPVH=$row["tipo"];
+                $LNGIDNORG=$row["origen"];
+                $BITSUS = $row["BITSUS"];
+                $DTHOR = $row["DTHOR"];
+                
+
+
+                ($BITSUS == 1) ? $BITSUS = "Activo" : $BITSUS = "Inactivo";
+
+                $finales++;
+            ?>
                 <tr>
-                    <th>#Identificador</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Placas</th>
-                    <th>Tipo</th>
-                    <th>Estado</th>
-                    <th>fecha</th>
-                    <th>Accion</th>
+                    <td><?php echo $STRNMRSR ?></td>
+                    <td><?php echo $STRNMR ?></td>
+                    <td><?php echo $STRMRC ?></td>
+                    <td><?php echo $STRMDL ?></td>
+                    <td><?php echo $STRPLC ?></td>
+                    <td><?php echo $STRTPVH ?></td>
+                    <td><?php echo $LNGIDNORG ?></td>
+                    <td><?php echo $BITSUS ?></td>
+                    <td><?php echo $DTHOR ?></td>
+                    <td class="text-right">
+                        <?php if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) { ?>
+
+                            <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $STRNMRSR; ?>','view/modals/editar/vehiculo.php')"><i class="fa fa-edit"></i></button>
+
+                        <?php } ?>
+                        <?php if (in_array(3, $_SESSION['Habilidad']['vehiculos'])) { ?>
+
+                            <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $STRNMRSR; ?>','view/ajax/vehiculos_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
+
+                        <?php } ?>
+                        <?php if (in_array(4, $_SESSION['Habilidad']['vehiculos'])) { ?>
+
+                            <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $STRNMRSR; ?>','view/modals/mostrar/vehiculo.php')"><i class="fa fa-eye"></i></button>
+
+                        <?php } ?>
+
+                    </td>
                 </tr>
-            </thead>
 
-            <tbody>
-                <?php
-                $finales = 0;
-                while ($row = mysqli_fetch_array($query)) {
-                    $pk_mov = $row["pk_mov"];
-                    $STRMAR = $row["STRMAR"];
-                    $STRMOD = $row["STRMOD"];
-                    $STRPLACAS = $row["STRPLACAS"];
-                    $STRTIPO = $row["STRTIPO"];
-                    $BITSUS = $row["BITSUS"];
-                    $DTHOR = $row["DTHOR"];
-                     if($STRTIPO==1) $STRTIPO="moto";
-                     if($STRTIPO==2) $STRTIPO="Carro";
-                     if($STRTIPO==3) $STRTIPO="motoCarro";
+            <?php } ?>
+        </tbody>
 
+        <tfoot>
 
-                     ($BITSUS==1)? $BITSUS="Activo":$BITSUS="Inactivo";
-
-                    $finales++;
-                ?>
-                    <tr>
-                        <td><?php echo $pk_mov ?></td>
-                        <td><?php echo $STRMAR ?></td>
-                        <td><?php echo $STRMOD ?></td>
-                        <td><?php echo $STRPLACAS ?></td>
-                        <td><?php echo $STRTIPO ?></td>
-                        <td><?php echo $BITSUS ?></td>
-                        <td><?php echo $DTHOR ?></td>
-                        <td class="text-right">
-                            <?php if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) { ?>
-
-                                <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal"  data-target="#modal_update" onclick="editar('<?php echo $pk_mov; ?>','view/modals/editar/vehiculo.php')"><i class="fa fa-edit"></i></button>
-
-                            <?php } ?>
-                            <?php if (in_array(3, $_SESSION['Habilidad']['vehiculos'])) { ?>
-
-                                <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $pk_mov; ?>','view/ajax/vehiculos_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
-
-                            <?php } ?>
-                            <?php if (in_array(4, $_SESSION['Habilidad']['vehiculos'])) { ?>
-
-                                <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $pk_mov; ?>','view/modals/mostrar/vehiculo.php')"><i class="fa fa-eye"></i></button>
-
-                            <?php } ?>
-
-                        </td>
-                    </tr>
-
-                <?php } ?>
-            </tbody>
-
-            <tfoot>
-
-            </tfoot>
-        </table>
+        </tfoot>
+    </table>
 <?php
-    } else {
-        echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+} else {
+    echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
-    }
+}
 //}
 ?>

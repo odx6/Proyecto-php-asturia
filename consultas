@@ -1,0 +1,97 @@
+SELECT
+    tblcatveh.*,
+    tbltpveh.STRNOM AS tipo,
+    tblcatorg.STRDSCORG AS origen
+FROM
+    tblcatveh
+    INNER JOIN tbltpveh ON tblcatveh.STRTPVH = tbltpveh.STRTPVH
+    INNER JOIN tblcatorg ON tblcatveh.LNGIDNORG = tblcatorg.LNGIDNORG;
+
+CONSULTA 2 PARA LA ACTUALIZACION
+SELECT
+    tblcatveh.*,
+    tbltpveh.STRNOM AS tipo,
+    tblcatorg.STRDSCORG AS origen
+FROM
+    tblcatveh
+    INNER JOIN tbltpveh ON tblcatveh.STRTPVH = tbltpveh.STRTPVH
+    INNER JOIN tblcatorg ON tblcatveh.LNGIDNORG = tblcatorg.LNGIDNORG
+WHERE
+    tblcatveh.STRNMRSR = 'automovilprueba123';
+
+---- forekeys-----
+ALTER TABLE
+    tabla_hija
+ADD
+    CONSTRAINT fk_nombre_foreign_key FOREIGN KEY (columna_hija) REFERENCES tabla_padre(columna_padre) ON DELETE CASCADE ON UPDATE CASCADE;
+
+relacion organizacion - vehiculo
+ALTER TABLE
+    tblcatveh
+ADD
+    CONSTRAINT fk_organizacion_foreign_key FOREIGN KEY (LNGIDNORG) REFERENCES tblcatorg(LNGIDNORG) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+    relacion TIPO-VEHICULO
+ALTER TABLE
+    tblcatveh
+ADD
+    CONSTRAINT fk_tipo_foreign_key FOREIGN KEY (STRTPVH) REFERENCES tbltpveh(STRTPVH) ON DELETE RESTRICT ON UPDATE CASCADE;
+    
+RELACION  SOLICITUD EMPLEADO CAPTURISTA
+ALTER TABLE
+    tblcatslc
+ADD
+    CONSTRAINT fk_capturista_foreign_key FOREIGN KEY (LNGIDNUSR) REFERENCES tblcatemp(IDEMP) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+RELACION SOLICITUD EMPLEADO-CONTACTO
+ALTER TABLE
+    tblcatslc
+ADD
+    CONSTRAINT fk_contacto_foreign_key FOREIGN KEY (LNGIDNCNT) REFERENCES tblcatemp(IDEMP) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+Relacion solicitud-empleado-mecanico
+ALTER TABLE
+    tblcatslc
+ADD
+    CONSTRAINT fk_mecanico_foreign_key FOREIGN KEY (LNGIDNMCN) REFERENCES tblcatemp(IDEMP) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+relacion  solicitud-organizacion
+ALTER TABLE
+    tblcatslc
+ADD
+    CONSTRAINT fk_organizacion_foreign_key FOREIGN KEY (LNGIDNORG) REFERENCES tblcatemp(IDEMP) ON DELETE CASCADE ON UPDATE CASCADE;
+
+relacion solicitud-automovil 
+ALTER TABLE
+    tblcatslc
+ADD
+    CONSTRAINT fk_vehiculo_foreign_key FOREIGN KEY (STRNMRSR) REFERENCES tblcatveh(STRNMRSR) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+//forekeys de folios-organizacion
+
+ALTER TABLE
+    tblfolslc
+ADD
+    CONSTRAINT fk_folios_foreign_key FOREIGN KEY (fk_org) REFERENCES tblcatorg(LNGIDNORG) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+    INSERT INTO `empleado_permisos`(`idempleado_permiso`, `idempleado`, `idpermiso`, `Habilidades`) 
+    VALUES ('16','2','1','1,2,3,4,5'),
+     ('17','2','2','1,2,3,4,5'),
+     ('18','2','3','1,2,3,4,5'),
+     ('19','2','4','1,2,3,4,5'),
+     ('20','2','5','1,2,3,4,5'),
+     ('21','2','6','1,2,3,4,5'),
+     ('22','2','7','1,2,3,4,5'),
+     ('23','2','8','1,2,3,4,5'),
+     ('24','2','9','1,2,3,4,5'),
+     ('25','2','10','1,2,3,4,5'),
+     ('26','2','11','1,2,3,4,5'),
+     ('27','2','12','1,2,3,4,5'),
+     ('28','2','13','1,2,3,4,5'),
+     ('29','2','14','1,2,3,4,5'),
+     ('30','2','15','1,2,3,4,5');

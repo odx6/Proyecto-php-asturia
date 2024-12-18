@@ -1,6 +1,7 @@
 <?php
 $active2 = "active";
 include "resources/header copy.php";
+
 if ($_SESSION['productos'] == 1) {
     //verifica si tiene permiso al modulo 
     $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";

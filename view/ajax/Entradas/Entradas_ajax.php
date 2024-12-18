@@ -17,9 +17,9 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 
 	try {
 		
-		if ($delete = mysqli_query($con, "DELETE FROM tblinv WHERE INTIDINV='$id'")) {
+		if ($delete = mysqli_query($con, "UPDATE `tblinv` SET `status`='cancelado' WHERE INTIDINV='$id';")) {
 			$aviso = "Bien hecho!";
-			$msj = "Datos eliminados satisfactoriamente.";
+			$msj = "Datos cancelados correctamente";
 			$classM = "alert alert-success";
 			$times = "&times;";
 
@@ -28,11 +28,14 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 			$tarjetas = mysqli_query($con, "SELECT * FROM tbltarinv WHERE  INTIDINV='$id';");
 
 			if ($delete) {
+				
 				while ($row = mysqli_fetch_array($detalles)) {
 
+                   
 					$INTIDDET = $row['INTIDDET'];
-					$sql = recuperarDatos("SELECT * FROM tblinvdet WHERE  INTIDINV='$INTIDDET';");
-					$data = "tblinvdet";
+					$data = recuperarDatos("SELECT * FROM tblinvdet WHERE  INTIDDET='$INTIDDET';");
+					$eliminarDetalle = mysqli_query($con, "DELETE  FROM tblinvdet WHERE  INTIDDET='$INTIDDET';");
+					$tabla = "tblinvdet";
 					$tipo = "Eliminacion";
 					$fecha = date("Y-m-d H:i:s");
 
@@ -43,7 +46,9 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 				while ($row2 = mysqli_fetch_array($tarjetas)) {
 
 					$INTIDTAR  = $row2['INTIDTAR'];
+					
 					$data = recuperarDatos("SELECT * FROM tbltarinv WHERE INTIDTAR='$INTIDTAR';");
+					$eliminartarjeta = mysqli_query($con, "DELETE  FROM tbltarinv WHERE INTIDTAR='$INTIDTAR';");
 					$tabla = "tbltarinv";
 					$tipo = "Eliminacion";
 					$fecha = date("Y-m-d H:i:s");
@@ -106,7 +111,7 @@ if ($action == 'ajax') {
 	$total_pages = ceil($numrows / $per_page);
 	$reload = './Entradas-view.php';
 	//main query to fetch the data
-	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere ");
+	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere and  status IS NULL");
 	//loop through fetched data
 
 	if (isset($_REQUEST["id"])) {

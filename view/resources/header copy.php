@@ -1,5 +1,39 @@
 <?php
-$user_ip = $_SERVER['REMOTE_ADDR'];
+date_default_timezone_set('America/Mexico_City');
+$hora = mysqli_query($con, "SELECT * FROM `configuracion` where id=1;");
+$fila = mysqli_fetch_array($hora);
+$correo = mysqli_query($con, "SELECT STRCOR FROM tblcatemp WHERE IDEMP=1;");
+$adminCorreo = mysqli_fetch_array($correo);
+
+
+$hora_entrada = $fila["hora_entrada"];
+$hora_salida = $fila["hora_salida"];
+$dias_inactivos = $fila["Dias_inactivos"];
+$arrayDias = explode(",", $dias_inactivos);
+
+// Obtén la hora actual
+$hora_actual = date("H:i");
+$dia = date('N');
+
+
+// Comprueba si la hora actual está dentro del horario del usuario
+
+
+
+
+if ($_SESSION['correo'] == $adminCorreo['STRCOR']) {
+
+  $isAdmin = 1;
+} else {
+  $isAdmin = 0;
+}
+if ($hora_actual >= $hora_entrada && $hora_actual <= $hora_salida && !in_array($dia, $arrayDias) || $isAdmin == 1) {
+  // El usuario puede iniciar sesión
+
+
+} else {
+  header("location: ./?view=logout");
+}
 if (!isset($_SESSION['user_id']) && $_SESSION['user_id'] == null) {
   header("location: ./?view=index");
 
@@ -38,7 +72,7 @@ $nombre_empresa = $rw['nombre'];
 
 $_SESSION['NOMBREMPRESA'] = $nombre_empresa;
 ?>
-<!--Header go -->
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -52,12 +86,36 @@ $_SESSION['NOMBREMPRESA'] = $nombre_empresa;
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+   <!-- Tempusdominus Bootstrap 4 -->
+   <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="plugins/bs-stepper/css/bs-stepper.min.css">
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="plugins/dropzone/min/dropzone.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css?v=3.2.0">
+  <!-- Tempusdominus Bootstrap 4 -->
+  
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
+
+
+
+
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="plugins/bs-stepper/css/bs-stepper.min.css">
 
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">

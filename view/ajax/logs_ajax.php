@@ -57,7 +57,7 @@ if ($action == 'ajax') {
 	$total_pages = ceil($numrows / $per_page);
 	$reload = './productos-view.php';
 	//main query to fetch the data
-	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
+	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere ");
 	//loop through fetched data
 
 	if (isset($_REQUEST["id"])) {

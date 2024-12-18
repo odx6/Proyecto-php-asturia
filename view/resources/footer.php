@@ -49,36 +49,19 @@
 <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- date-range-picker -->
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
 <!--<script src="plugins/toastr/toastr.min.js"></script>-->
+<!-- InputMask -->
+<script src="plugins/moment/moment.min.js"></script>
 <script src="assets/js/Asturias.js"></script>
 <script src="assets/js/Validaciones.js"></script>
 <script src="assets/js/datatable.js"></script>
 <script src="assets/js/Editar.js"></script>
-<!--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>-->
-<script>
+<script src="dist/js/adminlte.min.js"></script>
 
 
-</script>
-
-
-   
-
-    <!-- <script src="assets/plugins/selectpicker/bootstrap-select.min.js"></script> 
-    <script type="text/javascript">
-    $('.selectpicker').selectpicker({
-      style: 'btn-primary',
-      size: 5
-    });
-    </script> --> 
-
-   <!--  <script src="assets/plugins/select2/js/select2.min.js"></script> 
-	<script type="text/javascript">
-	  	$('select').select2();
-         <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
-          <script src="assets/js/sidebars.js"></script>
-	</script>  -->
-
-  <script src="dist/js/adminlte.min.js"></script>
+ 
   <?php if(isset($scripts))echo $scripts ?>
  
 </body>

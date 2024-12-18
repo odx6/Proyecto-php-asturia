@@ -1,5 +1,6 @@
 <?php
 include "resources/header copy.php";
+
 if (in_array(2, $_SESSION['Habilidad']['compras']) && isset($_POST["idecompra"])) {
 
     require_once("./config/config.php");

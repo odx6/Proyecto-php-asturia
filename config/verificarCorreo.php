@@ -26,15 +26,31 @@ function  verificacionDeCorreo($correo,$token){
       // Configura el cuerpo del correo electrónico
       $mail->isHTML(TRUE);
       $mail->Subject = 'verificacion de correo';
+
+      $url="http://localhost:8080/proyecto/?view=validacion&token=$token&correo=$correo";
       //$mail->Body = "Haz clic en el siguiente enlace para verificar tu correo electrónico : HTML http://localhost:8080/proyecto/?view=validacion&token=$token&correo=$correo";
-        $mail->Body = "Haz clic en el siguiente enlace para verificar tu correo electrónico : HTML https://romasa.000webhostapp.com/?view=validacion&token=$token&correo=$correo";
+        $mail->Body = ' <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Verificación de Correo Electrónico Fernanda Asturias</title>
+        </head>
+        <body>
+            <h1>¡Bienvenido a nuestro sistema!</h1>
+            <p>Gracias por registrarte. Para completar el proceso de verificación, haz clic en el siguiente enlace:</p>
+            <p><a href='.$url.'>Verificar mi cuenta</a></p>
+            <p>Si no te registraste en nuestro sistema, ignora este mensaje.</p>
+            <p>¡Gracias!</p>
+        </body>
+        </html>';
       $mail->AltBody = "Haz clic en el siguiente enlace para verificar tu correo electrónico : HTML http://localhost:8080/proyecto/?view=verificar?token='$token'?correo='$correo' ";
       $mail->send();
       $boleean="true";
       return $boleean;
   } catch (Exception $e) {
       // Muestra un mensaje de error si algo sale mal
-      return $boleean;
+      return $boleean."El correo electrónico no se pudo enviar. Error de PHPMailer: {$mail->ErrorInfo}";
       echo "El correo electrónico no se pudo enviar. Error de PHPMailer: {$mail->ErrorInfo}";
   }
   }

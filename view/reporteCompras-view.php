@@ -184,15 +184,21 @@ EOD;
 
             $detalle = "SELECT tbldetcom.*,tblcatuni.STRNOMUNI, tblcatpro.STRDESPRO FROM `tbldetcom` INNER JOIN tblcatuni on tbldetcom.FK_UNI=tblcatuni.INTIDUNI INNER JOIN tblcatpro ON tbldetcom.FK_SKU=tblcatpro.STRSKU WHERE tbldetcom.FK_COM='$FK_COM';";
             $querydetalle = mysqli_query($con, $detalle);
-
+             $MONTOTAL=0;
             while ($row2 = mysqli_fetch_array($querydetalle)) {
 
 
                 $TOTAL = $row2["TOTAL"];
                 $totalCompra += $TOTAL;
+
+                $MONTOTAL+=$row2["TOTAL"];
+                
+
             }
-
-
+            $MONTOTAL = "$" . number_format($MONTOTAL, 2, '.', ',');
+            
+       
+           
 
 
             $filas .= "
@@ -207,6 +213,7 @@ EOD;
                 <td>  $DTHORFAC</td>
                 <td>   $DTHOTPAG </td>
                 <td>    $DTHOR  </td>
+                <td>    $MONTOTAL  </td>
                
                 
                 
@@ -239,9 +246,6 @@ EOD;
 
 
 
-
-
-
             $filas .= '
         <tr>
             
@@ -259,6 +263,7 @@ EOD;
             $querydetalle = mysqli_query($con, $detalle);
             $total = 0;
             while ($row2 = mysqli_fetch_array($querydetalle)) {
+                
 
                 $FK_SKU = $row2["FK_SKU"];
                 $STRDESPRO = $row2["STRDESPRO"];
@@ -268,6 +273,8 @@ EOD;
                 $PCRCOSTANTE = $row2["PCRCOSTANTE"];
                 $TOTAL = $row2["TOTAL"];
                 $total += $TOTAL;
+
+                $totaldecomprasentotal= $TOTAL+$total;
                 $totalCompra += $TOTAL;
                 $PCRCOST = "$" . number_format($PCRCOST, 2, '.', ',');
                 $PCRCOSTANTE = "$" . number_format($PCRCOSTANTE, 2, '.', ',');
@@ -282,6 +289,7 @@ EOD;
             <td colspan="5">' . $STRDESPRO . '</td>
                 <td style="text-align: right">   ' . $PCRCOST . ' </td>
                 <td style="text-align: right">' . $TOTAL . '</td>
+              
                 
                </tr>
             
@@ -313,6 +321,7 @@ EOD;
         <th style="background-color:orange ;">Fecha de la factura</th>
         <th style="background-color:orange ;">Fecha Pago</th>
         <th style="background-color:orange ;">Fecha de creacion</th>
+        <th style="background-color:orange ;">Monto total</th>
         
        
     </tr>
@@ -350,6 +359,8 @@ NUMERO TOTAL DE COMPRAS :  $numbercompras                                       
 
 EOD;
 
+
+
     $x = $pdf->GetX();
     $y = $pdf->GetY();
 
@@ -363,8 +374,13 @@ EOD;
     $pdf->Write(0, $txt, '', 0, 'L', true, 0, false, false, 0);
 
    
+ 
+
+    
+   
 
 
+    
 
 
     // Obtener el PDF como una cadena base64

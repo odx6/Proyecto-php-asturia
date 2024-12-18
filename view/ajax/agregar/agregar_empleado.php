@@ -8,8 +8,7 @@ if (empty(trim($_POST['STRNSS']))) {
 	$errors[] = "RFC está vacío.";
 } elseif (empty(trim($_POST['STRCUR']))) {
 	$errors[] = "CURP está vacío.";
-} 
-elseif (empty(trim($_POST['STRNDL']))) {
+} elseif (empty(trim($_POST['STRNDL']))) {
 	$errors[] = "Licencia está vacío.";
 } elseif (empty($_POST['STRNOM'])) {
 	$errors[] = "Nombre está vacío.";
@@ -35,6 +34,8 @@ elseif (empty(trim($_POST['STRNDL']))) {
 	$errors[] = "Contraseña  está vacío.";
 } elseif (empty($_POST['BITSUS'])) {
 	$errors[] = "Estado está vacío.";
+} elseif (empty($_POST['sesion'])) {
+	$errors[] = "Estado está vacío.";
 } elseif (
 	!empty($_POST['STRNSS'])
 	&& !empty($_POST['STRRFC'])
@@ -52,12 +53,13 @@ elseif (empty(trim($_POST['STRNDL']))) {
 	&& !empty($_POST['STRCOR'])
 	&& !empty($_POST['STRPWS'])
 	&& !empty($_POST['BITSUS'])
+	&& !empty($_POST['sesion'])
 
 
 	/*&& !empty($_POST['kind'])*/
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-	require_once("../../../config/RecuperarDatos.php"); 
+	require_once("../../../config/RecuperarDatos.php");
 
 	// escaping, additionally removing everything that could be (html/javascript-) code
 	//$IDEMP = mysqli_real_escape_string($con,(strip_tags($_POST["IDEMP"],ENT_QUOTES)));
@@ -77,6 +79,7 @@ elseif (empty(trim($_POST['STRNDL']))) {
 	$STRCOR = mysqli_real_escape_string($con, (strip_tags($_POST["STRCOR"], ENT_QUOTES)));
 	$STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
 	$BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
+	$sesion = mysqli_real_escape_string($con, (strip_tags($_POST["sesion"], ENT_QUOTES)));
 	$CREATED_AT = date("Y-m-d H:i:s");
 	if (empty($_FILES["STRIMGE"]['name'])) {
 		$STRIMG = "view/resources/images/Default/perfil.png";
@@ -126,58 +129,58 @@ elseif (empty(trim($_POST['STRNDL']))) {
 
 
 	//Write register in to database 
-	if (verificacionDeCorreo($STRCOR, $token) == "true"){ $sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR,STRNDL, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN) 
-	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNDL . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "');";
-	$query_new = mysqli_query($con, $sql);
+	if (verificacionDeCorreo($STRCOR, $token) == "true") {
+		$sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR,STRNDL, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN,	numsesion) 
+	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNDL . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "','".$sesion . "');";
+		$query_new = mysqli_query($con, $sql);
 
-	if($query_new){
-	$id=mysqli_insert_id($con);
-		$sql2=recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
-		$tabla="tblcatemp";
-		$tipo="creacion";
-		$fecha=date("Y-m-d H:i:s");
-		
-     $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-	 $query = mysqli_query($con, $sqllog);
+		if ($query_new) {
+			$id = mysqli_insert_id($con);
+			$sql2 = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
+			$tabla = "tblcatemp";
+			$tipo = "creacion";
+			$fecha = date("Y-m-d H:i:s");
 
-	}
-	if ($query_new) {
-		if (!empty($_POST['permisos'])) {
-			$numeroMaximo = "select max(IDEMP) as nuevo_empleado from tblcatemp";
-			$idusernew_sql = mysqli_query($con, $numeroMaximo);
-			$idusernew_rw = mysqli_fetch_array($idusernew_sql);
-			$idusernew = $idusernew_rw['nuevo_empleado'];
-			//agrego los permisos by amner saucedo sosa
-			$num_element = 0;
-			$sw = true;
+			$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+			$query = mysqli_query($con, $sqllog);
+		}
+		if ($query_new) {
+			if (!empty($_POST['permisos'])) {
+				$numeroMaximo = "select max(IDEMP) as nuevo_empleado from tblcatemp";
+				$idusernew_sql = mysqli_query($con, $numeroMaximo);
+				$idusernew_rw = mysqli_fetch_array($idusernew_sql);
+				$idusernew = $idusernew_rw['nuevo_empleado'];
+				//agrego los permisos by amner saucedo sosa
+				$num_element = 0;
+				$sw = true;
 
-			while ($num_element < count($permisos)) {
-				$sql_detalle = "INSERT INTO empleado_permisos(idempleado, idpermiso) VALUES($idusernew, $permisos[$num_element])";
+				while ($num_element < count($permisos)) {
+					$sql_detalle = "INSERT INTO empleado_permisos(idempleado, idpermiso) VALUES($idusernew, $permisos[$num_element])";
 
-				mysqli_query($con, $sql_detalle) or $sw = false;
-				$id=mysqli_insert_id($con);
-				$sql2=recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$id';");
-				$tabla="empleado_permisos";
-				$tipo="creacion";
-				$fecha=date("Y-m-d H:i:s");
-				
-			 $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$sql2."');";
-			 $query = mysqli_query($con, $sqllog);
-				$num_element = $num_element + 1;
+					mysqli_query($con, $sql_detalle) or $sw = false;
+					$id = mysqli_insert_id($con);
+					$sql2 = recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$id';");
+					$tabla = "empleado_permisos";
+					$tipo = "creacion";
+					$fecha = date("Y-m-d H:i:s");
+
+					$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+					$query = mysqli_query($con, $sqllog);
+					$num_element = $num_element + 1;
+				}
+
+				$messages[] = "Empleado ha sido agregado con éxito.";
+			} else {
+
+				$messages[] = "Empleado ha sido agregado con éxito, sin permisos.";
 			}
-
-			$messages[] = "Empleado ha sido agregado con éxito.";
 		} else {
-
-			$messages[] = "Empleado ha sido agregado con éxito, sin permisos.";
+			$errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
 		}
 	} else {
-		$errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
-	}
-}else{
 
-	$errors[]="error al verificar el correo verifique su correo";
-}
+		$errors[] = "error al verificar el correo verifique su correo" . verificacionDeCorreo($STRCOR, $token);
+	}
 	// if has been added successfully
 
 } else {
@@ -185,37 +188,37 @@ elseif (empty(trim($_POST['STRNDL']))) {
 }
 if (isset($errors)) {
 
-	?>
-		<div class="alert alert-danger" role="alert">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<strong>Error!</strong>
-			<?php
-			foreach ($errors as $error) {
-				echo $error;
-			}
-			?>
-		</div>
-	<?php
-	}
-	if (isset($messages)) {
-	
-	?>
-	
-		<div class="alert alert-success" >
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<strong>¡Bien hecho!</strong>
-	
-			<?php
-			foreach ($messages as $message) {
-				echo $message;
-			}
-			?>
-	
-	
-		</div>
-		
-	
-	
-	<?php
-	}
-	?>
+?>
+	<div class="alert alert-danger" role="alert">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>Error!</strong>
+		<?php
+		foreach ($errors as $error) {
+			echo $error;
+		}
+		?>
+	</div>
+<?php
+}
+if (isset($messages)) {
+
+?>
+
+	<div class="alert alert-success">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<strong>¡Bien hecho!</strong>
+
+		<?php
+		foreach ($messages as $message) {
+			echo $message;
+		}
+		?>
+
+
+	</div>
+
+
+
+<?php
+}
+?>

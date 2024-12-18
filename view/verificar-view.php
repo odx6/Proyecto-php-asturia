@@ -22,7 +22,8 @@ try {
 
     // Configura los encabezados del correo electrónico
     $mail->setFrom('r41325833@gmail.com', 'Everardo');
-    $mail->addAddress('r41325833@gmail.com', 'usuario');
+    $mail->addAddress('r41325833@gmail.com', 'usuario'); 
+    
 
     // Configura el cuerpo del correo electrónico
     $mail->isHTML(TRUE);

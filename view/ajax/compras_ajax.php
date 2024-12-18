@@ -9,13 +9,44 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
     $id = $_REQUEST["id"];
 
     $sql2 = recuperarDatos("SELECT * from tblcom WHERE PK_COMPRA='$id'");
+    $detalle = "SELECT * FROM tbldetcom WHERE  FK_COM='$id';";
+	$tarjeta = "SELECT * FROM tbltarinv WHERE  INTIDINV='$id';";
     try {
         if (($delete = mysqli_query($con, "DELETE FROM tblcom WHERE PK_COMPRA='$id'"))) {
             $aviso = "Bien hecho!";
             $msj = "Datos eliminados satisfactoriamente.";
             $classM = "alert alert-success";
             $times = "&times;";
+            $detalles = mysqli_query($con, $detalle);
+			$tarjetas = mysqli_query($con, "SELECT * FROM tbltarinv WHERE  INTIDINV='$id';");
             if ($delete) {
+                while ($row = mysqli_fetch_array($detalles)) {
+
+                   
+					$PK_DETCOM = $row['PK_DETCOM'];
+					$data = recuperarDatos("SELECT * FROM tbldetcom WHERE  PK_DETCOM='$PK_DETCOM';");
+					$eliminarDetalle = mysqli_query($con, "DELETE  FROM tbldetcom WHERE  PK_DETCOM='$PK_DETCOM;");
+					$tabla = "tbldetcom";
+					$tipo = "Eliminacion";
+					$fecha = date("Y-m-d H:i:s");
+
+					$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $data . "');";
+					$query = mysqli_query($con, $sqllog);
+				}
+				
+				while ($row2 = mysqli_fetch_array($tarjetas)) {
+
+					$INTIDTAR  = $row2['INTIDTAR'];
+					
+					$data = recuperarDatos("SELECT * FROM tbltarinv WHERE INTIDTAR='$INTIDTAR';");
+					$eliminartarjeta = mysqli_query($con, "DELETE  FROM tbltarinv WHERE INTIDTAR='$INTIDTAR';");
+					$tabla = "tbltarinv";
+					$tipo = "Eliminacion";
+					$fecha = date("Y-m-d H:i:s");
+
+					$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $data . "');";
+					$query = mysqli_query($con, $sqllog);
+				}
 
                 $tabla = "tblcom";
                 $tipo = "Eliminacion";

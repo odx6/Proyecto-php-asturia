@@ -79,9 +79,9 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="INTFOL" class=" col-form-label">Folio: </label>
-                                <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: ">
+                                <input type="text" required class="form-control" id="INTFOL" name="INTFOL" placeholder="Folio: " onchange="validfolio();">
                                 <span id="MINTFOL"></span>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -574,25 +574,26 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
         function ActualizarCantidad(sku) {
             var Dato = $("#C" + sku).val();
 
-            if(Dato>0){
+            if (Dato > 0) {
                 var TipoMov = $("#INTTIPMOV").val();
-            if (TipoMov == 1) {
-                var temp = inventario[getIndice(inventario, sku)];
+                if (TipoMov == 1) {
+                    var temp = inventario[getIndice(inventario, sku)];
 
-                temp.INTCANT = Dato;
-                temp.MONCTOPRO = Dato * temp.MONPRCOS;
-                document.getElementById("S" + sku).innerText = formatToPesos(temp.MONCTOPRO);
-                calcularTotal(inventario);
+                    temp.INTCANT = Dato;
+                    temp.MONCTOPRO = Dato * temp.MONPRCOS;
+                    document.getElementById("S" + sku).innerText = formatToPesos(temp.MONCTOPRO);
+                    calcularTotal(inventario);
+
+                } else {
+
+                    validarStock(sku, Dato);
+                }
 
             } else {
-
-                validarStock(sku, Dato);
-            }
-
-            }else{alert("no se permiten numeros negativos");
+                alert("no se permiten numeros negativos");
                 $("#C" + sku).val("");
             }
-           
+
 
 
 
@@ -719,6 +720,58 @@ if (in_array(1, $_SESSION['Habilidad']['Entradas'])) {
 
 
         });
+
+        function validfolio() {
+            var folio = document.getElementById('INTFOL').value;
+            // alert("Elfolio es :"+folio);
+            parametros = {
+                'valor': folio
+
+
+            }
+            $.ajax({
+                type: "POST",
+                url: "view/ajax/Funciones/validarFolio.php",
+                data: parametros, // Usar el objeto FormData como los datos de la petición
+                // Indicar a jQuery que no establezca el tipo de contenido
+                success: function(data) {
+                    var spanfolio = document.getElementById('MINTFOL');
+                    var folio = document.getElementById('INTFOL');
+                    if (data) {
+
+                        $.ajax({
+                            type: "GET",
+                            url: "view/ajax/Funciones/SiguienteFolio.php",
+
+                            success: function(data) {
+                           
+                            
+
+                                spanfolio.textContent = "Folio no dispononible,Folio disponible  :"+data;
+                                spanfolio.style.color = "red";
+                                folio.value=data;
+                                folio.style.color="green";
+
+                            }
+                        });
+
+                        //endSiguienteDispnible 
+                        // folio.textContent = "";
+                        //spanfolio.textContent = "El folio que quieres ingresar  ya esta registrado";
+                        // spanfolio.style.color = "red";
+
+
+                    } else {
+
+                        spanfolio.textContent = "Exito !Folio Disponible ";
+                        spanfolio.style.color = "green";
+
+                    }
+
+
+                }
+            });
+        }
     </script>
 <?php
 } else {

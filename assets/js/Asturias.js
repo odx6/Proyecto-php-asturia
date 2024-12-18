@@ -505,15 +505,101 @@ function formatToPesos(amount) {
   return "$" + amount;
 }
 
-function chekCrear(nombreBoton ,afectado) {
+function chekCrear(nombreBoton, afectado) {
   var isChecked = document.getElementById(nombreBoton).checked;
   if (isChecked) {
-    $('.'+afectado).prop('checked', true)
-  }else{
-    $('.'+afectado).prop('checked', false)
+    $('.' + afectado).prop('checked', true)
+  } else {
+    $('.' + afectado).prop('checked', false)
 
   }
 
 
- 
+
 }
+
+function validarContrasena(contrasena) {
+  // Verificar longitud mínima
+  if (contrasena.length < 8) {
+    return false;
+  }
+
+  // Verificar caracteres especiales
+  var caracteresEspeciales = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+  if (!caracteresEspeciales.test(contrasena)) {
+    return false;
+  }
+
+  // Verificar letras mayúsculas y minúsculas
+  var tieneMayuscula = /[A-Z]/.test(contrasena);
+  var tieneMinuscula = /[a-z]/.test(contrasena);
+  if (!(tieneMayuscula && tieneMinuscula)) {
+    return false;
+  }
+
+  // Verificar números
+  var tieneNumero = /[0-9]/.test(contrasena);
+  if (!tieneNumero) {
+    return false;
+  }
+
+  // Si pasa todas las verificaciones, la contraseña es válida
+  return true;
+}
+
+
+function Csegura() {
+
+  var pswr = document.getElementById('STRPWS').value;
+  var prspan = document.getElementById('addPasword');
+
+
+  //alert("el valor es :"+pswr);
+
+  if (validarContrasena(pswr)) {
+
+    prspan.textContent = "La contraseña es valida ";
+    prspan.style.color = "green";
+
+
+  } else {
+    prspan.textContent = "Ingrese una contraseña mas segura ,Verificar la lungitud sea mayor o igual a 8, que contenga caracteres especiales, mayusculas, minusculas y números  ";
+    prspan.style.color = "red";
+
+  }
+
+
+
+
+
+
+
+}
+function Csegura2() {
+
+
+   var pswr= document.getElementById('USTRPWS').value;
+   var prspan = document.getElementById('addPaswordUpdate');
+
+
+   if (validarContrasena(pswr)) {
+
+    prspan.textContent = "La contraseña es valida ";
+    prspan.style.color = "green";
+
+
+  } else {
+    prspan.textContent = "Ingrese una contraseña mas segura ,Verificar la lungitud sea mayor o igual a 8, que contenga caracteres especiales, mayusculas, minusculas y números  ";
+    prspan.style.color = "red";
+
+  }
+
+
+
+
+
+}
+
+
+
+

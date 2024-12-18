@@ -1,5 +1,5 @@
 function   Editarloked(){
-   alert("Hola");
+  // alert("Hola");
     var id=$('#sku').val();
     if(id !=null && id)
     $.ajax({

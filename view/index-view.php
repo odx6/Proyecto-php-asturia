@@ -1,4 +1,5 @@
 <?php
+
 if (isset($_SESSION['user_id']) && $_SESSION !== null) {
   header("location: ./?view=dashboard");
 }

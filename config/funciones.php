@@ -47,4 +47,3 @@ if(isset($id) && isset($tabla) && isset($columna) && isset($columnaN)){
   
 
 ?>
-

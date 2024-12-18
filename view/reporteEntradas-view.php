@@ -197,14 +197,16 @@ if ($Tipo == 1) {
                 $STRNOMUNI = $row2['STRNOMUNI'];
                 $MONPRCOS = $row2['MONPRCOS'];
                 $MONCTOPRO = $row2['MONCTOPRO'];
+
                 $totalEntrada +=$MONCTOPRO;
+                $total +=$MONCTOPRO;
               
                 $MONPRCOS="$". number_format($MONPRCOS, 2, '.', ',');
                 $MONCTOPRO="$". number_format($MONCTOPRO, 2, '.', ',');
-        
+             
                    
             }
-           // $totalEntrada = "$" . number_format($total, 2, '.', ',');
+            $total = "$" . number_format($total, 2, '.', ',');
 
           
             
@@ -227,6 +229,7 @@ if ($Tipo == 1) {
                 <td> $STRNOMALM  </td>
                 <td> $STROBS  </td>
                 <td> $DTEHOR  </td>
+                <td> $total  </td>
                
                 
                 
@@ -354,6 +357,7 @@ if ($Tipo == 1 ) {
         <th style="background-color:orange ;">almacen</th>
         <th style="background-color:orange ;">Descripcion</th>
         <th style="background-color:orange ;">Fecha-Hora</th>
+        <th style="background-color:orange ;">Total</th>
 
        
     </tr>
@@ -392,9 +396,10 @@ $totalEntrada = "$" . number_format($totalEntrada, 2, '.', ',');
 $pdf->SetFont('helvetica', 'BI', 12);
 
     $txt = <<<EOD
-NUMERO TOTAL DE $aux :  $numberentradas                                                                                                     MONTO TOTAL : $totalEntrada
+NUMERO TOTAL DE  $aux :  $numberentradas                                                                                                     MONTO TOTAL : $totalEntrada
 
 EOD;
+
 
     $x = $pdf->GetX();
     $y = $pdf->GetY();
@@ -419,6 +424,9 @@ $pdfBase64 = base64_encode($pdfData);
 
 // Devolver el PDF codificado en base64
 echo $pdfBase64;
+ 
+
+
 
 }else{
    /* $compras="Sinpermisos";

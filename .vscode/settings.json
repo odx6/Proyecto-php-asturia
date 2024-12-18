@@ -1,3 +1,10 @@
 {
-    "livePreview.defaultPreviewPath": "/view/pdf-inventario.html"
+    "livePreview.defaultPreviewPath": "/view/pdf-inventario.html",
+    "cSpell.language": "en,es",
+    "cSpell.languageSettings": [
+      
+    ],
+    "cSpell.dictionaries": [
+        "  \"cSpell.language\": \"en,es\","
+    ]
 }

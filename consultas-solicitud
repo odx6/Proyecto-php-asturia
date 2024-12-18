@@ -1,0 +1,19 @@
+SELECT
+    tblcatslc.*,
+    tblcatemp.STRNOM AS NOMBRE,
+    tblcatemp.STRAPE AS apellido,
+    tblcatfol.folio AS folioG,
+    tblcatfol.folio AS folioE,
+    tblcatemp.STRNOM AS NCONTACTO,
+    tblcatemp.STRAPE AS ACONTACTO,
+    tblcatorg.LNGIDNORG AS NEMPRESA,
+    tblcatemp.STRNOM AS MNOMBRE,
+    tblcatemp.STRAPE AS Mapellido,
+FROM
+    tblcatslc
+    INNER JOIN tblcatemp ON tblcatslc.LNGIDNUSR = tblcatemp.IDEMP
+    INNER JOIN tblcatfol ON tblcatslc.INTFOLSLC = tblcatfol.id_folio
+    INNER JOIN tblcatfol ON tblcatslc.INTFOLSLCE = tblcatfol.id_empresa
+    INNER JOIN tblcatfol ON tblcatslc.LNGIDNCNT = tblcatemp.IDEMP
+    INNER JOIN tblcatorg ON tblcatslc.LNGIDNORG = tblcatorg.LNGIDNORG
+    INNER JOIN tblcatemp ON tblcatslc.LNGIDNMCN = tblcatemp.IDEMP

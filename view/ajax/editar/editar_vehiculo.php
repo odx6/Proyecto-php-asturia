@@ -5,35 +5,39 @@ session_start();
 $gump = new GUMP();
 
 $gump->validation_rules([
-     'id' => 'required',
-    'STRMAR'    => 'required|alpha_numeric|max_len,100|min_len,3',
-    'STRMOD'    => 'required|max_len,100|min_len,3',
-    'STRPLACAS'       => 'required',
-    'STRTIPO'      => 'required',
-    'BITSUS' => 'required'
+    'STRNMRSR'    => 'required|alpha_numeric|max_len,100|min_len,3',
+    'STRNMR'    => 'required|alpha_numeric|max_len,100|min_len,3',
+    'STRMRC'       => 'required',
+    'STRMDL'      => 'required',
+    'STRPLC' => 'required'
 ]);
 
 $gump->set_fields_error_messages([
-    'id'=>['required'=>'Campo requerido para la actualizacion de datos'],
-    'STRMAR'      => [
+    'STRNMRSR'      => [
         'required' => 'El campo marca es requerido',
         'alpha_numeric' => 'El campo solo puede contener letras y numeros',
         'min-len' => 'el minimo de caracteres para modelo es 3'
     ],
-    'STRMOD'   => [
+    'STRNMR'   => [
         'required' => 'El campo modelo es requerido',
         'min_len' => 'El minimo de caracteres para modelo es 3'
+    ],
+    'STRMRC' => [
+        'required' => 'el campo numero es requerido',
+        'numeric' => 'el valor debe ser numerico'
+
+
+
     ]
+
 ]);
 $gump->filter_rules([
-    'STRMAR' => 'trim|sanitize_string',
-    'STRMOD' => 'trim|sanitize_string',
-    'STRPLACAS' => 'trim|sanitize_string'
+    'STRNMRSR' => 'trim|sanitize_string',
+    'STRNMR' => 'trim|sanitize_string',
+    'STRPLC' => 'trim|sanitize_string'
 
 ]);
 $valid_data = $gump->run($_POST);
-
-
 ?>
 <?php
 if ($gump->errors()) {
@@ -49,7 +53,7 @@ if ($gump->errors()) {
         ?>
     </div>
 
-<?php
+    <?php
 
 
 } else {
@@ -57,27 +61,43 @@ if ($gump->errors()) {
     require_once("../../../config/RecuperarDatos.php");
 
 
-    $id=intval($valid_data["id"]);
-    $STRMAR = mysqli_real_escape_string($con, (strip_tags($valid_data["STRMAR"], ENT_QUOTES)));
-    $STRMOD = mysqli_real_escape_string($con, (strip_tags($valid_data["STRMOD"], ENT_QUOTES)));
-    $STRPLACAS = mysqli_real_escape_string($con, (strip_tags($valid_data["STRPLACAS"], ENT_QUOTES)));
-    $STRTIPO = mysqli_real_escape_string($con, (strip_tags($valid_data["STRTIPO"], ENT_QUOTES)));
+    $id = $valid_data["id"];
+    $STRNMRSR = mysqli_real_escape_string($con, (strip_tags($valid_data["STRNMRSR"], ENT_QUOTES)));
+    $STRNMR = mysqli_real_escape_string($con, (strip_tags($valid_data["STRNMR"], ENT_QUOTES)));
+    $STRMRC = mysqli_real_escape_string($con, (strip_tags($valid_data["STRMRC"], ENT_QUOTES)));
+    $STRMDL = mysqli_real_escape_string($con, (strip_tags($valid_data["STRMDL"], ENT_QUOTES)));
+    $STRPLC = mysqli_real_escape_string($con, (strip_tags($valid_data["STRPLC"], ENT_QUOTES)));
+    $STRTPVH = mysqli_real_escape_string($con, (strip_tags($valid_data["STRTPVH"], ENT_QUOTES)));
+    $LNGIDNORG = mysqli_real_escape_string($con, (strip_tags($valid_data["LNGIDNORG"], ENT_QUOTES)));
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($valid_data["BITSUS"], ENT_QUOTES)));
     $DTEHOR = date("Y-m-d H:i:s");
-    $oldata=recuperarDatos("SELECT * from tblcatmov WHERE pk_mov='$id';");
+    $oldata = recuperarDatos("SELECT * from tblcatveh WHERE STRNMRSR='$id';");
 
     try {
-        $update = "UPDATE `tblcatmov` SET `STRMAR`='".$STRMAR."',`STRMOD`='".$STRMOD."',`STRPLACAS`='".$STRPLACAS."',`STRTIPO`='".$STRTIPO."',`BITSUS`='".$BITSUS."' WHERE pk_mov='$id';";
+      
+            $update = "UPDATE `tblcatveh` SET
+             `STRNMRSR`='" . $STRNMRSR . "',
+             `STRNMR`='" . $STRNMR . "',
+            `STRMRC`='" . $STRMRC . "',
+            `STRMDL`='" . $STRMDL . "',
+            `STRPLC`='" . $STRPLC . "',
+            `STRTPVH`='" . $STRTPVH . "',
+            `LNGIDNORG`='" . $LNGIDNORG . "',
+            `BITSUS`='" . $BITSUS . "' 
+             WHERE STRNMRSR='$id';";
+            
+      
+
         $query_update = mysqli_query($con, $update);
         if ($query_update) {
             $messages[] = "Se actualizo el vehiculo";
-            $ide=$id;
-            $sql2 = recuperarDatos("SELECT * from tblcatmov WHERE pk_mov='$id';");
-            $tabla = "tblcatmov";
+            $ide = $STRNMRSR;
+            $sql2 = recuperarDatos("SELECT * from tblcatveh WHERE STRNMRSR='$ide';");
+            $tabla = "tblcatveh";
             $tipo = "Actualizacion";
             $fecha = date("Y-m-d H:i:s");
 
-            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha .  "','".$oldata."','" . $sql2 . "');";
+            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha .  "','" . $oldata . "','" . $sql2 . "');";
             $query = mysqli_query($con, $sqllog);
 
             ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
@@ -92,31 +112,31 @@ if ($gump->errors()) {
 
     if (isset($errors)) {
 
-        ?>
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Error!</strong>
-                <?php
-                foreach ($errors as $error) {
-                    echo $error;
-                }
-                ?>
-            </div>
-        <?php
-        }
-        if (isset($messages)) {
-        
-        ?>
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>¡Bien hecho!</strong>
-                <?php
-                foreach ($messages as $message) {
-                    echo $message;
-                }
-                ?>
-            </div>
-        <?php
-        }
+    ?>
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error!</strong>
+            <?php
+            foreach ($errors as $error) {
+                echo $error;
+            }
+            ?>
+        </div>
+    <?php
+    }
+    if (isset($messages)) {
+
+    ?>
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>¡Bien hecho!</strong>
+            <?php
+            foreach ($messages as $message) {
+                echo $message;
+            }
+            ?>
+        </div>
+<?php
+    }
 }
 ?>

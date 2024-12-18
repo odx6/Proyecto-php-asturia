@@ -3,6 +3,7 @@ $active2 = "active";
 
 include "resources/header copy.php";
 include "./config/funciones.php";
+
 if (empty($_REQUEST['id'])) {
     header("location: ./?view=index");
 }

@@ -29,6 +29,7 @@ if (in_array(2, $_SESSION['Habilidad']['Empleados'])) {
                 $BITSUS = $row['BITSUS'];
                 $STRIMG = $row['STRIMG'];
                 $CREATE_AT = $row['CREATE_AT'];
+                $sesion = $row['numsesion'];
 
                 list($date, $hora) = explode(" ", $CREATE_AT);
                 list($Y, $m, $d) = explode("-", $date);
@@ -66,10 +67,22 @@ if (in_array(2, $_SESSION['Habilidad']['Empleados'])) {
                             </span>
 
                         </div>
-                        <div class="form-group">
-                            <label for="STRNDL" class=" col-form-label">Numero de licencia: </label>
-                            <input type="text" required class="form-control" id="STRNDL" name="STRNDL" placeholder="Numero de licencia: " required value="<?php echo $STRNDL?>">
-                            <span id="MSTRNDL"></span>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="STRNDL" class=" col-form-label">Numero de licencia: </label>
+                                    <input type="text" required class="form-control" id="STRNDL" name="STRNDL" placeholder="Numero de licencia: " required value="<?php echo $STRNDL ?>">
+                                    <span id="MSTRNDL"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="secion" class=" col-form-label">Numero de sesiones </label>
+                                    <input type="number" required class="form-control" id="sesion" name="sesion" placeholder="Max sesion"  min="0" oninput="validity.valid||(value='');" value="<?php echo $sesion; ?>">
+                                    <span id="sesion"></span>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -184,7 +197,8 @@ if (in_array(2, $_SESSION['Habilidad']['Empleados'])) {
                     <div class="col-4">
                         <div class="form-group">
                             <label for="pasword" class=" col-form-label">Contraseña: </label>
-                            <input type="password" class="form-control" id="STRPWS" name="STRPWS" placeholder="Contraseña: ">
+                            <input type="password" class="form-control S" id="USTRPWS" name="STRPWS" placeholder="Contraseña: " onchange="Csegura2()">
+                            <span id="addPaswordUpdate"> </span>
                         </div>
                     </div>
                     <div class="col-4">
