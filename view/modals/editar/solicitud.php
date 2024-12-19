@@ -6,29 +6,27 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
     if (isset($_GET["id"])) {
         $id = $_GET["id"];
         $id = intval($id);
-        $sql = "select * from solicitud where pk_solicitud='$id'";
+        $sql = "select * from tblcatslc where 	LNGIDNSLC='$id'";
         $query = mysqli_query($con, $sql);
         $num = mysqli_num_rows($query);
         if ($num == 1) {
-            $rw = mysqli_fetch_array($query);
-            $pk_solicitud = $rw['pk_solicitud'];
-            $fk_empleado = $rw['fk_empleado'];
+            while ($rw = mysqli_fetch_array($query)) {
+            $LNGIDNSLC = $rw['LNGIDNSLC'];
+            $LNGIDNUSR = $rw['LNGIDNUSR'];
+            $INTFOLSLC = $rw['INTFOLSLC'];
+            $INTFOLSLCE = $rw['INTFOLSLCE'];
+            $DTFCHSLC = $rw['DTFCHSLC'];
 
-            //Name empleado 
-            if (isset($fk_empleado) && $fk_empleado != NULL) {
-                $Empleado = mysqli_query($con, "SELECT * FROM tblcatemp WHERE IDEMP='$fk_empleado'");
-                $tem = mysqli_fetch_array($Empleado);
-                $NombreEmpleado = $tem['STRNOM'] . " " . $tem['STRAPE'];
+            $LNGIDNCNT = $rw['LNGIDNCNT'];
+            $LNGIDNORG = $rw['LNGIDNORG'];
+            $STRNMRSR = $rw['STRNMRSR'];
+            $STRKLM = $rw['STRKLM'];
+            $STROBSRPT = $rw['STROBSRPT'];
+            $STRDGN = $rw['STRDGN'];
+            $LNGIDNMCN = $rw['LNGIDNMCN'];
+            $DTFCHDGN = $rw['DTFCHDGN'];
+            $BITCNCSLC = $rw['BITCNCSLC'];
             }
-            //
-            $NumeroFolio = $rw['NumeroFolio'];
-            $fecha = $rw['fecha'];
-            $operador = $rw['operador'];
-            $NoCarro = $rw['NoCarro'];
-            $Kilometraje = $rw['Kilometraje'];
-            $NoPlacas = $rw['NoPlacas'];
-            $DetallesServicio = $rw['DetallesServicio'];
-            $Observaciones = $rw['Observaciones'];
         }
     } else {
         exit;
@@ -36,64 +34,220 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
 ?>
 
 
-    <input type="hidden" value="<?php echo $id; ?>" name="id" id="id">
-    <input type="hidden" required class="form-control" id="fk_empleado" name="fk_empleado" placeholder="EMPLEADO: " value="<?php if (isset($fk_empleado)) echo   $fk_empleado ?>">
-    <input type="hidden" required class="form-control" id="fecha" name="fecha" placeholder="fecha: " value="<?php
-echo date('Y-m-d H:i:s');
-?>">
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="form-group">
-                                <label for="sku" class="col-sm-2 control-label"> Orden: </label>
-                                <input type="text" required class="form-control" id="pk_solicitud" name="pk_solicitud" placeholder="Id de Orden: " value="<?php echo $pk_solicitud?>">
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <label for="sku" class="col-sm-2 control-label">No.Folio: </label>
-                                <input type="text" required class="form-control" id="NumeroFolio" name="NumeroFolio" placeholder="NumeroFolio: " value="<?php echo $NumeroFolio?>">
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <label for="codigo" class="col-sm-2 control-label">operador: </label>
-                                <input type="text" required class="form-control" id="operador" name="operador" placeholder="operador: " value="<?php echo $operador?>">
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <label for="descripcion" class="col-sm-2 control-label">No.NoCarro: </label>
-                                <input type="text" required class="form-control" id="NoCarro" name="NoCarro" placeholder="No.NoCarro: " value="<?php echo $NoCarro?>">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="form-group">
-                                <label for="categoria" class="col-sm-2 control-label">Kilometraje: </label>
-                                <input type="text" required class="form-control" id="Kilometraje" name="Kilometraje" placeholder="Kilometraje: " value="<?php echo $Kilometraje?>">
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <label for="subcategoria" class="col-sm-2 control-label">No.placas: </label>
-                                <input type="text" required class="form-control" id="NoPlacas" name="NoPlacas" placeholder="NoPlacas: " value="<?php echo $NoPlacas?>">
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                <label for="precio" class="col-sm-2 control-label">DetallesServicio: </label>
-                                <input type="text" required class="form-control" id="DetallesServicio" name="DetallesServicio" placeholder="DetallesServicio" value="<?php echo $DetallesServicio?>">
-                            </div>
-                        </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="Empleado" class=" col-form-label">Capturista: </label>
 
-                        <div class="col-3">
-                            <div class="form-group">
-                                <label for="unidad" class="col-sm-2 control-label">Observaciones: </label>
-                                <input type="text" class="form-control" id="Observaciones" name="Observaciones" placeholder="Observaciones: " value="<?php echo $Observaciones?>">
-                            </div>
-                        </div>
-                    </div>
+                <?php
+
+                // Consulta SQL para obtener los datos
+                $consulta = "SELECT  IDEMP,STRNOM,STRAPE FROM `tblcatemp`  ORDER BY STRNOM ASC";
+                $resultado = mysqli_query($con, $consulta);
+
+
+                // Crear el elemento select
+                echo ' <select class="form-control select2" name="LNGIDNUSR" id="LNGIDNUSR">';
+
+                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                    // Iterar sobre los resultados y crear una opción para cada uno
+
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        echo '<option value="' . $fila['IDEMP'] . '"  <?php if($LNGIDNSLC= $fila["IDEMP"])echo "selected" ?>   ' . $fila['STRNOM'] . " " . $fila['STRAPE'] . '</option>';
+                    }
+                } else {
+
+                    echo  '<option value="" disabled  selected >No hay empleados</option>';
+                }
+
+                echo '</select>';
+                ?>
+            </div>
+
+
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="Empleado" class=" col-form-label">Contacto: </label>
+
+                <?php
+
+                // Consulta SQL para obtener los datos
+                $consulta = "SELECT  IDEMP,STRNOM,STRAPE FROM `tblcatemp`  ORDER BY STRNOM ASC";
+                $resultado = mysqli_query($con, $consulta);
+
+
+                // Crear el elemento select
+                echo ' <select class="form-control select2" name="LNGIDNCNT" id="LNGIDNCNT">';
+
+                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                    // Iterar sobre los resultados y crear una opción para cada uno
+
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        echo '<option value="' . $fila['IDEMP'] . '"." <?php if($LNGIDNUSR= $fila["IDEMP"]) echo "selected" ?> ". ' . $fila['STRNOM'] . " " . $fila['STRAPE'] . '</option>';
+                    }
+                } else {
+
+                    echo  '<option value="" disabled  selected >No hay empleados</option>';
+                }
+
+                echo '</select>';
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="Mecanico" class=" col-form-label">Mecanico: </label>
+
+                <?php
+
+                // Consulta SQL para obtener los datos
+                $consulta = "SELECT  IDEMP,STRNOM,STRAPE FROM `tblcatemp`  ORDER BY STRNOM ASC";
+                $resultado = mysqli_query($con, $consulta);
+
+
+                // Crear el elemento select
+                echo ' <select class="form-control select2" name="LNGIDNMCN" id="LNGIDNMCN">';
+
+                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                    // Iterar sobre los resultados y crear una opción para cada uno
+
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        echo '<option value="' . $fila['IDEMP'] . '"  <?php if($id= $fila["IDEMP"])echo "selected" ?>   ' . $fila['STRNOM'] . " " . $fila['STRAPE'] . '</option>';
+                    }
+                } else {
+
+                    echo  '<option value="" disabled  selected >No hay empleados</option>';
+                }
+
+                echo '</select>';
+                ?>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="TIPO" class=" col-form-label">Organizacion: </label>
+
+                <?php
+
+                // Consulta SQL para obtener los datos
+                $consulta = "SELECT  LNGIDNORG,STRDSCORG FROM tblcatorg ORDER BY STRDSCORG ASC";
+                $resultado = mysqli_query($con, $consulta);
+
+
+                // Crear el elemento select
+                echo ' <select class="form-control select2" name="LNGIDNORG" id="LNGIDNORG">';
+
+                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                    // Iterar sobre los resultados y crear una opción para cada uno
+
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        echo '<option value="' . $fila['LNGIDNORG'] . '"  <?php if($LNGIDNORG= $fila["LNGIDNORG"]) selected ?>   ' . $fila['STRDSCORG'] . '</option>';
+                    }
+                } else {
+
+                    echo  '<option value="" disabled  selected >Debe tener una organizacion  registrada </option>';
+                }
+
+                echo '</select>';
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="Vehiculo" class=" col-form-label">Automovil: </label>
+
+                <?php
+
+                // Consulta SQL para obtener los datos
+                $consulta = "SELECT  STRNMRSR,STRNMR,STRMRC,STRMDL FROM tblcatveh ORDER BY STRNMRSR ASC";
+                $resultado = mysqli_query($con, $consulta);
+
+
+                // Crear el elemento select
+                echo ' <select class="form-control select2" name="STRNMRSR" id="STRNMRSR">';
+
+                if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
+
+                    // Iterar sobre los resultados y crear una opción para cada uno
+
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        echo '<option value="' . $fila['STRNMRSR'] . '"  <?php if($STRNMRSR= $fila["STRNMRSR"]) selected ?>   ' . $fila['STRNMR'] . "-" . $fila['STRMRC'] . "-" . $fila['STRMDL'] . '</option>';
+                    }
+                } else {
+
+                    echo  '<option value="" disabled  selected >Debe tener automoviles registrados </option>';
+                }
+
+                echo '</select>';
+                ?>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="unidad" class="col-12 control-label">Fecha de registro : </label>
+
+                <input type="date" class="form-control" id="Observaciones" name="DTFCHSLC" placeholder="DTFCHSLC: ">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="unidad" class="col-12 control-label">Fecha de diagnostico : </label>
+
+                <input type="date" class="form-control" id="Observaciones" name="DTFCHDGN" placeholder="DTFCHDGN: ">
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+
+        <div class="col-12">
+            <div class="form-group">
+                <label for="kilometros" class="col-sm-2 control-label">kilometros: </label>
+                <input type="text" required class="form-control" id="STRKLM" name="STRKLM" placeholder="kilometros">
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Observaciones</font>
+                    </font>
+                </label>
+                <textarea class="form-control" rows="3" placeholder="Observaciones ..." id="STROBSRPT" name="STROBSRPT"></textarea>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Diagnostico</font>
+                    </font>
+                </label>
+                <textarea class="form-control" rows="3" placeholder="Diagnostico ..." id="STRDGN" name="STRDGN"></textarea>
+            </div>
+        </div>
+    </div>
 
 
 

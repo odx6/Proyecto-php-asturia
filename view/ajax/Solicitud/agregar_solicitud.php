@@ -106,7 +106,7 @@ if ($gump->errors()) {
 	require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 	// escaping, additionally removing everything that could be (html/javascript-) code
-	
+
 	$IDEMPLEADO = mysqli_real_escape_string($con, (strip_tags($_POST["IDEMPLEADO"], ENT_QUOTES)));
 	$LNGIDNUSR = mysqli_real_escape_string($con, (strip_tags($_POST["LNGIDNUSR"], ENT_QUOTES)));
 	$LNGIDNCNT = mysqli_real_escape_string($con, (strip_tags($_POST["LNGIDNCNT"], ENT_QUOTES)));
@@ -130,70 +130,70 @@ if ($gump->errors()) {
 	if ($query_folios && mysqli_num_rows($query_folios) > 0) {
 		$fila = mysqli_fetch_assoc($query_folios);
 		$oldFolio = $fila['numgeneral'];
-		$oldFolio =$oldFolio+1;
+		$oldFolio = $oldFolio + 1;
 	} else {
 		$error[] = "Error al consultar folio general";
 	}
 	$sqlinsertfolio = "INSERT INTO 
 	`tblcatfol`( `folio`, `tipo_folio`, `fecha_creacion`) 
 	VALUES ('" . $oldFolio . "','GENERAL','" . $Fecha . "')";
-    try{
+	try {
 		$IFolioGeneral = mysqli_query($con, $sqlinsertfolio);
 	} catch (mysqli_sql_exception $e) {
 		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
 	}
-	
-	if ($IFolioGeneral ) {
+
+	if ($IFolioGeneral) {
 		$idFolioGeneral = mysqli_insert_id($con);
 	}
 
 
 	//end insert folio 
 	//insertar folio specific
-	$sqlNumFolEsp = "SELECT COUNT(*) AS Especifico FROM tblcatfol WHERE tipo_folio= 'ESPECIFICO' and id_folio='".$LNGIDNORG."';";
-     try{
-		$query_folios_especificos=mysqli_query($con,$sqlNumFolEsp);
-	 } catch (mysqli_sql_exception $e) {
+	$sqlNumFolEsp = "SELECT COUNT(*) AS Especifico FROM tblcatfol WHERE tipo_folio= 'ESPECIFICO' and id_empresa='" . $LNGIDNORG . "';";
+	try {
+		$query_folios_especificos = mysqli_query($con, $sqlNumFolEsp);
+	} catch (mysqli_sql_exception $e) {
 		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
 	}
 	if ($query_folios_especificos && mysqli_num_rows($query_folios_especificos) > 0) {
 		$fila = mysqli_fetch_assoc($query_folios_especificos);
 		$FolioEspecifico = $fila['Especifico'];
-		$FolioEspecifico = $FolioEspecifico+1;
+		$FolioEspecifico = $FolioEspecifico + 1;
 	} else {
 		$error[] = "Error al consultar  Folio Especifico";
 	}
-	$sqlEspecifico="INSERT INTO 
+	$sqlEspecifico = "INSERT INTO 
 	`tblcatfol`(`id_empresa`, `folio`, `tipo_folio`, `fecha_creacion`) 
-	VALUES ('". $LNGIDNORG . "','" . $FolioEspecifico. "','ESPECIFICO','" . $Fecha . "')";
-	 try{
+	VALUES ('" . $LNGIDNORG . "','" . $FolioEspecifico . "','ESPECIFICO','" . $Fecha . "');";
+	try {
 		$sqlFolioE = mysqli_query($con, $sqlEspecifico);
 	} catch (mysqli_sql_exception $e) {
 		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
 	}
-	
-	if ($sqlFolioE ) {
+
+	if ($sqlFolioE) {
 		$idFolioEspecifico = mysqli_insert_id($con);
 	}
 	//endfolioEspecifico 
 
 
-     
+
 
 	$sql = "INSERT INTO 
 	`tblcatslc`( `LNGIDNUSR`, `INTFOLSLC`, `INTFOLSLCE`, `DTFCHSLC`, `LNGIDNORG`, `STRNMRSR`, `STRKLM`, `STROBSRPT`, `STRDGN`, `LNGIDNMCN`, `DTFCHDGN`, `BITCNCSLC`, `LNGIDNCNT`) 
-	VALUES ('".$LNGIDNUSR."','".$idFolioGeneral."','".$idFolioEspecifico."','".$DTFCHSLC."','".$LNGIDNORG."','".$STRNMRSR."','".$STRKLM."','".$STROBSRPT."','".$STRDGN."','".$LNGIDNMCN."','".$DTFCHDGN."','0','".$LNGIDNCNT."');";
+	VALUES ('" . $LNGIDNUSR . "','" . $idFolioGeneral . "','" . $idFolioEspecifico . "','" . $DTFCHSLC . "','" . $LNGIDNORG . "','" . $STRNMRSR . "','" . $STRKLM . "','" . $STROBSRPT . "','" . $STRDGN . "','" . $LNGIDNMCN . "','" . $DTFCHDGN . "','1','" . $LNGIDNCNT . "');";
 	try {
 		$query_new = mysqli_query($con, $sql);
 		if ($query_new) {
 			if ($query_new) {
-                $id = mysqli_insert_id($con);
+				$id = mysqli_insert_id($con);
 				$sql2 = recuperarDatos("SELECT * from tblcatslc WHERE LNGIDNSLC='$id';");
 				$tabla = "solicitud";
 				$tipo = "creacion";
 				$fecha = date("Y-m-d H:i:s");
 
-				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $dni . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
 				$query = mysqli_query($con, $sqllog);
 				$messages[] = "Solicitud agregada correctamente";
 			}

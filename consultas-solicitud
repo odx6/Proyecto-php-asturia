@@ -17,3 +17,28 @@ FROM
     INNER JOIN tblcatfol ON tblcatslc.LNGIDNCNT = tblcatemp.IDEMP
     INNER JOIN tblcatorg ON tblcatslc.LNGIDNORG = tblcatorg.LNGIDNORG
     INNER JOIN tblcatemp ON tblcatslc.LNGIDNMCN = tblcatemp.IDEMP
+
+#consultas 
+
+SELECT
+tblcatslc.*,
+tblcatemp.STRNOM AS CNombre,
+tblcatemp.STRAPE AS Capellido,
+tblcatfol.folio  AS folioE
+
+FROM 
+tblcatslc
+INNER JOIN tblcatemp ON  tblcatslc.LNGIDNUSR=tblcatemp.IDEMP
+INNER JOIN tblcatfol ON  tblcatslc.INTFOLSLCE=tblcatfol.id_folio
+
+SELECT
+tblcatslc.*,
+tblcatemp.STRNOM AS NOMBRE,
+tblcatemp.STRAPE AS apellido,
+tblcatfol.folio  AS folioG,
+tblcatorg.STRDSCORG AS NEMPRESA
+FROM 
+tblcatslc
+INNER JOIN tblcatemp ON  tblcatslc.LNGIDNUSR=tblcatemp.IDEMP
+INNER JOIN tblcatfol ON  tblcatslc.INTFOLSLC=tblcatfol.id_folio
+INNER JOIN tblcatorg ON  tblcatslc.LNGIDNORG=tblcatorg.LNGIDNORG

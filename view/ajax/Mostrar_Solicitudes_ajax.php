@@ -3,6 +3,8 @@ include("is_logged.php"); //Archivo comprueba si el usuario esta logueado
 /* Connect To Database*/
 require_once("../../config/config.php");
 require_once("../../config/RecuperarDatos.php");
+require_once("../../config/funciones.php");
+
 if (isset($_REQUEST["id"])) { //codigo para eliminar 
 	$id = $_REQUEST["id"];
 
@@ -93,16 +95,20 @@ if ($action == 'ajax') {
 		<table id="example1" class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>#Id Orden </th>
-					<th> Empleado </th>
-					<th>No.Folio</th>
-					<th>Fecha</th>
-					<th>Operador</th>
-					<th>No.Carro</th>
+					<th>#ID </th>
+					<th>Capturista</th>
+					<th>No.Folio general</th>
+					<th>No.Folio de empresa</th>
+					<th>Fecha de solicitud</th>
+					<th>Contacto</th>
+					<th>Organizacion</th>
+					<th>Vehiculo</th>
 					<th>Kilometraje</th>
-					<th>No.Placas</th>
-					<th>Detalles del servicio</th>
 					<th>Observaciones</th>
+					<th>Diagnostico</th>
+					<th>Mecanico</th>
+					<th>Fecha Diagnostico</th>
+					<th>Estado</th>
 					<th>Accion</th>
 				</tr>
 			</thead>
@@ -111,54 +117,65 @@ if ($action == 'ajax') {
 				<?php
 				$finales = 0;
 				while ($row = mysqli_fetch_array($query)) {
-					$id = $row['pk_solicitud'];
-					$empleado = $row['fk_empleado'];
-					//Name Empleado 
-					if (isset($empleado) && $empleado != NULL) {
-						$Empleado = mysqli_query($con, "SELECT * FROM tblcatemp WHERE IDEMP='$empleado'");
-						$tem = mysqli_fetch_array($Empleado);
-						$NombreEmpleado = $tem['STRNOM'] . " " . $tem['STRAPE'];
+					$LNGIDNSLC = $row['LNGIDNSLC'];
+					$LNGIDNUSR = $row['LNGIDNUSR'];
+					$INTFOLSLC = $row['INTFOLSLC'];
+					$INTFOLSLCE = $row['INTFOLSLCE'];
+					$DTFCHSLC = $row['DTFCHSLC'];
+
+					$LNGIDNCNT = $row['LNGIDNCNT'];
+					$LNGIDNORG = $row['LNGIDNORG'];
+					$STRNMRSR = $row['STRNMRSR'];
+					$STRKLM = $row['STRKLM'];
+					$STROBSRPT = $row['STROBSRPT'];
+					$STRDGN = $row['STRDGN'];
+					$LNGIDNMCN = $row['LNGIDNMCN'];
+					$DTFCHDGN = $row['DTFCHDGN'];
+					$BITCNCSLC = $row['BITCNCSLC'];
+
+
+					if ($BITCNCSLC == 1) {
+						$lbl_status = "registrada ";
+						$lbl_class = 'label label-success';
+					} else {
+						$lbl_status = "Cancelado";
+						$lbl_class = 'label label-danger';
 					}
-					//
-					$Folio = $row['NumeroFolio'];
-					$Fecha = $row['fecha'];
-					$Operador = $row['operador'];
-					$Carro = $row['NoCarro'];
-					$Kilometraje = $row['Kilometraje'];
-					$Placas = $row['NoPlacas'];
-					$Detalles = $row['DetallesServicio'];
-					$Observacione = $row['Observaciones'];
 
 
 
 					$finales++;
 				?>
 					<tr>
-						<td><?php echo $id ?></td>
-						<td><?php echo $NombreEmpleado ?></td>
-						<td><?php echo $Folio ?></td>
-						<td><?php echo $Fecha ?></td>
-						<td><?php echo $Operador ?></td>
-						<td><?php echo $Carro ?></td>
-						<td><?php echo $Kilometraje ?></td>
-						<td><?php echo $Placas ?></td>
-						<td><?php echo $Detalles ?></td>
-						<td><?php echo $Observacione ?></td>
+						<td><?php echo $LNGIDNSLC ?></td>
+						<td><?php consultarNombre($LNGIDNUSR, 'tblcatemp', 'IDEMP', 'STRNOM');  echo " " ; consultarNombre($LNGIDNUSR, 'tblcatemp', 'IDEMP', 'STRAPE'); ?></td>
+						<td><?php consultarNombre($INTFOLSLC, 'tblcatfol', 'id_folio', 'folio'); ?></td>
+						<td><?php consultarNombre($INTFOLSLCE, 'tblcatfol', 'id_folio', 'folio'); ?></td>
+						<td><?php echo $DTFCHSLC ?></td>
+						<td><?php consultarNombre($LNGIDNCNT, 'tblcatemp', 'IDEMP', 'STRNOM');  echo " " ; consultarNombre($LNGIDNCNT, 'tblcatemp', 'IDEMP', 'STRAPE'); ?></td>
+						<td><?php consultarNombre($LNGIDNORG, 'tblcatorg', 'LNGIDNORG', 'STRDSCORG'); ?></td>
+						<td><?php echo $STRNMRSR ?></td>
+						<td><?php echo $STRKLM." KM" ?></td>
+						<td><?php echo $STROBSRPT ?></td>
+						<td><?php echo $STRDGN ?></td>
+						<td><?php consultarNombre($LNGIDNMCN, 'tblcatemp', 'IDEMP', 'STRNOM');  echo " " ; consultarNombre($LNGIDNMCN, 'tblcatemp', 'IDEMP', 'STRAPE'); ?></td>
+						<td><?php echo $DTFCHDGN ?></td>
+						<td><span class="<?php echo $lbl_class; ?>"><?php echo $lbl_status; ?></span></td>
 
 						<td class="text-right">
 							<?php if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) { ?>
 
-								<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $id; ?>','view/modals/editar/solicitud.php');"><i class="fa fa-edit"></i></button>
+								<button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $LNGIDNSLC; ?>','view/modals/editar/solicitud.php');"><i class="fa fa-edit"></i></button>
 							<?php } ?>
 							<?php if (in_array(3, $_SESSION['Habilidad']['Solicitud'])) { ?>
-								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $id; ?>','view/ajax/Mostrar_Solicitudes_ajax.php','solicitud')"><i class="far fa-trash-alt"></i></button>
+								<button type="button" class="btn btn-danger btn-square btn-xs" onclick="eliminar('<?php echo $LNGIDNSLC; ?>','view/ajax/Mostrar_Solicitudes_ajax.php','solicitud')"><i class="far fa-trash-alt"></i></button>
 							<?php  } ?>
 							<?php if (in_array(4, $_SESSION['Habilidad']['Solicitud'])) { ?>
-								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $id; ?>','view/modals/mostrar/solicitud.php')"><i class="fa fa-eye"></i></button>
+								<button type="button" class="btn btn-info btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $LNGIDNSLC; ?>','view/modals/mostrar/solicitud.php')"><i class="fa fa-eye"></i></button>
 							<?php } ?>
 							<?php if (in_array(5, $_SESSION['Habilidad']['Solicitud'])) { ?>
 								<form action="?view=Pdfs" method="post">
-									<input type="hidden" name="id" value="<?php echo $id; ?>">
+									<input type="hidden" name="id" value="<?php echo $LNGIDNSLC; ?>">
 									<button type="submit" class="btn btn-success btn-square btn-xs" data-toggle="modal" data-target="#"><i class="fas fa-file-pdf"></i></button>
 								</form>
 							<?php } ?>
