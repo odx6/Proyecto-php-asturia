@@ -350,6 +350,36 @@ $_SESSION['NOMBREMPRESA'] = $nombre_empresa;
                 </ul>
               </li>
             <?php } ?>
+            <?php if ($_SESSION['Combustible'] == 1) { ?>
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                <i class="fas fa-charging-station"></i>
+                  <p>
+                    &nbsp; combustible
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <?php if ($_SESSION['Rutas'] == 1) { ?>
+                    <li class="nav-item">
+                      <a href="./?view=Rutas" class="nav-link ">
+                      <i class="fas fa-route"></i>
+                        <p>&nbsp;Rutas</p>
+                      </a>
+                    </li>
+                  <?php } ?>
+                  <?php if ($_SESSION['Kilometraje'] == 1) { ?>
+                    <li class="nav-item">
+                      <a href="./?view=Kilometraje" class="nav-link ">
+                      <i class="fas fa-tachometer-alt"></i>
+                        <p>&nbsp;Kilometraje</p>
+                      </a>
+                    </li>
+                  <?php } ?>
+               
+                </ul>
+              </li>
+            <?php } ?>
 
             <?php if ($_SESSION['solicitud'] == 1) { ?>
               <li class="nav-item">

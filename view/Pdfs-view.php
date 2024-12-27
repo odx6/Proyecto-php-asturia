@@ -58,17 +58,17 @@ if ($_SESSION['solicitud'] == 1) {
     $vigencia=getDato($LNGIDNCNT ,'tblcatemp', 'IDEMP', 'DTHLIC');
 
     // Fecha actual
-$fecha_actual = time();
+$fecha_actual =date("Y-m-d"); 
 
 // Fecha a comparar (formato 'Y-m-d')
-$fecha_vigencia = strtotime('vigencia');
+
 $icon;
 
 // Comparar fechas
-if ($fecha_actual <= $fecha_vigencia) {
-   $icon="<i class='fa-solid fa-check'></i>";
+if ($fecha_actual <= $vigencia) {
+   $icon="vigente";
 } else {
-  $icon="<i class='fa-solid fa-xmark'></i>";
+  $icon="expirado";
 }
 
     
@@ -151,25 +151,27 @@ if ($fecha_actual <= $fecha_vigencia) {
       <tbody>
         <tr class="line">
           <td  style=" width: 20%;">NOMBRE</td>
-          <td colspan="4">'.$nombre."  ".$apellido.'</td>
+          <td colspan="8">'.$nombre."  ".$apellido.'</td>
         </tr>
         <tr style="border-top: 0.5pt solid black;">
           <td style=" width: 20%;">LICENCIA</td>
           <td >'.$LICENCIA.'</td>
-          <td style=" width: 20%;">VIGENCIA</td>
-          <td >'.$vigencia.' '.$icon.'</td>
+          <td>VIGENCIA</td>
+          <td colspan="6">'.$vigencia.'-'.$icon.'</td>
         </tr>
         <tr>
           <td style=" width: 20%;">ORIGEN</td>
-          <td colspan="4">'.$ORIGEN."-".$FolioE.'</td>
+          <td colspan="3">'.$ORIGEN.'</td>
+          <td >FOLIO</td>
+          <td colspan="4">'.$FolioE.'</td>
         </tr>
         <tr>
           <td style=" width: 20%;">CONTACTO</td>
-          <td colspan="4">'.$ContactoN." ".$ContactoA.'-'.$ContactoTel.'</td>
+          <td colspan="8">'.$ContactoN." ".$ContactoA.'-'.$ContactoTel.'</td>
         </tr>
          <tr>
           <td style=" width: 20%;" rowspan="10">FIRMA</td>
-          <td colspan="4" rowspan="10"></td>
+          <td colspan="8" rowspan="10"></td>
         </tr>
     
          

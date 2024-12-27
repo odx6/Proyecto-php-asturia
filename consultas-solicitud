@@ -42,3 +42,45 @@ tblcatslc
 INNER JOIN tblcatemp ON  tblcatslc.LNGIDNUSR=tblcatemp.IDEMP
 INNER JOIN tblcatfol ON  tblcatslc.INTFOLSLC=tblcatfol.id_folio
 
+
+SELECT
+tblcatslc.*,
+tblcatemp.STRNOM AS CNombre,
+tblcatemp.STRAPE AS Capellido,
+tblcatfol.folio  AS folioE
+
+FROM 
+tblcatslc
+INNER JOIN tblcatemp ON  tblcatslc.LNGIDNUSR=tblcatemp.IDEMP
+INNER JOIN tblcatfol ON  tblcatslc.INTFOLSLCE=tblcatfol.id_folio
+UNION ALL
+SELECT
+tblcatslc.*,
+tblcatemp.STRNOM AS NOMBRE,
+tblcatemp.STRAPE AS apellido,
+tblcatfol.folio  AS folioG,
+
+FROM 
+tblcatslc
+INNER JOIN tblcatemp ON  tblcatslc.LNGIDNUSR=tblcatemp.IDEMP
+INNER JOIN tblcatfol ON  tblcatslc.INTFOLSLC=tblcatfol.id_folio
+
+//Consulta para recorrido 
+
+SELECT 
+tblreco.*,
+tblcatemp.STRNOM AS Operador,
+tblcatemp.STRAPE AS Aoperador, 
+tblcatveh.STRNMR AS NCar,
+tblcatveh.STRMRC AS Mcar,
+tblcatrut.STRNOM AS ruta,
+tblcatrut.STRNOM AS ruta,
+tblcattik.*
+FROM 
+tblreco
+INNER JOIN tblcatemp ON tblcatemp.IDEMP=tblreco.IDEMP
+INNER JOIN tblcatveh ON tblcatveh.STRNMRSR=tblreco.STRNMRSR
+INNER JOIN tblcatrut ON tblcatrut.STRPRUT=tblreco.STRPRUT
+INNER JOIN tblcattik ON tblcattik.STRPRE=tblreco.STRPRE
+
+

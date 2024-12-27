@@ -31,67 +31,89 @@ ALTER TABLE
 ADD
     CONSTRAINT fk_organizacion_foreign_key FOREIGN KEY (LNGIDNORG) REFERENCES tblcatorg(LNGIDNORG) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-    relacion TIPO-VEHICULO
+relacion TIPO - VEHICULO
 ALTER TABLE
     tblcatveh
 ADD
     CONSTRAINT fk_tipo_foreign_key FOREIGN KEY (STRTPVH) REFERENCES tbltpveh(STRTPVH) ON DELETE RESTRICT ON UPDATE CASCADE;
-    
-RELACION  SOLICITUD EMPLEADO CAPTURISTA
+
+RELACION SOLICITUD EMPLEADO CAPTURISTA
 ALTER TABLE
     tblcatslc
 ADD
     CONSTRAINT fk_capturista_foreign_key FOREIGN KEY (LNGIDNUSR) REFERENCES tblcatemp(IDEMP) ON DELETE CASCADE ON UPDATE CASCADE;
 
-
-RELACION SOLICITUD EMPLEADO-CONTACTO
+RELACION SOLICITUD EMPLEADO - CONTACTO
 ALTER TABLE
     tblcatslc
 ADD
     CONSTRAINT fk_contacto_foreign_key FOREIGN KEY (LNGIDNCNT) REFERENCES tblcatemp(IDEMP) ON DELETE CASCADE ON UPDATE CASCADE;
 
-
-Relacion solicitud-empleado-mecanico
+Relacion solicitud - empleado - mecanico
 ALTER TABLE
     tblcatslc
 ADD
     CONSTRAINT fk_mecanico_foreign_key FOREIGN KEY (LNGIDNMCN) REFERENCES tblcatemp(IDEMP) ON DELETE CASCADE ON UPDATE CASCADE;
 
-
-relacion  solicitud-organizacion
+relacion solicitud - organizacion
 ALTER TABLE
     tblcatslc
 ADD
     CONSTRAINT fk_organizacion_foreign_key FOREIGN KEY (LNGIDNORG) REFERENCES tblcatemp(IDEMP) ON DELETE CASCADE ON UPDATE CASCADE;
 
-relacion solicitud-automovil 
+relacion solicitud - automovil
 ALTER TABLE
     tblcatslc
 ADD
     CONSTRAINT fk_vehiculo_foreign_key FOREIGN KEY (STRNMRSR) REFERENCES tblcatveh(STRNMRSR) ON DELETE CASCADE ON UPDATE CASCADE;
 
-
-//forekeys de folios-organizacion
-
+/ / forekeys de folios - organizacion
 ALTER TABLE
     tblfolslc
 ADD
     CONSTRAINT fk_folios_foreign_key FOREIGN KEY (fk_org) REFERENCES tblcatorg(LNGIDNORG) ON DELETE CASCADE ON UPDATE CASCADE;
 
+INSERT INTO
+    `empleado_permisos`(
+        `idempleado_permiso`,
+        `idempleado`,
+        `idpermiso`,
+        `Habilidades`
+    )
+VALUES
+    ('16', '2', '1', '1,2,3,4,5'),
+    ('17', '2', '2', '1,2,3,4,5'),
+    ('18', '2', '3', '1,2,3,4,5'),
+    ('19', '2', '4', '1,2,3,4,5'),
+    ('20', '2', '5', '1,2,3,4,5'),
+    ('21', '2', '6', '1,2,3,4,5'),
+    ('22', '2', '7', '1,2,3,4,5'),
+    ('23', '2', '8', '1,2,3,4,5'),
+    ('24', '2', '9', '1,2,3,4,5'),
+    ('25', '2', '10', '1,2,3,4,5'),
+    ('26', '2', '11', '1,2,3,4,5'),
+    ('27', '2', '12', '1,2,3,4,5'),
+    ('28', '2', '13', '1,2,3,4,5'),
+    ('29', '2', '14', '1,2,3,4,5'),
+    ('30', '2', '15', '1,2,3,4,5');
 
-    INSERT INTO `empleado_permisos`(`idempleado_permiso`, `idempleado`, `idpermiso`, `Habilidades`) 
-    VALUES ('16','2','1','1,2,3,4,5'),
-     ('17','2','2','1,2,3,4,5'),
-     ('18','2','3','1,2,3,4,5'),
-     ('19','2','4','1,2,3,4,5'),
-     ('20','2','5','1,2,3,4,5'),
-     ('21','2','6','1,2,3,4,5'),
-     ('22','2','7','1,2,3,4,5'),
-     ('23','2','8','1,2,3,4,5'),
-     ('24','2','9','1,2,3,4,5'),
-     ('25','2','10','1,2,3,4,5'),
-     ('26','2','11','1,2,3,4,5'),
-     ('27','2','12','1,2,3,4,5'),
-     ('28','2','13','1,2,3,4,5'),
-     ('29','2','14','1,2,3,4,5'),
-     ('30','2','15','1,2,3,4,5');
+INSERT INTO
+    `tblcatrut`(`STRPRUT`, `STRNOM`, `DOUKM`, `DTHCRE`, `BITSUS`)
+VALUES
+    (
+        '[value-1]',
+        '[value-2]',
+        '[value-3]',
+        '[value-4]',
+        '[value-5]'
+    )
+UPDATE
+    `tblcatrut`
+SET
+    `STRPRUT` = '[value-1]',
+    `STRNOM` = '[value-2]',
+    `DOUKM` = '[value-3]',
+    `DTHCRE` = '[value-4]',
+    `BITSUS` = '[value-5]'
+WHERE
+    1

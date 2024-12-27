@@ -81,6 +81,9 @@ if ($row = mysqli_fetch_array($query)) {
 	in_array(13, $valores) ? $_SESSION['proveedores'] = 1 : $_SESSION['proveedores'] = 0;
 	in_array(14, $valores) ? $_SESSION['compras'] = 1 : $_SESSION['compras'] = 0;
 	in_array(15, $valores) ? $_SESSION['registros'] = 1 : $_SESSION['registros'] = 0;
+	in_array(16, $valores) ? $_SESSION['Combustible'] = 1 : $_SESSION['Combustible'] = 0;
+	in_array(17, $valores) ? $_SESSION['Rutas'] = 1 : $_SESSION['Rutas'] = 0;
+	in_array(18, $valores) ? $_SESSION['Kilometraje'] = 1 : $_SESSION['Kilometraje'] = 0;
 
 	$_SESSION['Habilidad'] = $Habilidades;
 

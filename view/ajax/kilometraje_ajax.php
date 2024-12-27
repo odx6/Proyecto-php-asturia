@@ -1,0 +1,170 @@
+<?php
+include("is_logged.php"); //Archivo comprueba si el usuario esta logueado
+/* Connect To Database*/
+require_once("../../config/config.php");
+require_once("../../config/funciones.php");
+require_once("../../config/RecuperarDatos.php");
+
+if (isset($_REQUEST["id"])) { //codigo para eliminar 
+    $id = $_REQUEST["id"];
+
+    $sql2 = recuperarDatos("SELECT * from tblreco WHERE STRPRE='$id'");
+    try {
+        if (($delete = mysqli_query($con, "DELETE FROM tblreco WHERE STRPRE='$id'"))) {
+            $aviso = "Bien hecho!";
+            $msj = "Datos eliminados satisfactoriamente.";
+            $classM = "alert alert-success";
+            $times = "&times;";
+            if ($delete) {
+
+                $tabla = "tblreco";
+                $tipo = "Eliminacion";
+                $fecha = date("Y-m-d H:i:s");
+
+                $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+                $query = mysqli_query($con, $sqllog);
+            }
+        } else {
+            $aviso = "Aviso!";
+            $msj = "Error al eliminar los datos " . mysqli_error($con);
+            $classM = "alert alert-danger";
+            $times = "&times;";
+        }
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() == 1451) {
+            $aviso = "Aviso!";
+            $msj = "El dato que intentas eliminar tiene relacion con otros registros por favor verifica que no dependa de otros registros Codigo de Error:" . $e->getCode();
+            $classM = "alert alert-danger";
+            $times = "&times;";
+        } else {
+            $aviso = "Aviso!";
+            $msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
+            $classM = "alert alert-danger";
+            $times = "&times;";
+        }
+    }
+}
+
+$action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
+if ($action == 'ajax') {
+    $query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
+    $tables = "tblreco";
+    $campos = "*";
+    $sWhere = " STRPRE LIKE '%" . $query . "%'";
+
+
+    $reload = './productos-view.php';
+    //main query to fetch the data
+   // $query = mysqli_query($con, "SELECT $campos FROM  $tables;");
+     $query = mysqli_query($con, "SELECT tblreco.*, tblcatemp.STRNOM AS Operador, tblcatemp.STRAPE AS Aoperador, tblcatveh.STRNMR AS NCar, tblcatveh.STRMRC AS Mcar, tblcatrut.STRNOM AS ruta, tblcatrut.STRNOM AS ruta, tblcattik.* FROM tblreco INNER JOIN tblcatemp ON tblcatemp.IDEMP=tblreco.IDEMP INNER JOIN tblcatveh ON tblcatveh.STRNMRSR=tblreco.STRNMRSR INNER JOIN tblcatrut ON tblcatrut.STRPRUT=tblreco.STRPRUT INNER JOIN tblcattik ON tblcattik.STRPRE=tblreco.STRPRE;");
+    //loop through fetched data
+
+    if (isset($_REQUEST["id"])) {
+?>
+        <div class="<?php echo $classM; ?>">
+            <button type="button" class="close" data-dismiss="alert"><?php echo $times; ?></button>
+            <strong><?php echo $aviso ?> </strong>
+            <?php echo $msj; ?>
+        </div>
+    <?php
+    }
+    //  if ($numrows > 0) {
+    ?>
+    <table id="example1" class="table table-bordered table-striped">
+
+        <thead>
+            <tr>
+                <th>#CLAVE</th>
+                <th>OPERADOR</th>
+                <th>VEHICULO</th>
+                <th>TICKETS</th>
+                <th>RUTA</th>
+                <th>KILOMETRAJE DE INICIO</th>
+                <th>KILOMETRAJE FINAL</th>
+                <th>KILOMETRAJE RECORRIDO</th>
+                <th>RENDIMIENTO POR LITRO</th>
+                <th>IMPORTE</th>
+                <th>CONSUMO</th>
+                <th>DIFERENCIA</th>
+                <th>DESCUENTO</th>
+                <th>CAPTURA</th>
+              
+                <th>Accion</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php
+            $finales = 0;
+            while ($row = mysqli_fetch_array($query)) {
+              
+                $STRPRE = $row["STRPRE"];
+                $IDEMP = $row["IDEMP"];
+                $STRNMRSR = $row["STRNMRSR"];
+                $STRPRUT = $row["STRPRUT"];
+                $KLMINI=$row["KLMINI"];
+                $KLMFIN = $row["KLMFIN"];
+                $KLMRECO=$row["KLMRECO"];
+                $DOUREN=$row["DOUREN"];
+                $INPRT=$row["INPRT"];
+                $DOUCON=$row["DOUCON"];
+                $DOUDIF=$row["DOUDIF"];
+                $DOUDES=$row["DOUDES"];
+                $DTHCAP = $row["DTHCAP"];
+                $DTHOR = $row["DTHOR"];
+                
+
+
+                ($BITSUS == 1) ? $BITSUS = "Activo" : $BITSUS = "Inactivo";
+
+                $finales++;
+            ?>
+                <tr>
+                    <td><?php echo $STRPRE ?></td>
+                    <td><?php echo $IDEMP ?></td>
+                    <td><?php echo $STRNMRSR ?></td>
+                    <td><?php echo $STRPRUT ?></td>
+                    <td><?php echo $KLMINI ?></td>
+                    <td><?php echo $KLMFIN ?></td>
+                    <td><?php echo $KLMRECO ?></td>
+                    <td><?php echo $DOUREN ?></td>
+                    <td><?php echo $INPRT ?></td>
+                    <td><?php echo $DOUCON ?></td>
+                    <td><?php echo $DOUDIF ?></td>
+                    <td><?php echo $DOUDES ?></td>
+                    <td><?php echo $DTHCAP ?></td>
+                    <td><?php echo $DTHOR ?></td>
+                    <td class="text-right">
+                        <?php if (in_array(2, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+
+                            <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $STRPRE; ?>','view/modals/editar/vehiculo.php')"><i class="fa fa-edit"></i></button>
+
+                        <?php } ?>
+                        <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+
+                            <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $STRPRE; ?>','view/ajax/vehiculos_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
+
+                        <?php } ?>
+                        <?php if (in_array(4, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+
+                            <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $STRPRE; ?>','view/modals/mostrar/vehiculo.php')"><i class="fa fa-eye"></i></button>
+
+                        <?php } ?>
+
+                    </td>
+                </tr>
+
+            <?php } ?>
+        </tbody>
+
+        <tfoot>
+
+        </tfoot>
+    </table>
+<?php
+} else {
+    echo '<div class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <strong>Sin Resultados!</strong> No se encontraron resultados en la base de datos!.</div>';
+}
+//}
+?>
