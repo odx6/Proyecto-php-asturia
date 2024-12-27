@@ -34,6 +34,8 @@ if (empty(trim($_POST['STRNSS']))) {
 	$errors[] = "Contraseña  está vacío.";
 } elseif (empty($_POST['BITSUS'])) {
 	$errors[] = "Estado está vacío.";
+}elseif (empty($_POST['DTHLIC'])) {
+	$errors[] = "fecha de  vencimiento de licencia está vacío.";
 } elseif (empty($_POST['sesion'])) {
 	$errors[] = "Estado está vacío.";
 } elseif (
@@ -54,6 +56,7 @@ if (empty(trim($_POST['STRNSS']))) {
 	&& !empty($_POST['STRPWS'])
 	&& !empty($_POST['BITSUS'])
 	&& !empty($_POST['sesion'])
+	&& !empty($_POST['DTHLIC'])
 
 
 	/*&& !empty($_POST['kind'])*/
@@ -79,6 +82,7 @@ if (empty(trim($_POST['STRNSS']))) {
 	$STRCOR = mysqli_real_escape_string($con, (strip_tags($_POST["STRCOR"], ENT_QUOTES)));
 	$STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
 	$BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
+	$DTHLIC = mysqli_real_escape_string($con, (strip_tags($_POST["DTHLIC"], ENT_QUOTES)));
 	$sesion = mysqli_real_escape_string($con, (strip_tags($_POST["sesion"], ENT_QUOTES)));
 	$CREATED_AT = date("Y-m-d H:i:s");
 	if (empty($_FILES["STRIMGE"]['name'])) {
@@ -130,8 +134,8 @@ if (empty(trim($_POST['STRNSS']))) {
 
 	//Write register in to database 
 	if (verificacionDeCorreo($STRCOR, $token) == "true") {
-		$sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR,STRNDL, STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN,	numsesion) 
-	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNDL . "','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "','".$sesion . "');";
+		$sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR,STRNDL,DTHLIC,STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN,	numsesion) 
+	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNDL . "','".$DTHLIC."','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "','".$sesion . "');";
 		$query_new = mysqli_query($con, $sql);
 
 		if ($query_new) {

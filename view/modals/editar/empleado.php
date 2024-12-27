@@ -15,6 +15,7 @@ if (in_array(2, $_SESSION['Habilidad']['Empleados'])) {
                 $STRRFC = $row['STRRFC'];
                 $STRCUR = $row['STRCUR'];
                 $STRNDL = $row['STRNDL'];
+                $DTHLIC = $row['DTHLIC'];
                 $STRNOM = $row['STRNOM'];
                 $STRAPE = $row['STRAPE'];
                 $STRDOM = $row['STRDOM'];
@@ -69,18 +70,25 @@ if (in_array(2, $_SESSION['Habilidad']['Empleados'])) {
                         </div>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="STRNDL" class=" col-form-label">Numero de licencia: </label>
                                     <input type="text" required class="form-control" id="STRNDL" name="STRNDL" placeholder="Numero de licencia: " required value="<?php echo $STRNDL ?>">
                                     <span id="MSTRNDL"></span>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="secion" class=" col-form-label">Numero de sesiones </label>
-                                    <input type="number" required class="form-control" id="sesion" name="sesion" placeholder="Max sesion"  min="0" oninput="validity.valid||(value='');" value="<?php echo $sesion; ?>">
+                                    <input type="number" required class="form-control" id="sesion" name="sesion" placeholder="Max sesion" min="0" oninput="validity.valid||(value='');" value="<?php echo $sesion; ?>">
                                     <span id="sesion"></span>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="secion" class=" col-form-label">Fecha de vencimiento </label>
+                                    <input type="date" required class="form-control" id="DTHLIC" name="DTHLIC" placeholder="fecha de vencimiento" required value="<?php echo $DTHLIC ?>">
+                                    <span id="DTHLIC"></span>
                                 </div>
                             </div>
                         </div>

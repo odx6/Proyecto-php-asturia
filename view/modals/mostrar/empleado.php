@@ -16,6 +16,7 @@ if (isset($_GET["id"])) {
             $STRRFC = $row['STRRFC'];
             $STRCUR = $row['STRCUR'];
             $STRNDL = $row['STRNDL'];
+            $DTHLIC = $row['DTHLIC'];
             $STRNOM = $row['STRNOM'];
             $STRAPE = $row['STRAPE'];
             $STRDOM = $row['STRDOM'];
@@ -196,7 +197,14 @@ if (isset($_GET["id"])) {
 
 
                 </div>
+                <div class="row">
+                <div class="form-group">
+                        <label for="DTHLIC" class=" col-form-label">vigencia de la licencia: </label>
+                           <?php echo $DTHLIC?>
+                          
 
+                        </div>
+                </div>
 
                 <p class="text-muted text-center">permisos</p>
 

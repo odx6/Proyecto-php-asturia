@@ -35,6 +35,10 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
 
 
     <div class="row">
+    <input type="hidden" required class="form-control" id="LNGIDNSLC" name="LNGIDNSLC"  value="<?php echo $LNGIDNSLC ?>">
+    <input type="hidden" required class="form-control" id="OLDLNGIDNSLC" name="OLDLNGIDNSLC"  value="<?php echo $LNGIDNSLC ?>">
+    <input type="hidden" required class="form-control" id="OLDFOL" name="OLDFOL"  value="<?php echo $INTFOLSLCE ?>">
+        
         <div class="col-6">
             <div class="form-group">
                 <label for="Empleado" class=" col-form-label">Capturista: </label>
@@ -47,14 +51,18 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
 
 
                 // Crear el elemento select
-                echo ' <select class="form-control select2" name="LNGIDNUSR" id="LNGIDNUSR">';
+                echo ' <select class="form-control select2" name="LNGIDNUSR" id="LNGIDNUSR" required>';
 
                 if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
                     // Iterar sobre los resultados y crear una opción para cada uno
 
                     while ($fila = mysqli_fetch_assoc($resultado)) {
-                        echo '<option value="' . $fila['IDEMP'] . '"  <?php if($LNGIDNSLC= $fila["IDEMP"])echo "selected" ?>   ' . $fila['STRNOM'] . " " . $fila['STRAPE'] . '</option>';
+                        echo '<option value="'. $fila['IDEMP'] . '" ';
+                        if($LNGIDNUSR ==$fila['IDEMP']) {echo 'selected';}
+                         echo '>';
+                         echo $fila['STRNOM'].' '.$fila['STRAPE'].'</option>';
+                        
                     }
                 } else {
 
@@ -79,14 +87,16 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
 
 
                 // Crear el elemento select
-                echo ' <select class="form-control select2" name="LNGIDNCNT" id="LNGIDNCNT">';
+                echo ' <select class="form-control select2" name="LNGIDNCNT" id="LNGIDNCNT" required>';
 
                 if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
                     // Iterar sobre los resultados y crear una opción para cada uno
 
                     while ($fila = mysqli_fetch_assoc($resultado)) {
-                        echo '<option value="' . $fila['IDEMP'] . '"." <?php if($LNGIDNUSR= $fila["IDEMP"]) echo "selected" ?> ". ' . $fila['STRNOM'] . " " . $fila['STRAPE'] . '</option>';
+                        echo '<option value="' . $fila['IDEMP'] . '"';
+                         if($LNGIDNCNT == $fila["IDEMP"]) echo "selected";
+                         echo '>' . $fila['STRNOM'] . ' ' . $fila['STRAPE'] . '</option>';
                     }
                 } else {
 
@@ -111,14 +121,16 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
 
 
                 // Crear el elemento select
-                echo ' <select class="form-control select2" name="LNGIDNMCN" id="LNGIDNMCN">';
+                echo ' <select class="form-control select2" name="LNGIDNMCN" id="LNGIDNMCN" required>';
 
                 if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
                     // Iterar sobre los resultados y crear una opción para cada uno
 
                     while ($fila = mysqli_fetch_assoc($resultado)) {
-                        echo '<option value="' . $fila['IDEMP'] . '"  <?php if($id= $fila["IDEMP"])echo "selected" ?>   ' . $fila['STRNOM'] . " " . $fila['STRAPE'] . '</option>';
+                        echo '<option value="' . $fila['IDEMP']. '"';
+                         if($LNGIDNMCN== $fila["IDEMP"])echo 'selected';
+                        echo  '>' . $fila['STRNOM'] .'' . $fila['STRAPE'] . '</option>';
                     }
                 } else {
 
@@ -141,14 +153,16 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
 
 
                 // Crear el elemento select
-                echo ' <select class="form-control select2" name="LNGIDNORG" id="LNGIDNORG">';
+                echo ' <select class="form-control select2" name="LNGIDNORG" id="LNGIDNORG" required >';
 
                 if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
                     // Iterar sobre los resultados y crear una opción para cada uno
 
                     while ($fila = mysqli_fetch_assoc($resultado)) {
-                        echo '<option value="' . $fila['LNGIDNORG'] . '"  <?php if($LNGIDNORG= $fila["LNGIDNORG"]) selected ?>   ' . $fila['STRDSCORG'] . '</option>';
+                        echo '<option value="' . $fila['LNGIDNORG'] . '"';
+                          if($LNGIDNORG== $fila["LNGIDNORG"])echo  'selected'; 
+                          echo '>'. $fila['STRDSCORG'] . '</option>';
                     }
                 } else {
 
@@ -173,14 +187,16 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
 
 
                 // Crear el elemento select
-                echo ' <select class="form-control select2" name="STRNMRSR" id="STRNMRSR">';
+                echo ' <select class="form-control select2" name="STRNMRSR" id="STRNMRSR" required>';
 
                 if (isset($resultado) && $resultado != NULL &&  mysqli_num_rows($resultado) > 0) {
 
                     // Iterar sobre los resultados y crear una opción para cada uno
 
                     while ($fila = mysqli_fetch_assoc($resultado)) {
-                        echo '<option value="' . $fila['STRNMRSR'] . '"  <?php if($STRNMRSR= $fila["STRNMRSR"]) selected ?>   ' . $fila['STRNMR'] . "-" . $fila['STRMRC'] . "-" . $fila['STRMDL'] . '</option>';
+                        echo '<option value="' . $fila['STRNMRSR'] . '"';
+                          if($STRNMRSR== $fila["STRNMRSR"])echo 'selected';
+                          echo '>' . $fila['STRNMR'] . "-" . $fila['STRMRC'] . "-" . $fila['STRMDL'] . '</option>';
                     }
                 } else {
 
@@ -199,14 +215,14 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
             <div class="form-group">
                 <label for="unidad" class="col-12 control-label">Fecha de registro : </label>
 
-                <input type="date" class="form-control" id="Observaciones" name="DTFCHSLC" placeholder="DTFCHSLC: ">
+                <input type="date" required class="form-control" id="Observaciones" name="DTFCHSLC" placeholder="DTFCHSLC: " value="<?php echo $DTFCHSLC ?>">
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
                 <label for="unidad" class="col-12 control-label">Fecha de diagnostico : </label>
 
-                <input type="date" class="form-control" id="Observaciones" name="DTFCHDGN" placeholder="DTFCHDGN: ">
+                <input type="date" class="form-control" required id="Observaciones" name="DTFCHDGN" placeholder="DTFCHDGN: " value="<?php echo $DTFCHDGN ?>">
 
             </div>
         </div>
@@ -217,13 +233,21 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
 
     <div class="row">
 
-        <div class="col-12">
+        <div class="col-6">
             <div class="form-group">
                 <label for="kilometros" class="col-sm-2 control-label">kilometros: </label>
-                <input type="text" required class="form-control" id="STRKLM" name="STRKLM" placeholder="kilometros">
+                <input type="text" required class="form-control" id="STRKLM" name="STRKLM" placeholder="kilometros" value="<?php echo $STRKLM ?>">
             </div>
         </div>
-
+        <div class="col-6">
+            <div class="form-group">
+                <label for="Estado" class=" control-label">Estado: </label>
+                <select class="form-control" name="BITCNCSLC" id="BITCNCSLC" required >
+                    <option value="1" <?php if ($BITCNCSLC == 1) echo "selected"; ?>>Registrado</option>
+                    <option value="0" <?php if ($BITCNCSLC == 0) echo "selected"; ?>>Cancelado</option>
+                </select>
+            </div>
+        </div>
 
     </div>
     <div class="row">
@@ -234,7 +258,7 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
                         <font style="vertical-align: inherit;">Observaciones</font>
                     </font>
                 </label>
-                <textarea class="form-control" rows="3" placeholder="Observaciones ..." id="STROBSRPT" name="STROBSRPT"></textarea>
+                <textarea class="form-control" rows="3" placeholder="Observaciones ..." id="STROBSRPT" name="STROBSRPT" required ><?php echo $STROBSRPT ?></textarea>
             </div>
         </div>
         <div class="col-6">
@@ -244,7 +268,7 @@ if (in_array(2, $_SESSION['Habilidad']['Solicitud'])) {
                         <font style="vertical-align: inherit;">Diagnostico</font>
                     </font>
                 </label>
-                <textarea class="form-control" rows="3" placeholder="Diagnostico ..." id="STRDGN" name="STRDGN"></textarea>
+                <textarea class="form-control" rows="3" placeholder="Diagnostico ..." id="STRDGN" name="STRDGN" required ><?php echo $STRDGN ?></textarea>
             </div>
         </div>
     </div>

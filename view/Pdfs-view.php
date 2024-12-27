@@ -9,195 +9,254 @@ include_once "./vendor/autoload.php";
 use Dompdf\Dompdf;
 
 
-if (!isset($_SESSION['user_id']) | empty($_POST["id"]) ){
+if (!isset($_SESSION['user_id']) | empty($_POST["id"])) {
     header("location: ./?view=index"); //Redirecciona 
     exit;
 }
 if ($_SESSION['solicitud'] == 1) {
-    if (isset($_POST["id"])) {
+   if (isset($_POST["id"])) {
         $id = $_POST["id"];
         $id = intval($id);
-        $sql = "select * from solicitud where pk_solicitud='$id'";
+        $sql = "select * from tblcatslc where 	LNGIDNSLC='".$id."';";
         $query = mysqli_query($con, $sql);
         $num = mysqli_num_rows($query);
         if ($num == 1) {
-            $rw = mysqli_fetch_array($query);
-            $pk_solicitud = $rw['pk_solicitud'];
-            $fk_empleado = $rw['fk_empleado'];
-            $NumeroFolio = $rw['NumeroFolio'];
-            $fecha = $rw['fecha'];
-            $operador = $rw['operador'];
-            $NoCarro = $rw['NoCarro'];
-            $Kilometraje = $rw['Kilometraje'];
-            $NoPlacas = $rw['NoPlacas'];
-            $DetallesServicio = $rw['DetallesServicio'];
-            $Observaciones = $rw['Observaciones'];
+            while ($rw = mysqli_fetch_array($query)) {
+                $LNGIDNSLC = $rw['LNGIDNSLC'];
+                $LNGIDNUSR = $rw['LNGIDNUSR'];
+                $INTFOLSLC = $rw['INTFOLSLC'];
+                $INTFOLSLCE = $rw['INTFOLSLCE'];
+                $DTFCHSLC = $rw['DTFCHSLC'];
+                $LNGIDNCNT = $rw['LNGIDNCNT'];
+                $LNGIDNORG = $rw['LNGIDNORG'];
+                $STRNMRSR = $rw['STRNMRSR'];
+                $STRKLM = $rw['STRKLM'];
+                $STROBSRPT = $rw['STROBSRPT'];
+                $STRDGN = $rw['STRDGN'];
+                $LNGIDNMCN = $rw['LNGIDNMCN'];
+                $DTFCHDGN = $rw['DTFCHDGN'];
+                $BITCNCSLC = $rw['BITCNCSLC'];
+            }
         }
     } else {
         exit;
     }
-    ob_start();
-    consultarNombre($fk_empleado, 'tblcatemp', 'IDEMP', 'STRNOM');
-
-    $nombre = ob_get_clean();
-   
-
-    ob_start();
-    consultarNombre($fk_empleado, 'tblcatemp', 'IDEMP', 'STRAPE');
-
-    $apellido = ob_get_clean();
-   
-   
-
   
+   
 
+    $nombre = getDato($LNGIDNUSR, 'tblcatemp', 'IDEMP', 'STRNOM');
+    $apellido =getDato($LNGIDNUSR, 'tblcatemp', 'IDEMP', 'STRAPE');
+    $LICENCIA = getDato($LNGIDNUSR, 'tblcatemp', 'IDEMP', 'STRNDL');
+    $ORIGEN = getDato($LNGIDNORG, 'tblcatorg', 'LNGIDNORG', 'STRDSCORG');
+    $ContactoN=getDato($LNGIDNCNT, 'tblcatemp', 'IDEMP', 'STRNOM'); 
+    $ContactoA=getDato($LNGIDNCNT, 'tblcatemp', 'IDEMP', 'STRAPE');
+    $ContactoTel=getDato($LNGIDNCNT, 'tblcatemp', 'IDEMP', 'STRTEL');
+    $FolioG=getDato($INTFOLSLC,'tblcatfol','id_folio','folio');
+    $FolioE=getDato($INTFOLSLCE,'tblcatfol','id_folio','folio');
+    $MecanicoN=getDato($LNGIDNUSR, 'tblcatemp', 'IDEMP', 'STRNOM');
+    $MecanicoA=getDato($LNGIDNUSR, 'tblcatemp', 'IDEMP', 'STRAPE');
+    $vigencia=getDato($LNGIDNCNT ,'tblcatemp', 'IDEMP', 'DTHLIC');
+
+    // Fecha actual
+$fecha_actual = time();
+
+// Fecha a comparar (formato 'Y-m-d')
+$fecha_vigencia = strtotime('vigencia');
+$icon;
+
+// Comparar fechas
+if ($fecha_actual <= $fecha_vigencia) {
+   $icon="<i class='fa-solid fa-check'></i>";
+} else {
+  $icon="<i class='fa-solid fa-xmark'></i>";
+}
+
+    
+   
+    //data vehiculo 
+     $car="SELECT * FROM `tblcatveh`  WHERE STRNMRSR='".$STRNMRSR."' ";
+     try {
+		$cars = mysqli_query($con,$car);
+	} catch (mysqli_sql_exception $e) {
+		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+	}
+    if($cars){
+      $filas=mysqli_fetch_assoc($cars);
+
+    }
+    $tipo=getDato($filas['STRTPVH'], 'tbltpveh', 'STRTPVH', 'STRNOM');
+    $OrigenVeh=getDato($filas['LNGIDNORG'], 'tblcatorg', 'LNGIDNORG', 'STRDSCORG');
+
+    //
     $dompdf = new Dompdf();
     $NoOrden = 4;
-    $html = '<!DOCTYPE html>
+    $html = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
-    <style>
-        .invoice {
-            width: 90s%;
-            margin: 0 auto;
-           
-        }
-
-        header {
-            position: fixed;
-            top: 0cm;
-            left: 0cm;
-            right: 0cm;
-            height: 2cm;
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            text-align:  center;
-            line-height: 30px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0cm;
-            left: 0cm;
-            right: 0cm;
-            height: 2cm;
-            background-color:white;
-            color:black;
-            text-align: center;
-            line-height: 35px;
-            border-top: 1px solid black;
-            
-        }
-         .con
-        .invoice-details {
-            margin: 20px;
-        }
-
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .invoice-table, th, td {
-            border: 1px solid #000;
-        }
-
-        .signature {
-            width: 50%;
-            float: left;
-        }
-     
-        h5{
-        	background-color:black;
-        	color:white;
-        	text-align:center;
-        }
-        p{
-        	text-align:center;
-        }
-        h1{
-        	text-align:center;
-        }
-    </style>
-</head>
-<body>
-<header>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+  <style>
+    *{margin:0;
     
-    <h4>CEMENTO ACERO Y ACABADOS ROMA, S.A C.V <br>SIMBOLOS PATRIOS N°730 COL.ELISEO JIMENEZ RUIZ C.P 68120</h4>
-    <h3></h3>
-   
-   
-</header>
-<footer>
+}
+
+    body {
+      
+      font-family: sans-serif;
+      font-size:16px;
+    }
+
+    div.page {
+      margin: 10mm;
+      padding: 10mm;
+      border: 0.5pt solid gray;
+    }
+
+    div.bgcolor {
+      background-color: #e0e0e0;
+      line-height: 170%;
+    }
+    td{
+    border-bottom:1px solid rgb(10, 10, 10);
+
+}
+    
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <h2>SOLICITUD DE INGRESO A TALLER N° '.$FolioG.'</h2>
 
 
-<strong> MANUEL F.RODRIGUEZ MARRON GERENTE <?php echo date ("Y");?></strong>
 
-</footer>
+ 
+    <table >
+      <tbody>
+        <tr>
+          <td>
+            <p style="background:rgb(15, 15, 15); line-height:170%; color: #e0e0e0; " >FECHA DE <br> SOLICITUD</p>
+          </td>
+          <td style="border-top:1px solid  rgb(10, 10, 10) ">'.$DTFCHSLC.'</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <div class="invoice">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+
+
+ 
+    <p style="background:rgb(15, 15, 15); line-height:170%; color: #e0e0e0; text-align: center;">DATOS DEL SOLICITANTE
+    </p>
+    <table style="width: 100%;">
+      <tbody>
+        <tr class="line">
+          <td  style=" width: 20%;">NOMBRE</td>
+          <td colspan="4">'.$nombre."  ".$apellido.'</td>
+        </tr>
+        <tr style="border-top: 0.5pt solid black;">
+          <td style=" width: 20%;">LICENCIA</td>
+          <td >'.$LICENCIA.'</td>
+          <td style=" width: 20%;">VIGENCIA</td>
+          <td >'.$vigencia.' '.$icon.'</td>
+        </tr>
+        <tr>
+          <td style=" width: 20%;">ORIGEN</td>
+          <td colspan="4">'.$ORIGEN."-".$FolioE.'</td>
+        </tr>
+        <tr>
+          <td style=" width: 20%;">CONTACTO</td>
+          <td colspan="4">'.$ContactoN." ".$ContactoA.'-'.$ContactoTel.'</td>
+        </tr>
+         <tr>
+          <td style=" width: 20%;" rowspan="10">FIRMA</td>
+          <td colspan="4" rowspan="10"></td>
+        </tr>
+    
+         
+
+      </tbody>
+    </table>
+    <p style="background:rgb(15, 15, 15); line-height:170%; color: #e0e0e0; text-align: center;">DATOS DEL JEFE DE AREA
+    </p>
+    <table style="width: 100%;">
+      <tbody>
+        <tr>
+          <td style=" width: 20%;">NOMBRE</td>
+          <td style="width=100%"></td>
+        </tr>
+     
+       
+        <tr >
+          <td style=" width: 20%;">CONTACTO</td>
+         <td ></td>
+        </tr>
+           <tr>
+          <td style=" width: 20%;" rowspan="10" >FIRMA</td>
+          <td  rowspan="10"></td>
+        </tr>
+
+      </tbody>
+    </table>
+    <p style="background:rgb(15, 15, 15);  color: #e0e0e0; text-align: center;">DATOS DE LA UNIDAD
+    </p>
+    <table style="width: 100%;">
+      <tbody>
+        <tr>
+          <td style=" width: 20%;">IDENTIFICADOR</td>
+          <td>'.$STRNMRSR.'</td>
+        </tr>
+        <tr> 
+          <td style=" width: 20%;">NUMERO</td>
+          <td>'.$filas['STRNMR'].'</td>
+        </tr>
+        <tr>
+          <td style=" width: 20%;">KILOMETRAJE</td>
+          <td>'.$STRKLM.'</td>
+        </tr>
+        <tr>
+          <td style=" width: 20%;">MARCA</td>
+          <td>'.$filas['STRMRC'].'</td>
+        </tr>
+        <tr>
+          <td style=" width: 20%;">TIPO</td>
+          <td>'.$tipo.'</td>
+        </tr>
+        <tr>
+          <td style=" width: 20%;">ORIGEN</td>
+          <td>'.$OrigenVeh.'</td>
+        </tr>
         
-        <table class="invoice-table">
-            <tr>
-                <th>Id Orden :</th>
-                <th>' . $pk_solicitud . '</th>
-                <th>No. de Folio :</th>
-                <th>' . $NumeroFolio . '</th>
-                <th>Fecha</th>
-                <th>' . $fecha . '</th>
-            </tr>
-          
-        </table>
-        <h5>Datos Generales-Orden</h5>
-         <table class="invoice-table">
-            <tr>
-                <th>Operador </th>
-                <th>' . $operador . '</th>
-              
-            </tr>
-          
-        </table>
-         <table class="invoice-table">
-            <tr>
-                <th>No. de Carro :</th>
-                <th>' . $NoCarro . '</th>
-                <th>Kilometraje :</th>
-                <th>' . $Kilometraje . '</th>
-                <th>No.Placas :</th>
-                <th>' . $NoPlacas . '</th>
-              
-            </tr>
-          
-        </table>
-         <h5>Detalles de Servicio</h5>
-         <textarea row="30">' . $DetallesServicio . '</textarea>
-          <h5>Observaciones</h5>
-         <textarea row="30">' . $Observaciones . ' </textarea>
-        <div><h1>ORDEN DE SERVICIO-TALLER</h1></div>
+       
 
-        <div class="signature">
-        <br>
-            <p>AUTORIZO</p> 
-            <p>' . $nombre.' '.$apellido. '</p><br>
-            <p>__________________________</p>
-        </div>
-        <div class="signature">
-        <br>
-          <p>AUTORIZO</p> 
-            <p>Chofer</p><br>
-            <p>__________________________</p>
-        </div>
+      </tbody>
+    </table>
+    <p style="background:rgb(15, 15, 15); line-height:170%; color: #e0e0e0; text-align: center;">DESCRIPCIÓN DE FALLAS O DESPERFECTOS DETECTADOS 
+    </p>
 
-        
-    </div>
-  	 
+    <TEXtarea style="width: 100% ;"  rows="70">'.$STRDGN.'</TEXtarea>
+    <p style="background:rgb(15, 15, 15); line-height:170%; color: #e0e0e0; text-align: center;">ORDEN DE TRABAJO RECONOCIDA POR
+    </p>
+    <table style="width: 100%;">
+      <tbody>
+        <tr>
+          <td style=" width: 20%;">NOMBRE</td>
+          <td>'.$MecanicoN."  ".$MecanicoA.'</td>
+        </tr>
+     
+        <tr>
+          <td style=" width: 20%;">FECHA</td>
+          <td style="width:100%">'.$DTFCHDGN.'</td>
+        </tr>
+        <tr>
+          <td style=" width: 20%;" rowspan="10">FIRMA</td>
+          <td colspan="2" rowspan="10"></td>
+        </tr>
+      </tbody>
+    </table>
+
+
 </body>
+
 </html>
 ';
 

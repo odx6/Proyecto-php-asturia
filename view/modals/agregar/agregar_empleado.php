@@ -29,18 +29,25 @@
 
                                        </div>
                                        <div class="row">
-                                           <div class="col-6">
+                                           <div class="col-4">
                                                <div class="form-group">
                                                    <label for="STRNDL" class=" col-form-label">Numero de licencia: </label>
                                                    <input type="text" required class="form-control" id="STRNDL" name="STRNDL" placeholder="Numero de licencia: " required>
                                                    <span id="MSTRNDL"></span>
                                                </div>
                                            </div>
-                                           <div class="col-6">
+                                           <div class="col-4">
                                                <div class="form-group">
                                                    <label for="secion" class=" col-form-label">Numero de sesiones </label>
                                                    <input type="number" required class="form-control" id="sesion" name="sesion" placeholder="Max sesion" required  min="0" oninput="validity.valid||(value='');" >
                                                    <span id="sesion"></span>
+                                               </div>
+                                           </div>
+                                           <div class="col-4">
+                                               <div class="form-group">
+                                                   <label for="secion" class=" col-form-label">Fecha de vencimiento </label>
+                                                   <input type="date" required class="form-control" id="DTHLIC" name="DTHLIC" placeholder="fecha de vencimiento" required  >
+                                                   <span id="DTHLIC"></span>
                                                </div>
                                            </div>
                                        </div>

@@ -10,6 +10,41 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
 
 	$id = intval($id);
 	$sql2 = recuperarDatos("SELECT * from tblcatslc WHERE LNGIDNSLC='$id';");
+	//cancelar folio 
+	$folRecuperado="SELECT `INTFOLSLC`, `INTFOLSLCE` FROM `tblcatslc` WHERE  LNGIDNSLC='".$id."'";
+	try{
+		$Folios=mysqli_query($con,$folRecuperado);
+	} catch (mysqli_sql_exception $e) {
+		$error[]="error al ejecutar la consulta de cancelacion de folios";
+		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+	}
+
+	if($Folios){
+		$filas=mysqli_fetch_assoc($Folios);
+        $cancelarFolio="UPDATE `tblcatfol` SET `estado`='0' WHERE id_folio='".$filas['INTFOLSLC']."'";
+		try {
+			$FolioCancelado = mysqli_query($con, $cancelarFolio);
+		} catch (mysqli_sql_exception $e) {
+			$error[]="error al cancelar el folio General";
+			$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+		} 
+		$cancelarFolioE="UPDATE `tblcatfol` SET `estado`='0' WHERE id_folio='".$filas['INTFOLSLCE']."'";
+		try {
+			$FolioCanceladoE = mysqli_query($con, $cancelarFolioE);
+		} catch (mysqli_sql_exception $e) {
+			$error[]="error al cancelar el folio Especifico";
+			$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+		} 
+
+
+
+	}else{
+		$error[]="error al cancelar el folios";
+	}
+
+	//
+
+
 
 	try {
 		if (($delete = mysqli_query($con, "DELETE FROM tblcatslc WHERE LNGIDNSLC='$id'"))) {

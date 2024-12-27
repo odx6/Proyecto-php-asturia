@@ -31,6 +31,8 @@ elseif (empty(trim($_POST['STRNDL']))) {
     $errors[] = "Telefono está vacío.";
 } elseif (empty(trim($_POST['STRCOR']))) {
     $errors[] = "Correo Electronico está vacío.";
+}elseif (empty(trim($_POST['DTHLIC']))) {
+    $errors[] = "La fecha  de vencimiento  de la licencia  esta vacia";
 } elseif (empty($_POST['BITSUS'])) {
     $errors[] = "Estado está vacío.";
 }
@@ -56,6 +58,7 @@ elseif (empty($_POST['sesion'])) {
     && !empty($_POST['STRCOR'])
     && !empty($_POST['BITSUS'])
     && !empty($_POST['sesion'])
+    && !empty($_POST['DTHLIC'])
 
     /*&& !empty($_POST['kind'])*/
 ) {
@@ -79,6 +82,7 @@ elseif (empty($_POST['sesion'])) {
     $STRTEL = mysqli_real_escape_string($con, (strip_tags($_POST["STRTEL"], ENT_QUOTES)));
     $STRCOR = mysqli_real_escape_string($con, (strip_tags($_POST["STRCOR"], ENT_QUOTES)));
     $OLDSTRCOR = mysqli_real_escape_string($con, (strip_tags($_POST["OLDSTRCOR"], ENT_QUOTES)));
+    $DTHLIC = mysqli_real_escape_string($con, (strip_tags($_POST["DTHLIC"], ENT_QUOTES)));
     $sesion = mysqli_real_escape_string($con, (strip_tags($_POST["sesion"], ENT_QUOTES)));
 
     if (!empty($_POST['STRPWS'])) $STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
@@ -145,9 +149,9 @@ elseif (empty($_POST['sesion'])) {
     $oldata = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
     // UPDATE data into database
     if (!empty($_POST['STRPWS'])) {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS ."',numsesion='" . $sesion . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "',DTHLIC='".$DTHLIC."', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS ."',numsesion='" . $sesion . "' WHERE IDEMP='" . $id . "' ";
     } else {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS ."',numsesion='" . $sesion . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', DTHLIC='".$DTHLIC."',STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS ."',numsesion='" . $sesion . "' WHERE IDEMP='" . $id . "' ";
     }
     $query = mysqli_query($con, $sql);
     if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/perfil.png") {

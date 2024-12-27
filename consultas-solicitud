@@ -30,15 +30,15 @@ FROM
 tblcatslc
 INNER JOIN tblcatemp ON  tblcatslc.LNGIDNUSR=tblcatemp.IDEMP
 INNER JOIN tblcatfol ON  tblcatslc.INTFOLSLCE=tblcatfol.id_folio
-
+UNION ALL
 SELECT
 tblcatslc.*,
 tblcatemp.STRNOM AS NOMBRE,
 tblcatemp.STRAPE AS apellido,
 tblcatfol.folio  AS folioG,
-tblcatorg.STRDSCORG AS NEMPRESA
+
 FROM 
 tblcatslc
 INNER JOIN tblcatemp ON  tblcatslc.LNGIDNUSR=tblcatemp.IDEMP
 INNER JOIN tblcatfol ON  tblcatslc.INTFOLSLC=tblcatfol.id_folio
-INNER JOIN tblcatorg ON  tblcatslc.LNGIDNORG=tblcatorg.LNGIDNORG
+
