@@ -17,7 +17,7 @@ if (in_array(2, $_SESSION['Habilidad']['Kilometraje'])) {
                 $STRPRUT = $row["STRPRUT"];
                 $KLMINI=$row["KLMINI"];
                 $KLMFIN = $row["KLMFIN"];
-                $KLMRECO=$row["KLMRECO"];
+                $KLMRECO=$row["KLMRECO"]; 
                 $DOUREN=$row["DOUREN"];
                 $INPRT=$row["INPRT"];
                 $DOUCON=$row["DOUCON"];

@@ -177,6 +177,7 @@ function eliminar(id, path, table) {
 
 // editar
 function editar(id, path) {
+  ;
   var parametros = {
     "action": "ajax",
     "id": id
@@ -194,7 +195,12 @@ function editar(id, path) {
   })
 }
 //endeditar
-
+//ide 
+function ChangeValue(id,path){
+  //console.log(id)
+  document.getElementById('STRPRE').value = id;
+}
+//
 //mostrar
 function mostrar(id, path) {
   var parametros = {

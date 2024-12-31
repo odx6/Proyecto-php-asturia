@@ -157,7 +157,7 @@ if ($action == 'ajax') {
                         <?php } ?>
                         <?php if (in_array(1, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                            <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#ticket_modal"  onclick="editar('<?php echo $STRPRE; ?>','view/modals/agregar/agregar_ticket.php')"><i class="fa fa-eye"></i></button>
+                            <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#ticket_modal"  onclick="ChangeValue('<?php echo $STRPRE; ?>','view/modals/agregar/agregar_ticket.php')"><i class="fas fa-ticket-alt"></i></button>
 
                         <?php } ?>
 

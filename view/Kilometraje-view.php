@@ -1,7 +1,6 @@
 <?php
 $active8 = "active";
 
-
 if ($_SESSION['productos'] == 1) {
      (in_array(1,$_SESSION['Habilidad']['Kilometraje']))? $agregar='modals/agregar/agregar_recorrido.php':'';
      (in_array(2,$_SESSION['Habilidad']['Kilometraje']))? $editar="modals/editar/editar_template.php":'';
@@ -68,6 +67,33 @@ $('#new_register').submit(function(event) {
                 });
             }, 5000);
             $('#formModal').modal('hide');
+        }
+    });
+    event.preventDefault();
+})
+    //agregar ticket
+    $('#new_register_ticket').submit(function(event) {
+    event.preventDefault();
+    $('#guardar_datos_ticket').attr('disabled', true);
+    var parametros = $(this).serialize();
+    $.ajax({
+        type: 'POST',
+        url: 'view/ajax/agregar/agregar_ticket.php',
+        data: parametros,
+        beforeSend: function(objeto) {
+            $('#resultados_ajax').html('Enviando...');
+        },
+        success: function(datos) {
+
+            $('.resultados_ajax').html(datos);
+            $('#guardar_datos_ticket').attr('disabled', false);
+             load();
+            window.setTimeout(function() {
+                $('.alert').fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 5000);
+            $('#ticket_modal').modal('hide');
         }
     });
     event.preventDefault();
