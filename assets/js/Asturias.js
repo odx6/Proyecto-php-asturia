@@ -174,6 +174,39 @@ function eliminar(id, path, table) {
     })
   }
 }
+//eliminar ticket
+function DeleteTicket(id, path){
+  if (confirm('Esta acción  eliminará de forma permanente el ticket\n\n Desea continuar?')) {
+   
+    var parametros = {
+      "id": id,
+    
+    };
+
+    $.ajax({
+      url: path,
+      data: parametros,
+      beforeSend: function (objeto) {
+        $("#loader").html("<img src='./assets/img/ajax-loader.gif'>");
+      },
+      success: function (data) {
+        $(".outer_div").html(data).fadeIn('slow');
+        $("#loader").html("");
+        renderTable();
+
+
+        window.setTimeout(function () {
+          $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+          });
+        }, 5000);
+
+      }
+    })
+  }
+}
+
+//end eliminar ticket
 
 // editar
 function editar(id, path) {
@@ -197,7 +230,7 @@ function editar(id, path) {
 //endeditar
 //ide 
 function ChangeValue(id,path){
-  //console.log(id)
+  console.log(id)
   document.getElementById('STRPRE').value = id;
 }
 //
@@ -222,7 +255,15 @@ function mostrar(id, path) {
 
 //end mostrar 
 
-
+function MostrarTickets(id){
+  console.log(id)
+  elemento=document.getElementById('table_tickets'+id)
+  if (elemento.style.display === "none") {
+    elemento.style.display = "block"; // Hacer visible
+} else {
+    elemento.style.display = "none"; // Ocultar
+}
+}
 
 function mensaje() {
 

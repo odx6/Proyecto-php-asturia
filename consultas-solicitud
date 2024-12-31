@@ -74,12 +74,12 @@ tblcatemp.STRAPE AS Aoperador,
 tblcatveh.STRNMR AS NCar,
 tblcatveh.STRMRC AS Mcar,
 tblcatrut.STRNOM AS ruta,
-tblcattik.*
+
 FROM 
 tblreco
 INNER JOIN tblcatemp ON tblcatemp.IDEMP=tblreco.IDEMP
 INNER JOIN tblcatveh ON tblcatveh.STRNMRSR=tblreco.STRNMRSR
 INNER JOIN tblcatrut ON tblcatrut.STRPRUT=tblreco.STRPRUT
-INNER JOIN tblcattik ON tblcattik.STRPRE=tblreco.STRPRE
+
 
 

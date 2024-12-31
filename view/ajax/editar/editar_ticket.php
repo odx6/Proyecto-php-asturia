@@ -5,7 +5,7 @@ session_start();
 $gump = new GUMP();
 
 $gump->validation_rules([
-    'STRPRE'    => 'required|numeric',
+    'id'    => 'required|numeric',
     'INTNO'    => 'required',
     'PCRXLIT'       => 'required|numeric|min_numeric,1',
     'LTS'      => 'required|numeric|min_numeric,1',
@@ -14,9 +14,9 @@ $gump->validation_rules([
 ]);
 
 $gump->set_fields_error_messages([
-    'STRPRE'      => [
-        'required' => 'El campo recorrido  es requerido',
-        'numeric' => 'La clave del recorrido solo puede contener numeros'
+    'id'      => [
+        'required' => 'La clave primaria del ticket  es requerido',
+        'numeric' => 'La clave del ticket solo puede contener numeros'
     ],
     'INTNO'   => [
         'required' => 'El campo N° de ticket es requerido'
@@ -44,7 +44,7 @@ $gump->set_fields_error_messages([
 
 ]);
 $gump->filter_rules([
-    'STRPRE' => 'trim|sanitize_string',
+    'id' => 'trim|sanitize_string',
     'INTNO' => 'trim|sanitize_string',
     'PCRXLIT' => 'trim|sanitize_string',
     'LTS' => 'trim|sanitize_string',
@@ -76,56 +76,31 @@ if ($gump->errors()) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
     require_once("../../../config/RecuperarDatos.php");
 
-    $STRPRE = mysqli_real_escape_string($con, (strip_tags($valid_data["STRPRE"], ENT_QUOTES)));
+    $id = mysqli_real_escape_string($con, (strip_tags($valid_data["id"], ENT_QUOTES)));
     $INTNO = mysqli_real_escape_string($con, (strip_tags($valid_data["INTNO"], ENT_QUOTES)));
     $PCRXLIT = mysqli_real_escape_string($con, (strip_tags($valid_data["PCRXLIT"], ENT_QUOTES)));
     $LTS = mysqli_real_escape_string($con, (strip_tags($valid_data["LTS"], ENT_QUOTES)));
     $LOC = mysqli_real_escape_string($con, (strip_tags($valid_data["LOC"], ENT_QUOTES)));
-    $DTEHOR = date("Y-m-d H:i:s");
     try {
-        $recorrido = "SELECT * FROM `tblreco` WHERE STRPRE='" . $STRPRE . "'";
-        $data = mysqli_query($con, $recorrido);
-
-        $row = mysqli_fetch_array($data);
-    } catch (mysqli_sql_exception $e) {
-        $errors[] = " error al consultar el recorrido";
-        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-    }
-    
-
-    try {
-        $insert = "INSERT INTO
-    `tblcattik`(
-        `INTNO`,
-        `STRPRUT`,
-        `STRNMRSR`,
-        `STRPRE`,
-        `PCRXLIT`,
-        `LTS`,
-        `LOC`,
-        `DTEHOR`
-    )
-VALUES
-    (
-        '" . $INTNO . "',
-        '" . $row["STRPRUT"] . "',
-        '" . $row["STRNMRSR"] . "',
-        '" . $STRPRE . "',
-        '" . $PCRXLIT . "',
-        '" . $LTS . "',
-        '" . $LOC . "',
-        '" . $DTEHOR . "'
-    );";
+        $insert = "UPDATE
+    `tblcattik`
+SET
+    `INTNO` = '" . $INTNO . "',
+    `PCRXLIT` = '" . $PCRXLIT . "',
+    `LTS` = '" . $LTS . "',
+    `LOC` = '" . $LOC . "'
+WHERE
+     STRPTIK='" . $id . "'";
         $query_insert = mysqli_query($con, $insert);
         if ($query_insert) {
             //actualizar datos 
 
             //
-            $messages[] = "Se agrego el ticket correctamente";
-            $id = mysqli_insert_id($con);
+            $messages[] = "Se actualizo el ticket correctamente";
+
             $sql2 = recuperarDatos("SELECT * from tblcattik WHERE STRPTIK ='" . $id . "';");
             $tabla = "tblcattik";
-            $tipo = "creacion";
+            $tipo = "Actualizacion";
             $fecha = date("Y-m-d H:i:s");
 
             $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
