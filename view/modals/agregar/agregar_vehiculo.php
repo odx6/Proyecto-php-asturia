@@ -82,7 +82,7 @@
 
                         <div class="row">
 
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="TIPO" class=" col-form-label">Origen: </label>
 
@@ -114,7 +114,15 @@
                                 </div>
 
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="kilometros" class=" col-form-label">kilometros: </label>
+                                    <input type="number" required class="form-control" id="DOKLM" name="DOKLM" placeholder="KILOMETROS: ">
+                                </div>
+                            </div>
+
+
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="BITSUS" class="col-form-label">Estado: </label>
 

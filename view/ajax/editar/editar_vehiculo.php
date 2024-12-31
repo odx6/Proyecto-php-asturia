@@ -9,7 +9,8 @@ $gump->validation_rules([
     'STRNMR'    => 'required|alpha_numeric|max_len,100|min_len,3',
     'STRMRC'       => 'required',
     'STRMDL'      => 'required',
-    'STRPLC' => 'required'
+    'STRPLC' => 'required',
+    'DOKLM' => 'required|numeric|min_numeric,1'
 ]);
 
 $gump->set_fields_error_messages([
@@ -28,7 +29,13 @@ $gump->set_fields_error_messages([
 
 
 
-    ]
+    ],
+    'DOKLM'=>[
+         'required'=>'El capmpo modelo es requerido',
+         'numeric'=>'El campo kilometros debe ser numerico',
+         'min_numeric'=>'El campo kilometros debe ser mayor a 1',
+    ],
+
 
 ]);
 $gump->filter_rules([
@@ -69,6 +76,7 @@ if ($gump->errors()) {
     $STRPLC = mysqli_real_escape_string($con, (strip_tags($valid_data["STRPLC"], ENT_QUOTES)));
     $STRTPVH = mysqli_real_escape_string($con, (strip_tags($valid_data["STRTPVH"], ENT_QUOTES)));
     $LNGIDNORG = mysqli_real_escape_string($con, (strip_tags($valid_data["LNGIDNORG"], ENT_QUOTES)));
+    $DOKLM = mysqli_real_escape_string($con, (strip_tags($valid_data["DOKLM"], ENT_QUOTES)));
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($valid_data["BITSUS"], ENT_QUOTES)));
     $DTEHOR = date("Y-m-d H:i:s");
     $oldata = recuperarDatos("SELECT * from tblcatveh WHERE STRNMRSR='$id';");
@@ -83,6 +91,7 @@ if ($gump->errors()) {
             `STRPLC`='" . $STRPLC . "',
             `STRTPVH`='" . $STRTPVH . "',
             `LNGIDNORG`='" . $LNGIDNORG . "',
+            `DOKLM`='" . $DOKLM . "',
             `BITSUS`='" . $BITSUS . "' 
              WHERE STRNMRSR='$id';";
             

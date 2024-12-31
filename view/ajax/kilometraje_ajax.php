@@ -55,8 +55,8 @@ if ($action == 'ajax') {
 
     $reload = './productos-view.php';
     //main query to fetch the data
-   // $query = mysqli_query($con, "SELECT $campos FROM  $tables;");
-     $query = mysqli_query($con, "SELECT tblreco.*, tblcatemp.STRNOM AS Operador, tblcatemp.STRAPE AS Aoperador, tblcatveh.STRNMR AS NCar, tblcatveh.STRMRC AS Mcar, tblcatrut.STRNOM AS ruta, tblcatrut.STRNOM AS ruta, tblcattik.* FROM tblreco INNER JOIN tblcatemp ON tblcatemp.IDEMP=tblreco.IDEMP INNER JOIN tblcatveh ON tblcatveh.STRNMRSR=tblreco.STRNMRSR INNER JOIN tblcatrut ON tblcatrut.STRPRUT=tblreco.STRPRUT INNER JOIN tblcattik ON tblcattik.STRPRE=tblreco.STRPRE;");
+    // $query = mysqli_query($con, "SELECT $campos FROM  $tables;");
+    $query = mysqli_query($con, "SELECT tblreco.*, tblcatemp.STRNOM AS Operador, tblcatemp.STRAPE AS Aoperador, tblcatveh.STRNMR AS NCar, tblcatveh.STRMRC AS Mcar, tblcatrut.STRNOM AS ruta FROM tblreco INNER JOIN tblcatemp ON tblcatemp.IDEMP=tblreco.IDEMP INNER JOIN tblcatveh ON tblcatveh.STRNMRSR=tblreco.STRNMRSR INNER JOIN tblcatrut ON tblcatrut.STRPRUT=tblreco.STRPRUT;");
     //loop through fetched data
 
     if (isset($_REQUEST["id"])) {
@@ -77,7 +77,7 @@ if ($action == 'ajax') {
                 <th>#CLAVE</th>
                 <th>OPERADOR</th>
                 <th>VEHICULO</th>
-                <th>TICKETS</th>
+
                 <th>RUTA</th>
                 <th>KILOMETRAJE DE INICIO</th>
                 <th>KILOMETRAJE FINAL</th>
@@ -88,7 +88,8 @@ if ($action == 'ajax') {
                 <th>DIFERENCIA</th>
                 <th>DESCUENTO</th>
                 <th>CAPTURA</th>
-              
+                <th>Creacion</th>
+
                 <th>Accion</th>
             </tr>
         </thead>
@@ -97,35 +98,39 @@ if ($action == 'ajax') {
             <?php
             $finales = 0;
             while ($row = mysqli_fetch_array($query)) {
-              
+
                 $STRPRE = $row["STRPRE"];
                 $IDEMP = $row["IDEMP"];
                 $STRNMRSR = $row["STRNMRSR"];
                 $STRPRUT = $row["STRPRUT"];
-                $KLMINI=$row["KLMINI"];
+                $KLMINI = $row["KLMINI"];
                 $KLMFIN = $row["KLMFIN"];
-                $KLMRECO=$row["KLMRECO"];
-                $DOUREN=$row["DOUREN"];
-                $INPRT=$row["INPRT"];
-                $DOUCON=$row["DOUCON"];
-                $DOUDIF=$row["DOUDIF"];
-                $DOUDES=$row["DOUDES"];
+                $KLMRECO = $row["KLMRECO"];
+                $DOUREN = $row["DOUREN"];
+                $INPRT = $row["INPRT"];
+                $DOUCON = $row["DOUCON"];
+                $DOUDIF = $row["DOUDIF"];
+                $DOUDES = $row["DOUDES"];
                 $DTHCAP = $row["DTHCAP"];
                 $DTHOR = $row["DTHOR"];
-                
+                //datos
+
+                $NameOp = $row["Operador"] . " " . $row["Aoperador"];
+                $ruta = $row["ruta"];
 
 
-                ($BITSUS == 1) ? $BITSUS = "Activo" : $BITSUS = "Inactivo";
+
+
 
                 $finales++;
             ?>
                 <tr>
                     <td><?php echo $STRPRE ?></td>
-                    <td><?php echo $IDEMP ?></td>
+                    <td><?php echo $NameOp ?></td>
                     <td><?php echo $STRNMRSR ?></td>
-                    <td><?php echo $STRPRUT ?></td>
-                    <td><?php echo $KLMINI ?></td>
-                    <td><?php echo $KLMFIN ?></td>
+                    <td><?php echo $ruta ?></td>
+                    <td><?php echo $KLMINI . "km" ?></td>
+                    <td><?php echo $KLMFIN . "km" ?></td>
                     <td><?php echo $KLMRECO ?></td>
                     <td><?php echo $DOUREN ?></td>
                     <td><?php echo $INPRT ?></td>
@@ -137,17 +142,22 @@ if ($action == 'ajax') {
                     <td class="text-right">
                         <?php if (in_array(2, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                            <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $STRPRE; ?>','view/modals/editar/vehiculo.php')"><i class="fa fa-edit"></i></button>
+                            <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $STRPRE; ?>','view/modals/editar/Recorrido.php')"><i class="fa fa-edit"></i></button>
 
                         <?php } ?>
                         <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                            <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $STRPRE; ?>','view/ajax/vehiculos_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
+                            <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $STRPRE; ?>','view/ajax/recorrido_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
 
                         <?php } ?>
                         <?php if (in_array(4, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
                             <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $STRPRE; ?>','view/modals/mostrar/vehiculo.php')"><i class="fa fa-eye"></i></button>
+
+                        <?php } ?>
+                        <?php if (in_array(1, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+
+                            <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#ticket_modal"  onclick="editar('<?php echo $STRPRE; ?>','view/modals/agregar/agregar_ticket.php')"><i class="fa fa-eye"></i></button>
 
                         <?php } ?>
 

@@ -3,9 +3,10 @@ $active8 = "active";
 
 
 if ($_SESSION['productos'] == 1) {
-     (in_array(1,$_SESSION['Habilidad']['vehiculos']))? $agregar='modals/agregar/agregar_recorrido.php':'';
-     (in_array(2,$_SESSION['Habilidad']['vehiculos']))? $editar="modals/editar/editar_template.php":'';
-     (in_array(4,$_SESSION['Habilidad']['vehiculos']))? $mostrar="modals/mostrar/mostrar_template.php":'';
+     (in_array(1,$_SESSION['Habilidad']['Kilometraje']))? $agregar='modals/agregar/agregar_recorrido.php':'';
+     (in_array(2,$_SESSION['Habilidad']['Kilometraje']))? $editar="modals/editar/editar_template.php":'';
+     (in_array(4,$_SESSION['Habilidad']['Kilometraje']))? $mostrar="modals/mostrar/mostrar_template.php":'';
+     (in_array(1,$_SESSION['Habilidad']['Kilometraje']))? $agregarTicket="modals/agregar/agregar_ticket.php":'';
     
     $TitleModal="Editar consumo de kilometraje";
 
@@ -79,7 +80,7 @@ $('#new_register').submit(function(event) {
             var parametros = $(this).serialize();
             $.ajax({
                 type: 'POST',
-                url: 'view/ajax/editar/editar_vehiculo.php',
+                url: 'view/ajax/editar/editar_recorrido.php',
                 data: parametros,
                 beforeSend: function(objeto) {
                     $('.resultados_ajax').html('Enviando...');

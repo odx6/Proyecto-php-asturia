@@ -46,6 +46,9 @@ include "resources/header copy.php";
                                 (isset($agregar))? include $agregar:'';
                                 (isset($editar))? include $editar:'';
                                 (isset($mostrar))? include $mostrar:'';
+                                (isset($agregarTicket))? include $agregarTicket:'';
+                                (isset($mostrarTicket))? include $mostrarTicket:'';
+                                (isset($editarTicket))? include $editarTicket:'';
                                
                                 ?>
                                 

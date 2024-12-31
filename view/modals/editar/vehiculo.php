@@ -7,7 +7,7 @@ if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) {
         $id = $_GET["id"];
         //$id = intval($id);
         $sql = "SELECT * FROM `tblcatveh` WHERE STRNMRSR='$id';";
-      
+
         $query = mysqli_query($con, $sql);
         $num = mysqli_num_rows($query);
         if ($num == 1) {
@@ -20,6 +20,7 @@ if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) {
                 $STRPLC = $row["STRPLC"];
                 $STRTPVH = $row["STRTPVH"];
                 $LNGIDNORG = $row["LNGIDNORG"];
+                $DOKLM = $row["DOKLM"];
                 $BITSUS = $row["BITSUS"];
                 $DTHOR = $row["DTHOR"];
             }
@@ -34,19 +35,19 @@ if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) {
         <div class="col-4">
             <div class="form-group">
                 <label for="STRNMRSR" class=" col-form-label">IDENTIFICADOR: </label>
-                <input type="text" required class="form-control" id="STRNMRSR" name="STRNMRSR"  value="<?php echo  $STRNMRSR ?>">
+                <input type="text" required class="form-control" id="STRNMRSR" name="STRNMRSR" value="<?php echo  $STRNMRSR ?>">
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label for="STRNMR" class=" col-form-label">NÚMERO: </label>
-                <input type="text" required class="form-control" id="STRNMR" name="STRNMR"  value="<?php echo $STRNMR?>">
+                <input type="text" required class="form-control" id="STRNMR" name="STRNMR" value="<?php echo $STRNMR ?>">
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label for="STRMRC" class=" col-form-label">MARCA: </label>
-                <input type="text" required class="form-control" id="STRMRC" name="STRMRC"  value="<?php echo $STRMRC ?>">
+                <input type="text" required class="form-control" id="STRMRC" name="STRMRC" value="<?php echo $STRMRC ?>">
             </div>
         </div>
 
@@ -55,13 +56,13 @@ if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) {
         <div class="col-4">
             <div class="form-group">
                 <label for="modelo" class=" col-form-label">MODELO: </label>
-                <input type="text" required class="form-control" id="STRMDL" name="STRMDL"  value="<?php echo $STRMDL  ?>">
+                <input type="text" required class="form-control" id="STRMDL" name="STRMDL" value="<?php echo $STRMDL  ?>">
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label for="PLACAS" class=" col-form-label">PLACAS: </label>
-                <input type="text" required class="form-control" id="STRPLC" name="STRPLC" value="<?php echo $STRPLC ?>" >
+                <input type="text" required class="form-control" id="STRPLC" name="STRPLC" value="<?php echo $STRPLC ?>">
             </div>
         </div>
         <div class="col-4">
@@ -99,7 +100,7 @@ if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) {
 
     <div class="row">
 
-        <div class="col-6">
+        <div class="col-4">
             <div class="form-group">
                 <label for="TIPO" class=" col-form-label">Origen: </label>
 
@@ -131,7 +132,14 @@ if (in_array(2, $_SESSION['Habilidad']['vehiculos'])) {
             </div>
 
         </div>
-        <div class="col-6">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="kilometros" class=" col-form-label">kilometros: </label>
+                <input type="number" required class="form-control" id="DOKLM" name="DOKLM" placeholder="KILOMETROS: " value="<?php echo $DOKLM ?>">
+            </div>
+        </div>
+
+        <div class="col-4">
             <div class="form-group">
                 <label for="BITSUS" class="col-form-label">Estado: </label>
 

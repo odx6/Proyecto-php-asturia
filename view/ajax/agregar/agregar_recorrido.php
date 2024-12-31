@@ -7,7 +7,7 @@ $gump->validation_rules([
 	'IDEMP'    => 'required|numeric',
 	'STRNMRSR'    => 'required|alpha_numeric',
 	'STRPRUT'    => 'required|numeric',
-	'DTHCAP'    => 'required|date,Y/m/d',
+	'DTHCAP'    => 'required',
 	'KLMFIN'    => 'required|numeric|min_numeric,50'
 ]);
 
@@ -19,16 +19,16 @@ $gump->set_fields_error_messages([
 	'STRNMRSR'   => [
 		'required' => 'El automovil es obligatorio',
 		'alpha_numeric' => 'La clave del automovil debe ser alfa numerica'
-    ],
-    'STRPRUT'   => [
+	],
+	'STRPRUT'   => [
 		'required' => 'La  ruta es requerida y obligatoria',
 		'alpha_numeric' => 'La clave de la ruta debe ser numerica'
 	],
-    'DTHCAP'   => [
+	'DTHCAP'   => [
 		'required' => 'La  fecha es obligatoria',
-		'date' => 'La fecha debe estar en formato aaa/mm/dd'
-    ],
-    'KLMFIN'   => [
+		
+	],
+	'KLMFIN'   => [
 		'required' => 'Los kilometros finales son requeridos',
 		'numeric' => 'Los kilometros deben ser numericos',
 		'min_numeric,50' => 'Los kilometros deben superar los 50 km para ser validos',
@@ -66,7 +66,8 @@ if ($gump->errors()) {
 
 } else {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-	require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
+	require_once("../../../config/RecuperarDatos.php"); 
+	require_once("../../../config/funciones.php");//Contiene las variables de configuracion para conectar a la base de datos
 
 
 	$IDEMP = mysqli_real_escape_string($con, (strip_tags($_POST["IDEMP"], ENT_QUOTES)));
@@ -74,25 +75,67 @@ if ($gump->errors()) {
 	$STRPRUT = mysqli_real_escape_string($con, (strip_tags($_POST["STRPRUT"], ENT_QUOTES)));
 	$DTHCAP = mysqli_real_escape_string($con, (strip_tags($_POST["DTHCAP"], ENT_QUOTES)));
 	$KLMFIN = mysqli_real_escape_string($con, (strip_tags($_POST["KLMFIN"], ENT_QUOTES)));
-	$Fecha = date("Y-m-d");
+	$KLMINIC=getDato($STRNMRSR,'tblcatveh','STRNMRSR','DOKLM');
+	
+	IF($KLMINIC >0 && $KLMFIN>0 && $KLMFIN>=$KLMINIC)
+	{
+		$KLMRECO=$KLMFIN-$KLMINIC;
+		$FINAL=$KLMFIN;
 
-    $sql="INSERT INTO
-    `tblcatrut`( `STRNOM`, `DOUKM`, `DTHCRE`, `BITSUS`)
+	}
+	$Fecha = date("Y-m-d");
+	
+    
+
+
+	$sql = "INSERT INTO
+    `tblreco`(
+        `IDEMP`,
+        `STRNMRSR`,
+        `STRPRUT`,
+        `KLMFIN`,
+        `KLMINI`,
+        `KLMRECO`,
+        `DOUREN`,
+        `INPRT`,
+        `DOUCON`,
+        `DOUDIF`,
+        `DOUDES`,
+        `DTHCAP`,
+        `DTHOR`
+    )
 VALUES
     (
-        '".$STRNOM."',
-        '".$DOUKM."',
-        '".$Fecha."',
-        '1'
-    );";
-	
+        '".$IDEMP."',
+        '".$STRNMRSR."',
+        '".$STRPRUT."',
+        '".$FINAL."',
+        '".$KLMINIC."',
+        '".$KLMRECO."',
+        '0',
+        '0',
+        '0',
+        '0',
+        '0',
+        '".$DTHCAP."',
+        '".$Fecha."'
+   );";
+
 	try {
 		$query_new = mysqli_query($con, $sql);
 		if ($query_new) {
+            //ACTUALIZAR KILOMETROS
+            try{
+             $updateklm="UPDATE `tblcatveh` SET `DOKLM`='".$FINAL."' WHERE STRNMRSR='".$STRNMRSR."'";
+			} catch (mysqli_sql_exception $e) {
+				$errors[] = "Error al actualizar los kiloemtros";
+				$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+			}
+			//
 			if ($query_new) {
 				$id = mysqli_insert_id($con);
-				$sql2 = recuperarDatos("SELECT * from tblcatrut WHERE 	STRPRUT ='$id';");
-				$tabla = "tblcatrut";
+				$sql2 = recuperarDatos("SELECT * from tblreco WHERE 	STRPRE ='$id';");
+				$tabla = "tblreco";
 				$tipo = "creacion";
 				$fecha = date("Y-m-d H:i:s");
 
@@ -102,7 +145,7 @@ VALUES
 			}
 		}
 	} catch (mysqli_sql_exception $e) {
-        $errors[]="Error al  agregar la Ruta";
+		$errors[] = "Error al  agregar la Ruta";
 		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
 	}
 }

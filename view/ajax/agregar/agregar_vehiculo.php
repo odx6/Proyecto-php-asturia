@@ -9,7 +9,8 @@ $gump->validation_rules([
     'STRNMR'    => 'required|alpha_numeric|max_len,100|min_len,3',
     'STRMRC'       => 'required',
     'STRMDL'      => 'required',
-    'STRPLC' => 'required'
+    'STRPLC' => 'required',
+    'DOKLM' => 'required|numeric|min_numeric,1'
 ]);
 
 $gump->set_fields_error_messages([
@@ -28,13 +29,23 @@ $gump->set_fields_error_messages([
           
 
 
-    ]
+    ],
+    'STRMDL'=>[
+         'required'=>'El capmpo modelo es requerido',
+    ],
+    'DOKLM'=>[
+         'required'=>'El capmpo modelo es requerido',
+         'numeric'=>'El campo kilometros debe ser numerico',
+         'min_numeric'=>'El campo kilometros debe ser mayor a 1',
+    ],
+
 
 ]);
 $gump->filter_rules([
     'STRNMRSR' => 'trim|sanitize_string',
     'STRNMR' => 'trim|sanitize_string',
-    'STRPLC' => 'trim|sanitize_string'
+    'STRPLC' => 'trim|sanitize_string',
+    'DOKLM' => 'trim|sanitize_string'
 
 ]);
 $valid_data = $gump->run($_POST);
@@ -69,11 +80,12 @@ if ($gump->errors()) {
     $STRPLC = mysqli_real_escape_string($con, (strip_tags($valid_data["STRPLC"], ENT_QUOTES)));
     $STRTPVH = mysqli_real_escape_string($con, (strip_tags($valid_data["STRTPVH"], ENT_QUOTES)));
     $LNGIDNORG = mysqli_real_escape_string($con, (strip_tags($valid_data["LNGIDNORG"], ENT_QUOTES)));
+    $DOKLM = mysqli_real_escape_string($con, (strip_tags($valid_data["DOKLM"], ENT_QUOTES)));
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($valid_data["BITSUS"], ENT_QUOTES)));
     $DTEHOR = date("Y-m-d H:i:s");
 
     try {
-        $insert = "INSERT INTO `tblcatveh`(`STRNMRSR`, `STRNMR`, `STRMRC`, `STRMDL`, `STRPLC`, `STRTPVH`, `LNGIDNORG`, `BITSUS`, `DTHOR`)  VALUES ('" . $STRNMRSR . "','" . $STRNMR . "','" . $STRMRC . "','" . $STRMDL. "','" . $STRPLC. "','" . $STRTPVH."','" . $LNGIDNORG. "','" . $BITSUS."','" . $DTEHOR . "');";
+        $insert = "INSERT INTO `tblcatveh`(`STRNMRSR`, `STRNMR`, `STRMRC`, `STRMDL`, `STRPLC`, `STRTPVH`, `LNGIDNORG`,`DOKLM`, `BITSUS`, `DTHOR`)  VALUES ('" . $STRNMRSR . "','" . $STRNMR . "','" . $STRMRC . "','" . $STRMDL. "','" . $STRPLC. "','" . $STRTPVH."','" . $LNGIDNORG. "','".$DOKLM."','" . $BITSUS."','" . $DTEHOR . "');";
         $query_insert = mysqli_query($con, $insert);
         if ($query_insert) {
             $messages[] = "Se agrego el automovil";

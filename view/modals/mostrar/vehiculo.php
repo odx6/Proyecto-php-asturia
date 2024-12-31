@@ -29,6 +29,7 @@ WHERE
                 $STRPLC = $row["STRPLC"];
                 $STRTPVH = $row["tipo"];
                 $LNGIDNORG = $row["origen"];
+                $DOKLM = $row["DOKLM"];
                 $BITSUS = $row["BITSUS"];
                 $DTHOR = $row["DTHOR"];
             }
@@ -84,6 +85,12 @@ WHERE
 
         <p class="text-muted">
             <span class="tag tag-danger"><?php echo $LNGIDNORG; ?></span>
+
+        </p>
+        <strong><i class="fas fa-tachometer-alt"></i><p>Kilometros</p> </strong>
+
+        <p class="text-muted">
+            <span class="tag tag-danger"><?php echo $DOKLM; ?></span>
 
         </p>
         <hr>
