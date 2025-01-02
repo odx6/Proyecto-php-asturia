@@ -137,14 +137,19 @@ if (in_array(2, $_SESSION['Habilidad']['Kilometraje'])) {
 
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="Fecha" class=" col-form-label">FECHA: </label>
                                     <input type="date" required class="form-control" id="DTHCAP" name="DTHCAP" placeholder="Modelo: " value="<?php echo $DTHCAP ?>">
                                 </div>
                             </div>
-                           
-                            <div class="col-6">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="KLMINI" class=" col-form-label">ODOMETRO INICIAL: </label>
+                                    <input type="number" required class="form-control" id="KLMINI" name="KLMINI" placeholder="odometro final: " value="<?php echo $KLMINI?>">
+                                </div>
+                            </div>
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="KLMFIN" class=" col-form-label">ODOMETRO FINAL: </label>
                                     <input type="number" required class="form-control" id="KLMFIN" name="KLMFIN" placeholder="odometro final: " value="<?php echo $KLMFIN?>">

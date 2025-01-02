@@ -8,7 +8,8 @@ $gump->validation_rules([
 	'STRNMRSR'    => 'required|alpha_numeric',
 	'STRPRUT'    => 'required|numeric',
 	'DTHCAP'    => 'required',
-	'KLMFIN'    => 'required|numeric|min_numeric,50'
+	'KLMFIN'    => 'required|min_numeric,50',
+	'KLMINI'    => 'required|min_numeric,1',
 ]);
 
 $gump->set_fields_error_messages([
@@ -26,12 +27,16 @@ $gump->set_fields_error_messages([
 	],
 	'DTHCAP'   => [
 		'required' => 'La  fecha es obligatoria',
-		
+
 	],
 	'KLMFIN'   => [
 		'required' => 'Los kilometros finales son requeridos',
 		'numeric' => 'Los kilometros deben ser numericos',
 		'min_numeric,50' => 'Los kilometros deben superar los 50 km para ser validos',
+	],
+	'KLMINI'   => [
+		'required' => 'Los kilometros iniciales son requeridos',
+		'min_numeric,50' => 'Los kilometros deben superar los 1 km para ser validos',
 	]
 
 ]);
@@ -40,7 +45,8 @@ $gump->filter_rules([
 	'STRNMRSR' => 'trim|sanitize_string',
 	'STRPRUT' => 'trim|sanitize_string',
 	'DTHCAP' => 'trim|sanitize_string',
-	'KLMFIN' => 'trim|sanitize_string'
+	'KLMFIN' => 'trim|sanitize_string',
+	'KLMINI' => 'trim|sanitize_string'
 
 ]);
 $valid_data = $gump->run($_POST);
@@ -66,8 +72,8 @@ if ($gump->errors()) {
 
 } else {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-	require_once("../../../config/RecuperarDatos.php"); 
-	require_once("../../../config/funciones.php");//Contiene las variables de configuracion para conectar a la base de datos
+	require_once("../../../config/RecuperarDatos.php");
+	require_once("../../../config/funciones.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 
 	$IDEMP = mysqli_real_escape_string($con, (strip_tags($_POST["IDEMP"], ENT_QUOTES)));
@@ -75,20 +81,31 @@ if ($gump->errors()) {
 	$STRPRUT = mysqli_real_escape_string($con, (strip_tags($_POST["STRPRUT"], ENT_QUOTES)));
 	$DTHCAP = mysqli_real_escape_string($con, (strip_tags($_POST["DTHCAP"], ENT_QUOTES)));
 	$KLMFIN = mysqli_real_escape_string($con, (strip_tags($_POST["KLMFIN"], ENT_QUOTES)));
-	$KLMINIC=getDato($STRNMRSR,'tblcatveh','STRNMRSR','DOKLM');
-	
-	IF($KLMINIC >0 && $KLMFIN>0 && $KLMFIN>=$KLMINIC)
-	{
-		$KLMRECO=$KLMFIN-$KLMINIC;
-		$FINAL=$KLMFIN;
-
-	}
+	$KLMINIC = mysqli_real_escape_string($con, (strip_tags($_POST["KLMINI"], ENT_QUOTES)));
 	$Fecha = date("Y-m-d");
-	
-    
+	$min_klm = 0;
 
+	$ultimo_registro = "SELECT * 
+FROM tblreco  WHERE STRNMRSR='" . $STRNMRSR . "'
+ORDER BY STRPRE DESC 
+LIMIT 1;";
 
-	$sql = "INSERT INTO
+	try {
+		$query_kilometraje = mysqli_query($con, $ultimo_registro);
+	} catch (mysqli_sql_exception $e) {
+		$errors[] = "Error al consultar los datos";
+		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+	}
+	$num = mysqli_num_rows($query_kilometraje);
+	if ($num  > 0) {
+		$row = mysqli_fetch_array($query_kilometraje);
+		$min_klm = $row['KLMFIN'];
+	}
+
+	if ($KLMINIC > 0 && $KLMFIN > 0 && $KLMFIN >= $KLMINIC && $KLMINIC > $min_klm) {
+		$KLMRECO = $KLMFIN - $KLMINIC;
+		$FINAL = $KLMFIN;
+		$sql = "INSERT INTO
     `tblreco`(
         `IDEMP`,
         `STRNMRSR`,
@@ -106,47 +123,49 @@ if ($gump->errors()) {
     )
 VALUES
     (
-        '".$IDEMP."',
-        '".$STRNMRSR."',
-        '".$STRPRUT."',
-        '".$FINAL."',
-        '".$KLMINIC."',
-        '".$KLMRECO."',
+        '" . $IDEMP . "',
+        '" . $STRNMRSR . "',
+        '" . $STRPRUT . "',
+        '" . $FINAL . "',
+        '" . $KLMINIC . "',
+        '" . $KLMRECO . "',
         '0',
         '0',
         '0',
         '0',
         '0',
-        '".$DTHCAP."',
-        '".$Fecha."'
+        '" . $DTHCAP . "',
+        '" . $Fecha . "'
    );";
-
-	try {
-		$query_new = mysqli_query($con, $sql);
-		if ($query_new) {
-            //ACTUALIZAR KILOMETROS
-            try{
-             $updateklm="UPDATE `tblcatveh` SET `DOKLM`='".$FINAL."' WHERE STRNMRSR='".$STRNMRSR."'";
-			} catch (mysqli_sql_exception $e) {
-				$errors[] = "Error al actualizar los kiloemtros";
-				$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-			}
-			//
+		try {
+			$query_new = mysqli_query($con, $sql);
 			if ($query_new) {
-				$id = mysqli_insert_id($con);
-				$sql2 = recuperarDatos("SELECT * from tblreco WHERE 	STRPRE ='$id';");
-				$tabla = "tblreco";
-				$tipo = "creacion";
-				$fecha = date("Y-m-d H:i:s");
+				//ACTUALIZAR KILOMETROS
+				try {
+					$updateklm = "UPDATE `tblcatveh` SET `DOKLM`='" . $FINAL . "' WHERE STRNMRSR='" . $STRNMRSR . "'";
+				} catch (mysqli_sql_exception $e) {
+					$errors[] = "Error al actualizar los kiloemtros";
+					$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+				}
+				//
+				if ($query_new) {
+					$id = mysqli_insert_id($con);
+					$sql2 = recuperarDatos("SELECT * from tblreco WHERE 	STRPRE ='$id';");
+					$tabla = "tblreco";
+					$tipo = "creacion";
+					$fecha = date("Y-m-d H:i:s");
 
-				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-				$query = mysqli_query($con, $sqllog);
-				$messages[] = "Ruta agregada correctamente";
+					$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+					$query = mysqli_query($con, $sqllog);
+					$messages[] = "Ruta agregada correctamente";
+				}
 			}
+		} catch (mysqli_sql_exception $e) {
+			$errors[] = "Error al  agregar la Ruta";
+			$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
 		}
-	} catch (mysqli_sql_exception $e) {
-		$errors[] = "Error al  agregar la Ruta";
-		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+	}else{
+		$errors[] ="Los kilometrajes no pueden ser menores al ultimo registro";
 	}
 }
 

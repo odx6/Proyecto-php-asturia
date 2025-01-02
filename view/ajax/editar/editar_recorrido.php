@@ -9,7 +9,9 @@ $gump->validation_rules([
     'STRNMRSR'    => 'required|alpha_numeric',
     'STRPRUT'    => 'required|numeric',
     'DTHCAP'    => 'required',
-    'KLMFIN'    => 'required|numeric|min_numeric,50'
+    'KLMFIN'    => 'required|numeric|min_numeric,50',
+	'KLMINI'    => 'required|min_numeric,1',
+
 ]);
 
 $gump->set_fields_error_messages([
@@ -37,7 +39,11 @@ $gump->set_fields_error_messages([
         'required' => 'Los kilometros finales son requeridos',
         'numeric' => 'Los kilometros deben ser numericos',
         'min_numeric,50' => 'Los kilometros deben superar los 50 km para ser validos',
-    ]
+    ],
+    'KLMINI'   => [
+		'required' => 'Los kilometros iniciales son requeridos',
+		'min_numeric,50' => 'Los kilometros deben superar los 1 km para ser validos',
+	]
 
 ]);
 $gump->filter_rules([
@@ -46,7 +52,8 @@ $gump->filter_rules([
     'STRNMRSR' => 'trim|sanitize_string',
     'STRPRUT' => 'trim|sanitize_string',
     'DTHCAP' => 'trim|sanitize_string',
-    'KLMFIN' => 'trim|sanitize_string'
+    'KLMFIN' => 'trim|sanitize_string',
+    'KLMINI' => 'trim|sanitize_string'
 
 ]);
 $valid_data = $gump->run($_POST);
@@ -82,15 +89,32 @@ if ($gump->errors()) {
     $STRPRUT = mysqli_real_escape_string($con, (strip_tags($_POST["STRPRUT"], ENT_QUOTES)));
     $DTHCAP = mysqli_real_escape_string($con, (strip_tags($_POST["DTHCAP"], ENT_QUOTES)));
     $KLMFIN = mysqli_real_escape_string($con, (strip_tags($_POST["KLMFIN"], ENT_QUOTES)));
+    $KLMINIC = mysqli_real_escape_string($con, (strip_tags($_POST["KLMINI"], ENT_QUOTES)));
     $OLDKLMFIN = getDato($id, 'tblreco', 'STRPRE', 'KLMFIN');
     $OLDKLMINI = getDato($id, 'tblreco', 'STRPRE', 'KLMINI');
-    $KLMINIC = getDato($STRNMRSR, 'tblcatveh', 'STRNMRSR', 'DOKLM');
     $Fecha = date("Y-m-d");
+    $ultimo_registro = "SELECT * 
+    FROM tblreco  WHERE STRNMRSR='" . $STRNMRSR . "'
+    ORDER BY STRPRE DESC 
+    LIMIT 1  OFFSET 1;";
+    
+        try {
+            $query_kilometraje = mysqli_query($con, $ultimo_registro);
+        } catch (mysqli_sql_exception $e) {
+            $errors[] = "Error al consultar los datos";
+            $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+        }
+        $num = mysqli_num_rows($query_kilometraje);
+        if ($num  > 0) {
+            $row = mysqli_fetch_array($query_kilometraje);
+            $min_klm = $row['KLMFIN'];
+        }
+
 
 
     if($KLMFIN >$KLMINIC || $KLMFIN> $OLDKLMINI){
 
-    if ($OLDKLMFIN == $KLMFIN) {
+    if ($OLDKLMFIN == $KLMFIN && $KLMINIC>$min_klm ) {
 
         $sql = "UPDATE
         `tblreco`
@@ -106,7 +130,7 @@ if ($gump->errors()) {
     WHERE
         STRPRE ='" . $id . "'";
     } else {
-        if ($KLMINIC > 0 && $KLMFIN > 0 && $KLMFIN >= $OLDKLMINI) {
+        if ($KLMINIC > 0 && $KLMFIN > 0 && $KLMFIN >= $OLDKLMINI && $KLMINIC>$min_klm) {
             $KLMRECO = $KLMFIN - $OLDKLMINI;
             $sql = "UPDATE
             `tblreco`
@@ -131,8 +155,7 @@ if ($gump->errors()) {
 
 
 
-
-
+  if(isset($sql)){
     try {
         $query_new = mysqli_query($con, $sql);
         if ($query_new) {
@@ -160,6 +183,10 @@ if ($gump->errors()) {
         $errors[] = "Error al  agregar la Ruta";
         $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
     }
+  }else{
+  $errors[]="Verificar  que el kilometraje inicial sea menor al final o el kilometraje inicial sea mayor a ".$min_klm;
+  }
+    
 }else{
 
     $errors[]="el kilometro final debe ser mayor al kilometro inicial";

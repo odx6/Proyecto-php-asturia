@@ -111,19 +111,26 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="Fecha" class=" col-form-label">FECHA: </label>
                                     <input type="date" required class="form-control" id="DTHCAP" name="DTHCAP" placeholder="Modelo: ">
                                 </div>
                             </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="KLMINI" class=" col-form-label">ODOMETRO INICIAL: </label>
+                                    <input type="number" required class="form-control" id="KLMINI" name="KLMINI" placeholder="odometro inicial: ">
+                                </div>
+                            </div>
                            
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="KLMFIN" class=" col-form-label">ODOMETRO FINAL: </label>
                                     <input type="number" required class="form-control" id="KLMFIN" name="KLMFIN" placeholder="odometro final: ">
                                 </div>
                             </div>
+                            
                         
                         </div>
 

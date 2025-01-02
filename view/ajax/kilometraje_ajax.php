@@ -151,7 +151,7 @@ if ($action == 'ajax') {
                                 $importe = 0;
                                 $totalts = 0;
 
-                                $tickets = " SELECT * FROM `tblcattik` WHERE STRPRE='" . $STRPRE . "';";
+                                $tickets = " SELECT * FROM `tblcattik` WHERE STRPRE='". $STRPRE ."';";
                                 $query_tickets = mysqli_query($con, $tickets);
                                 if( mysqli_num_rows($query_tickets) > 0){
 
