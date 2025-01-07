@@ -136,7 +136,8 @@ if (empty(trim($_POST['STRNSS']))) {
 	if (verificacionDeCorreo($STRCOR, $token) == "true") {
 		$sql = "INSERT INTO tblcatemp (STRNSS,STRRFC,STRCUR,STRNDL,DTHLIC,STRNOM,STRAPE, STRDOM,STRLOC, STRMUN,STREST, STRCP,STRPAI,STRTEL,STRCOR,STRPWS,BITSUS,STRIMG , CREATE_AT,TOKEN,	numsesion) 
 	VALUES('" . $STRNSS . "','" . $STRRFC . "','" . $STRCUR . "','" . $STRNDL . "','".$DTHLIC."','" . $STRNOM . "','" . $STRAPE . "','" . $STRDOM . "','" . $STRLOC . "','" . $STRMUN . "','" . $STREST . "','" . $STRCP . "','" . $STRPAI . "','" . $STRTEL . "','" . $STRCOR . "','" . $STRPWS . "','" . $BITSUS . "','" . $STRIMG . "','" . $CREATED_AT . "','" . $token . "','".$sesion . "');";
-		$query_new = mysqli_query($con, $sql);
+		try{
+			$query_new = mysqli_query($con, $sql);
 
 		if ($query_new) {
 			$id = mysqli_insert_id($con);
@@ -181,6 +182,12 @@ if (empty(trim($_POST['STRNSS']))) {
 		} else {
 			$errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
 		}
+		}catch (mysqli_sql_exception $e) {
+
+            $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+        }
+		
+		
 	} else {
 
 		$errors[] = "error al verificar el correo verifique su correo" . verificacionDeCorreo($STRCOR, $token);

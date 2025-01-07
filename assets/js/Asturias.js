@@ -169,19 +169,29 @@ function eliminar(id, path, table) {
             $(this).remove();
           });
         }, 5000);
+        load();
+
+
 
       }
     })
   }
 }
 //eliminar ticket
-function DeleteTicket(id, path){
+function DeleteTicket(id, path, table) {
   if (confirm('Esta acción  eliminará de forma permanente el ticket\n\n Desea continuar?')) {
-   
+    var page = 1;
+    var query = "";
+    var per_page = "";
     var parametros = {
-      "id": id,
-    
+      "action": "ajax",
+      "page": page,
+      "query": query,
+      "per_page": per_page,
+      "id_ticket": id,
+      'table': table
     };
+
 
     $.ajax({
       url: path,
@@ -229,7 +239,7 @@ function editar(id, path) {
 }
 //endeditar
 //ide 
-function ChangeValue(id,path){
+function ChangeValue(id, path) {
   console.log(id)
   document.getElementById('STRPRE').value = id;
 }
@@ -255,14 +265,14 @@ function mostrar(id, path) {
 
 //end mostrar 
 
-function MostrarTickets(id){
+function MostrarTickets(id) {
   console.log(id)
-  elemento=document.getElementById('table_tickets'+id)
+  elemento = document.getElementById('table_tickets' + id)
   if (elemento.style.display === "none") {
     elemento.style.display = "block"; // Hacer visible
-} else {
+  } else {
     elemento.style.display = "none"; // Ocultar
-}
+  }
 }
 
 function mensaje() {
@@ -625,11 +635,11 @@ function Csegura() {
 function Csegura2() {
 
 
-   var pswr= document.getElementById('USTRPWS').value;
-   var prspan = document.getElementById('addPaswordUpdate');
+  var pswr = document.getElementById('USTRPWS').value;
+  var prspan = document.getElementById('addPaswordUpdate');
 
 
-   if (validarContrasena(pswr)) {
+  if (validarContrasena(pswr)) {
 
     prspan.textContent = "La contraseña es valida ";
     prspan.style.color = "green";
@@ -638,6 +648,44 @@ function Csegura2() {
   } else {
     prspan.textContent = "Ingrese una contraseña mas segura ,Verificar la lungitud sea mayor o igual a 8, que contenga caracteres especiales, mayusculas, minusculas y números  ";
     prspan.style.color = "red";
+
+  }
+
+
+
+
+
+}
+function Csegura3() {
+
+
+  var pswr = document.getElementById('STRPWSPER').value;
+  var prspan = document.getElementById('PasswordPerfil');
+
+
+  if (validarContrasena(pswr)) {
+
+    prspan.textContent = "La contraseña es valida ";
+    prspan.style.color = "green";
+
+
+  } else {
+    prspan.textContent = "Ingrese una contraseña mas segura ,Verificar la lungitud sea mayor o igual a 8, que contenga caracteres especiales, mayusculas, minusculas y números  ";
+    prspan.style.color = "red";
+
+  }
+
+  function EditarPassword() {
+    var botonPassword = document.getElementById('STRPWSPER');
+    if (botonPassword.type = 'password') {
+      botonPassword.type = 'hidden'
+
+
+    } else {
+      botonPassword.type = 'password'
+
+    }
+
 
   }
 

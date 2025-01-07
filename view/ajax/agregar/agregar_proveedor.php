@@ -29,9 +29,9 @@ $gump->set_fields_error_messages([
         'max_len' => 'El maximo  de caracteres para modelo es 100'
     ],
 
-    'STRDOM'=>[
-        'required'=>'El campo domicilio es requerido',
-       
+    'STRDOM' => [
+        'required' => 'El campo domicilio es requerido',
+
     ]
 ]);
 $gump->filter_rules([
@@ -53,17 +53,18 @@ if ($gump->errors()) {
         <?php
         $array = $gump->get_readable_errors();
         foreach ($array as $error) {
-            echo $error."<br>";
+            echo $error . "<br>";
         }
         ?>
     </div>
 
-<?php
+    <?php
 
 
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
+    require_once("../../../config/funciones.php"); //Contiene las variables de configuracion para conectar a la base de datos
+    
 
     $STRRFC = mysqli_real_escape_string($con, (strip_tags($valid_data["STRRFC"], ENT_QUOTES)));
     $STRNOM = mysqli_real_escape_string($con, (strip_tags($valid_data["STRNOM"], ENT_QUOTES)));
@@ -76,58 +77,39 @@ if ($gump->errors()) {
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($valid_data["BITSUS"], ENT_QUOTES)));
     $DTEHOR = date("Y-m-d H:i:s");
 
-    try {
-        $insert="INSERT INTO `tblcatprov`( `STRRFC`, `STRNOM`, `STRDOM`, `STRTEL`, `STRNUMCUN`, `STRNOMBAN`, `STRCOR`, `STRCONT`, `BITSUS`, `DTHOR`)
-         VALUES ('".$STRRFC."','".$STRNOM."','".$STRDOM."','".$STRTEL."','".$STRNUMCUN."','".$STRNOMBAN."','".$STRCOR."','".$STRCONT."','".$BITSUS."','".$DTEHOR."');";
-        $query_insert = mysqli_query($con, $insert);
-        if ($query_insert) {
-            $messages[] = "Se agrego provedor";
-            $id = mysqli_insert_id($con);
-            $sql2 = recuperarDatos("SELECT * from tblcatprov WHERE pk_prov='$id';");
-            $tabla = "tblcatprov";
-            $tipo = "creacion";
-            $fecha = date("Y-m-d H:i:s");
 
-            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-            $query = mysqli_query($con, $sqllog);
-
-            ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
-        } else {
-
-            $errors[] = "No se pudo agregar el vehiculo";
-        }
-    } catch (mysqli_sql_exception $e) {
-
-        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-    }
+    $insert = "INSERT INTO `tblcatprov`( `STRRFC`, `STRNOM`, `STRDOM`, `STRTEL`, `STRNUMCUN`, `STRNOMBAN`, `STRCOR`, `STRCONT`, `BITSUS`, `DTHOR`)
+         VALUES ('" . $STRRFC . "','" . $STRNOM . "','" . $STRDOM . "','" . $STRTEL . "','" . $STRNUMCUN . "','" . $STRNOMBAN . "','" . $STRCOR . "','" . $STRCONT . "','" . $BITSUS . "','" . $DTEHOR . "');";
+    $mensaje = insertarLog($insert, 'tblcatprov', 'creacion', 'pk_prov','');
+    (strpos($mensaje, 'error') !== false) ? $messages[] = $mensaje : $errors[] = $mensaje;
 
     if (isset($errors)) {
 
-        ?>
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Error!</strong>
-                <?php
-                foreach ($errors as $error) {
-                    echo $error."<br>";
-                }
-                ?>
-            </div>
-        <?php
-        }
-        if (isset($messages)) {
-        
-        ?>
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>¡Bien hecho!</strong>
-                <?php
-                foreach ($messages as $message) {
-                    echo $message."<br>";
-                }
-                ?>
-            </div>
-        <?php
-        }
+    ?>
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error!</strong>
+            <?php
+            foreach ($errors as $error) {
+                echo $error . "<br>";
+            }
+            ?>
+        </div>
+    <?php
+    }
+    if (isset($messages)) {
+
+    ?>
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>¡Bien hecho!</strong>
+            <?php
+            foreach ($messages as $message) {
+                echo $message . "<br>";
+            }
+            ?>
+        </div>
+<?php
+    }
 }
 ?>

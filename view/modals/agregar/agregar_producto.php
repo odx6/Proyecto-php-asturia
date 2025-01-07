@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="STRSKU" class="col-sm-2 control-label">SKU: </label>
+                                    <label for="STRSKU" class=" control-label">SKU: </label>
                                     <input type="text" required class="form-control" id="STRSKU" name="STRSKU" placeholder="SKU: " onchange="validarExistencia(this.value,'tblcatpro','STRSKU')">
                                     <span id="MSTRSKU"></span>
                                 </div>

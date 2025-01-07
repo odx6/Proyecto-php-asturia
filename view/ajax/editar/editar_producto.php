@@ -49,79 +49,86 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 		$unidad = mysqli_real_escape_string($con, (strip_tags($_POST["unidad"], ENT_QUOTES)));
 		$Imagen = "";
 		$pathimg = "";
-		if (empty($_FILES["STRIMGPU"]['name'])) {
-			$sqlimg = "SELECT STRIMG FROM tblcatpro WHERE STRSKU='$id';";
-			$queyimg = mysqli_query($con, $sqlimg);
-			$num = mysqli_num_rows($queyimg);
-			if ($num == 1) {
-				$row = mysqli_fetch_array($queyimg);
-				$Imagen = $row['STRIMG'];
-			}
-		} else {
-			$sqlimg = "SELECT STRIMG FROM tblcatpro WHERE STRSKU='$id';";
-			$queyimg = mysqli_query($con, $sqlimg);
-			$num = mysqli_num_rows($queyimg);
-			if ($num == 1) {
-				$row = mysqli_fetch_array($queyimg);
-				$pathimg = $row['STRIMG'];
-			}
-
-
-			//UPDATE IMG 
-			//Agregar imagen
-			$target_dir = "../../resources/images/Productos/";
-			$image_name = time() . "_" . basename($_FILES["STRIMGPU"]["name"]);
-			$target_file = $target_dir . $image_name;
-			$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-			$imageFileZise = $_FILES["STRIMGPU"]["size"];
-
-			if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
-				$errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
-			} else if ($imageFileZise > 1048576) { //1048576 byte=1MB
-				$errors[] = "<p>Lo sentimos, pero el archivo es demasiado grande. Selecciona logo de menos de 1MB</p>";
-			} else {
-				/* Fin Validacion*/
-				if ($imageFileZise > 0) {
-					move_uploaded_file($_FILES["STRIMGPU"]["tmp_name"], $target_file);
-					$imagen = basename($_FILES["STRIMGPU"]["name"]);
-					$Imagen = "view/resources/images/Productos/$image_name";
+		try{
+			if (empty($_FILES["STRIMGPU"]['name'])) {
+				$sqlimg = "SELECT STRIMG FROM tblcatpro WHERE STRSKU='$id';";
+				$queyimg = mysqli_query($con, $sqlimg);
+				$num = mysqli_num_rows($queyimg);
+				if ($num == 1) {
+					$row = mysqli_fetch_array($queyimg);
+					$Imagen = $row['STRIMG'];
 				}
+			} else {
+				$sqlimg = "SELECT STRIMG FROM tblcatpro WHERE STRSKU='$id';";
+				$queyimg = mysqli_query($con, $sqlimg);
+				$num = mysqli_num_rows($queyimg);
+				if ($num == 1) {
+					$row = mysqli_fetch_array($queyimg);
+					$pathimg = $row['STRIMG'];
+				}
+	
+	
+				//UPDATE IMG 
+				//Agregar imagen
+				$target_dir = "../../resources/images/Productos/";
+				$image_name = time() . "_" . basename($_FILES["STRIMGPU"]["name"]);
+				$target_file = $target_dir . $image_name;
+				$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+				$imageFileZise = $_FILES["STRIMGPU"]["size"];
+	
+				if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
+					$errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
+				} else if ($imageFileZise > 1048576) { //1048576 byte=1MB
+					$errors[] = "<p>Lo sentimos, pero el archivo es demasiado grande. Selecciona logo de menos de 1MB</p>";
+				} else {
+					/* Fin Validacion*/
+					if ($imageFileZise > 0) {
+						move_uploaded_file($_FILES["STRIMGPU"]["tmp_name"], $target_file);
+						$imagen = basename($_FILES["STRIMGPU"]["name"]);
+						$Imagen = "view/resources/images/Productos/$image_name";
+					}
+				}
+				//END UPDATE IMG 
+	
+	
 			}
-			//END UPDATE IMG 
+			$PTAller = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDPUSO"], ENT_QUOTES)));
+			$estado = mysqli_real_escape_string($con, (strip_tags($_POST["estado"], ENT_QUOTES)));
+	
+			//variable de los permisos 
+			// $permisos = $_POST["permisos"];
+			$oldata = recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
+			$Editflag = "1";
+			// UPDATE data into database
+			$sql = "UPDATE tblcatpro SET STRSKU='" . $sku . "', STRCOD='" . $codigo . "', STRDESPRO='" . $descripcion . "', INTIDCAT='" . $categoria . "', INTIDSBC='" . $subcategoria . "', MONPCOS='" . $precio . "', INTIDUNI='" . $unidad . "', STRIMG='" . $Imagen . "',INTTIPUSO='" . $PTAller . "', BITSUS='" . $estado . "',loked='" . $Editflag .  "', Editor=0  WHERE STRSKU='" . $id . "' ";
+			$query = mysqli_query($con, $sql);
+			//codigo para eliminar una img
+			if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/productoDefault.png") {
+				if (file_exists("../../../" . $pathimg))
+					unlink("../../../" . $pathimg);
+			}
+	
+			if ($query) {
+				
+				$sql2 = recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$sku';");
+				//$sql2 = recuperarDatos("SELECT * FROM  tblcatpro ORDER BY updated_at DESC LIMIT 1;");
+				
+				$tabla = "tblcatpro";
+				$tipo = "Actualizacion";
+				$fecha = date("Y-m-d H:i:s");
+	
+				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sql2 . "');";
+				$query = mysqli_query($con, $sqllog);
+				$messages[]="Producto actualizado correctamente";
+			}
+			//
+			//Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
 
+		}catch (mysqli_sql_exception $e) {
 
+			$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
 		}
-		$PTAller = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDPUSO"], ENT_QUOTES)));
-		$estado = mysqli_real_escape_string($con, (strip_tags($_POST["estado"], ENT_QUOTES)));
 
-		//variable de los permisos 
-		// $permisos = $_POST["permisos"];
-		$oldata = recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$id';");
-		$Editflag = "1";
-		// UPDATE data into database
-		$sql = "UPDATE tblcatpro SET STRSKU='" . $sku . "', STRCOD='" . $codigo . "', STRDESPRO='" . $descripcion . "', INTIDCAT='" . $categoria . "', INTIDSBC='" . $subcategoria . "', MONPCOS='" . $precio . "', INTIDUNI='" . $unidad . "', STRIMG='" . $Imagen . "',INTTIPUSO='" . $PTAller . "', BITSUS='" . $estado . "',loked='" . $Editflag .  "', Editor=0  WHERE STRSKU='" . $id . "' ";
-		$query = mysqli_query($con, $sql);
-		//codigo para eliminar una img
-		if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/productoDefault.png") {
-			if (file_exists("../../../" . $pathimg))
-				unlink("../../../" . $pathimg);
-		}
-
-		if ($query) {
-			
-			$sql2 = recuperarDatos("SELECT * from tblcatpro WHERE STRSKU='$sku';");
-			//$sql2 = recuperarDatos("SELECT * FROM  tblcatpro ORDER BY updated_at DESC LIMIT 1;");
-			
-			$tabla = "tblcatpro";
-			$tipo = "Actualizacion";
-			$fecha = date("Y-m-d H:i:s");
-
-			$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sql2 . "');";
-			$query = mysqli_query($con, $sqllog);
-			$messages[]="Producto actualizado correctamente";
-		}
-		//
-		//Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
 
 
 	} else {

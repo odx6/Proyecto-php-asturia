@@ -68,7 +68,7 @@ if ($action == 'ajax') {
 	$query = '';
 	$tables = "tblcatemp";
 	$campos = "*";
-	$sWhere = " STRNOM LIKE '%" . $query . "%'";
+	$sWhere = " STRNOM LIKE '%" . $query . "%' ";
 	include 'pagination.php'; //include pagination file
 	//pagination variables
 	//$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
@@ -86,7 +86,7 @@ if ($action == 'ajax') {
 	$reload = './empleados-view.php';
 	//main query to fetch the data
 	//$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere LIMIT $offset,$per_page");
-	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere ");
+	$query = mysqli_query($con, "SELECT $campos FROM  $tables where $sWhere  ");
 	//loop through fetched data
 
 	if (isset($_REQUEST["id"])) {

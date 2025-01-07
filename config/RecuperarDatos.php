@@ -1,5 +1,5 @@
 <?php 
-function  recuperarDatos($consulta){
+/*function  recuperarDatos($consulta){
     global $con;
     $sqldelete=$consulta;
         $dataDelete=mysqli_query($con,$sqldelete);
@@ -10,5 +10,5 @@ function  recuperarDatos($consulta){
         return $dataend;
     
     }
-
+*/
 ?>

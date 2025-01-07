@@ -70,7 +70,102 @@ if (empty($_POST['IDEMP'])) {
     VALUES('" . $FECHA . "','" . $INTIDTOP . "','" . $INTTIPMOV . "','" . $folioFormat . "','" . $IDEMP . "','" . $STROBS . "','" . $INTIDALM . "','" . $created_at . "');";
 
 
+    try{
+        if ($query_new && $query_folio) {
+            $id = $id_insertado;
+            $sql2 = recuperarDatos("SELECT * from tblinv WHERE INTIDINV='$id';");
+            $tabla = "tblinv";
+            $tipo = "creacion";
+            $fecha = date("Y-m-d H:i:s");
+    
+            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+            $query = mysqli_query($con, $sqllog);
+            $messages[] = "Inventario Agregado correctamente";
+        }
+        $id;
+    
+        if ($query_new) {
+    
+            // La inserción fue exitosa
+    
+            if (is_array($datos)) {
+                // Recorrer el array con foreach e imprimir sus valores
+                foreach ($datos as $elemento) {
+                    /*foreach ($elemento as $clave => $valor) {
+                        echo $clave . ': ' . (is_array($valor) ? implode(', ', $valor) : $valor) . '<br>';
+                    }
+                    echo '<br>';*/
+    
+    
+                    $created_at = date("Y-m-d H:i:s");
+                    $created_at2 = date("Y-m-d");
+                    $SQL = " INSERT INTO tblinvdet( 
+                    INTIDINV,
+                     SKU,
+                      STRREF,
+                       INTCAN, 
+                       INTIDUNI, 
+                       MONPRCOS,
+                        MONCTOPRO,
+                         DTEHOR)
+                       VALUES('" . $id_insertado . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $created_at . "');";
+    
+                  
+                    $query_new = mysqli_query($con, $SQL);
+    
+                    if ($query_new) {
+                        $id = mysqli_insert_id($con);
+                        $sql3 = recuperarDatos("SELECT * from tblinvdet WHERE INTIDDET='$id';");
+                        $tabla = "tblinvdet";
+                        $tipo = "creacion";
+                        $fecha = date("Y-m-d H:i:s");
+    
+                        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql3 . "');";
+                        $query = mysqli_query($con, $sqllog);
+                        $messages[] = "Detalle de inventario agregado correctamente";
+                    }
+    
+    
+    
+    
+                    $sql2 = "INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
+                    VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" .$_POST['INTTIPMOV']. "','" . $INTIDALM . "','" . $created_at . "');";
+                    $query_new2 = mysqli_query($con, $sql2);
+                    if ($query_new2) {
+                        $id = mysqli_insert_id($con);
+                        $sql3 = recuperarDatos("SELECT * from tbltarinv WHERE INTIDTAR='$id';");
+                        $tabla = "tbltarinv";
+                        $tipo = "creacion";
+                        $fecha = date("Y-m-d H:i:s");
+    
+                        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql3 . "');";
+                        $query = mysqli_query($con, $sqllog);
+                        $messages[] = "Tarjeta de inventario  Agregada correctamente";
+                    }
+                }
+            } else {
+    
+                echo  '<div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Error! No se agrego ningun  producto al inventario  no se puede agregar un inventario vacio </strong>
+                
+            </div>';
+            }
+        } else {
+            // La inserción falló
+            echo mysqli_error($con); // Muestra el error específico
+        }
+        if (!$query_new) $errors[] = "no se agrego el producto";
+    
+        if (!mysqli_errno($con)) {
+            mysqli_commit($con);
+        } else { // Si hubo algún error, revertir los cambios
+            mysqli_rollback($con);
+        }
+    }catch (mysqli_sql_exception $e) {
 
+        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+    }
 
 
     $query_new = mysqli_query($con, $sql);
@@ -81,97 +176,7 @@ if (empty($_POST['IDEMP'])) {
     VALUES ('".$id_insertado."','".date("Y-m-d H:i:s")."','".$IDEMP."','".$format."');";
      $query_folio = mysqli_query($con, $sqlinsertFolio);
 
-    if ($query_new && $query_folio) {
-        $id = $id_insertado;
-        $sql2 = recuperarDatos("SELECT * from tblinv WHERE INTIDINV='$id';");
-        $tabla = "tblinv";
-        $tipo = "creacion";
-        $fecha = date("Y-m-d H:i:s");
-
-        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-        $query = mysqli_query($con, $sqllog);
-        $messages[] = "Inventario Agregado correctamente";
-    }
-    $id;
-
-    if ($query_new) {
-
-        // La inserción fue exitosa
-
-        if (is_array($datos)) {
-            // Recorrer el array con foreach e imprimir sus valores
-            foreach ($datos as $elemento) {
-                /*foreach ($elemento as $clave => $valor) {
-                    echo $clave . ': ' . (is_array($valor) ? implode(', ', $valor) : $valor) . '<br>';
-                }
-                echo '<br>';*/
-
-
-                $created_at = date("Y-m-d H:i:s");
-                $created_at2 = date("Y-m-d");
-                $SQL = " INSERT INTO tblinvdet( 
-                INTIDINV,
-                 SKU,
-                  STRREF,
-                   INTCAN, 
-                   INTIDUNI, 
-                   MONPRCOS,
-                    MONCTOPRO,
-                     DTEHOR)
-                   VALUES('" . $id_insertado . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" . $created_at . "');";
-
-              
-                $query_new = mysqli_query($con, $SQL);
-
-                if ($query_new) {
-                    $id = mysqli_insert_id($con);
-                    $sql3 = recuperarDatos("SELECT * from tblinvdet WHERE INTIDDET='$id';");
-                    $tabla = "tblinvdet";
-                    $tipo = "creacion";
-                    $fecha = date("Y-m-d H:i:s");
-
-                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql3 . "');";
-                    $query = mysqli_query($con, $sqllog);
-                    $messages[] = "Detalle de inventario agregado correctamente";
-                }
-
-
-
-
-                $sql2 = "INSERT INTO tbltarinv(INTIDINV, DTEFEC, SKU, STRREF, INTCAN, INTIDUNI, MONPRCOS, MONCTOPRO, INTTIPMOV, INTALM, DTEHOR) 
-                VALUES ('" . $id_insertado . "','" . $created_at2 . "','" . $elemento['SKU'] . "','" . $elemento['STRREF'] . "','" . $elemento['INTCANT'] . "','" . $elemento['INTIDUNI'] . "','" . $elemento['MONPRCOS'] . "','" . $elemento['MONCTOPRO'] . "','" .$_POST['INTTIPMOV']. "','" . $INTIDALM . "','" . $created_at . "');";
-                $query_new2 = mysqli_query($con, $sql2);
-                if ($query_new2) {
-                    $id = mysqli_insert_id($con);
-                    $sql3 = recuperarDatos("SELECT * from tbltarinv WHERE INTIDTAR='$id';");
-                    $tabla = "tbltarinv";
-                    $tipo = "creacion";
-                    $fecha = date("Y-m-d H:i:s");
-
-                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql3 . "');";
-                    $query = mysqli_query($con, $sqllog);
-                    $messages[] = "Tarjeta de inventario  Agregada correctamente";
-                }
-            }
-        } else {
-
-            echo  '<div class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Error! No se agrego ningun  producto al inventario  no se puede agregar un inventario vacio </strong>
-            
-        </div>';
-        }
-    } else {
-        // La inserción falló
-        echo mysqli_error($con); // Muestra el error específico
-    }
-    if (!$query_new) $errors[] = "no se agrego el producto";
-
-    if (!mysqli_errno($con)) {
-        mysqli_commit($con);
-    } else { // Si hubo algún error, revertir los cambios
-        mysqli_rollback($con);
-    }
+    
 } else {
     $errors[] = "desconocido.";
 }

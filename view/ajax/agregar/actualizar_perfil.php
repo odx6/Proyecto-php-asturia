@@ -8,7 +8,7 @@ if (empty(trim($_POST['STRNSS']))) {
     $errors[] = "RFC está vacío.";
 } elseif (empty(trim($_POST['STRCUR']))) {
     $errors[] = "CURP está vacío.";
-}elseif (empty(trim($_POST['STRNDL']))) {
+} elseif (empty(trim($_POST['STRNDL']))) {
     $errors[] = "Licencia está vacío.";
 } elseif (empty(trim($_POST['STRNOM']))) {
     $errors[] = "Nombre está vacío.";
@@ -57,10 +57,10 @@ if (empty(trim($_POST['STRNSS']))) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
     require_once("../../../config/RecuperarDatos.php");
     $id = intval($_POST['id']);
-    $consulta="SELECT * FROM tblcatemp WHERE IDEMP=$id;";
-    $oldata=recuperarDatos($consulta);
+    $consulta = "SELECT * FROM tblcatemp WHERE IDEMP=$id;";
+    $oldata = recuperarDatos($consulta);
     //Contiene las variables de configuracion para conectar a la base de datos
- 
+
     // escaping, additionally removing everything that could be (html/javascript-) code
     //$IDEMP = mysqli_real_escape_string($con,(strip_tags($_POST["IDEMP"],ENT_QUOTES)));
     $STRNSS = mysqli_real_escape_string($con, (strip_tags($_POST["STRNSS"], ENT_QUOTES)));
@@ -80,12 +80,18 @@ if (empty(trim($_POST['STRNSS']))) {
     $OLDSTRCOR = mysqli_real_escape_string($con, (strip_tags($_POST["OLDSTRCOR"], ENT_QUOTES)));
 
     if (!empty($_POST['STRPWS'])) $STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
-  
+
 
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
     if (empty($_FILES["STRIMGPE"]['name'])) {
         $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
-        $queyimg = mysqli_query($con, $sqlimg);
+        try {
+            $queyimg = mysqli_query($con, $sqlimg);
+        } catch (mysqli_sql_exception $e) {
+
+            $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+        }
+
         $num = mysqli_num_rows($queyimg);
         if ($num == 1) {
             $row = mysqli_fetch_array($queyimg);
@@ -93,7 +99,13 @@ if (empty(trim($_POST['STRNSS']))) {
         }
     } else {
         $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
-        $queyimg = mysqli_query($con, $sqlimg);
+        try {
+            $queyimg = mysqli_query($con, $sqlimg);
+        } catch (mysqli_sql_exception $e) {
+
+            $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+        }
+
         $num = mysqli_num_rows($queyimg);
         if ($num == 1) {
             $row = mysqli_fetch_array($queyimg);
@@ -138,38 +150,46 @@ if (empty(trim($_POST['STRNSS']))) {
 
     // UPDATE data into database
     if (!empty($_POST['STRPWS'])) {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "',STRNOM='".$STRNOM."',STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     } else {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
+        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen . "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "',STRNOM='".$STRNOM."', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS . "' WHERE IDEMP='" . $id . "' ";
     }
-    $query = mysqli_query($con, $sql);
-    if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/perfil.png") {
-        if (file_exists("../../../" . $pathimg))
-            unlink("../../../" . $pathimg);
+    try {
+        $query = mysqli_query($con, $sql);
+        if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/perfil.png") {
+            if (file_exists("../../../" . $pathimg))
+                unlink("../../../" . $pathimg);
+        }
+
+        if ($query) {
+
+            $sql2 = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
+            $tabla = "tblcatemp";
+            $tipo = "Actualizacion";
+            $fecha = date("Y-m-d H:i:s");
+            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "','" . $oldata . "');";
+            try {
+                $query = mysqli_query($con, $sqllog);
+            } catch (mysqli_sql_exception $e) {
+
+                $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+            }
+        }
+    } catch (mysqli_sql_exception $e) {
+
+        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
     }
 
-    if($query){
-       
-        $sql2 = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
-        $tabla = "tblcatemp";
-        $tipo = "Actualizacion";
-        $fecha = date("Y-m-d H:i:s");
-
-        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "','" . $oldata . "');";
-        $query = mysqli_query($con, $sqllog);
 
 
-    }
 
     $_SESSION['message'] = 'Perfil Actualizado Correctamente';
     $_SESSION['color'] = 'success';
 } else {
     $_SESSION['message'] = 'Algo salio mal , al actualizar perfil';
     $_SESSION['color'] = 'danger';
-    
 }
 
 
 
 header("location: ../../../?view=perfil");
-?>

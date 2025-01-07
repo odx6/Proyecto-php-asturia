@@ -75,6 +75,7 @@ if ($gump->errors()) {
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
     require_once("../../../config/RecuperarDatos.php");
+    require_once("../../../config/funciones.php");
 
     $STRPRE = mysqli_real_escape_string($con, (strip_tags($valid_data["STRPRE"], ENT_QUOTES)));
     $INTNO = mysqli_real_escape_string($con, (strip_tags($valid_data["INTNO"], ENT_QUOTES)));
@@ -118,9 +119,7 @@ VALUES
     );";
         $query_insert = mysqli_query($con, $insert);
         if ($query_insert) {
-            //actualizar datos 
-
-            //
+           
             $messages[] = "Se agrego el ticket correctamente";
             $id = mysqli_insert_id($con);
             $sql2 = recuperarDatos("SELECT * from tblcattik WHERE STRPTIK ='" . $id . "';");
@@ -132,6 +131,8 @@ VALUES
             $query = mysqli_query($con, $sqllog);
 
             ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
+
+            ActualizarTickets($STRPRE,$row["STRPRUT"]);
         } else {
 
             $errors[] = "No se pudo agregar el vehiculo";

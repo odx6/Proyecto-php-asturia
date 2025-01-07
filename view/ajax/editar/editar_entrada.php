@@ -77,8 +77,8 @@ if (empty($_POST['IDEMP'])) {
     //$estado = mysqli_real_escape_string($con, (strip_tags($_POST["MONCTOPRO"], ENT_QUOTES)));
     $FECHA = date("Y-m-d");
     $created_at = date("Y-m-d H:i:s");
-
-    //recupera los valores antes de la actualizacion
+     try{
+       //recupera los valores antes de la actualizacion
     //se debe filtrar por  inde inventario y movimiento
     $oldFolio = mysqli_query($con, "SELECT INTFOL FROM `tblinv` WHERE INTIDINV='$id';");
     $oldvalueFolio = mysqli_fetch_assoc($oldFolio);
@@ -302,6 +302,11 @@ if (empty($_POST['IDEMP'])) {
         mysqli_rollback($con);
         $errors[] = "se revertieron los cambios.";
     }
+     }catch (mysqli_sql_exception $e) {
+
+        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+    }
+    
 } else {
     $errors[] = "desconocido.";
 }

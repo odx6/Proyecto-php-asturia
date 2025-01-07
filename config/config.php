@@ -1,6 +1,6 @@
 <?php
      //ini_set('session.gc_maxlifetime', 1800);
-     
+    /* 
     date_default_timezone_set("America/Mexico_City");
     // Resto de tu código aquí
     
@@ -18,4 +18,6 @@
     if (@mysqli_connect_errno()) {
         @die("Conexión falló: ".mysqli_connect_errno()." : ". mysqli_connect_error());
     }
+
+   
 ?>

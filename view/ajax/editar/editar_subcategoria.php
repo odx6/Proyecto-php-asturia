@@ -25,22 +25,27 @@ if (empty(trim($_POST['STRNOMSBC']))) {
 
 	$DTEHOR = date("Y-m-d H:i:s");
 	$id = intval($_POST['id']);
-	//Write register in to database 
-	$oldata = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
+	try {
+		//Write register in to database 
+		$oldata = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
 
-	$sql =  "UPDATE tblcatsbc SET INTIDCAT='" . $INTIDCAT . "', STRNOMSBC='" . $STRNOMSBC . "', STRDESBC='" . $STRDESBC . "', BITSUS='" . $BITSUS . "'  WHERE INTIDSBC='" . $id . "' ";
-	$query_new = mysqli_query($con, $sql);
-	if ($query_new) {
+		$sql =  "UPDATE tblcatsbc SET INTIDCAT='" . $INTIDCAT . "', STRNOMSBC='" . $STRNOMSBC . "', STRDESBC='" . $STRDESBC . "', BITSUS='" . $BITSUS . "'  WHERE INTIDSBC='" . $id . "' ";
+		$query_new = mysqli_query($con, $sql);
+		if ($query_new) {
 
 
-		$sql2 = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
-		$tabla = "tblcatsbc";
-		$tipo = "Actualizacion";
-		$fecha = date("Y-m-d H:i:s");
+			$sql2 = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
+			$tabla = "tblcatsbc";
+			$tipo = "Actualizacion";
+			$fecha = date("Y-m-d H:i:s");
 
-		$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sql2 . "');";
-		$query = mysqli_query($con, $sqllog);
-		$messages[] = "Subcategoria Actualizada correctamente";
+			$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sql2 . "');";
+			$query = mysqli_query($con, $sqllog);
+			$messages[] = "Subcategoria Actualizada correctamente";
+		}
+	} catch (mysqli_sql_exception $e) {
+
+		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
 	}
 } else {
 	$errors[] = "desconocido.";

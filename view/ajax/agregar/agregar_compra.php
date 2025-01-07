@@ -186,9 +186,16 @@ if ($gump->errors()) {
                 $fecha = date("Y-m-d H:i:s");
 
                 $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+               try{
                 $query = mysqli_query($con, $sqllog);
 
                 ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
+               } catch (mysqli_sql_exception $e) {
+		
+				$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+			}
+               
+              
             } else {
 
                 $errors[] = "No se pudo agregar la compra";

@@ -113,7 +113,7 @@ $CREATE_AT = $rw->CREATE_AT;
                                 <!-- /.tab-pane -->
 
                                 <div class="tab-pane" id="settings">
-
+                                    
                                     <form class="form-horizontal" role="form" action="view/ajax/agregar/actualizar_perfil.php" name="update_register" id="update_register" method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="id" class="form-control" id="id" value="<?php echo $id_user ?>">
                                         <input type="hidden" class="form-control" id="OLDSTRCOR" name="OLDSTRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
@@ -123,7 +123,7 @@ $CREATE_AT = $rw->CREATE_AT;
                                                 <div class="form-group row">
                                                     <label for="inputName" class="col-sm-2 col-form-label">Seguridad social: </label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" required name="STRNSS" class="form-control" id="STRNSS" placeholder="NSS: " value="<?php echo $STRNSS ?>">
+                                                        <input type="text" required name="STRNSS" class="form-control" id="STRNSS" placeholder="NSS: " value="<?php echo $STRNSS ?>" pattern="^(\d{2})(\d{2})(\d{2})\d{5}$" title="El NSS debe tener 11 dígitos.">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -221,20 +221,29 @@ $CREATE_AT = $rw->CREATE_AT;
                                                         <input type="email" required name="STRCOR" class="form-control" id="STRCOR" placeholder="Email: " value="<?php echo $STRCOR ?>">
                                                     </div>
                                                 </div>
+
                                                 <div class="form-group row">
                                                     <label for="Contraseña" class="col-sm-2 col-form-label">Contraseña</label>
                                                     <div class="col-sm-10">
-                                                        <input type="password" name="STRPWS" class="form-control" id="STRPWS" placeholder="Contraseña: ">
+                                                        <input type="password" name="STRPWS" class="form-control" id="STRPWSPER" placeholder="Contraseña: " onchange="Csegura3()">
+                                                        <span id="PasswordPerfil"> </span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="Estatus" class="col-sm-2 col-form-label">Estatus</label>
+
+
+                                                    <label for="estado" class=" col-sm-2 col-form-label">Estado: </label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" required name="BITSUS" class="form-control" id="BITSUS" placeholder="Estado: " value="<?php echo $BITSUS ?>">
+                                                        <select class=" form-control " name="BITSUS" id="BITSUS" required>
+                                                            <option value="1" <?php if ($BITSUS == 1) echo 'selected'; ?>>Activo</option>
+                                                            <option value="0" <?php if ($BITSUS == 0) echo 'selected'; ?>>Inactivo</option>
+                                                        </select>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
+
 
 
 

@@ -45,6 +45,79 @@ if (isset($_REQUEST["id"])) { //codigo para eliminar
     }
 }
 
+//ELIMINAR TIKET
+
+if (isset($_REQUEST["id_ticket"])) { //codigo para eliminar 
+    $id = $_REQUEST["id_ticket"];
+
+    $sql2 = recuperarDatos("SELECT * from  tblcattik  WHERE STRPTIK='$id'");
+    try {
+        if (($delete = mysqli_query($con, "DELETE FROM  tblcattik  WHERE STRPTIK='$id'"))) {
+            $messages[] = "Bien hecho!";
+            $msj = "Datos eliminados .";
+            $classM = "alert alert-success";
+            $times = "&times;";
+            if ($delete) {
+                $tabla = "tblcattik";
+                $tipo = "Eliminacion";
+                $fecha = date("Y-m-d H:i:s");
+
+                $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+                $query = mysqli_query($con, $sqllog);
+               
+            }
+        } else {
+            $aviso = "Aviso!";
+            $msj = "Error al eliminar los datos " . mysqli_error($con);
+            $classM = "alert alert-danger";
+            $times = "&times;";
+        }
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() == 1451) {
+            $aviso = "Aviso!";
+            $msj = "El dato que intentas eliminar tiene relacion con otros registros por favor verifica que no dependa de otros registros Codigo de Error:" . $e->getCode();
+            $classM = "alert alert-danger";
+            $times = "&times;";
+        } else {
+            $aviso = "Aviso!";
+            $msj = "Error al eliminar los datos " . $e->getMessage() . " " . $e->getCode();
+            $classM = "alert alert-danger";
+            $times = "&times;";
+        }
+    }
+
+    
+    if (isset($errors)) {
+
+        ?>
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Error!</strong>
+                <?php
+                foreach ($errors as $error) {
+                    echo $error."<br>";
+                }
+                ?>
+            </div>
+        <?php
+        }
+        if (isset($messages)) {
+        
+        ?>
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>¡Bien hecho!</strong>
+                <?php
+                foreach ($messages as $message) {
+                    echo $message."<br>";
+                }
+                ?>
+            </div>
+        <?php
+        }
+}
+
+
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
 if ($action == 'ajax') {
     $query = mysqli_real_escape_string($con, (strip_tags($_REQUEST['query'], ENT_QUOTES)));
@@ -166,7 +239,7 @@ if ($action == 'ajax') {
                                         $PCRXLIT = $row["PCRXLIT"];
                                         $LTS = $row["LTS"];
                                         $LOC = $row["LOC"];
-                                        $DTEHOR = $row["DTEHOR"];
+                                        $DTEHORTIK = $row["DTEHOR"];
 
                                         $autorizado = getDato($STRPRUT, 'tblcatrut', 'STRPRUT', 'DOUKM');
                                         //datos
@@ -181,10 +254,10 @@ if ($action == 'ajax') {
                                         <tr>
 
                                             <td><?php echo $INTNO ?></td>
-                                            <td><?php echo $PCRXLIT ?></td>
-                                            <td><?php echo $LTS ?></td>
+                                            <td><?php echo "$ " . number_format($PCRXLIT, 2, '.', ','); ?></td>
+                                            <td><?php echo $LTS."ltr" ?></td>
                                             <td><?php echo $LOC ?></td>
-                                            <td><?php echo $DTHOR ?></td>
+                                            <td><?php echo $DTEHORTIK ?></td>
                                             <td class="text-right">
                                                 <?php if (in_array(2, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
@@ -193,7 +266,7 @@ if ($action == 'ajax') {
                                                 <?php } ?>
                                                 <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                                                    <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $STRPTIK; ?>','view/ajax/agregar/eliminar_ticket.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
+                                                    <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="DeleteTicket('<?php echo $STRPTIK; ?>','view/ajax/kilometraje_ajax.php')"><i class="far fa-trash-alt"></i></button>
 
                                                 <?php } ?>
                                                 <?php if (in_array(4, $_SESSION['Habilidad']['Kilometraje'])) { ?>
@@ -221,13 +294,13 @@ if ($action == 'ajax') {
                     <td><?php echo $KLMINI . "km" ?></td>
                     <td><?php echo $KLMFIN . "km" ?></td>
                     <td><?php echo $KLMRECO . "km" ?></td>
-                    <td><?php echo $DOUREN
+                    <td><?php echo $DOUREN."km"
                         ?></td>
-                    <td><?php echo $INPRT ?></td>
-                    <td><?php echo $DOUCON ?></td>
-                    <td><?php echo $DOUDIF
+                    <td><?php echo "$ " . number_format($INPRT, 2, '.', ',');?></td>
+                    <td><?php echo $DOUCON."ltr" ?></td>
+                    <td><?php echo $DOUDIF."km"
                         ?></td>
-                    <td><?php echo $DOUDES ?></td>
+                    <td><?php echo "$ " . number_format($DOUDES, 2, '.', ','); ?></td>
                     <td><?php echo $DTHCAP ?></td>
                     <td><?php echo $DTHOR ?></td>
                     <td class="text-right">
@@ -238,7 +311,7 @@ if ($action == 'ajax') {
                         <?php } ?>
                         <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                            <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $STRPRE; ?>','view/ajax/recorrido_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
+                            <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $STRPRE; ?>','view/ajax/kilometraje_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
 
                         <?php } ?>
                         <?php if (in_array(4, $_SESSION['Habilidad']['Kilometraje'])) { ?>

@@ -72,7 +72,6 @@ $nombre_empresa = $rw['nombre'];
 
 $_SESSION['NOMBREMPRESA'] = $nombre_empresa;
 ?>
-
 <!DOCTYPE html>
 
 <html lang="en">

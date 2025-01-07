@@ -28,18 +28,24 @@ if (empty(trim($_POST['STRNOMSBC']))) {
 	//Write register in to database 
 	$sql = "INSERT INTO tblcatsbc ( INTIDCAT,STRNOMSBC, STRDESBC,DTEHOR,BITSUS) 
 			VALUES('" . $INTIDCAT . "','" . $STRNOMSBC . "','" . $STRDESSBC . "','" . $DTEHOR . "','" . $BITSUS . "');";
-	$query_new = mysqli_query($con, $sql);
-	if ($query_new) {
-		$id = mysqli_insert_id($con);
-		$sql2 = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
-		$tabla = "tblcatsbc";
-		$tipo = "creacion";
-		$fecha = date("Y-m-d H:i:s");
+			try{
+				$query_new = mysqli_query($con, $sql);
+				if ($query_new) {
+					$id = mysqli_insert_id($con);
+					$sql2 = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
+					$tabla = "tblcatsbc";
+					$tipo = "creacion";
+					$fecha = date("Y-m-d H:i:s");
+			
+					$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+					$query = mysqli_query($con, $sqllog);
+				}
+				$messages[]="Subcategoria agregada correctamente";
+			} catch (mysqli_sql_exception $e) {
 
-		$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-		$query = mysqli_query($con, $sqllog);
-	}
-	$messages[]="Subcategoria agregada correctamente";
+				$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+			}
+	
 } else {
 	$errors[] = "desconocido.";
 }

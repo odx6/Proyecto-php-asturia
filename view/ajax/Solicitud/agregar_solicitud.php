@@ -123,17 +123,18 @@ if ($gump->errors()) {
 	$sqlNumFolios = "SELECT COUNT(*) AS numgeneral FROM tblcatfol WHERE tipo_folio= 'GENERAL'";
 	try {
 		$query_folios = mysqli_query($con, $sqlNumFolios);
+		if ($query_folios && mysqli_num_rows($query_folios) > 0) {
+			$fila = mysqli_fetch_assoc($query_folios);
+			$oldFolio = $fila['numgeneral'];
+			$oldFolio = $oldFolio + 1;
+		} else {
+			$error[] = "Error al consultar folio general";
+		}
 	} catch (mysqli_sql_exception $e) {
 		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
 	}
 
-	if ($query_folios && mysqli_num_rows($query_folios) > 0) {
-		$fila = mysqli_fetch_assoc($query_folios);
-		$oldFolio = $fila['numgeneral'];
-		$oldFolio = $oldFolio + 1;
-	} else {
-		$error[] = "Error al consultar folio general";
-	}
+	
 	$sqlinsertfolio = "INSERT INTO 
 	`tblcatfol`( `folio`, `tipo_folio`, `fecha_creacion`) 
 	VALUES ('" . $oldFolio . "','GENERAL','" . $Fecha . "')";
@@ -153,16 +154,17 @@ if ($gump->errors()) {
 	$sqlNumFolEsp = "SELECT COUNT(*) AS Especifico FROM tblcatfol WHERE tipo_folio= 'ESPECIFICO' and id_empresa='" . $LNGIDNORG . "';";
 	try {
 		$query_folios_especificos = mysqli_query($con, $sqlNumFolEsp);
+		if ($query_folios_especificos && mysqli_num_rows($query_folios_especificos) > 0) {
+			$fila = mysqli_fetch_assoc($query_folios_especificos);
+			$FolioEspecifico = $fila['Especifico'];
+			$FolioEspecifico = $FolioEspecifico + 1;
+		} else {
+			$error[] = "Error al consultar  Folio Especifico";
+		}
 	} catch (mysqli_sql_exception $e) {
 		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
 	}
-	if ($query_folios_especificos && mysqli_num_rows($query_folios_especificos) > 0) {
-		$fila = mysqli_fetch_assoc($query_folios_especificos);
-		$FolioEspecifico = $fila['Especifico'];
-		$FolioEspecifico = $FolioEspecifico + 1;
-	} else {
-		$error[] = "Error al consultar  Folio Especifico";
-	}
+	
 	$sqlEspecifico = "INSERT INTO 
 	`tblcatfol`(`id_empresa`, `folio`, `tipo_folio`, `fecha_creacion`) 
 	VALUES ('" . $LNGIDNORG . "','" . $FolioEspecifico . "','ESPECIFICO','" . $Fecha . "');";

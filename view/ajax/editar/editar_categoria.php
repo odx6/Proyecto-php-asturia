@@ -25,22 +25,30 @@ if (empty(trim($_POST['STRNOMCAT']))) {
 	$DTEHOR = date("Y-m-d H:i:s");
 	$id = intval($_POST['id']);
 	$olddata = recuperarDatos("SELECT * from tblcatcat WHERE INTIDCAT='$id';");
-	//Write register in to database 
+	//Write register in to database
+	try{
+		$sql =  "UPDATE tblcatcat SET STRNOMCAT='" . $STRNOMCAT . "', STRDESCAT='" . $STRDESCAT . "', BITSUS='" . $BITSUS . "'  WHERE INTIDCAT='" . $id . "' ";
+		$query_new = mysqli_query($con, $sql);
+		if ($query_new) {
+			$sql2 = $olddata;
+			$new = recuperarDatos("SELECT * from tblcatcat WHERE INTIDCAT='$id';");
+			$tabla = "tblcatcat";
+			$tipo = "Actualizacion";
+			$fecha = date("Y-m-d H:i:s");
+	
+			$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "','" . $new . "');";
+			$query = mysqli_query($con, $sqllog);
+			$messages[] = "Categoria actualizada correctamente";
+		}else{
+			$errors[]="Error  al actualizar   la categoria";
+		}
+	} catch (mysqli_sql_exception $e) {
+
+        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+    }
 
 
-	$sql =  "UPDATE tblcatcat SET STRNOMCAT='" . $STRNOMCAT . "', STRDESCAT='" . $STRDESCAT . "', BITSUS='" . $BITSUS . "'  WHERE INTIDCAT='" . $id . "' ";
-	$query_new = mysqli_query($con, $sql);
-	if ($query_new) {
-		$sql2 = $olddata;
-		$new = recuperarDatos("SELECT * from tblcatcat WHERE INTIDCAT='$id';");
-		$tabla = "tblcatcat";
-		$tipo = "Actualizacion";
-		$fecha = date("Y-m-d H:i:s");
 
-		$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "','" . $new . "');";
-		$query = mysqli_query($con, $sqllog);
-		$messages[] = "Categoria actualizada correctamente";
-	}
 } else {
 	$errors[] = "desconocido.";
 }

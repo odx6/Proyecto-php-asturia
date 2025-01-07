@@ -1,4 +1,5 @@
-<?php require_once("config.php");
+<?php 
+require_once("config.php");
 // Importa las clases necesarias de PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -55,4 +56,5 @@ function  verificacionDeCorreo($correo,$token){
   }
   }
   }
+
   ?>

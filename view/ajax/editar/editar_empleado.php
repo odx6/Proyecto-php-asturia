@@ -84,138 +84,144 @@ elseif (empty($_POST['sesion'])) {
     $OLDSTRCOR = mysqli_real_escape_string($con, (strip_tags($_POST["OLDSTRCOR"], ENT_QUOTES)));
     $DTHLIC = mysqli_real_escape_string($con, (strip_tags($_POST["DTHLIC"], ENT_QUOTES)));
     $sesion = mysqli_real_escape_string($con, (strip_tags($_POST["sesion"], ENT_QUOTES)));
-
-    if (!empty($_POST['STRPWS'])) $STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
-    $id = intval($_POST['id']);
-
-    $BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
-    if (empty($_FILES["STRIMGEU"]['name'])) {
-        $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
-        $queyimg = mysqli_query($con, $sqlimg);
-        $num = mysqli_num_rows($queyimg);
-        if ($num == 1) {
-            $row = mysqli_fetch_array($queyimg);
-            $Imagen = $row['STRIMG'];
-        }
-    } else {
-        $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
-        $queyimg = mysqli_query($con, $sqlimg);
-        $num = mysqli_num_rows($queyimg);
-        if ($num == 1) {
-            $row = mysqli_fetch_array($queyimg);
-            $pathimg = $row['STRIMG'];
-        }
-
-
-        //UPDATE IMG 
-        //Agregar imagen
-        $target_dir = "../../resources/images/Empleados/";
-        $image_name = time() . "_" . basename($_FILES["STRIMGEU"]["name"]);
-        $target_file = $target_dir . $image_name;
-        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-        $imageFileZise = $_FILES["STRIMGEU"]["size"];
-
-        if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
-            $errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
-        } else if ($imageFileZise > 1048576) { //1048576 byte=1MB
-            $errors[] = "<p>Lo sentimos, pero el archivo es demasiado grande. Selecciona logo de menos de 1MB</p>";
+    try{
+        if (!empty($_POST['STRPWS'])) $STRPWS = sha1(md5(mysqli_real_escape_string($con, (strip_tags($_POST["STRPWS"], ENT_QUOTES)))));
+        $id = intval($_POST['id']);
+    
+        $BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
+        if (empty($_FILES["STRIMGEU"]['name'])) {
+            $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
+            $queyimg = mysqli_query($con, $sqlimg);
+            $num = mysqli_num_rows($queyimg);
+            if ($num == 1) {
+                $row = mysqli_fetch_array($queyimg);
+                $Imagen = $row['STRIMG'];
+            }
         } else {
-            /* Fin Validacion*/
-            if ($imageFileZise > 0) {
-                move_uploaded_file($_FILES["STRIMGEU"]["tmp_name"], $target_file);
-                $imagen = basename($_FILES["STRIMGEU"]["name"]);
-                $Imagen = "view/resources/images/Empleados/$image_name";
+            $sqlimg = "SELECT STRIMG FROM `tblcatemp` WHERE IDEMP=$id;";
+            $queyimg = mysqli_query($con, $sqlimg);
+            $num = mysqli_num_rows($queyimg);
+            if ($num == 1) {
+                $row = mysqli_fetch_array($queyimg);
+                $pathimg = $row['STRIMG'];
             }
-        }
-    }
-
-
-    //variable de los permisos 
-
-    if (empty($_POST['permisos'])) {
-        $BITSUS = 2;
-    } else {
-
-        $permisos = $_POST["permisos"];
-    }
-
-
-    if ($OLDSTRCOR != $STRCOR) {
-        $token = md5(rand());
-        $sql = "UPDATE tblcatemp SET TOKEN='$token', VERIFICATE_AT=NULL WHERE STRNSS='" . $STRNSS . "' ";
-        $query1 = mysqli_query($con, $sql);
-        verificacionDeCorreo($STRCOR, $token);
-    }
-    $oldata = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
-    // UPDATE data into database
-    if (!empty($_POST['STRPWS'])) {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "',DTHLIC='".$DTHLIC."', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS ."',numsesion='" . $sesion . "' WHERE IDEMP='" . $id . "' ";
-    } else {
-        $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', DTHLIC='".$DTHLIC."',STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS ."',numsesion='" . $sesion . "' WHERE IDEMP='" . $id . "' ";
-    }
-    $query = mysqli_query($con, $sql);
-    if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/perfil.png") {
-        if (file_exists("../../../" . $pathimg))
-            unlink("../../../" . $pathimg);
-    }
-    if ($query) {
-
-        $sql2 = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
-        $tabla = "tblcatemp";
-        $tipo = "Actualizacion";
-        $fecha = date("Y-m-d H:i:s");
-
-        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "','" . $oldata . "');";
-        $query = mysqli_query($con, $sqllog);
-    }
-
-    //Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
-    /*if(!empty(($password))){
-    	$sql_password = "UPDATE empleado SET password='".$password."' WHERE id='".$id."' ";
-    	$query_password = mysqli_query($con,$sql_password);
-    }*/
-
-    if ($query) {
-        $sqlcopy = "SELECT * FROM empleado_permisos WHERE idempleado='$id'";
-        $PermisosEliminados = mysqli_query($con, $sqlcopy);
-        $sqldel = "DELETE FROM empleado_permisos WHERE idempleado='$id'";
-        if (mysqli_query($con, $sqldel)) {
-            while ($row = mysqli_fetch_array($PermisosEliminados)) {
-                $idx=$row['idempleado_permiso'];
-               //$sql2 = recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$idx';");
-               $sql2 = "".$row['idempleado_permiso'].",".$row['idempleado'].",".$row['idpermiso'].",".$row['Habilidades']."";
-                $tabla = "empleado_permisos";
-                $tipo = "Eliminacion";
-                $fecha = date("Y-m-d H:i:s");
-
-                $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-                $query = mysqli_query($con, $sqllog);
-
-            }
-            $num_element = 0;
-            $sw = true;
-            if (!empty($_POST['permisos'])) {
-                while ($num_element < count($permisos)) {
-                    $sql_detalle = "INSERT INTO empleado_permisos(idempleado, idpermiso) VALUES('$id', '$permisos[$num_element]')";
-                    mysqli_query($con, $sql_detalle) or $sw = false;
-                    $ide = mysqli_insert_id($con);
-                    $sql2 = recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$ide';");
-                    $tabla = "empleado_permisos";
-                    $tipo = "creacion";
-                    $fecha = date("Y-m-d H:i:s");
-
-                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $ide . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-                    $query = mysqli_query($con, $sqllog);
-                    $num_element = $num_element + 1;
+    
+    
+            //UPDATE IMG 
+            //Agregar imagen
+            $target_dir = "../../resources/images/Empleados/";
+            $image_name = time() . "_" . basename($_FILES["STRIMGEU"]["name"]);
+            $target_file = $target_dir . $image_name;
+            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+            $imageFileZise = $_FILES["STRIMGEU"]["size"];
+    
+            if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") and $imageFileZise > 0) {
+                $errors[] = "<p>Lo sentimos, sólo se permiten archivos JPG , JPEG, PNG y GIF.</p>";
+            } else if ($imageFileZise > 1048576) { //1048576 byte=1MB
+                $errors[] = "<p>Lo sentimos, pero el archivo es demasiado grande. Selecciona logo de menos de 1MB</p>";
+            } else {
+                /* Fin Validacion*/
+                if ($imageFileZise > 0) {
+                    move_uploaded_file($_FILES["STRIMGEU"]["tmp_name"], $target_file);
+                    $imagen = basename($_FILES["STRIMGEU"]["name"]);
+                    $Imagen = "view/resources/images/Empleados/$image_name";
                 }
             }
-            $return = $sw;
         }
+    
+    
+        //variable de los permisos 
+    
+        if (empty($_POST['permisos'])) {
+            $BITSUS = 2;
+        } else {
+    
+            $permisos = $_POST["permisos"];
+        }
+    
+    
+        if ($OLDSTRCOR != $STRCOR) {
+            $token = md5(rand());
+            $sql = "UPDATE tblcatemp SET TOKEN='$token', VERIFICATE_AT=NULL WHERE STRNSS='" . $STRNSS . "' ";
+            $query1 = mysqli_query($con, $sql);
+            verificacionDeCorreo($STRCOR, $token);
+        }
+        $oldata = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
+        // UPDATE data into database
+        if (!empty($_POST['STRPWS'])) {
+            $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "',DTHLIC='".$DTHLIC."', STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',STRPWS='" . $STRPWS . "',BITSUS='" . $BITSUS ."',numsesion='" . $sesion . "' WHERE IDEMP='" . $id . "' ";
+        } else {
+            $sql = "UPDATE tblcatemp SET STRNSS='" . $STRNSS . "', STRRFC='" . $STRRFC . "', STRIMG='" . $Imagen ."', STRNOM='" . $STRNOM .  "', STRCUR='" . $STRCUR . "', STRNDL='" . $STRNDL . "', DTHLIC='".$DTHLIC."',STRAPE='" . $STRAPE . "', STRDOM='" . $STRDOM . "', STRLOC='" . $STRLOC . "', STRMUN='" . $STRMUN . "', STREST='" . $STREST . "', STRCP='" . $STRCP . "', STRPAI='" . $STRPAI . "', STRTEL='" . $STRTEL . "',STRCOR='" . $STRCOR . "',BITSUS='" . $BITSUS ."',numsesion='" . $sesion . "' WHERE IDEMP='" . $id . "' ";
+        }
+        $query = mysqli_query($con, $sql);
+        if ($query && !empty($pathimg) && $pathimg != "view/resources/images/Default/perfil.png") {
+            if (file_exists("../../../" . $pathimg))
+                unlink("../../../" . $pathimg);
+        }
+        if ($query) {
+    
+            $sql2 = recuperarDatos("SELECT * from tblcatemp WHERE IDEMP='$id';");
+            $tabla = "tblcatemp";
+            $tipo = "Actualizacion";
+            $fecha = date("Y-m-d H:i:s");
+    
+            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "','" . $oldata . "');";
+            $query = mysqli_query($con, $sqllog);
+        }
+    
+        //Verifico que el campo de la contraseña no este vacia by Amner Saucedo Sosa
+        /*if(!empty(($password))){
+            $sql_password = "UPDATE empleado SET password='".$password."' WHERE id='".$id."' ";
+            $query_password = mysqli_query($con,$sql_password);
+        }*/
+    
+        if ($query) {
+            $sqlcopy = "SELECT * FROM empleado_permisos WHERE idempleado='$id'";
+            $PermisosEliminados = mysqli_query($con, $sqlcopy);
+            $sqldel = "DELETE FROM empleado_permisos WHERE idempleado='$id'";
+            if (mysqli_query($con, $sqldel)) {
+                while ($row = mysqli_fetch_array($PermisosEliminados)) {
+                    $idx=$row['idempleado_permiso'];
+                   //$sql2 = recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$idx';");
+                   $sql2 = "".$row['idempleado_permiso'].",".$row['idempleado'].",".$row['idpermiso'].",".$row['Habilidades']."";
+                    $tabla = "empleado_permisos";
+                    $tipo = "Eliminacion";
+                    $fecha = date("Y-m-d H:i:s");
+    
+                    $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+                    $query = mysqli_query($con, $sqllog);
+    
+                }
+                $num_element = 0;
+                $sw = true;
+                if (!empty($_POST['permisos'])) {
+                    while ($num_element < count($permisos)) {
+                        $sql_detalle = "INSERT INTO empleado_permisos(idempleado, idpermiso) VALUES('$id', '$permisos[$num_element]')";
+                        mysqli_query($con, $sql_detalle) or $sw = false;
+                        $ide = mysqli_insert_id($con);
+                        $sql2 = recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$ide';");
+                        $tabla = "empleado_permisos";
+                        $tipo = "creacion";
+                        $fecha = date("Y-m-d H:i:s");
+    
+                        $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $ide . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
+                        $query = mysqli_query($con, $sqllog);
+                        $num_element = $num_element + 1;
+                    }
+                }
+                $return = $sw;
+            }
+    
+            $messages[] = "El empleado ha sido actualizado con éxito.";
+        } else {
+            $errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
+        }
+    }catch (mysqli_sql_exception $e) {
 
-        $messages[] = "El empleado ha sido actualizado con éxito.";
-    } else {
-        $errors[] = "Lo sentimos, el registro falló. Por favor, regrese y vuelva a intentarlo.";
+        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
     }
+
+   
 } else {
     $errors[] = "desconocido.";
 }

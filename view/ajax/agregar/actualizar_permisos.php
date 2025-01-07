@@ -15,21 +15,35 @@ if (!empty($_POST['Habildades'])) {
         $id = $claves[$i];
         $oldata=recuperarDatos("SELECT * FROM empleado_permisos where idempleado_permiso='$id';");
         $sql = "UPDATE empleado_permisos SET Habilidades='$data'  WHERE 	idempleado_permiso='$id';";
-        $query = mysqli_query($con, $sql);
-
-        if($query){
-            $sql2=recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$id';");
-            $tabla="empleado_permisos";
-            $tipo="Actualizacion";
-
-            $fecha=date("Y-m-d H:i:s");
+        try{
+            $query = mysqli_query($con, $sql);
+            if($query){
+                $sql2=recuperarDatos("SELECT * from empleado_permisos WHERE idempleado_permiso='$id';");
+                $tabla="empleado_permisos";
+                $tipo="Actualizacion";
+    
+                $fecha=date("Y-m-d H:i:s");
+                
+             $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$oldata."','".$sql2."');";
+             try{
+                $query = mysqli_query($con, $sqllog);
+            }catch (mysqli_sql_exception $e) {
+        
+                $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+            }
             
-         $sqllog="INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('".$_SESSION['user_id']."','".$id."','".$tabla."','".$tipo."','".$fecha."','".$oldata."','".$sql2."');";
-         $query = mysqli_query($con, $sqllog);
-
+            
+    
+            }
+            
+            $i += 1;
+        }catch (mysqli_sql_exception $e) {
+    
+            $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
         }
         
-        $i += 1;
+
+       
     }
     $_SESSION['message'] = 'Permisos modificados con exito';
     $_SESSION['color'] = 'success';
