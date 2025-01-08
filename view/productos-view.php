@@ -168,15 +168,20 @@ if ($_SESSION['productos'] == 1) {
                     success: function(datos) {
                         $("#resultados_ajax").html(datos);
                         $('#guardar_datos').attr("disabled", false);
-
+                       
                         window.setTimeout(function() {
                             $(".alert").fadeTo(500, 0).slideUp(500, function() {
                                 $(this).remove();
                             });
                         }, 5000);
                         $('#formModal').modal('hide');
+                        
+                    },
+                    error:function(){
+                        alert("Algo salio mnal")
                     }
                 });
+                event.preventDefault();
             });
         </script>
 
@@ -199,6 +204,7 @@ if ($_SESSION['productos'] == 1) {
                     },
                     success: function(datos) {
                         $("#resultados_ajax").html(datos);
+                        
                         $('#actualizar_datos').attr("disabled", false);
 
                         window.setTimeout(function() {
@@ -207,8 +213,10 @@ if ($_SESSION['productos'] == 1) {
                             });
                         }, 5000);
                         $('#modal_update').modal('hide');
+                        load();
                     }
                 });
+                event.preventDefault();
             });
         </script>
         <script>
@@ -241,6 +249,7 @@ if ($_SESSION['productos'] == 1) {
 
                     }
                 })
+                event.preventDefault();
             }
 
             function mostrar(id) {
@@ -266,7 +275,7 @@ if ($_SESSION['productos'] == 1) {
             }
 
             function Editarloked() {
-                alert("Hola");
+                
                 var id = $('#sku').val();
                 if (id != null && id)
                     $.ajax({

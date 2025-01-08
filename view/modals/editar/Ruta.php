@@ -30,7 +30,7 @@ if (in_array(2, $_SESSION['Habilidad']['Rutas'])) {
             </div>
         </div>
         <div class="col-4">
-            <div class="form-group"><label for="Telefono" class=" col-form-label">Telefono: </label>
+            <div class="form-group"><label for="Telefono" class=" col-form-label">KM Autorizados: </label>
                 <input type="number" required class="form-control" id="DOUKM" name="DOUKM" placeholder="Telefono" value="<?php echo $DOUKM ?>">
             </div>
         </div>

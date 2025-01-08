@@ -90,7 +90,7 @@ if ($gump->errors()) {
 
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
+    require_once("../../../config/funciones.php");
     if (is_array($datos) && count($datos) > 0) {
 
         $IDEMP = mysqli_real_escape_string($con, (strip_tags($valid_data["IDEMP"], ENT_QUOTES)));
@@ -131,7 +131,7 @@ if ($gump->errors()) {
 
 
                             if ($insert_com) {
-                                $id_det_com=mysqli_insert_id($con);
+                                $id_det_com = mysqli_insert_id($con);
 
                                 //agregar ala tarjeta 
                                 $insert_tar = "INSERT INTO `tbltarinv`(`INTIDINV`, `DTEFEC`, `SKU`,  `INTCAN`, `INTIDUNI`, `MONPRCOS`, `MONCTOPRO`, `INTTIPMOV`, `INTALM`, `DTEHOR`) 
@@ -186,16 +186,14 @@ if ($gump->errors()) {
                 $fecha = date("Y-m-d H:i:s");
 
                 $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-               try{
-                $query = mysqli_query($con, $sqllog);
+                try {
+                    $query = mysqli_query($con, $sqllog);
 
-                ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
-               } catch (mysqli_sql_exception $e) {
-		
-				$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-			}
-               
-              
+                    ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
+                } catch (mysqli_sql_exception $e) {
+
+                    $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
+                }
             } else {
 
                 $errors[] = "No se pudo agregar la compra";

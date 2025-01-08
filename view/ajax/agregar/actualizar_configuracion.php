@@ -36,6 +36,7 @@ if (empty(trim($_POST['id']))) {
 
 
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
+	require_once("../../../config/funciones.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 	// escaping, additionally removing everything that could be (html/javascript-) code
 	$id = intval($_POST['id']);
@@ -54,6 +55,7 @@ if (empty(trim($_POST['id']))) {
 
 	// update data
 	$sql = "UPDATE configuracion SET nombre='" . $empresa . "', dni='" . $dni . "', actividad_economica='" . $actividad_economica . "', email='" . $email . "', telefono='" . $telefono . "' WHERE id='$id' ";
+	
 	try{
 		$query = mysqli_query($con, $sql);
 		if ($query_new) {

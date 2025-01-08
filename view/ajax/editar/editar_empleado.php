@@ -63,7 +63,7 @@ elseif (empty($_POST['sesion'])) {
     /*&& !empty($_POST['kind'])*/
 ) {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
+    require_once("../../../config/funciones.php");
 
     // escaping, additionally removing everything that could be (html/javascript-) code
     //$IDEMP = mysqli_real_escape_string($con,(strip_tags($_POST["IDEMP"],ENT_QUOTES)));

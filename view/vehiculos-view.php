@@ -67,6 +67,7 @@ $('#new_register').submit(function(event) {
                 });
             }, 5000);
             $('#formModal').modal('hide');
+            load();
         }
     });
     event.preventDefault();
@@ -94,6 +95,7 @@ $('#new_register').submit(function(event) {
                         });
                     }, 5000);
                     $('#modal_update').modal('hide');
+                    load();
                 }
             });
             event.preventDefault();

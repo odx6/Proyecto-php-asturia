@@ -65,7 +65,7 @@ if ($gump->errors()) {
 
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
+    require_once("../../../config/funciones.php");
 
 
     $id = $valid_data["id"];
@@ -80,45 +80,20 @@ if ($gump->errors()) {
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($valid_data["BITSUS"], ENT_QUOTES)));
     $DTEHOR = date("Y-m-d H:i:s");
     $oldata = recuperarDatos("SELECT * from tblcatveh WHERE STRNMRSR='$id';");
+    $update = "UPDATE `tblcatveh` SET
+    `STRNMRSR`='" . $STRNMRSR . "',
+    `STRNMR`='" . $STRNMR . "',
+   `STRMRC`='" . $STRMRC . "',
+   `STRMDL`='" . $STRMDL . "',
+   `STRPLC`='" . $STRPLC . "',
+   `STRTPVH`='" . $STRTPVH . "',
+   `LNGIDNORG`='" . $LNGIDNORG . "',
+   `DOKLM`='" . $DOKLM . "',
+   `BITSUS`='" . $BITSUS . "' 
+    WHERE STRNMRSR='$id';";
 
-    try {
-      
-            $update = "UPDATE `tblcatveh` SET
-             `STRNMRSR`='" . $STRNMRSR . "',
-             `STRNMR`='" . $STRNMR . "',
-            `STRMRC`='" . $STRMRC . "',
-            `STRMDL`='" . $STRMDL . "',
-            `STRPLC`='" . $STRPLC . "',
-            `STRTPVH`='" . $STRTPVH . "',
-            `LNGIDNORG`='" . $LNGIDNORG . "',
-            `DOKLM`='" . $DOKLM . "',
-            `BITSUS`='" . $BITSUS . "' 
-             WHERE STRNMRSR='$id';";
-            
-      
-
-        $query_update = mysqli_query($con, $update);
-        if ($query_update) {
-            $messages[] = "Se actualizo el vehiculo";
-            $ide = $STRNMRSR;
-            $sql2 = recuperarDatos("SELECT * from tblcatveh WHERE STRNMRSR='$ide';");
-            $tabla = "tblcatveh";
-            $tipo = "Actualizacion";
-            $fecha = date("Y-m-d H:i:s");
-
-            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha .  "','" . $oldata . "','" . $sql2 . "');";
-            $query = mysqli_query($con, $sqllog);
-
-            ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
-        } else {
-
-            $errors[] = "No se pudo agregar el vehiculo";
-        }
-    } catch (mysqli_sql_exception $e) {
-
-        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-    }
-
+    $mensaje = insertarLog($update, 'tblcatveh', 'Actualizacion', 'STRNMRSR', $id,$oldata);
+	(str_contains($mensaje, 'Error') === false) ? $messages[] = $mensaje : $errors[] = $mensaje;
     if (isset($errors)) {
 
     ?>

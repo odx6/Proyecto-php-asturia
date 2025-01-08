@@ -268,9 +268,13 @@ function mostrar(id, path) {
 function MostrarTickets(id) {
   console.log(id)
   elemento = document.getElementById('table_tickets' + id)
+  //tabla=document.getElementById('example1');
+ 
   if (elemento.style.display === "none") {
+    //tabla.classList.add('collapsed')
     elemento.style.display = "block"; // Hacer visible
   } else {
+    //tabla.classList.remove('collapsed')
     elemento.style.display = "none"; // Ocultar
   }
 }

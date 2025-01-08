@@ -74,7 +74,6 @@ if ($gump->errors()) {
 
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
     require_once("../../../config/funciones.php");
 
     $STRPRE = mysqli_real_escape_string($con, (strip_tags($valid_data["STRPRE"], ENT_QUOTES)));
@@ -92,10 +91,10 @@ if ($gump->errors()) {
         $errors[] = " error al consultar el recorrido";
         $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
     }
-    
 
-    try {
-        $insert = "INSERT INTO
+
+
+    $insert = "INSERT INTO
     `tblcattik`(
         `INTNO`,
         `STRPRUT`,
@@ -117,30 +116,10 @@ VALUES
         '" . $LOC . "',
         '" . $DTEHOR . "'
     );";
-        $query_insert = mysqli_query($con, $insert);
-        if ($query_insert) {
-           
-            $messages[] = "Se agrego el ticket correctamente";
-            $id = mysqli_insert_id($con);
-            $sql2 = recuperarDatos("SELECT * from tblcattik WHERE STRPTIK ='" . $id . "';");
-            $tabla = "tblcattik";
-            $tipo = "creacion";
-            $fecha = date("Y-m-d H:i:s");
-
-            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-            $query = mysqli_query($con, $sqllog);
-
-            ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
-
-            ActualizarTickets($STRPRE,$row["STRPRUT"]);
-        } else {
-
-            $errors[] = "No se pudo agregar el vehiculo";
-        }
-    } catch (mysqli_sql_exception $e) {
-
-        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-    }
+    $mensaje = insertarLog($insert, 'tblcattik', 'Creacion', 'STRPTIK', '', '');
+    (str_contains($mensaje, 'Error') === false) ? $messages[] = $mensaje : $errors[] = $mensaje;
+    
+    ActualizarTickets($STRPRE, $row["STRPRUT"]);
 
     if (isset($errors)) {
 

@@ -112,7 +112,7 @@ if ($gump->errors()) {
 
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
+    require_once("../../../config/funciones.php");
     if (is_array($datos) && count($datos) > 0) {
 
         $PK_COMPRA = mysqli_real_escape_string($con, (strip_tags($valid_data["PK_COMPRA"], ENT_QUOTES)));

@@ -79,7 +79,6 @@ if ($gump->errors()) {
 
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
     require_once("../../../config/funciones.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 
@@ -108,6 +107,8 @@ if ($gump->errors()) {
         if ($num  > 0) {
             $row = mysqli_fetch_array($query_kilometraje);
             $min_klm = $row['KLMFIN'];
+        }else{
+            $min_klm=0;
         }
 
 
@@ -156,33 +157,9 @@ if ($gump->errors()) {
 
 
   if(isset($sql)){
-    try {
-        $query_new = mysqli_query($con, $sql);
-        if ($query_new) {
-            //ACTUALIZAR KILOMETROS
-            try {
-                $updateklm = "UPDATE `tblcatveh` SET `DOKLM`='" . $KLMFIN . "' WHERE STRNMRSR='" . $STRNMRSR . "'";
-            } catch (mysqli_sql_exception $e) {
-                $errors[] = "Error al actualizar los kiloemtros";
-                $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-            }
-            //
-            if ($query_new) {
-
-                $sql2 = recuperarDatos("SELECT * from tblreco WHERE 	 STRPRE='$id';");
-                $tabla = "tblreco";
-                $tipo = "Actualizacion";
-                $fecha = date("Y-m-d H:i:s");
-
-                $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-                $query = mysqli_query($con, $sqllog);
-                $messages[] = "Recorrido Actualizada correctamente";
-            }
-        }
-    } catch (mysqli_sql_exception $e) {
-        $errors[] = "Error al  agregar la Ruta";
-        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-    }
+    $oldata=recuperarDatos("SELECT * from tblreco WHERE 	 STRPRE='$id';");
+    $mensaje = insertarLog($sql, 'tblreco', 'Actualizacion', 'STRPRE', $id,$oldata);
+    (str_contains($mensaje, 'Error') === false) ? $messages[] = $mensaje : $errors[] = $mensaje;
   }else{
   $errors[]="Verificar  que el kilometraje inicial sea menor al final o el kilometraje inicial sea mayor a ".$min_klm;
   }

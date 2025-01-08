@@ -23,20 +23,20 @@ $gump->set_fields_error_messages([
         'required' => 'El campo modelo es requerido',
         'min_len' => 'El minimo de caracteres para modelo es 3'
     ],
-    'STRMRC'=>[
-         'required'=>'el campo numero es requerido',
-         'numeric'=>'el valor debe ser numerico'
-          
+    'STRMRC' => [
+        'required' => 'el campo numero es requerido',
+        'numeric' => 'el valor debe ser numerico'
+
 
 
     ],
-    'STRMDL'=>[
-         'required'=>'El capmpo modelo es requerido',
+    'STRMDL' => [
+        'required' => 'El capmpo modelo es requerido',
     ],
-    'DOKLM'=>[
-         'required'=>'El capmpo modelo es requerido',
-         'numeric'=>'El campo kilometros debe ser numerico',
-         'min_numeric'=>'El campo kilometros debe ser mayor a 1',
+    'DOKLM' => [
+        'required' => 'El capmpo modelo es requerido',
+        'numeric' => 'El campo kilometros debe ser numerico',
+        'min_numeric' => 'El campo kilometros debe ser mayor a 1',
     ],
 
 
@@ -66,12 +66,12 @@ if ($gump->errors()) {
         ?>
     </div>
 
-<?php
+    <?php
 
 
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
+    require_once("../../../config/funciones.php");
 
     $STRNMRSR = mysqli_real_escape_string($con, (strip_tags($valid_data["STRNMRSR"], ENT_QUOTES)));
     $STRNMR = mysqli_real_escape_string($con, (strip_tags($valid_data["STRNMR"], ENT_QUOTES)));
@@ -84,57 +84,38 @@ if ($gump->errors()) {
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($valid_data["BITSUS"], ENT_QUOTES)));
     $DTEHOR = date("Y-m-d H:i:s");
 
-    try {
-        $insert = "INSERT INTO `tblcatveh`(`STRNMRSR`, `STRNMR`, `STRMRC`, `STRMDL`, `STRPLC`, `STRTPVH`, `LNGIDNORG`,`DOKLM`, `BITSUS`, `DTHOR`)  VALUES ('" . $STRNMRSR . "','" . $STRNMR . "','" . $STRMRC . "','" . $STRMDL. "','" . $STRPLC. "','" . $STRTPVH."','" . $LNGIDNORG. "','".$DOKLM."','" . $BITSUS."','" . $DTEHOR . "');";
-        $query_insert = mysqli_query($con, $insert);
-        if ($query_insert) {
-            $messages[] = "Se agrego el automovil";
-            $id = mysqli_insert_id($con);
-            $sql2 = recuperarDatos("SELECT * from tblcatveh WHERE STRNMRSR='$STRNMRSR';");
-            $tabla = "tblcatveh";
-            $tipo = "creacion";
-            $fecha = date("Y-m-d H:i:s");
 
-            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-            $query = mysqli_query($con, $sqllog);
-
-            ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
-        } else {
-
-            $errors[] = "No se pudo agregar el vehiculo";
-        }
-    } catch (mysqli_sql_exception $e) {
-
-        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-    }
+    $insert = "INSERT INTO `tblcatveh`(`STRNMRSR`, `STRNMR`, `STRMRC`, `STRMDL`, `STRPLC`, `STRTPVH`, `LNGIDNORG`,`DOKLM`, `BITSUS`, `DTHOR`)  VALUES ('" . $STRNMRSR . "','" . $STRNMR . "','" . $STRMRC . "','" . $STRMDL . "','" . $STRPLC . "','" . $STRTPVH . "','" . $LNGIDNORG . "','" . $DOKLM . "','" . $BITSUS . "','" . $DTEHOR . "');";
+    $mensaje = insertarLog($insert, 'tblcatveh', 'Creacion', 'STRNMRSR', $STRNMRSR, '');
+    (str_contains($mensaje, 'Error') === false) ? $messages[] = $mensaje : $errors[] = $mensaje;
 
     if (isset($errors)) {
 
-        ?>
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Error!</strong>
-                <?php
-                foreach ($errors as $error) {
-                    echo $error;
-                }
-                ?>
-            </div>
-        <?php
-        }
-        if (isset($messages)) {
-        
-        ?>
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>¡Bien hecho!</strong>
-                <?php
-                foreach ($messages as $message) {
-                    echo $message;
-                }
-                ?>
-            </div>
-        <?php
-        }
+    ?>
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error!</strong>
+            <?php
+            foreach ($errors as $error) {
+                echo $error;
+            }
+            ?>
+        </div>
+    <?php
+    }
+    if (isset($messages)) {
+
+    ?>
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>¡Bien hecho!</strong>
+            <?php
+            foreach ($messages as $message) {
+                echo $message;
+            }
+            ?>
+        </div>
+<?php
+    }
 }
 ?>

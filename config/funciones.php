@@ -174,7 +174,7 @@ function  recuperarDatos($consulta){
     
   }
 
-  function insertarLog($sql, $tabla, $tipo_operacion, $nom_clave_primaria, $id) {
+  function insertarLog($sql, $tabla, $tipo_operacion, $nom_clave_primaria, $id,$olddata) {
     global $con;
 
     // Verificar parámetros necesarios
@@ -190,20 +190,18 @@ function  recuperarDatos($consulta){
         }
 
         // Obtener ID del registro insertado
-        (isset($id))? $id = mysqli_insert_id($con) :$id=$id ;
+        (empty($id))? $id = mysqli_insert_id($con) :$id=$id ;
         
 
         // Recuperar datos del registro insertado
-        $sql2 = "SELECT * FROM $tabla WHERE $nom_clave_primaria='$id'";
-        $result = mysqli_query($con, $sql2);
-        if (!$result) {
-            throw new Exception("Error al recuperar datos: " . mysqli_error($con));
-        }
+        
+        $sql2 = recuperarDatos("SELECT * FROM $tabla WHERE $nom_clave_primaria='$id'");
+       
 
         $fecha = date("Y-m-d H:i:s");
 
-        // Preparar la consulta de log
-        $sqllog = sprintf(
+        if(empty($olddata)){
+          $sqllog = sprintf(
             "INSERT INTO `logs`(`fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) 
              VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
             mysqli_real_escape_string($con, $_SESSION['user_id']),
@@ -213,6 +211,21 @@ function  recuperarDatos($consulta){
             mysqli_real_escape_string($con, $fecha),
             mysqli_real_escape_string($con, $sql2)
         );
+        }else{
+          $sqllog = sprintf(
+            "INSERT INTO `logs`(`fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) 
+             VALUES ('%s', '%s', '%s', '%s', '%s', '%s','%s')",
+            mysqli_real_escape_string($con, $_SESSION['user_id']),
+            mysqli_real_escape_string($con, $id),
+            mysqli_real_escape_string($con, $tabla),
+            mysqli_real_escape_string($con, $tipo_operacion),
+            mysqli_real_escape_string($con, $fecha),
+            mysqli_real_escape_string($con, $olddata),
+            mysqli_real_escape_string($con, $sql2)
+        );
+        }
+        // Preparar la consulta de log
+       
 
         // Ejecutar la consulta de log
         $query_log = mysqli_query($con, $sqllog);
@@ -220,10 +233,11 @@ function  recuperarDatos($consulta){
             throw new Exception("Error al insertar en logs: " . mysqli_error($con));
         }
 
-        return "Operación completada con éxito.".$tabla;
+       
     } catch (Exception $e) {
         // Manejo de errores
-        return "Error: " . $e->getMessage();
+        return "Error: " . $e->getMessage().$e->getCode();
     }
+    return "Operación completada con éxito.".$tabla;
 }
 

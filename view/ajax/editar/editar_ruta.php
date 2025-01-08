@@ -5,7 +5,7 @@ $gump = new GUMP('en');
 
 $gump->validation_rules([
 	'id'    => 'required|numeric',
-	'STRNOM'    => 'required|alpha_numeric',
+	'STRNOM'    => 'required',
 	'DOUKM'    => 'required|numeric|min_numeric,15',
 	'BITSUS'    => 'required|numeric',
 ]);
@@ -17,7 +17,6 @@ $gump->set_fields_error_messages([
 	],
 	'STRNOM'      => [
 		'required' => 'El Nombre de la ruta es obligatorio',
-		'alpha_numeric' => 'El nombre debe ser alfanumerico',
 	],
 	'DOUKM'   => [
 		'required' => 'Los kilometros  autorizados son obligatorios',
@@ -61,7 +60,7 @@ if ($gump->errors()) {
 
 } else {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-	require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
+	require_once("../../../config/funciones.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 
 	$id = mysqli_real_escape_string($con, (strip_tags($_POST["id"], ENT_QUOTES)));
@@ -80,26 +79,10 @@ SET
     `BITSUS` = '".$BITSUS."'
 WHERE
     STRPRUT='".$id."' ;";
+	$oldata=recuperarDatos("SELECT * from tblcatrut WHERE 	STRPRUT ='$id';");
+    $mensaje = insertarLog($sql, 'tblcatrut', 'Actualizacion', 'STRPRUT', $id,$oldata);
+    (str_contains($mensaje, 'Error') === false) ? $messages[] = $mensaje : $errors[] = $mensaje;
 	
-	try {
-		$query_new = mysqli_query($con, $sql);
-		if ($query_new) {
-			if ($query_new) {
-			
-				$sql2 = recuperarDatos("SELECT * from tblcatrut WHERE 	STRPRUT ='$id';");
-				$tabla = "tblcatrut";
-				$tipo = "Actualizacion";
-				$fecha = date("Y-m-d H:i:s");
-
-				$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-				$query = mysqli_query($con, $sqllog);
-				$messages[] = "Ruta actualizada correctamente";
-			}
-		}
-	} catch (mysqli_sql_exception $e) {
-        $errors[]="Error al  actualizar la Ruta";
-		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-	}
 }
 
 if (isset($errors)) {

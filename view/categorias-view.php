@@ -224,6 +224,7 @@ if ($_SESSION['categorias'] == 1) {
                     $("#loader2").html("");
                 }
             })
+            event.preventDefault();
         }
 
         function mostrar(id) {
@@ -242,6 +243,7 @@ if ($_SESSION['categorias'] == 1) {
                     $("#loader3").html("");
                 }
             })
+            event.preventDefault();
         }
 
         function pdf(id) {
@@ -266,6 +268,7 @@ if ($_SESSION['categorias'] == 1) {
                     alert(data);
                 }
             })
+            
         }
 
         function exportpf(historial) {

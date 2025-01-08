@@ -25,8 +25,8 @@ if (empty(trim($_POST['STRNOMCAT']))) {
 	//Write register in to database 
 	$sql = "INSERT INTO tblcatcat ( STRNOMCAT, STRDESCAT,DTEHOR,BITSUS) 
 			VALUES('" . $STRNOMCAT . "','" . $STRDESCAT . "','" . $DTEHOR . "','" . $BITSUS . "');";
-	$mensaje=insertarLog($sql,'tblcatcat','creacion','INTIDCAT','0');
-   (strpos($mensaje,'error') !== false)? $messages[]=$mensaje:$errors[]=$mensaje;
+	$mensaje=insertarLog($sql,'tblcatcat','creacion','INTIDCAT','0','');
+	(str_contains($mensaje, 'Error')===false) ? $messages[] = $mensaje : $errors[] = $mensaje;
 	
 } else {
 	$errors[] = "desconocido.";

@@ -72,7 +72,6 @@ if ($gump->errors()) {
 
 } else {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-	require_once("../../../config/RecuperarDatos.php");
 	require_once("../../../config/funciones.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 
@@ -100,6 +99,8 @@ LIMIT 1;";
 	if ($num  > 0) {
 		$row = mysqli_fetch_array($query_kilometraje);
 		$min_klm = $row['KLMFIN'];
+	}else{
+		$min_klm=0;
 	}
 
 	if ($KLMINIC > 0 && $KLMFIN > 0 && $KLMFIN >= $KLMINIC && $KLMINIC > $min_klm) {
@@ -137,35 +138,11 @@ VALUES
         '" . $DTHCAP . "',
         '" . $Fecha . "'
    );";
-		try {
-			$query_new = mysqli_query($con, $sql);
-			if ($query_new) {
-				//ACTUALIZAR KILOMETROS
-				try {
-					$updateklm = "UPDATE `tblcatveh` SET `DOKLM`='" . $FINAL . "' WHERE STRNMRSR='" . $STRNMRSR . "'";
-				} catch (mysqli_sql_exception $e) {
-					$errors[] = "Error al actualizar los kiloemtros";
-					$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-				}
-				//
-				if ($query_new) {
-					$id = mysqli_insert_id($con);
-					$sql2 = recuperarDatos("SELECT * from tblreco WHERE 	STRPRE ='$id';");
-					$tabla = "tblreco";
-					$tipo = "creacion";
-					$fecha = date("Y-m-d H:i:s");
+   $mensaje = insertarLog($sql, 'tblreco', 'creacion', 'STRPRE', '', '');
+   (str_contains($mensaje, 'Error')===false) ? $messages[] = $mensaje : $errors[] = $mensaje;
 
-					$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-					$query = mysqli_query($con, $sqllog);
-					$messages[] = "Ruta agregada correctamente";
-				}
-			}
-		} catch (mysqli_sql_exception $e) {
-			$errors[] = "Error al  agregar la Ruta";
-			$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-		}
-	}else{
-		$errors[] ="Los kilometrajes no pueden ser menores al ultimo registro";
+	} else {
+		$errors[] = "Los kilometrajes no pueden ser menores al ultimo registro";
 	}
 }
 

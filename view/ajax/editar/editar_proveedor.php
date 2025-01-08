@@ -64,7 +64,7 @@ if ($gump->errors()) {
 
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
+    require_once("../../../config/funciones.php");
       
     $id=intval($valid_data["id"]);
     $STRRFC = mysqli_real_escape_string($con, (strip_tags($valid_data["STRRFC"], ENT_QUOTES)));
@@ -78,31 +78,9 @@ if ($gump->errors()) {
     $BITSUS = mysqli_real_escape_string($con, (strip_tags($valid_data["BITSUS"], ENT_QUOTES)));
     $DTEHOR = date("Y-m-d H:i:s");
     $oldata=recuperarDatos("SELECT * from tblcatprov WHERE pk_prov='$id';");
-    try {
-        $update="UPDATE `tblcatprov` SET `STRRFC`='".$STRRFC."',`STRNOM`='".$STRNOM."',`STRDOM`='".$STRDOM."',`STRTEL`='".$STRTEL."',`STRNUMCUN`='".$STRNUMCUN."',`STRNOMBAN`='".$STRNOMBAN."',`STRCOR`='".$STRCOR."',`STRCONT`='".$STRCONT."',`BITSUS`='".$BITSUS."'  WHERE pk_prov='$id'";
-      
-        $query_insert = mysqli_query($con, $update);
-        if ($query_insert) {
-            $messages[] = "Se actualizo el proveedor";
-           
-            $sql2 = recuperarDatos("SELECT * from tblcatprov WHERE pk_prov='$id';");
-            $tabla = "tblcatprov";
-            $tipo = "Actualizacion";
-            $fecha = date("Y-m-d H:i:s");
-
-            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','".$oldata."','". $sql2 . "');";
-            $query = mysqli_query($con, $sqllog);
-
-            ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
-        } else {
-
-            $errors[] = "No se pudo agregar el vehiculo";
-        }
-    } catch (mysqli_sql_exception $e) {
-
-        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-    }
-
+    $update="UPDATE `tblcatprov` SET `STRRFC`='".$STRRFC."',`STRNOM`='".$STRNOM."',`STRDOM`='".$STRDOM."',`STRTEL`='".$STRTEL."',`STRNUMCUN`='".$STRNUMCUN."',`STRNOMBAN`='".$STRNOMBAN."',`STRCOR`='".$STRCOR."',`STRCONT`='".$STRCONT."',`BITSUS`='".$BITSUS."'  WHERE pk_prov='$id'";
+    $mensaje = insertarLog($update, 'tblcatprov', 'Actualizacion', 'pk_prov', $id,$oldata);
+    (str_contains($mensaje, 'Error') === false) ? $messages[] = $mensaje : $errors[] = $mensaje;
     if (isset($errors)) {
 
         ?>

@@ -36,7 +36,7 @@ if (in_array(2, $_SESSION['Habilidad']['Productos'])) {
 		/*&& !empty($_POST['kind'])*/
 	) {
 		require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-		require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
+		require_once("../../../config/funciones.php"); //Contiene las variables de configuracion para conectar a la base de datos
 		//$id = $_POST["id"];
 		$id = mysqli_real_escape_string($con, (strip_tags($_POST["id"], ENT_QUOTES)));
 		// escaping, additionally removing everything that could be (html/javascript-) code

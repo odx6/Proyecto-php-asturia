@@ -80,8 +80,8 @@ if ($gump->errors()) {
 
     $insert = "INSERT INTO `tblcatprov`( `STRRFC`, `STRNOM`, `STRDOM`, `STRTEL`, `STRNUMCUN`, `STRNOMBAN`, `STRCOR`, `STRCONT`, `BITSUS`, `DTHOR`)
          VALUES ('" . $STRRFC . "','" . $STRNOM . "','" . $STRDOM . "','" . $STRTEL . "','" . $STRNUMCUN . "','" . $STRNOMBAN . "','" . $STRCOR . "','" . $STRCONT . "','" . $BITSUS . "','" . $DTEHOR . "');";
-    $mensaje = insertarLog($insert, 'tblcatprov', 'creacion', 'pk_prov','');
-    (strpos($mensaje, 'error') !== false) ? $messages[] = $mensaje : $errors[] = $mensaje;
+    $mensaje = insertarLog($insert, 'tblcatprov', 'creacion', 'pk_prov','','');
+	(str_contains($mensaje, 'Error')===false) ? $messages[] = $mensaje : $errors[] = $mensaje;
 
     if (isset($errors)) {
 

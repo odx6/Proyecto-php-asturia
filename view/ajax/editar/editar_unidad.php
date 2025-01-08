@@ -12,7 +12,7 @@ if (empty(trim($_POST['STRNOMUNI']))) {
 	&& !empty($_POST['BITSUS'])
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-	require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
+	require_once("../../../config/funciones.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 	// escaping, additionally removing everything that could be (html/javascript-) code
 	$STRNOMUNI = mysqli_real_escape_string($con, (strip_tags($_POST["STRNOMUNI"], ENT_QUOTES)));
@@ -21,29 +21,11 @@ if (empty(trim($_POST['STRNOMUNI']))) {
 
 	$DTEHOR = date("Y-m-d H:i:s");
 	$id = intval($_POST['id']);
-	try {
-		//Write register in to database 
-		$oldata = recuperarDatos("SELECT * from tblcatuni WHERE INTIDUNI='$id';");
+	$sql =  "UPDATE tblcatuni SET STRNOMUNI='" . $STRNOMUNI . "', STRDESUNI='" . $STRDESUNI . "', BITSUS='" . $BITSUS . "'  WHERE INTIDUNI='" . $id . "' ";
+	$oldata = recuperarDatos("SELECT * from tblcatuni WHERE INTIDUNI='$id';");
 
-
-		$sql =  "UPDATE tblcatuni SET STRNOMUNI='" . $STRNOMUNI . "', STRDESUNI='" . $STRDESUNI . "', BITSUS='" . $BITSUS . "'  WHERE INTIDUNI='" . $id . "' ";
-		$query_new = mysqli_query($con, $sql);
-		if ($query_new) {
-
-
-			$sql2 = recuperarDatos("SELECT * from tblcatuni WHERE INTIDUNI='$id';");
-			$tabla = "tblcatuni";
-			$tipo = "Actualizacion";
-			$fecha = date("Y-m-d H:i:s");
-
-			$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sql2 . "');";
-			$query = mysqli_query($con, $sqllog);
-		}
-		$messages[] = "Unidad Actualizada Correctamente";
-	} catch (mysqli_sql_exception $e) {
-
-		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-	}
+	$mensaje = insertarLog($sql, 'tblcatuni', 'Actualizacion', 'INTIDUNI', $id,$oldata);
+	(str_contains($mensaje, 'Error') === false) ? $messages[] = $mensaje : $errors[] = $mensaje;
 } else {
 	$errors[] = "desconocido.";
 }

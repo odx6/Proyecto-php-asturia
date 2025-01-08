@@ -74,14 +74,14 @@ if ($gump->errors()) {
 
 } else {
     require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-    require_once("../../../config/RecuperarDatos.php");
+    require_once("../../../config/funciones.php");
 
     $id = mysqli_real_escape_string($con, (strip_tags($valid_data["id"], ENT_QUOTES)));
     $INTNO = mysqli_real_escape_string($con, (strip_tags($valid_data["INTNO"], ENT_QUOTES)));
     $PCRXLIT = mysqli_real_escape_string($con, (strip_tags($valid_data["PCRXLIT"], ENT_QUOTES)));
     $LTS = mysqli_real_escape_string($con, (strip_tags($valid_data["LTS"], ENT_QUOTES)));
     $LOC = mysqli_real_escape_string($con, (strip_tags($valid_data["LOC"], ENT_QUOTES)));
-    try {
+
         $insert = "UPDATE
     `tblcattik`
 SET
@@ -91,30 +91,9 @@ SET
     `LOC` = '" . $LOC . "'
 WHERE
      STRPTIK='" . $id . "'";
-        $query_insert = mysqli_query($con, $insert);
-        if ($query_insert) {
-            //actualizar datos 
-
-            //
-            $messages[] = "Se actualizo el ticket correctamente";
-
-            $sql2 = recuperarDatos("SELECT * from tblcattik WHERE STRPTIK ='" . $id . "';");
-            $tabla = "tblcattik";
-            $tipo = "Actualizacion";
-            $fecha = date("Y-m-d H:i:s");
-
-            $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
-            $query = mysqli_query($con, $sqllog);
-
-            ($query) ? $messages[] = "Se creo el log de resgistro" : $errors[] = "algo salio mal al crear el resgistro";
-        } else {
-
-            $errors[] = "No se pudo agregar el vehiculo";
-        }
-    } catch (mysqli_sql_exception $e) {
-
-        $errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-    }
+     $oldata=recuperarDatos("SELECT * from tblcattik WHERE STRPTIK ='" . $id . "';");
+     $mensaje = insertarLog($insert, 'tblcattik', 'Actualizacion', 'STRPTIK', $id,$oldata);
+     (str_contains($mensaje, 'Error') === false) ? $messages[] = $mensaje : $errors[] = $mensaje;
 
     if (isset($errors)) {
 

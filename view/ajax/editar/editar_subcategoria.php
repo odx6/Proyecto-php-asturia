@@ -15,7 +15,7 @@ if (empty(trim($_POST['STRNOMSBC']))) {
 	&& !empty($_POST['INTIDCAT'])
 ) {
 	require_once("../../../config/config.php"); //Contiene las variables de configuracion para conectar a la base de datos
-	require_once("../../../config/RecuperarDatos.php"); //Contiene las variables de configuracion para conectar a la base de datos
+	require_once("../../../config/funciones.php"); //Contiene las variables de configuracion para conectar a la base de datos
 
 	// escaping, additionally removing everything that could be (html/javascript-) code
 	$INTIDCAT = mysqli_real_escape_string($con, (strip_tags($_POST["INTIDCAT"], ENT_QUOTES)));
@@ -25,28 +25,14 @@ if (empty(trim($_POST['STRNOMSBC']))) {
 
 	$DTEHOR = date("Y-m-d H:i:s");
 	$id = intval($_POST['id']);
-	try {
+
 		//Write register in to database 
 		$oldata = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
 
 		$sql =  "UPDATE tblcatsbc SET INTIDCAT='" . $INTIDCAT . "', STRNOMSBC='" . $STRNOMSBC . "', STRDESBC='" . $STRDESBC . "', BITSUS='" . $BITSUS . "'  WHERE INTIDSBC='" . $id . "' ";
-		$query_new = mysqli_query($con, $sql);
-		if ($query_new) {
-
-
-			$sql2 = recuperarDatos("SELECT * from tblcatsbc WHERE INTIDSBC='$id';");
-			$tabla = "tblcatsbc";
-			$tipo = "Actualizacion";
-			$fecha = date("Y-m-d H:i:s");
-
-			$sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`,`newvalue`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $oldata . "','" . $sql2 . "');";
-			$query = mysqli_query($con, $sqllog);
-			$messages[] = "Subcategoria Actualizada correctamente";
-		}
-	} catch (mysqli_sql_exception $e) {
-
-		$errors[] = "Error de mysql" . $e->getMessage() . "codigo" . $e->getCode();
-	}
+		$mensaje = insertarLog($sql, 'tblcatsbc', 'Actualizacion', 'INTIDSBC', $id, $oldata);
+		(str_contains($mensaje, 'Error') === false) ? $messages[] = $mensaje : $errors[] = $mensaje;
+		
 } else {
 	$errors[] = "desconocido.";
 }
