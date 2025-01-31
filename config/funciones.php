@@ -123,17 +123,20 @@ function ActualizarTickets($id, $ruta)
       $totalts += $LTS;
     }
     $autorizado = getDato($ruta, 'tblcatrut', 'STRPRUT', 'DOUKM');
+    $litros = getDato($ruta, 'tblcatrut', 'STRPRUT', 'DOULTS');
     $klmrecorrido = getDato($id, 'tblreco', 'STRPRE', 'KLMRECO');
 
     $rendimiento = CalcularRendimiento($klmrecorrido, $totalts);
     $diferencia = CalcularDiferencia($autorizado, $klmrecorrido);
+    $diferenciaenlts= CalcularDiferencia($litros, $totalts);
     $update_reco = "UPDATE
     `tblreco`
 SET
     `DOUREN` = '" . $rendimiento . "',
     `INPRT` = '" . $importe . "',
     `DOUCON` = '" . $totalts . "',
-    `DOUDIF` = '" . $diferencia . "'
+    `DOUDIF` = '" . $diferencia . "',
+    `DOUDIFLTS` = '" . $diferenciaenlts. "'
 WHERE
     STRPRE='" . $id . "';";
 

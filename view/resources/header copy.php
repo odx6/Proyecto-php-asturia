@@ -104,7 +104,6 @@ $_SESSION['NOMBREMPRESA'] = $nombre_empresa;
   <!-- dropzonejs -->
   <link rel="stylesheet" href="plugins/dropzone/min/dropzone.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css?v=3.2.0">
   <!-- Tempusdominus Bootstrap 4 -->
   
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">

@@ -49,6 +49,8 @@ include "resources/header copy.php";
                                 (isset($agregarTicket))? include $agregarTicket:'';
                                 (isset($mostrarTicket))? include $mostrarTicket:'';
                                 (isset($editarTicket))? include $editarTicket:'';
+                                (isset($CerrarRecorrido))? include $CerrarRecorrido:'';
+                              
                                
                                 ?>
                                 

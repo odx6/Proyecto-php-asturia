@@ -252,3 +252,15 @@ VALUES
         '[value-3]',
         '[value-4]'
     )
+UPDATE
+    `tblreco`
+SET
+   
+    `DOUDIF` = '[value-11]',
+    `FINISH` = '[value-13]',
+    `EVALUATOR` = '[value-14]',
+    `DOUDES` = '[value-14]',
+  
+WHERE
+    
+    `STRPRE` = '[value-1]',

@@ -7,6 +7,7 @@ $gump->validation_rules([
 	'id'    => 'required|numeric',
 	'STRNOM'    => 'required',
 	'DOUKM'    => 'required|numeric|min_numeric,15',
+	'DOULTS'    => 'required|numeric|min_numeric,15',
 	'BITSUS'    => 'required|numeric',
 ]);
 
@@ -21,6 +22,11 @@ $gump->set_fields_error_messages([
 	'DOUKM'   => [
 		'required' => 'Los kilometros  autorizados son obligatorios',
 		'numeric' => 'El valor debe ser numerico',
+		'min_numeric' => 'El numero de kilometros autorizdos debe ser mayor que 15 lts',
+    ],
+	'DOULTS'   => [
+		'required' => 'Los litros  autorizados son obligatorios',
+		'numeric' => 'El valor debe ser numerico',
 		'min_numeric' => 'El numero de litros autorizdos debe ser mayor que 15 lts',
     ],
     'BITSUS'   => [
@@ -34,6 +40,7 @@ $gump->filter_rules([
 	'id' => 'trim|sanitize_string',
 	'STRNOM' => 'trim|sanitize_string',
 	'DOUKM' => 'trim|sanitize_string',
+	'DOULTS' => 'trim|sanitize_string',
 	'BITSUS' => 'trim|sanitize_string'
 
 ]);
@@ -66,6 +73,7 @@ if ($gump->errors()) {
 	$id = mysqli_real_escape_string($con, (strip_tags($_POST["id"], ENT_QUOTES)));
 	$STRNOM = mysqli_real_escape_string($con, (strip_tags($_POST["STRNOM"], ENT_QUOTES)));
 	$DOUKM = mysqli_real_escape_string($con, (strip_tags($_POST["DOUKM"], ENT_QUOTES)));
+	$DOULTS = mysqli_real_escape_string($con, (strip_tags($_POST["DOULTS"], ENT_QUOTES)));
 	$BITSUS = mysqli_real_escape_string($con, (strip_tags($_POST["BITSUS"], ENT_QUOTES)));
 	$Fecha = date("Y-m-d");
 
@@ -75,6 +83,7 @@ SET
   
     `STRNOM` = '".$STRNOM."',
     `DOUKM` = '".$DOUKM."',
+    `DOULTS` = '".$DOULTS."',
    
     `BITSUS` = '".$BITSUS."'
 WHERE

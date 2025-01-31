@@ -103,7 +103,7 @@ LIMIT 1;";
 		$min_klm=0;
 	}
 
-	if ($KLMINIC > 0 && $KLMFIN > 0 && $KLMFIN >= $KLMINIC && $KLMINIC > $min_klm) {
+	if ($KLMINIC > 0 && $KLMFIN > 0 && $KLMFIN >= $KLMINIC && $KLMINIC >= $min_klm) {
 		$KLMRECO = $KLMFIN - $KLMINIC;
 		$FINAL = $KLMFIN;
 		$sql = "INSERT INTO
@@ -118,6 +118,7 @@ LIMIT 1;";
         `INPRT`,
         `DOUCON`,
         `DOUDIF`,
+        `DOUDIFLTS`,
         `DOUDES`,
         `DTHCAP`,
         `DTHOR`
@@ -130,6 +131,7 @@ VALUES
         '" . $FINAL . "',
         '" . $KLMINIC . "',
         '" . $KLMRECO . "',
+        '0',
         '0',
         '0',
         '0',

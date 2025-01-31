@@ -63,7 +63,6 @@ if (isset($_REQUEST["id_ticket"])) { //codigo para eliminar
 
                 $sqllog = "INSERT INTO `logs`( `fk_empleado`, `fk_registro`, `tabla`, `Tipo`, `fecha`, `sql`) VALUES('" . $_SESSION['user_id'] . "','" . $id . "','" . $tabla . "','" . $tipo . "','" . $fecha . "','" . $sql2 . "');";
                 $query = mysqli_query($con, $sqllog);
-               
             }
         } else {
             $aviso = "Aviso!";
@@ -85,36 +84,37 @@ if (isset($_REQUEST["id_ticket"])) { //codigo para eliminar
         }
     }
 
-    
+
     if (isset($errors)) {
 
-        ?>
-            <div class="alert alert-danger" role="alert">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Error!</strong>
-                <?php
-                foreach ($errors as $error) {
-                    echo $error."<br>";
-                }
-                ?>
-            </div>
-        <?php
-        }
-        if (isset($messages)) {
-        
-        ?>
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>¡Bien hecho!</strong>
-                <?php
-                foreach ($messages as $message) {
-                    echo $message."<br>";
-                }
-                ?>
-            </div>
-        <?php
-        }
+?>
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error!</strong>
+            <?php
+            foreach ($errors as $error) {
+                echo $error . "<br>";
+            }
+            ?>
+        </div>
+    <?php
+    }
+    if (isset($messages)) {
+
+    ?>
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>¡Bien hecho!</strong>
+            <?php
+            foreach ($messages as $message) {
+                echo $message . "<br>";
+            }
+            ?>
+        </div>
+    <?php
+    }
 }
+
 
 
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
@@ -132,7 +132,7 @@ if ($action == 'ajax') {
     //loop through fetched data
 
     if (isset($_REQUEST["id"])) {
-?>
+    ?>
         <div class="<?php echo $classM; ?>">
             <button type="button" class="close" data-dismiss="alert"><?php echo $times; ?></button>
             <strong><?php echo $aviso ?> </strong>
@@ -140,7 +140,7 @@ if ($action == 'ajax') {
         </div>
     <?php
     }
-    
+
     ?>
     <table id="example1" class="table table-bordered table-striped">
 
@@ -155,11 +155,14 @@ if ($action == 'ajax') {
                 <th>KILOMETRAJE DE INICIO</th>
                 <th>KILOMETRAJE FINAL</th>
                 <th>KILOMETRAJE RECORRIDO</th>
+                <th>KILOMETRAJE AUTORIZADO</th>
+                <th>DIFERENCIA POR KILOMETRO</th>
                 <th>RENDIMIENTO POR LITRO</th>
                 <th>IMPORTE</th>
+                <th>LITROS AUTORIZADOS</th>
                 <th>CONSUMO</th>
-                <th>DIFERENCIA</th>
-                <th>SALDO</th>
+                <th>DIFERENCIA POR LITROS</th>
+                <th>DESCUENTO </th>
                 <th>CAPTURA</th>
                 <th>Creacion</th>
 
@@ -183,14 +186,20 @@ if ($action == 'ajax') {
                 $INPRT = $row["INPRT"];
                 $DOUCON = $row["DOUCON"];
                 $DOUDIF = $row["DOUDIF"];
+                $DOUDIFLTS = $row["DOUDIFLTS"];
                 $DOUDES = $row["DOUDES"];
+                $FINISH = $row["FINISH"];
+                $EVALUATOR = $row["EVALUATOR"];
                 $DTHCAP = $row["DTHCAP"];
                 $DTHOR = $row["DTHOR"];
                 //datos
-                ActualizarTickets($STRPRE,$STRPRUT);
+                ActualizarTickets($STRPRE, $STRPRUT);
+                $autorizado = getDato($STRPRUT, 'tblcatrut', 'STRPRUT', 'DOUKM');
+                $LITROS = getDato($STRPRUT, 'tblcatrut', 'STRPRUT', 'DOULTS');
 
                 $NameOp = $row["Operador"] . " " . $row["Aoperador"];
                 $ruta = $row["ruta"];
+
 
 
 
@@ -240,10 +249,10 @@ if ($action == 'ajax') {
                                         $LOC = $row["LOC"];
                                         $DTEHORTIK = $row["DTEHOR"];
 
-                                        $autorizado = getDato($STRPRUT, 'tblcatrut', 'STRPRUT', 'DOUKM');
+
                                         //datos
 
-                                        $importe += CalcularImporte($PCRXLIT,$LTS);
+                                        $importe += CalcularImporte($PCRXLIT, $LTS);
                                         $totalts += $LTS;
 
 
@@ -254,25 +263,31 @@ if ($action == 'ajax') {
 
                                             <td><?php echo $INTNO ?></td>
                                             <td><?php echo "$ " . number_format($PCRXLIT, 2, '.', ','); ?></td>
-                                            <td><?php echo $LTS."ltr" ?></td>
+                                            <td><?php echo $LTS . "ltr" ?></td>
                                             <td><?php echo $LOC ?></td>
                                             <td><?php echo $DTEHORTIK ?></td>
                                             <td class="text-right">
-                                                <?php if (in_array(2, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+                                                <?php if ($FINISH == 0) { ?>
+                                                    <?php if (in_array(2, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                                                    <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update_ticket" onclick="editar('<?php echo $STRPTIK; ?>','view/modals/editar/ticket.php')"><i class="fa fa-edit"></i></button>
+                                                        <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update_ticket" onclick="editar('<?php echo $STRPTIK; ?>','view/modals/editar/ticket.php')"><i class="fa fa-edit"></i></button>
 
-                                                <?php } ?>
-                                                <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+                                                    <?php } ?>
+                                                    <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                                                    <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="DeleteTicket('<?php echo $STRPTIK; ?>','view/ajax/kilometraje_ajax.php')"><i class="far fa-trash-alt"></i></button>
+                                                        <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="DeleteTicket('<?php echo $STRPTIK; ?>','view/ajax/kilometraje_ajax.php')"><i class="far fa-trash-alt"></i></button>
 
-                                                <?php } ?>
-                                                <?php if (in_array(4, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+                                                    <?php } ?>
+                                                    <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                                                    <!--<button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $STRPTIK; ?>','view/modals/mostrar/vehiculo.php')"><i class="fa fa-eye"></i></button>-->
+                                                        <!--<button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $STRPTIK; ?>','view/modals/mostrar/vehiculo.php')"><i class="fa fa-eye"></i></button>-->
 
-                                                <?php } ?>
+                                                    <?php } ?>
+                                                <?php } else {
+                                                    echo "cerrado por";
+                                                    $name = getDato($EVALUATOR, 'tblcatemp', 'IDEMP', 'STRNOM') . getDato($EVALUATOR, 'tblcatemp', 'IDEMP', 'STRAPE');
+                                                    echo $name;
+                                                } ?>
 
 
                                             </td>
@@ -293,35 +308,50 @@ if ($action == 'ajax') {
                     <td><?php echo $KLMINI . "km" ?></td>
                     <td><?php echo $KLMFIN . "km" ?></td>
                     <td><?php echo $KLMRECO . "km" ?></td>
-                    <td><?php echo $DOUREN."km"
+                    <td><?php echo $autorizado . "km" ?></td>
+                    <td><?php echo $DOUDIF . "km"
                         ?></td>
-                    <td><?php echo "$ " . number_format($INPRT, 2, '.', ',');?></td>
-                    <td><?php echo $DOUCON."ltr" ?></td>
-                    <td><?php echo $DOUDIF."km"
+                    <td><?php echo $DOUREN . "km"
+                        ?></td>
+                    <td><?php echo "$ " . number_format($INPRT, 2, '.', ','); ?></td>
+                    <td><?php echo $LITROS . "ltr" ?></td>
+                    <td><?php echo $DOUCON . "ltr" ?></td>
+                    <td><?php echo $DOUDIFLTS . " LTS"
                         ?></td>
                     <td><?php echo "$ " . number_format($DOUDES, 2, '.', ','); ?></td>
                     <td><?php echo $DTHCAP ?></td>
                     <td><?php echo $DTHOR ?></td>
                     <td class="text-right">
-                        <?php if (in_array(2, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+                        <?php if ($FINISH == 0) { ?>
+                            <?php if (in_array(2, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                            <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $STRPRE; ?>','view/modals/editar/Recorrido.php')"><i class="fa fa-edit"></i></button>
+                                <button type="button" class="btn btn-warning btn-square btn-xs" data-toggle="modal" data-target="#modal_update" onclick="editar('<?php echo $STRPRE; ?>','view/modals/editar/Recorrido.php')"><i class="fa fa-edit"></i></button>
 
-                        <?php } ?>
-                        <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+                            <?php } ?>
+                            <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                            <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $STRPRE; ?>','view/ajax/kilometraje_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
+                                <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" onclick="eliminar('<?php echo $STRPRE; ?>','view/ajax/kilometraje_ajax.php','tblcatmov')"><i class="far fa-trash-alt"></i></button>
 
-                        <?php } ?>
-                        <?php if (in_array(4, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+                            <?php } ?>
+                            <?php if (in_array(4, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                            <!--<button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $STRPRE; ?>','view/modals/mostrar/vehiculo.php')"><i class="fa fa-eye"></i></button>-->
+                                <!--<button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#modal_show" onclick="mostrar('<?php echo $STRPRE; ?>','view/modals/mostrar/vehiculo.php')"><i class="fa fa-eye"></i></button>-->
 
-                        <?php } ?>
-                        <?php if (in_array(1, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+                            <?php } ?>
+                            <?php if (in_array(1, $_SESSION['Habilidad']['Kilometraje'])) { ?>
 
-                            <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#ticket_modal" onclick="ChangeValue('<?php echo $STRPRE; ?>','view/modals/agregar/agregar_ticket.php')"><i class="fas fa-ticket-alt"></i></button>
-                        <?php } ?>
+                                <button type="button" class="btn btn-primary btn-square btn-xs" data-toggle="modal" data-target="#ticket_modal" onclick="ChangeValue('<?php echo $STRPRE; ?>','view/modals/agregar/agregar_ticket.php')"><i class="fas fa-ticket-alt"></i></button>
+                            <?php } ?>
+                            <?php if (in_array(3, $_SESSION['Habilidad']['Kilometraje'])) { ?>
+
+                                <button type="button" class="btn btn-danger btn-square btn-xs" data-toggle="modal" data-target="#modal_recorrido" onclick="editar('<?php echo $STRPRE; ?>','view/modals/editar/recorrido2.php')"><i class="fas fa-lock"></i></button>
+
+                            <?php } ?>
+                        <?php } else {
+                            echo "cerrado por";
+                            $name = getDato($EVALUATOR, 'tblcatemp', 'IDEMP', 'STRNOM') . getDato($EVALUATOR, 'tblcatemp', 'IDEMP', 'STRAPE');
+                             echo  $name;
+                        } ?>
 
                     </td>
                 </tr>

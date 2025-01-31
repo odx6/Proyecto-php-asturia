@@ -6,6 +6,7 @@ $gump = new GUMP('en');
 
 $gump->validation_rules([
 	'STRNOM'    => 'required',
+	'DOULTS'    => 'required|numeric|min_numeric,15',
 	
 ]);
 
@@ -18,7 +19,12 @@ $gump->set_fields_error_messages([
 		'required' => 'Los kilometros  autorizados son obligatorios',
 		'numeric' => 'El valor debe ser numerico',
 		'min_numeric' => 'El numero de litros autorizdos debe ser mayor que 15 lts',
-	]
+	],
+	 'DOULTS'   => [
+		'required' => 'Los litros autorizados son obligatorios',
+		'numeric' => 'El valor debe ser numerico ',
+		'min_numeric' => 'El numero de litros autorizdos debe ser mayor que 15 lts',
+	],
 
 ]);
 $gump->filter_rules([
@@ -54,14 +60,16 @@ if ($gump->errors()) {
 
 	$STRNOM = mysqli_real_escape_string($con, (strip_tags($_POST["STRNOM"], ENT_QUOTES)));
 	$DOUKM = mysqli_real_escape_string($con, (strip_tags($_POST["DOUKM"], ENT_QUOTES)));
+	$DOULTS = mysqli_real_escape_string($con, (strip_tags($_POST["DOULTS"], ENT_QUOTES)));
 	$Fecha = date("Y-m-d");
 
     $sql="INSERT INTO
-    `tblcatrut`( `STRNOM`, `DOUKM`, `DTHCRE`, `BITSUS`)
+    `tblcatrut`( `STRNOM`, `DOUKM`,  `DOULTS`,`DTHCRE`, `BITSUS`)
 VALUES
     (
         '".$STRNOM."',
         '".$DOUKM."',
+        '".$DOULTS."',
         '".$Fecha."',
         '1'
     );";

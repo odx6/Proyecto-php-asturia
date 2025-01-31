@@ -75,6 +75,7 @@ if ($action == 'ajax') {
                     <th>#CLAVE</th>
                     <th>NOMBRE</th>
                     <th>KILOMETROS AUTORIZADOS</th>
+                    <th>LITROS AUTORIZADOS</th>
                     <th>FECHA DE CREACION</th>
                     <th>ESTADO</th>
                     <th>Accion</th>
@@ -88,6 +89,7 @@ if ($action == 'ajax') {
                     $STRPRUT = $row["STRPRUT"];
                     $STRNOM = $row["STRNOM"];
                     $DOUKM = $row["DOUKM"];
+                    $DOULTS = $row["DOULTS"];
                     $DTHCRE = $row["DTHCRE"];
                     $BITSUS = $row["BITSUS"];
                     ($BITSUS==1)? $BITSUS="Activo":$BITSUS="Inactivo";
@@ -98,7 +100,8 @@ if ($action == 'ajax') {
                     <tr>
                         <td><?php echo $STRPRUT ?></td>
                         <td><?php echo $STRNOM ?></td>
-                        <td><?php echo $DOUKM ?></td>
+                        <td><?php echo $DOUKM." KM" ?></td>
+                        <td><?php echo $DOULTS." lts" ?></td>
                         <td><?php echo $DTHCRE ?></td>
                         <td><?php echo $BITSUS ?></td>
                         

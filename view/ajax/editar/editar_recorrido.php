@@ -131,7 +131,7 @@ if ($gump->errors()) {
     WHERE
         STRPRE ='" . $id . "'";
     } else {
-        if ($KLMINIC > 0 && $KLMFIN > 0 && $KLMFIN >= $OLDKLMINI && $KLMINIC>$min_klm) {
+        if ($KLMINIC > 0 && $KLMFIN > 0 && $KLMFIN >= $OLDKLMINI && $KLMINIC>=$min_klm) {
             $KLMRECO = $KLMFIN - $OLDKLMINI;
             $sql = "UPDATE
             `tblreco`

@@ -18,8 +18,15 @@
                                 </div>
                             </div>
                             <div class="col-6">
+                                <div class="form-group"> <label for="KILOMETROS AUTORIZADOS" class=" col-form-label">KILOMETROS AUTORIZADOS: </label>
+                                    <input type="number" required class="form-control" id="DOUKM" name="DOUKM" placeholder="KILOMETROS AUTORIZADOS: ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="form-group"> <label for="LITROS AUTORIZADOS" class=" col-form-label">LITROS AUTORIZADOS: </label>
-                                    <input type="number" required class="form-control" id="DOUKM" name="DOUKM" placeholder="LITROS AUTORIZADOS: ">
+                                    <input type="number" required class="form-control" id="DOULTS" name="DOULTS" placeholder="LITROS AUTORIZADOS: ">
                                 </div>
                             </div>
                         </div>

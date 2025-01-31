@@ -14,6 +14,7 @@ if (in_array(2, $_SESSION['Habilidad']['Rutas'])) {
                 $STRPRUT  = $row["STRPRUT"];
                 $STRNOM  = $row["STRNOM"];
                 $DOUKM = $row["DOUKM"];
+                $DOULTS = $row["DOULTS"];
                 $BITSUS = $row["BITSUS"];
             }
         }
@@ -31,7 +32,12 @@ if (in_array(2, $_SESSION['Habilidad']['Rutas'])) {
         </div>
         <div class="col-4">
             <div class="form-group"><label for="Telefono" class=" col-form-label">KM Autorizados: </label>
-                <input type="number" required class="form-control" id="DOUKM" name="DOUKM" placeholder="Telefono" value="<?php echo $DOUKM ?>">
+                <input type="number" required class="form-control" id="DOUKM" name="DOUKM" placeholder="KLM" value="<?php echo $DOUKM ?>">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group"><label for="Telefono" class=" col-form-label">LTS Autorizados: </label>
+                <input type="number" required class="form-control" id="DOULTS" name="DOULTS" placeholder="LTS" value="<?php echo $DOULTS ?>">
             </div>
         </div>
         <div class="col-4">

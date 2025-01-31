@@ -9,7 +9,7 @@ $gump->validation_rules([
 	'LNGIDNCNT'       => 'required|numeric',
 	'LNGIDNMCN'       => 'required|numeric',
 	'LNGIDNORG'       => 'required|numeric',
-	'STRNMRSR'       => 'required|alpha_numeric',
+	'STRNMRSR'       => 'required',
 	'DTFCHSLC'       => 'required',
 	'DTFCHDGN'       => 'required',
 	'STRKLM' => 'required|numeric',
@@ -44,8 +44,7 @@ $gump->set_fields_error_messages([
 	],
 	'STRNMRSR' => [
 		'required' => 'El NO. de serie del vehiculo es requerido',
-		'alpha_numeric' => 'La clave del vehiculo debe ser alphanumerica',
-
+		
 	],
 	'DTFCHSLC' => [
 		'required' => 'El diagnostico es requerido'
